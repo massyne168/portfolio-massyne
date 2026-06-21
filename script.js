@@ -196,6 +196,10 @@ if (motionVideos.length && !prefersReducedMotion) {
 
 const closeMenu = () => {
   header.classList.remove("menu-open");
+  document.body.classList.remove("menu-open");
+  menuToggle.classList.remove("active");
+  const navMenu = document.querySelector(".nav-links");
+  navMenu?.classList.remove("open", "active", "is-open");
   menuToggle.setAttribute("aria-expanded", "false");
   menuToggle.setAttribute("aria-label", "Open menu");
 };
@@ -345,7 +349,18 @@ if (archiveGallery) {
 }
 
 menuToggle.addEventListener("click", () => {
+  if (window.innerWidth <= 768) {
+    closeMenu();
+    return;
+  }
+
   const isOpen = header.classList.toggle("menu-open");
+  document.body.classList.toggle("menu-open", isOpen);
+  menuToggle.classList.toggle("active", isOpen);
+  const navMenu = document.querySelector(".nav-links");
+  navMenu?.classList.toggle("open", isOpen);
+  navMenu?.classList.toggle("active", isOpen);
+  navMenu?.classList.toggle("is-open", isOpen);
   menuToggle.setAttribute("aria-expanded", String(isOpen));
   menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
 });
@@ -361,10 +376,14 @@ navLinks.forEach(link => {
 });
 
 window.addEventListener("resize", debounce(() => {
-  if (window.innerWidth > 820) {
+  if (window.innerWidth > 820 || window.innerWidth <= 768) {
     closeMenu();
   }
 }), { passive: true });
+
+if (window.innerWidth <= 768) {
+  closeMenu();
+}
 
 window.addEventListener("keydown", event => {
   if (event.key === "Escape") {
