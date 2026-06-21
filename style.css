@@ -253,13 +253,34 @@ footer {
   color: #ffffff;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.65s ease, visibility 0.65s ease;
-  animation: loaderAutoHide 0.01s linear 2s forwards;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
 }
 
-.page-loader.loaded {
+.page-loader.loaded,
+.page-loader.is-hidden {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
+}
+
+.loader,
+.loading-screen,
+.preloader,
+#loader,
+#loading,
+.page-loader {
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.loader.is-hidden,
+.loading-screen.is-hidden,
+.preloader.is-hidden,
+#loader.is-hidden,
+#loading.is-hidden,
+.page-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .loader-content {
@@ -311,14 +332,6 @@ footer {
 @keyframes loaderSpin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes loaderAutoHide {
-  to {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
   }
 }
 

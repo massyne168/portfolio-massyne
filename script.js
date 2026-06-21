@@ -18,8 +18,15 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const pageLoader = document.querySelector("#pageLoader");
 const loaderPercent = document.querySelector("#loaderPercent");
 const loaderStatus = document.querySelector("#loaderStatus");
+const minimumLoadingTime = 3000;
+let contentShown = false;
 
 const showContent = () => {
+  if (contentShown) {
+    return;
+  }
+
+  contentShown = true;
   document.body.classList.remove("is-loading", "loading");
   document.body.classList.add("loaded");
 
@@ -37,15 +44,15 @@ const showContent = () => {
   });
 
   if (pageLoader) {
-    pageLoader.classList.add("loaded");
+    pageLoader.classList.add("is-hidden", "loaded");
     window.setTimeout(() => {
-      pageLoader.remove();
+      pageLoader.style.display = "none";
     }, 700);
   }
 };
 
 if (pageLoader && loaderPercent) {
-  const loaderDuration = 900;
+  const loaderDuration = minimumLoadingTime;
   const loaderStatuses = [
     "Designing...",
     "Loading Visuals...",
@@ -77,7 +84,7 @@ if (pageLoader && loaderPercent) {
       return;
     }
 
-    showContent();
+    loaderPercent.textContent = "100%";
   };
 
   requestAnimationFrame(updateLoader);
@@ -85,8 +92,14 @@ if (pageLoader && loaderPercent) {
   showContent();
 }
 
-window.addEventListener("load", showContent, { once: true });
-window.setTimeout(showContent, 2000);
+window.addEventListener("load", () => {
+  window.setTimeout(showContent, minimumLoadingTime);
+}, { once: true });
+window.setTimeout(() => {
+  if (document.readyState === "complete") {
+    showContent();
+  }
+}, minimumLoadingTime + 2000);
 
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
