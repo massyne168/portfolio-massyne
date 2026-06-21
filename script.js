@@ -18,7 +18,7 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const pageLoader = document.querySelector("#pageLoader");
 const loaderPercent = document.querySelector("#loaderPercent");
 const loaderStatus = document.querySelector("#loaderStatus");
-const minimumLoadingTime = 3000;
+const maximumLoadingTime = 2000;
 let contentShown = false;
 
 const showContent = () => {
@@ -52,7 +52,7 @@ const showContent = () => {
 };
 
 if (pageLoader && loaderPercent) {
-  const loaderDuration = minimumLoadingTime;
+  const loaderDuration = maximumLoadingTime;
   const loaderStatuses = [
     "Designing...",
     "Loading Visuals...",
@@ -93,13 +93,11 @@ if (pageLoader && loaderPercent) {
 }
 
 window.addEventListener("load", () => {
-  window.setTimeout(showContent, minimumLoadingTime);
+  showContent();
 }, { once: true });
 window.setTimeout(() => {
-  if (document.readyState === "complete") {
-    showContent();
-  }
-}, minimumLoadingTime + 2000);
+  showContent();
+}, maximumLoadingTime);
 
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
@@ -421,6 +419,7 @@ if (finePointer) {
   const cursorPull = { x: 0, y: 0 };
   let ringScale = 1;
   let targetScale = 1;
+  let activeTargetRect = null;
 
   const lerp = (start, end, amount) => start + (end - start) * amount;
 
@@ -444,8 +443,13 @@ if (finePointer) {
       cursorDot.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate(-50%, -50%)`;
     }
 
-    cursorRing.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0) translate(-50%, -50%) scale(${ringScale})`;
-    cursorGlow.style.transform = `translate3d(${glow.x}px, ${glow.y}px, 0) translate(-50%, -50%)`;
+    if (cursorRing) {
+      cursorRing.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0) translate(-50%, -50%) scale(${ringScale})`;
+    }
+
+    if (cursorGlow) {
+      cursorGlow.style.transform = `translate3d(${glow.x}px, ${glow.y}px, 0) translate(-50%, -50%)`;
+    }
 
     requestAnimationFrame(moveCursor);
   };
@@ -463,11 +467,12 @@ if (finePointer) {
   cursorTargets.forEach(item => {
     item.addEventListener("pointerenter", () => {
       document.body.classList.add("cursor-hover");
+      activeTargetRect = item.getBoundingClientRect();
       targetScale = 1.08;
     });
 
     item.addEventListener("pointermove", event => {
-      const rect = item.getBoundingClientRect();
+      const rect = activeTargetRect || item.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       const distanceX = event.clientX - centerX;
@@ -484,6 +489,7 @@ if (finePointer) {
     item.addEventListener("pointerleave", () => {
       item.style.setProperty("--magnet-x", "0px");
       item.style.setProperty("--magnet-y", "0px");
+      activeTargetRect = null;
       cursorPull.x = 0;
       cursorPull.y = 0;
       targetScale = 1;

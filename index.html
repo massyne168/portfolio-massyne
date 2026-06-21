@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/optimized/hero-1122.webp" imagesrcset="images/optimized/hero-480.webp 480w, images/optimized/hero-800.webp 800w, images/optimized/hero-1122.webp 1122w" imagesizes="(min-width: 1024px) 45vw, 100vw" type="image/webp" fetchpriority="high" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.min.css" />
 </head>
 <body class="is-loading">
   <div class="cinematic-bg" aria-hidden="true">
@@ -46,7 +46,7 @@
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
   <div class="custom-cursor" aria-hidden="true">
-    <img src="images/cursor.png" alt="">
+    <img src="images/cursor.png" alt="" width="64" height="64" loading="lazy" decoding="async">
   </div>
 
   <header class="site-header" id="siteHeader">
@@ -314,12 +314,12 @@
       </div>
 
       <div class="motion-grid" aria-label="Motion design showcase">
-        <article class="motion-card silver-light-card"><video src="images/optimized/motion1.mp4" aria-label="Motion design animation 1" width="960" height="556" muted loop playsinline preload="metadata"></video></article>
-        <article class="motion-card silver-light-card"><video src="images/optimized/motion2.mp4" aria-label="Motion design animation 2" width="960" height="556" muted loop playsinline preload="metadata"></video></article>
-        <article class="motion-card silver-light-card"><video src="images/optimized/motion3.mp4" aria-label="Motion design animation 3" width="960" height="556" muted loop playsinline preload="metadata"></video></article>
-        <article class="motion-card silver-light-card"><video src="images/optimized/motion4.mp4" aria-label="Motion design animation 4" width="960" height="556" muted loop playsinline preload="metadata"></video></article>
-        <article class="motion-card silver-light-card"><video src="images/optimized/motion5.mp4" aria-label="Motion design animation 5" width="960" height="556" muted loop playsinline preload="metadata"></video></article>
-        <article class="motion-card silver-light-card"><video src="images/optimized/motion6.mp4" aria-label="Motion design animation 6" width="960" height="556" muted loop playsinline preload="metadata"></video></article>
+        <article class="motion-card silver-light-card"><video src="images/optimized/motion1.mp4" aria-label="Motion design animation 1" width="960" height="556" autoplay muted loop playsinline preload="metadata"></video></article>
+        <article class="motion-card silver-light-card"><video src="images/optimized/motion2.mp4" aria-label="Motion design animation 2" width="960" height="556" autoplay muted loop playsinline preload="metadata"></video></article>
+        <article class="motion-card silver-light-card"><video src="images/optimized/motion3.mp4" aria-label="Motion design animation 3" width="960" height="556" autoplay muted loop playsinline preload="metadata"></video></article>
+        <article class="motion-card silver-light-card"><video src="images/optimized/motion4.mp4" aria-label="Motion design animation 4" width="960" height="556" autoplay muted loop playsinline preload="metadata"></video></article>
+        <article class="motion-card silver-light-card"><video src="images/optimized/motion5.mp4" aria-label="Motion design animation 5" width="960" height="556" autoplay muted loop playsinline preload="metadata"></video></article>
+        <article class="motion-card silver-light-card"><video src="images/optimized/motion6.mp4" aria-label="Motion design animation 6" width="960" height="556" autoplay muted loop playsinline preload="metadata"></video></article>
       </div>
     </section>
 
@@ -641,7 +641,7 @@
     <p>&copy; 2026 All Rights Reserved</p>
   </footer>
 
-  <script src="script.js" defer></script>
+  <script src="script.min.js" defer></script>
 </body>
 </html>
 
