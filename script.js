@@ -405,6 +405,7 @@ window.addEventListener("keydown", event => {
 });
 
 if (finePointer) {
+  const customCursor = document.querySelector(".custom-cursor");
   const cursorDot = document.querySelector(".cursor-dot");
   const cursorRing = document.querySelector(".cursor-ring");
   const cursorGlow = document.querySelector(".cursor-glow");
@@ -435,7 +436,14 @@ if (finePointer) {
     glow.y = lerp(glow.y, mouse.y, 0.1);
     ringScale = lerp(ringScale, targetScale, 0.12);
 
-    cursorDot.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate(-50%, -50%)`;
+    if (customCursor) {
+      customCursor.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate(-8px, -8px)`;
+    }
+
+    if (cursorDot) {
+      cursorDot.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate(-50%, -50%)`;
+    }
+
     cursorRing.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0) translate(-50%, -50%) scale(${ringScale})`;
     cursorGlow.style.transform = `translate3d(${glow.x}px, ${glow.y}px, 0) translate(-50%, -50%)`;
 

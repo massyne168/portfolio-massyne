@@ -6150,3 +6150,69 @@ body::after {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
+
+.custom-cursor {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  .menu-toggle,
+  .project-card,
+  .service-card,
+  .archive-card,
+  .contact-card,
+  .gurzil-logo-card,
+  .gurzil-copy-card,
+  .gurzil-image-card,
+  .about-card,
+  .about-skill-pills span,
+  .motion-card,
+  .card {
+    cursor: none !important;
+  }
+
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10001;
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+    transition: opacity 0.22s ease;
+  }
+
+  .custom-cursor img {
+    width: 32px;
+    height: auto;
+    display: block;
+    pointer-events: none;
+    transform-origin: 8px 8px;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .cursor-dot {
+    opacity: 0 !important;
+  }
+
+  body.cursor-ready .custom-cursor {
+    opacity: 1;
+  }
+
+  body.cursor-hover .custom-cursor img {
+    transform: scale(1.16);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor,
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-glow {
+    display: none !important;
+  }
+}
