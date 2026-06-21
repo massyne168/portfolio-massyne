@@ -70,7 +70,8 @@ body::after {
 body.is-loading main,
 body.is-loading .site-header,
 body.is-loading footer {
-  opacity: 0;
+  opacity: 1;
+  visibility: visible;
 }
 
 main,
@@ -90,6 +91,7 @@ footer {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.65s ease, visibility 0.65s ease;
+  animation: loaderAutoHide 0.01s linear 2s forwards;
 }
 
 .page-loader.loaded {
@@ -146,6 +148,14 @@ footer {
 @keyframes loaderSpin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes loaderAutoHide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 
@@ -1339,8 +1349,8 @@ footer > * {
   box-shadow:
     0 28px 82px rgba(0, 0, 0, 0.44),
     inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: translateY(0);
   transition:
     opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
@@ -2480,8 +2490,8 @@ footer {
 .about-card,
 .about-skill-pills span,
 .motion-card {
-  opacity: 0;
-  transform: translateY(24px);
+  opacity: 1;
+  transform: translateY(0);
   will-change: opacity, transform;
   transition:
     opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
@@ -4277,4 +4287,96 @@ body::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+@property --rotate {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+#work .project-card {
+  --rotate: -70;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  isolation: isolate;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+#work .project-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+#work .project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background:
+    conic-gradient(
+      from calc(var(--rotate) * 1deg),
+      transparent 0deg,
+      transparent 70deg,
+      #ff1a1a 110deg,
+      transparent 150deg,
+      transparent 360deg
+    );
+  animation: project-border-rotate 4s linear infinite;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.9;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+#work .project-card:hover::before {
+  opacity: 1;
+}
+
+#work .project-card:hover img {
+  transform: scale(1.055);
+  filter: contrast(1.08) brightness(1.05) saturate(1.04);
+}
+
+@keyframes project-border-rotate {
+  from {
+    --rotate: -70;
+  }
+
+  to {
+    --rotate: 290;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #work .project-card::before {
+    animation: none;
+  }
+}
+
+.project-card,
+.project-card::after,
+.project-card img,
+.project-card-content,
+.project-info {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.project-card::after {
+  background: transparent !important;
+  display: none !important;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.03) !important;
 }

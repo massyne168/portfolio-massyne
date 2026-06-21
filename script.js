@@ -1,6 +1,13 @@
 const header = document.querySelector("#siteHeader");
 const menuToggle = document.querySelector("#menuToggle");
 const navLinks = document.querySelectorAll(".nav-links a");
+
+if (typeof window.CSS !== "undefined" && typeof window.CSS.registerProperty === "function") {
+  document.body.classList.add("registerProperty-supported");
+} else {
+  document.body.classList.add("registerProperty-not-supported");
+}
+
 const revealItems = document.querySelectorAll(
   ".section-reveal, .project-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card"
 );
@@ -11,6 +18,31 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const pageLoader = document.querySelector("#pageLoader");
 const loaderPercent = document.querySelector("#loaderPercent");
 const loaderStatus = document.querySelector("#loaderStatus");
+
+const showContent = () => {
+  document.body.classList.remove("is-loading", "loading");
+  document.body.classList.add("loaded");
+
+  revealItems.forEach(item => {
+    item.classList.add("is-visible");
+    if (item.classList.contains("archive-card")) {
+      item.classList.add("show");
+    }
+    item.style.transitionDelay = "";
+  });
+
+  document.querySelectorAll("main, .hero, .hero-content, .hero-image, .hero-visual, section, [data-animate], .reveal").forEach(item => {
+    item.style.opacity = "1";
+    item.style.visibility = "visible";
+  });
+
+  if (pageLoader) {
+    pageLoader.classList.add("loaded");
+    window.setTimeout(() => {
+      pageLoader.remove();
+    }, 700);
+  }
+};
 
 if (pageLoader && loaderPercent) {
   const loaderDuration = 900;
@@ -45,47 +77,52 @@ if (pageLoader && loaderPercent) {
       return;
     }
 
-    document.body.classList.remove("is-loading");
-    pageLoader.classList.add("loaded");
-    window.setTimeout(() => {
-      pageLoader.remove();
-    }, 700);
+    showContent();
   };
 
   requestAnimationFrame(updateLoader);
+} else {
+  showContent();
 }
 
-const revealObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const delay = Number(entry.target.dataset.revealDelay || 0);
-        entry.target.classList.add("is-visible");
-        if (entry.target.classList.contains("archive-card")) {
-          entry.target.classList.add("show");
-        }
-        window.setTimeout(() => {
-          entry.target.style.transitionDelay = "";
-        }, revealDuration + delay + 100);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  {
-    threshold: 0.14,
-    rootMargin: "0px 0px -70px 0px"
-  }
-);
+window.addEventListener("load", showContent, { once: true });
+window.setTimeout(showContent, 2000);
 
-revealItems.forEach((item, index) => {
-  const archiveIndex = item.classList.contains("archive-card")
-    ? Array.from(document.querySelectorAll(".archive-card")).indexOf(item)
-    : -1;
-  const delay = archiveIndex >= 0 ? archiveIndex * 70 : Math.min(index * 35, 280);
-  item.dataset.revealDelay = String(delay);
-  item.style.transitionDelay = `${delay}ms`;
-  revealObserver.observe(item);
-});
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = Number(entry.target.dataset.revealDelay || 0);
+          entry.target.classList.add("is-visible");
+          if (entry.target.classList.contains("archive-card")) {
+            entry.target.classList.add("show");
+          }
+          window.setTimeout(() => {
+            entry.target.style.transitionDelay = "";
+          }, revealDuration + delay + 100);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.14,
+      rootMargin: "0px 0px -70px 0px"
+    }
+  );
+
+  revealItems.forEach((item, index) => {
+    const archiveIndex = item.classList.contains("archive-card")
+      ? Array.from(document.querySelectorAll(".archive-card")).indexOf(item)
+      : -1;
+    const delay = archiveIndex >= 0 ? archiveIndex * 70 : Math.min(index * 35, 280);
+    item.dataset.revealDelay = String(delay);
+    item.style.transitionDelay = `${delay}ms`;
+    revealObserver.observe(item);
+  });
+} else {
+  showContent();
+}
 
 const updateHeader = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 24);
@@ -339,7 +376,7 @@ if (finePointer) {
   const cursorDot = document.querySelector(".cursor-dot");
   const cursorRing = document.querySelector(".cursor-ring");
   const cursorGlow = document.querySelector(".cursor-glow");
-  const cursorTargets = document.querySelectorAll("a, button, .btn, .menu-toggle, .project-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card");
+  const cursorTargets = document.querySelectorAll("a, button, .btn, .menu-toggle, .project-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .lv-glow-card");
 
   const mouse = {
     x: window.innerWidth / 2,
