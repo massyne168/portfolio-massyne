@@ -6,6 +6,7 @@ const revealItems = document.querySelectorAll(
 );
 const revealDuration = 800;
 const finePointer = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const pageLoader = document.querySelector("#pageLoader");
 const loaderPercent = document.querySelector("#loaderPercent");
@@ -90,7 +91,29 @@ const updateHeader = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 24);
 };
 
-window.addEventListener("scroll", updateHeader);
+const debounce = (callback, wait = 160) => {
+  let timer;
+
+  return (...args) => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => callback(...args), wait);
+  };
+};
+
+let headerTicking = false;
+const scheduleHeaderUpdate = () => {
+  if (headerTicking) {
+    return;
+  }
+
+  headerTicking = true;
+  requestAnimationFrame(() => {
+    updateHeader();
+    headerTicking = false;
+  });
+};
+
+window.addEventListener("scroll", scheduleHeaderUpdate, { passive: true });
 window.addEventListener("load", updateHeader);
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -103,11 +126,36 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
     event.preventDefault();
     target.scrollIntoView({
-      behavior: "smooth",
+      behavior: prefersReducedMotion ? "auto" : "smooth",
       block: "start"
     });
   });
 });
+
+const motionVideos = document.querySelectorAll(".motion-card video");
+
+if (motionVideos.length && !prefersReducedMotion) {
+  const motionObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        const video = entry.target;
+
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+          return;
+        }
+
+        video.pause();
+      });
+    },
+    {
+      rootMargin: "160px 0px",
+      threshold: 0.2
+    }
+  );
+
+  motionVideos.forEach(video => motionObserver.observe(video));
+}
 
 const closeMenu = () => {
   header.classList.remove("menu-open");
@@ -239,10 +287,23 @@ if (archiveGallery) {
   archiveGallery.addEventListener("pointerup", stopArchiveDrag);
   archiveGallery.addEventListener("pointercancel", stopArchiveDrag);
   archiveGallery.addEventListener("pointerleave", stopArchiveDrag);
-  archiveGallery.addEventListener("scroll", updateArchiveArrows, { passive: true });
+  let archiveArrowTicking = false;
+  const scheduleArchiveArrowUpdate = () => {
+    if (archiveArrowTicking) {
+      return;
+    }
+
+    archiveArrowTicking = true;
+    requestAnimationFrame(() => {
+      updateArchiveArrows();
+      archiveArrowTicking = false;
+    });
+  };
+
+  archiveGallery.addEventListener("scroll", scheduleArchiveArrowUpdate, { passive: true });
   archivePrev?.addEventListener("click", () => scrollArchiveByCards(-1));
   archiveNext?.addEventListener("click", () => scrollArchiveByCards(1));
-  window.addEventListener("resize", updateArchiveArrows);
+  window.addEventListener("resize", debounce(updateArchiveArrows), { passive: true });
   updateArchiveArrows();
 }
 
@@ -262,11 +323,11 @@ navLinks.forEach(link => {
   });
 });
 
-window.addEventListener("resize", () => {
+window.addEventListener("resize", debounce(() => {
   if (window.innerWidth > 820) {
     closeMenu();
   }
-});
+}), { passive: true });
 
 window.addEventListener("keydown", event => {
   if (event.key === "Escape") {

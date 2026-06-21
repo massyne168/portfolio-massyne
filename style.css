@@ -4200,3 +4200,81 @@ img {
     transform: translateX(-50%) rotate(-45deg);
   }
 }
+
+/* Performance layer: preserve the look while reducing GPU-heavy work. */
+body::after {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.site-header {
+  backdrop-filter: blur(10px) saturate(115%);
+  -webkit-backdrop-filter: blur(10px) saturate(115%);
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(14px) saturate(125%);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
+}
+
+.hero-stats,
+.hero-visual,
+.project-card,
+.archive-card,
+.contact-panel,
+.gurzil-shell,
+.about-shell,
+.motion-card,
+.menu-toggle,
+.nav-links {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.section-reveal,
+.project-card,
+.service-card,
+.archive-card,
+.contact-card,
+.gurzil-logo-card,
+.gurzil-copy-card,
+.gurzil-image-card,
+.about-card,
+.about-skill-pills span,
+.motion-card {
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.motion-card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  .project-card.is-visible,
+  .card.is-visible,
+  .hero-visual,
+  .hero-visual .portrait-atmosphere::after,
+  .curved-gallery.is-animated .showcase-marquee-track {
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
