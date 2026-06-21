@@ -420,6 +420,9 @@ if (finePointer) {
   let ringScale = 1;
   let targetScale = 1;
   let activeTargetRect = null;
+  let cursorFrame = null;
+  let cursorActive = false;
+  let lastCursorMove = performance.now();
 
   const lerp = (start, end, amount) => start + (end - start) * amount;
 
@@ -451,17 +454,37 @@ if (finePointer) {
       cursorGlow.style.transform = `translate3d(${glow.x}px, ${glow.y}px, 0) translate(-50%, -50%)`;
     }
 
-    requestAnimationFrame(moveCursor);
+    if (!document.body.classList.contains("cursor-hover") && performance.now() - lastCursorMove > 900) {
+      cursorActive = false;
+    }
+
+    if (cursorActive) {
+      cursorFrame = requestAnimationFrame(moveCursor);
+    } else {
+      cursorFrame = null;
+    }
+  };
+
+  const startCursor = () => {
+    if (cursorFrame) {
+      return;
+    }
+
+    cursorActive = true;
+    cursorFrame = requestAnimationFrame(moveCursor);
   };
 
   window.addEventListener("pointermove", event => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
+    lastCursorMove = performance.now();
     document.body.classList.add("cursor-ready");
+    startCursor();
   });
 
   window.addEventListener("pointerleave", () => {
     document.body.classList.remove("cursor-ready");
+    cursorActive = false;
   });
 
   cursorTargets.forEach(item => {
@@ -496,6 +519,4 @@ if (finePointer) {
       document.body.classList.remove("cursor-hover");
     });
   });
-
-  requestAnimationFrame(moveCursor);
 }

@@ -6270,3 +6270,91 @@ body::after {
     contain-intrinsic-size: 900px;
   }
 }
+
+/* Performance guardrails: keep the look, but avoid repaint-heavy animated properties. */
+.site-header,
+.site-header.is-scrolled {
+  backdrop-filter: blur(10px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(120%) !important;
+}
+
+.hero-stats,
+.hero-visual,
+.hero-image,
+.project-card,
+.archive-card,
+.service-card,
+.about-card,
+.contact-card,
+.contact-panel,
+.gurzil-logo-card,
+.gurzil-copy-card,
+.gurzil-image-card,
+.motion-card,
+.silver-light-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.btn,
+.project-card,
+.archive-card,
+.service-card,
+.about-card,
+.contact-card,
+.gurzil-logo-card,
+.gurzil-copy-card,
+.gurzil-image-card,
+.motion-card,
+.archive-arrow,
+.menu-toggle {
+  transition-property: transform, opacity, background, background-color, border-color, color !important;
+}
+
+.hero-visual,
+.hero-image {
+  animation: none !important;
+  transition-property: transform, opacity, border-color !important;
+}
+
+.hero-visual img,
+.hero-image img,
+.project-card img,
+.archive-card img,
+.gurzil-image-card img,
+.motion-card img,
+.motion-card video {
+  transition-property: transform, opacity !important;
+}
+
+.cursor-glow {
+  display: none !important;
+}
+
+.section-reveal.is-visible,
+.project-card.is-visible,
+.service-card.is-visible,
+.archive-card.is-visible,
+.contact-card.is-visible,
+.gurzil-logo-card.is-visible,
+.gurzil-copy-card.is-visible,
+.gurzil-image-card.is-visible,
+.about-card.is-visible,
+.motion-card.is-visible {
+  will-change: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-card::before,
+  .archive-card::before,
+  .service-card::before,
+  .about-card::before,
+  .contact-card::before,
+  .gurzil-image-card::before,
+  .gurzil-logo-card::before,
+  .gurzil-copy-card::before,
+  .motion-card::before,
+  .silver-light-card::before {
+    animation-duration: 8s !important;
+  }
+}
