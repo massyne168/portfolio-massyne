@@ -9,7 +9,7 @@ if (typeof window.CSS !== "undefined" && typeof window.CSS.registerProperty === 
 }
 
 const revealItems = document.querySelectorAll(
-  ".section-reveal, .project-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card"
+  ".section-reveal, .project-card, .cyber-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card"
 );
 const revealDuration = 800;
 const finePointer = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
@@ -407,7 +407,7 @@ if (finePointer) {
   const cursorDot = document.querySelector(".cursor-dot");
   const cursorRing = document.querySelector(".cursor-ring");
   const cursorGlow = document.querySelector(".cursor-glow");
-  const cursorTargets = document.querySelectorAll("a, button, .btn, .menu-toggle, .project-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .lv-glow-card");
+  const cursorTargets = document.querySelectorAll("a, button, .btn, .menu-toggle, .project-card, .cyber-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .lv-glow-card");
 
   const mouse = {
     x: window.innerWidth / 2,
