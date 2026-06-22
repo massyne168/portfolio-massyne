@@ -550,8 +550,8 @@ footer {
   padding: 22px clamp(20px, 5vw, 76px);
   background: rgba(5, 5, 5, 0.68);
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  backdrop-filter: blur(10px) saturate(125%);
-  -webkit-backdrop-filter: blur(10px) saturate(125%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition: background 0.3s ease, padding 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
 }
 
@@ -560,8 +560,8 @@ footer {
   background: rgba(5, 5, 5, 0.86);
   border-bottom-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 18px 46px rgba(0, 0, 0, 0.38), 0 0 32px rgba(255, 30, 30, 0.045);
-  backdrop-filter: blur(10px) saturate(155%);
-  -webkit-backdrop-filter: blur(10px) saturate(155%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .navbar-logo {
@@ -792,8 +792,8 @@ p {
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.06);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .hero-stat {
@@ -904,8 +904,8 @@ p {
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015)),
     rgba(15, 15, 15, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow:
     0 28px 86px rgba(0, 0, 0, 0.48),
     0 18px 54px rgba(255, 30, 30, 0.06);
@@ -1267,8 +1267,8 @@ footer > * {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
   filter: brightness(var(--carousel-brightness));
   transform-style: preserve-3d;
@@ -1359,8 +1359,8 @@ footer > * {
   min-height: 20%;
   padding: 18px 22px 20px;
   background: rgba(255, 255, 255, 0.035);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .showcase-card-copy p {
@@ -1518,8 +1518,8 @@ footer > * {
   box-shadow:
     0 20px 48px rgba(0, 0, 0, 0.42),
     0 0 24px rgba(255, 30, 30, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   cursor: pointer;
   transform: translate3d(var(--magnet-x), calc(-50% + var(--magnet-y)), 0);
   transition:
@@ -1669,8 +1669,8 @@ footer > * {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   transition:
@@ -1745,8 +1745,8 @@ footer > * {
   min-height: 20%;
   padding: 20px 22px 22px;
   background: rgba(255, 255, 255, 0.035);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .project-meta {
@@ -1818,8 +1818,8 @@ footer > * {
   box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition:
     transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1970,8 +1970,8 @@ dd {
   box-shadow:
     0 34px 100px rgba(0, 0, 0, 0.52),
     0 0 70px rgba(255, 30, 30, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .about-shell::before {
@@ -2044,8 +2044,8 @@ dd {
   box-shadow:
     0 22px 62px rgba(0, 0, 0, 0.36),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition:
     transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
@@ -2177,8 +2177,8 @@ dd {
   box-shadow:
     0 34px 110px rgba(0, 0, 0, 0.58),
     0 0 70px rgba(255, 30, 30, 0.13);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .gurzil-shell::before,
@@ -2246,8 +2246,8 @@ dd {
     linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
     rgba(5, 5, 5, 0.62);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition:
     transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
@@ -2434,8 +2434,8 @@ dd {
     rgba(5, 5, 5, 0.58);
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 34px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow:
     0 40px 120px rgba(0, 0, 0, 0.48),
     0 22px 80px rgba(255, 30, 30, 0.08);
@@ -2508,8 +2508,8 @@ dd {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   transition:
     opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
@@ -3093,8 +3093,8 @@ footer {
     pointer-events: none;
     transform: translateY(-10px);
     transition: opacity 0.25s ease, transform 0.25s ease;
-    backdrop-filter: blur(10px) saturate(145%);
-    -webkit-backdrop-filter: blur(10px) saturate(145%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .site-header.menu-open .nav-links {
@@ -4150,8 +4150,8 @@ body {
     transition:
       opacity 0.3s ease,
       transform 0.3s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .site-header.menu-open .nav-links {
@@ -4420,8 +4420,8 @@ img {
       background 0.25s ease,
       border-color 0.25s ease,
       box-shadow 0.25s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .menu-toggle::before {
@@ -4494,14 +4494,14 @@ body::after {
 }
 
 .site-header {
-  backdrop-filter: blur(10px) saturate(115%);
-  -webkit-backdrop-filter: blur(10px) saturate(115%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .site-header.is-scrolled {
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
-  backdrop-filter: blur(14px) saturate(125%);
-  -webkit-backdrop-filter: blur(14px) saturate(125%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .hero-stats,
@@ -5818,8 +5818,8 @@ body::after {
   box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.36),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition:
     transform 0.35s ease,
     border-color 0.35s ease,
@@ -6340,8 +6340,8 @@ body::after {
 .gurzil-image-card {
   background: rgba(255, 255, 255, 0.035) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .custom-cursor {
@@ -6461,8 +6461,8 @@ body::after {
 /* Performance guardrails: keep the look, but avoid repaint-heavy animated properties. */
 .site-header,
 .site-header.is-scrolled {
-  backdrop-filter: blur(10px) saturate(120%) !important;
-  -webkit-backdrop-filter: blur(10px) saturate(120%) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .hero-stats,
@@ -6549,13 +6549,13 @@ body::after {
   }
 }
 
-/* Premium dark glass refresh */
+/* Premium solid dark glass refresh */
 .glass,
 .card,
 .project-card,
+.cyber-card,
 .archive-card,
 .motion-card,
-.cyber-card,
 .service-card,
 .contact-card,
 .about-card,
@@ -6570,55 +6570,39 @@ body::after {
 .gurzil-logo-card,
 .gurzil-copy-card,
 .gurzil-image-card,
-.site-footer,
-.footer-brand,
-.menu-toggle,
 .mobile-menu,
 .silver-light-card {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
-    rgba(8, 8, 8, 0.72) !important;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.96), rgba(7, 7, 7, 0.94)) !important;
   border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border-radius: 22px !important;
-  box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
 }
 
 .site-header {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.016)),
-    rgba(5, 5, 5, 0.78) !important;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.97), rgba(7, 7, 7, 0.95)) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.46) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 .site-header.is-scrolled {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
-    rgba(7, 7, 7, 0.84) !important;
-  box-shadow:
-    0 16px 38px rgba(0, 0, 0, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  background: linear-gradient(180deg, rgba(16, 16, 16, 0.98), rgba(6, 6, 6, 0.96)) !important;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.52) !important;
 }
 
-.glass:hover,
 .card:hover,
 .project-card:hover,
 .project-card.is-visible:hover,
+.cyber-card:hover,
+.cyber-card.is-visible:hover,
 .archive-card:hover,
 .archive-card.is-visible:hover,
 .archive-card.show:hover,
 .motion-card:hover,
 .motion-card.is-visible:hover,
-.cyber-card:hover,
-.cyber-card.is-visible:hover,
 .service-card:hover,
 .contact-card:hover,
 .contact-card.is-visible:hover,
@@ -6630,14 +6614,9 @@ body::after {
 .gurzil-image-card:hover,
 .gurzil-image-card.is-visible:hover,
 .silver-light-card:hover {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025)),
-    rgba(10, 10, 10, 0.78) !important;
-  border-color: rgba(255, 255, 255, 0.16) !important;
-  box-shadow:
-    0 20px 48px rgba(0, 0, 0, 0.42),
-    inset 0 1px 0 rgba(255, 255, 255, 0.075) !important;
-  transform: translateY(-6px) !important;
+  border-color: rgba(255, 30, 30, 0.28) !important;
+  transform: translateY(-5px) !important;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.55) !important;
   filter: none !important;
 }
 
@@ -6669,7 +6648,7 @@ body::after {
 }
 
 .cyber-card:hover .cyber-card-media {
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 30, 30, 0.24) !important;
   box-shadow: none !important;
 }
 
@@ -6690,27 +6669,50 @@ body::after {
 }
 
 .service-copy::before {
-  opacity: 0.36 !important;
+  opacity: 0.32 !important;
   box-shadow: none !important;
 }
 
 .hero-visual .portrait-atmosphere::before,
 .hero-image .portrait-atmosphere::before {
-  filter: blur(10px) !important;
-  opacity: 0.18 !important;
+  filter: none !important;
+  opacity: 0.14 !important;
 }
 
 @media (max-width: 768px) {
+  .card,
+  .project-card,
+  .cyber-card,
+  .archive-card,
+  .motion-card,
+  .service-card,
+  .contact-card,
+  .about-card,
+  .contact-panel,
+  .hero-image-frame,
+  .hero-visual,
+  .hero-image,
+  .image-frame,
+  .card-frame,
+  .gurzil-panel,
+  .gurzil-shell,
+  .gurzil-logo-card,
+  .gurzil-copy-card,
+  .gurzil-image-card,
+  .mobile-menu,
+  .silver-light-card,
   .site-header .nav-links,
   .nav-links {
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-      rgba(8, 8, 8, 0.86) !important;
-    border: 1px solid rgba(255, 255, 255, 0.10) !important;
-    box-shadow:
-      0 18px 45px rgba(0, 0, 0, 0.42),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
+    background: rgba(10, 10, 10, 0.98) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-radius: 18px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48) !important;
+  }
+
+  .site-header {
+    background: rgba(8, 8, 8, 0.98) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 }
