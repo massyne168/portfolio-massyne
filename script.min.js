@@ -14,6 +14,15 @@ const revealItems = document.querySelectorAll(
 const revealDuration = 800;
 const finePointer = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let scrollIdleTimer;
+
+const markPageScrolling = () => {
+  document.body.classList.add("is-scrolling");
+  window.clearTimeout(scrollIdleTimer);
+  scrollIdleTimer = window.setTimeout(() => {
+    document.body.classList.remove("is-scrolling");
+  }, 140);
+};
 
 const pageLoader = document.querySelector("#pageLoader");
 const loaderPercent = document.querySelector("#loaderPercent");
@@ -150,6 +159,8 @@ const debounce = (callback, wait = 160) => {
 
 let headerTicking = false;
 const scheduleHeaderUpdate = () => {
+  markPageScrolling();
+
   if (headerTicking) {
     return;
   }
@@ -255,6 +266,10 @@ if (archiveGallery) {
   let dragStartX = 0;
   let dragStartScroll = 0;
   let archiveScrollTimer;
+  let archiveWheelDelta = 0;
+  let archiveWheelFrame = null;
+  let archiveDragFrame = null;
+  let archiveDragLeft = 0;
 
   const getArchiveStep = () => {
     const card = archiveGallery.querySelector(".archive-card");
@@ -298,10 +313,19 @@ if (archiveGallery) {
   archiveGallery.addEventListener("wheel", event => {
     event.preventDefault();
     const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
-    archiveGallery.scrollBy({
-      left: delta * 0.85,
-      behavior: "smooth"
-    });
+    archiveWheelDelta += delta * 0.85;
+
+    if (!archiveWheelFrame) {
+      archiveWheelFrame = requestAnimationFrame(() => {
+        archiveGallery.scrollBy({
+          left: archiveWheelDelta,
+          behavior: "auto"
+        });
+        archiveWheelDelta = 0;
+        archiveWheelFrame = null;
+      });
+    }
+
     scheduleArchiveSnap();
   }, { passive: false });
 
@@ -319,7 +343,14 @@ if (archiveGallery) {
     }
 
     const dragDistance = event.clientX - dragStartX;
-    archiveGallery.scrollLeft = dragStartScroll - dragDistance;
+    archiveDragLeft = dragStartScroll - dragDistance;
+
+    if (!archiveDragFrame) {
+      archiveDragFrame = requestAnimationFrame(() => {
+        archiveGallery.scrollLeft = archiveDragLeft;
+        archiveDragFrame = null;
+      });
+    }
   });
 
   const stopArchiveDrag = event => {
@@ -427,6 +458,12 @@ if (finePointer) {
   const lerp = (start, end, amount) => start + (end - start) * amount;
 
   const moveCursor = () => {
+    if (document.body.classList.contains("is-scrolling")) {
+      cursorActive = false;
+      cursorFrame = null;
+      return;
+    }
+
     const targetX = mouse.x + cursorPull.x;
     const targetY = mouse.y + cursorPull.y;
 
@@ -475,6 +512,11 @@ if (finePointer) {
   };
 
   window.addEventListener("pointermove", event => {
+    if (document.body.classList.contains("is-scrolling")) {
+      cursorActive = false;
+      return;
+    }
+
     mouse.x = event.clientX;
     mouse.y = event.clientY;
     lastCursorMove = performance.now();

@@ -6850,3 +6850,178 @@ body::after {
     transform: scale(1);
   }
 }
+
+/* Scroll performance stabilization */
+html,
+body {
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  transition-property: transform, opacity !important;
+}
+
+.card,
+.project-card,
+.archive-card,
+.motion-card,
+.hero-visual,
+section {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.section-reveal,
+.project-card,
+.cyber-card,
+.service-card,
+.archive-card,
+.contact-card,
+.gurzil-logo-card,
+.gurzil-copy-card,
+.gurzil-image-card,
+.about-card,
+.about-skill-pills span,
+.motion-card,
+.curved-card,
+.showcase-card-image,
+.archive-card .showcase-card-image,
+.hero-visual img,
+.hero-image img,
+.project-card img,
+.cyber-card img,
+.archive-card img,
+.gurzil-image-card img,
+.motion-card img,
+.motion-card video {
+  transition-property: transform, opacity !important;
+}
+
+.site-header,
+.site-header.is-scrolled {
+  z-index: 30 !important;
+  padding-block: 18px !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transition-property: transform, opacity !important;
+}
+
+.page-loader {
+  z-index: 60 !important;
+}
+
+.custom-cursor,
+.cursor-dot,
+.cursor-ring,
+.cursor-glow {
+  transition-property: transform, opacity !important;
+}
+
+body.is-scrolling .custom-cursor,
+body.is-scrolling .cursor-dot,
+body.is-scrolling .cursor-ring,
+body.is-scrolling .cursor-glow {
+  opacity: 0 !important;
+}
+
+.cursor-glow,
+.project-glow,
+.image-glow,
+.contact-glow,
+.card-glow,
+.lv-glow,
+.portrait-atmosphere,
+.frame-corner,
+.section::before,
+.section::after,
+footer::before,
+footer::after {
+  display: none !important;
+  opacity: 0 !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+.cinematic-bg,
+.cinematic-bg::before,
+.cinematic-bg::after,
+.animated-bg,
+.bg-noise,
+.bg-ui {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.cinematic-bg .shape,
+.showcase-marquee-track,
+.marquee-track {
+  will-change: transform;
+}
+
+.cinematic-bg .shape,
+.hero-visual,
+.hero-image,
+.project-card,
+.cyber-card,
+.archive-card,
+.service-card,
+.about-card,
+.contact-card,
+.gurzil-image-card,
+.gurzil-logo-card,
+.gurzil-copy-card,
+.motion-card,
+.silver-light-card {
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.card:hover,
+.project-card:hover,
+.project-card.is-visible:hover,
+.cyber-card:hover,
+.cyber-card.is-visible:hover,
+.archive-card:hover,
+.archive-card.is-visible:hover,
+.archive-card.show:hover,
+.motion-card:hover,
+.motion-card.is-visible:hover,
+.service-card:hover,
+.contact-card:hover,
+.contact-card.is-visible:hover,
+.about-card:hover,
+.gurzil-logo-card:hover,
+.gurzil-logo-card.is-visible:hover,
+.gurzil-copy-card:hover,
+.gurzil-copy-card.is-visible:hover,
+.gurzil-image-card:hover,
+.gurzil-image-card.is-visible:hover,
+.silver-light-card:hover {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.archive-track,
+.creative-collection-grid {
+  transition: none !important;
+  scroll-behavior: auto;
+  contain: layout paint;
+}
+
+@media (max-width: 768px), (hover: none), (pointer: coarse) {
+  .cinematic-bg .shape,
+  .showcase-marquee-track,
+  .marquee-track,
+  .animated-bg,
+  .bg-noise,
+  .bg-ui {
+    animation: none !important;
+  }
+}
