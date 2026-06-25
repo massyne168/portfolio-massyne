@@ -565,7 +565,6 @@
       color: #fff;
       background: linear-gradient(135deg, #ff1f35, #8e0011);
       font-weight: 800;
-      cursor: pointer;
       box-shadow: 0 18px 42px rgba(190, 0, 22, 0.28);
       transition: transform 180ms ease, filter 180ms ease;
     }
@@ -729,13 +728,6 @@
     <span class="bg-noise"></span>
     <span class="bg-ui"></span>
   </div>
-  <div class="cursor-glow" aria-hidden="true"></div>
-  <div class="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" aria-hidden="true"></div>
-  <div class="custom-cursor" aria-hidden="true">
-    <img src="images/cursor.png" alt="" width="64" height="64" loading="lazy" decoding="async">
-  </div>
-
   <header class="site-header" id="siteHeader">
     <a href="#home" class="navbar-logo" aria-label="Home">
       <img src="images/optimized/logo-1016.webp" srcset="images/optimized/logo-480.webp 480w, images/optimized/logo-800.webp 800w, images/optimized/logo-1016.webp 1016w" sizes="100px" alt="Logo" width="1016" height="716" loading="lazy" decoding="async" />
@@ -758,7 +750,7 @@
     <section class="hero section-reveal" id="home">
       <div class="hero-content">
         <p class="kicker">2026 Portfolio</p>
-        <img class="hero-title-image" src="images/optimized/massyne-1000.webp" srcset="images/optimized/massyne-800.webp 800w, images/optimized/massyne-480.webp 480w, images/optimized/massyne-1000.webp 1000w" sizes="(min-width: 1440px) 40vw, (min-width: 1024px) 44vw, (min-width: 640px) 72vw, 92vw" alt="Massyne" width="1000" height="300" loading="lazy" decoding="async" />
+        <img class="hero-title-image" src="images/optimized/massyne-1000.webp" sizes="(min-width: 1440px) 40vw, (min-width: 1024px) 44vw, (min-width: 640px) 72vw, 92vw" alt="Massyne" width="1000" height="300" loading="lazy" decoding="async" />
         <p class="hero-subtitle">
           Creating bold cinematic visuals, Conceptual Character Poster, logos, branding
           identities, and modern digital designs.
@@ -989,7 +981,7 @@
         </article>
 
         <article class="project-card">
-          <div class="project-image"><img src="images/card13.webp" srcset="images/optimized/card13-480.webp 480w, images/optimized/card13-800.webp 800w, images/optimized/card13-1200.webp 1200w" sizes="(min-width: 1024px) 420px, (min-width: 641px) 390px, 92vw" alt="VELOCITY BIKER Poster Design" width="1200" height="1600" loading="lazy" decoding="async" />
+          <div class="project-image"><img src="images/card13.webp" sizes="(min-width: 1024px) 420px, (min-width: 641px) 390px, 92vw" alt="VELOCITY BIKER Poster Design" width="1200" height="1600" loading="lazy" decoding="async" />
           </div>
           <div class="project-meta">
             <dl class="project-details">
@@ -1011,49 +1003,31 @@
       </div>
     </section>
 
-    <section class="section cyber-cards-section section-reveal" id="cyber-cards" aria-labelledby="cyber-cards-title">
-      <div class="section-heading cyber-cards-heading">
-        <p class="kicker">Cyber Cards</p>
-        <h2 id="cyber-cards-title">Cyber Cards</h2>
-        <p>Futuristic UI card designs and premium digital identity layouts.</p>
+    <section class="section motion-lines-section section-reveal" id="motion-lines" aria-labelledby="motion-lines-title">
+      <div class="section-heading motion-lines-heading">
+        <p class="kicker">Motion Lines</p>
+        <h2 id="motion-lines-title">Motion Lines</h2>
+        <p>Animated visual assets and cinematic line motion designs.</p>
       </div>
 
-      <div class="cyber-cards-grid" aria-label="Cyber card portfolio designs">
-        <article class="cyber-card">
-          <div class="cyber-card-media">
-            <img src="images/cyber-card1.png" alt="Cyber Card 01 futuristic UI card design placeholder" width="1080" height="1600" loading="lazy" decoding="async" />
-          </div>
-          <p>Card 01</p>
+      <div class="motion-lines-grid" aria-label="Motion Lines animated visual assets">
+        <article class="motion-lines-card">
+          <img src="images/motion1.gif" alt="Motion Lines animated visual asset 1" width="960" height="540" loading="lazy" decoding="async" />
         </article>
-        <article class="cyber-card">
-          <div class="cyber-card-media">
-            <img src="images/cyber-card2.png" alt="Cyber Card 02 futuristic UI card design placeholder" width="1080" height="1600" loading="lazy" decoding="async" />
-          </div>
-          <p>Card 02</p>
+        <article class="motion-lines-card">
+          <img src="images/motion2.gif" alt="Motion Lines animated visual asset 2" width="960" height="540" loading="lazy" decoding="async" />
         </article>
-        <article class="cyber-card">
-          <div class="cyber-card-media">
-            <img src="images/cyber-card3.png" alt="Cyber Card 03 futuristic UI card design placeholder" width="1080" height="1600" loading="lazy" decoding="async" />
-          </div>
-          <p>Card 03</p>
+        <article class="motion-lines-card">
+          <img src="images/motion3.gif" alt="Motion Lines animated visual asset 3" width="960" height="540" loading="lazy" decoding="async" />
         </article>
-        <article class="cyber-card">
-          <div class="cyber-card-media">
-            <img src="images/cyber-card4.png" alt="Cyber Card 04 futuristic UI card design placeholder" width="1080" height="1600" loading="lazy" decoding="async" />
-          </div>
-          <p>Card 04</p>
+        <article class="motion-lines-card">
+          <img src="images/motion4.gif" alt="Motion Lines animated visual asset 4" width="960" height="540" loading="lazy" decoding="async" />
         </article>
-        <article class="cyber-card">
-          <div class="cyber-card-media">
-            <img src="images/cyber-card5.png" alt="Cyber Card 05 futuristic UI card design placeholder" width="1080" height="1600" loading="lazy" decoding="async" />
-          </div>
-          <p>Card 05</p>
+        <article class="motion-lines-card">
+          <img src="images/motion5.gif" alt="Motion Lines animated visual asset 5" width="960" height="540" loading="lazy" decoding="async" />
         </article>
-        <article class="cyber-card">
-          <div class="cyber-card-media">
-            <img src="images/cyber-card6.png" alt="Cyber Card 06 futuristic UI card design placeholder" width="1080" height="1600" loading="lazy" decoding="async" />
-          </div>
-          <p>Card 06</p>
+        <article class="motion-lines-card">
+          <img src="images/motion6.gif" alt="Motion Lines animated visual asset 6" width="960" height="540" loading="lazy" decoding="async" />
         </article>
       </div>
     </section>
@@ -1215,16 +1189,16 @@
 
         <div class="gurzil-grid" aria-label="Gurzil Team brand visuals">
           <article class="gurzil-image-card silver-light-card">
-            <img src="images/optimized/gurzil1-1920.webp" srcset="images/optimized/gurzil1-480.webp 480w, images/optimized/gurzil1-800.webp 800w, images/optimized/gurzil1-1200.webp 1200w, images/optimized/gurzil1-1920.webp 1920w" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" alt="Gurzil Team brand visual 1" width="1920" height="1080" loading="lazy" decoding="async" />
+            <img src="images/optimized/gurzil1-1920.webp" sizes="(min-width: 769px) 50vw, 100vw" alt="Gurzil Team brand visual 1" width="1920" height="1080" loading="lazy" decoding="async" />
           </article>
           <article class="gurzil-image-card silver-light-card">
-            <img src="images/optimized/gurzil2-1920.webp" srcset="images/optimized/gurzil2-480.webp 480w, images/optimized/gurzil2-800.webp 800w, images/optimized/gurzil2-1200.webp 1200w, images/optimized/gurzil2-1920.webp 1920w" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" alt="Gurzil Team brand visual 2" width="1920" height="1080" loading="lazy" decoding="async" />
+            <img src="images/optimized/gurzil2-1920.webp" sizes="(min-width: 769px) 50vw, 100vw" alt="Gurzil Team brand visual 2" width="1920" height="1080" loading="lazy" decoding="async" />
           </article>
           <article class="gurzil-image-card silver-light-card">
-            <img src="images/optimized/gurzil3-1920.webp" srcset="images/optimized/gurzil3-480.webp 480w, images/optimized/gurzil3-800.webp 800w, images/optimized/gurzil3-1200.webp 1200w, images/optimized/gurzil3-1920.webp 1920w" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" alt="Gurzil Team brand visual 3" width="1920" height="1080" loading="lazy" decoding="async" />
+            <img src="images/optimized/gurzil3-1920.webp" sizes="(min-width: 769px) 50vw, 100vw" alt="Gurzil Team brand visual 3" width="1920" height="1080" loading="lazy" decoding="async" />
           </article>
           <article class="gurzil-image-card silver-light-card">
-            <img src="images/optimized/gurzil4-1920.webp" srcset="images/optimized/gurzil4-480.webp 480w, images/optimized/gurzil4-800.webp 800w, images/optimized/gurzil4-1200.webp 1200w, images/optimized/gurzil4-1920.webp 1920w" sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" alt="Gurzil Team brand visual 4" width="1920" height="1080" loading="lazy" decoding="async" />
+            <img src="images/optimized/gurzil4-1920.webp" sizes="(min-width: 769px) 50vw, 100vw" alt="Gurzil Team brand visual 4" width="1920" height="1080" loading="lazy" decoding="async" />
           </article>
         </div>
       </div>
@@ -1425,7 +1399,7 @@
       <div class="footer-logo">
         <img src="images/optimized/logo-1016.webp" srcset="images/optimized/logo-480.webp 480w, images/optimized/logo-800.webp 800w, images/optimized/logo-1016.webp 1016w" sizes="100px" alt="MASSYNE logo" width="1016" height="716" loading="lazy" decoding="async" />
       </div>
-      <strong class="footer-name">MASSYNE & HENA</strong>
+      <strong class="footer-name"></strong>
       <span>Graphic Designer &amp; Motion Designer</span>
     </div>
     <p>&copy; 2026 All Rights Reserved</p>
@@ -1557,4 +1531,3 @@
   </script>
 </body>
 </html>
-

@@ -335,30 +335,6 @@ footer {
   }
 }
 
-.cursor-dot,
-.cursor-ring,
-.cursor-glow {
-  display: none;
-}
-
-.cursor-glow {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 80px;
-  height: 80px;
-  z-index: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  background: rgba(255, 30, 30, 0.55);
-  filter: blur(10px);
-  mix-blend-mode: screen;
-  transform: translate3d(-50%, -50%, 0);
-  transition: opacity 0.35s ease;
-  will-change: transform, opacity;
-}
-
 .animated-bg {
   position: fixed;
   inset: 0;
@@ -1083,86 +1059,6 @@ footer > * {
   min-height: 0;
 }
 
-.cyber-cards-section {
-  overflow: hidden;
-}
-
-.cyber-cards-heading p:not(.kicker) {
-  max-width: 680px;
-  margin-top: 16px;
-  color: rgba(255, 255, 255, 0.68);
-}
-
-.cyber-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 260px));
-  gap: clamp(18px, 2.2vw, 28px);
-  align-items: start;
-  justify-content: center;
-}
-
-.cyber-card {
-  --magnet-x: 0px;
-  --magnet-y: 0px;
-  position: relative;
-  width: 100%;
-  max-width: 260px;
-  min-height: 0;
-  overflow: visible;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  transition:
-    transform 0.35s ease,
-    opacity 0.35s ease;
-}
-
-.cyber-card-media {
-  aspect-ratio: 1080 / 1600;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  background: rgba(3, 3, 4, 0.9);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.32);
-  transition:
-    border-color 0.35s ease,
-    box-shadow 0.35s ease;
-}
-
-.cyber-card img {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  display: block;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.35s ease;
-}
-
-.cyber-card p {
-  margin-top: 12px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 1.2px;
-  line-height: 1.2;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.cyber-card:hover {
-  transform: translate3d(var(--magnet-x), calc(var(--magnet-y) - 6px), 0) scale(1.02);
-}
-
-.cyber-card:hover .cyber-card-media {
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.38);
-}
-
-.cyber-card:hover img {
-  transform: scale(1.04);
-}
-
 .curved-showcase {
   min-height: 100vh;
   display: grid;
@@ -1478,7 +1374,6 @@ footer > * {
   max-width: 100%;
   margin-inline: auto;
   padding: 8px 4px 22px;
-  cursor: grab;
   scroll-behavior: smooth;
   scroll-padding-inline: 4px;
   scroll-snap-type: x mandatory;
@@ -1495,7 +1390,6 @@ footer > * {
 
 .archive-track.is-dragging,
 .creative-collection-grid.is-dragging {
-  cursor: grabbing;
   scroll-behavior: auto;
   scroll-snap-type: none;
   user-select: none;
@@ -1522,7 +1416,6 @@ footer > * {
     0 0 24px rgba(255, 30, 30, 0.08);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  cursor: pointer;
   transform: translate3d(var(--magnet-x), calc(-50% + var(--magnet-y)), 0);
   transition:
     transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -2344,11 +2237,6 @@ dd {
     filter 0.7s ease;
 }
 
-.gurzil-image-card:hover img {
-  transform: scale(1.055);
-  filter: contrast(1.1) brightness(1.02) saturate(1);
-}
-
 .services-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2739,7 +2627,6 @@ footer {
 
 .section-reveal,
 .project-card,
-.cyber-card,
 .service-card,
 .archive-card,
 .contact-card,
@@ -2773,7 +2660,6 @@ footer {
 
 .section-reveal.is-visible,
 .project-card.is-visible,
-.cyber-card.is-visible,
 .service-card.is-visible,
 .archive-card.is-visible,
 .contact-card.is-visible,
@@ -2817,16 +2703,8 @@ footer {
   transform: translate3d(var(--magnet-x), var(--magnet-y), 0);
 }
 
-.cyber-card.is-visible {
-  transform: translate3d(var(--magnet-x), var(--magnet-y), 0);
-}
-
 .project-card.is-visible:hover {
   transform: translate3d(var(--magnet-x), calc(var(--magnet-y) - 8px), 0) scale(1.02);
-}
-
-.cyber-card.is-visible:hover {
-  transform: translate3d(var(--magnet-x), calc(var(--magnet-y) - 6px), 0) scale(1.02);
 }
 
 .contact-card.is-visible {
@@ -2856,89 +2734,6 @@ footer {
 
 .about-skill-pills span.is-visible:hover {
   transform: translate3d(var(--magnet-x), calc(var(--magnet-y) - 3px), 0);
-}
-
-@media (pointer: fine) and (hover: hover) {
-  html,
-  body,
-  a,
-  button,
-  .btn,
-  .menu-toggle,
-  .project-card,
-  .cyber-card,
-  .service-card,
-  .curved-card,
-  .contact-card,
-  .gurzil-logo-card,
-  .gurzil-copy-card,
-  .gurzil-image-card,
-  .card,
-  .work-card,
-  .portfolio-card {
-    cursor: none;
-  }
-
-  .cursor-dot,
-  .cursor-ring {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: block;
-    pointer-events: none;
-    opacity: 0;
-    will-change: transform, opacity;
-    z-index: 9999;
-  }
-
-  .cursor-glow {
-    display: block;
-  }
-
-  .cursor-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #FF1E1E;
-    box-shadow: 0 0 16px rgba(255, 30, 30, 0.22);
-  }
-
-  .cursor-ring {
-    width: 34px;
-    height: 34px;
-    border: 1px solid rgba(255, 30, 30, 0.27);
-    border-radius: 50%;
-    background: rgba(255, 30, 30, 0.015);
-    box-shadow: 0 0 24px rgba(255, 30, 30, 0.075);
-    transition:
-      width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-      height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-      background 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  body.cursor-ready .cursor-dot,
-  body.cursor-ready .cursor-ring,
-  body.cursor-ready .cursor-glow {
-    opacity: 1;
-  }
-
-  body.cursor-ready .cursor-glow {
-    opacity: 0.1;
-  }
-
-  body.cursor-hover .cursor-glow {
-    opacity: 0.12;
-  }
-
-  body.cursor-hover .cursor-ring {
-    width: 48px;
-    height: 48px;
-    border-color: rgba(255, 30, 30, 0.32);
-    background: rgba(255, 30, 30, 0.027);
-    box-shadow: 0 0 34px rgba(255, 30, 30, 0.145);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -5206,7 +5001,6 @@ body::after {
 .archive-card:hover img,
 .work-card:hover img,
 .media-card:hover img,
-.gurzil-image-card:hover img,
 #work .project-card:hover img {
   transform: scale(1.03);
 }
@@ -5241,9 +5035,6 @@ body::after {
     max-width: 460px;
   }
 
-  .cyber-cards-grid {
-    grid-template-columns: repeat(3, minmax(0, 260px));
-  }
 }
 
 @media (max-width: 768px) {
@@ -5270,23 +5061,6 @@ body::after {
     width: min(100%, 420px) !important;
     max-width: 100% !important;
     margin-inline: auto;
-  }
-
-  .cyber-cards-grid {
-    grid-template-columns: repeat(2, minmax(0, 160px));
-    gap: 18px 14px;
-  }
-
-  .cyber-card {
-    width: 100%;
-    max-width: 160px;
-    margin-inline: auto;
-  }
-
-  .cyber-card p {
-    margin-top: 9px;
-    font-size: 0.7rem;
-    letter-spacing: 0.9px;
   }
 
   .project-image,
@@ -6281,41 +6055,6 @@ body::after {
   }
 }
 
-@media (max-width: 768px) {
-  .gurzil-spotlight .gurzil-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-  }
-
-  .gurzil-spotlight .gurzil-image-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-height: 0 !important;
-    border-radius: 16px !important;
-    overflow: hidden !important;
-    aspect-ratio: auto !important;
-  }
-
-  .gurzil-spotlight .gurzil-image-card img {
-    width: 100% !important;
-    height: 180px !important;
-    min-height: 0 !important;
-    object-fit: cover !important;
-    object-position: center !important;
-    display: block !important;
-  }
-}
-
-@media (max-width: 390px) {
-  .gurzil-spotlight .gurzil-grid {
-    gap: 10px !important;
-  }
-
-  .gurzil-spotlight .gurzil-image-card img {
-    height: 155px !important;
-  }
-}
-
 .about,
 .about-shell,
 .gurzil-spotlight,
@@ -6352,73 +6091,6 @@ body::after {
   -webkit-backdrop-filter: none;
 }
 
-.custom-cursor {
-  display: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  body,
-  a,
-  button,
-  .menu-toggle,
-  .project-card,
-  .cyber-card,
-  .service-card,
-  .archive-card,
-  .contact-card,
-  .gurzil-logo-card,
-  .gurzil-copy-card,
-  .gurzil-image-card,
-  .about-card,
-  .about-skill-pills span,
-  .motion-card,
-  .card {
-    cursor: none !important;
-  }
-
-  .custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10001;
-    display: block;
-    opacity: 0;
-    pointer-events: none;
-    will-change: transform, opacity;
-    transition: opacity 0.22s ease;
-  }
-
-  .custom-cursor img {
-    width: 32px;
-    height: auto;
-    display: block;
-    pointer-events: none;
-    transform-origin: 8px 8px;
-    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .cursor-dot {
-    opacity: 0 !important;
-  }
-
-  body.cursor-ready .custom-cursor {
-    opacity: 1;
-  }
-
-  body.cursor-hover .custom-cursor img {
-    transform: scale(1.16);
-  }
-}
-
-@media (hover: none), (pointer: coarse) {
-  .custom-cursor,
-  .cursor-dot,
-  .cursor-ring,
-  .cursor-glow {
-    display: none !important;
-  }
-}
-
 @media (max-width: 768px), (hover: none), (pointer: coarse) {
   .cinematic-bg .shape,
   .animated-bg,
@@ -6437,7 +6109,6 @@ body::after {
   }
 
   .project-card,
-  .cyber-card,
   .archive-card,
   .service-card,
   .about-card,
@@ -6493,7 +6164,6 @@ body::after {
 
 .btn,
 .project-card,
-.cyber-card,
 .archive-card,
 .service-card,
 .about-card,
@@ -6516,7 +6186,6 @@ body::after {
 .hero-visual img,
 .hero-image img,
 .project-card img,
-.cyber-card img,
 .archive-card img,
 .gurzil-image-card img,
 .motion-card img,
@@ -6524,13 +6193,8 @@ body::after {
   transition-property: transform, opacity !important;
 }
 
-.cursor-glow {
-  display: none !important;
-}
-
 .section-reveal.is-visible,
 .project-card.is-visible,
-.cyber-card.is-visible,
 .service-card.is-visible,
 .archive-card.is-visible,
 .contact-card.is-visible,
@@ -6561,7 +6225,6 @@ body::after {
 .glass,
 .card,
 .project-card,
-.cyber-card,
 .archive-card,
 .motion-card,
 .service-card,
@@ -6604,8 +6267,6 @@ body::after {
 .card:hover,
 .project-card:hover,
 .project-card.is-visible:hover,
-.cyber-card:hover,
-.cyber-card.is-visible:hover,
 .archive-card:hover,
 .archive-card.is-visible:hover,
 .archive-card.show:hover,
@@ -6649,23 +6310,11 @@ body::after {
   background: none !important;
 }
 
-.cyber-card-media {
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  border-radius: 18px !important;
-  box-shadow: none !important;
-}
-
-.cyber-card:hover .cyber-card-media {
-  border-color: rgba(255, 30, 30, 0.24) !important;
-  box-shadow: none !important;
-}
-
 .project-glow,
 .image-glow,
 .contact-glow,
 .card-glow,
-.lv-glow,
-.cursor-glow {
+.lv-glow {
   display: none !important;
   opacity: 0 !important;
 }
@@ -6690,7 +6339,6 @@ body::after {
 @media (max-width: 768px) {
   .card,
   .project-card,
-  .cyber-card,
   .archive-card,
   .motion-card,
   .service-card,
@@ -6876,7 +6524,6 @@ section {
 
 .section-reveal,
 .project-card,
-.cyber-card,
 .service-card,
 .archive-card,
 .contact-card,
@@ -6892,7 +6539,6 @@ section {
 .hero-visual img,
 .hero-image img,
 .project-card img,
-.cyber-card img,
 .archive-card img,
 .gurzil-image-card img,
 .motion-card img,
@@ -6914,21 +6560,6 @@ section {
   z-index: 60 !important;
 }
 
-.custom-cursor,
-.cursor-dot,
-.cursor-ring,
-.cursor-glow {
-  transition-property: transform, opacity !important;
-}
-
-body.is-scrolling .custom-cursor,
-body.is-scrolling .cursor-dot,
-body.is-scrolling .cursor-ring,
-body.is-scrolling .cursor-glow {
-  opacity: 0 !important;
-}
-
-.cursor-glow,
 .project-glow,
 .image-glow,
 .contact-glow,
@@ -6968,7 +6599,6 @@ footer::after {
 .hero-visual,
 .hero-image,
 .project-card,
-.cyber-card,
 .archive-card,
 .service-card,
 .about-card,
@@ -6986,8 +6616,6 @@ footer::after {
 .card:hover,
 .project-card:hover,
 .project-card.is-visible:hover,
-.cyber-card:hover,
-.cyber-card.is-visible:hover,
 .archive-card:hover,
 .archive-card.is-visible:hover,
 .archive-card.show:hover,
@@ -7023,5 +6651,166 @@ footer::after {
   .bg-noise,
   .bg-ui {
     animation: none !important;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: url("images/cursor.png") 8 8, auto;
+  }
+
+  a,
+  button,
+  .card,
+  .project-card,
+  .btn,
+  .menu-toggle,
+  .archive-card,
+  .service-card,
+  .contact-card,
+  .gurzil-logo-card,
+  .gurzil-copy-card,
+  .gurzil-image-card,
+  .about-card,
+  .motion-card {
+    cursor: url("images/cursor.png") 8 8, pointer !important;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  body,
+  a,
+  button,
+  .card,
+  .project-card,
+  .btn,
+  .menu-toggle,
+  .archive-card,
+  .service-card,
+  .contact-card,
+  .gurzil-logo-card,
+  .gurzil-copy-card,
+  .gurzil-image-card,
+  .about-card,
+  .motion-card {
+    cursor: auto !important;
+  }
+}
+
+.gurzil-spotlight .gurzil-grid,
+.gallery-grid,
+.gurzil-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+  align-items: start !important;
+}
+
+.gurzil-spotlight .gurzil-image-card,
+.gallery-card,
+.gurzil-card {
+  aspect-ratio: 16 / 9 !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border-radius: 18px !important;
+  background: #111 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transform: translateY(0) !important;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+.gurzil-spotlight .gurzil-image-card img,
+.gallery-card img,
+.gurzil-card img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+}
+
+.gurzil-spotlight .gurzil-image-card:hover,
+.gurzil-spotlight .gurzil-image-card.is-visible:hover,
+.gallery-card:hover,
+.gurzil-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(255, 40, 40, 0.45) !important;
+}
+
+.gurzil-spotlight .gurzil-image-card:hover img,
+.gallery-card:hover img,
+.gurzil-card:hover img {
+  transform: none !important;
+}
+
+@media (max-width: 640px) {
+  .gurzil-spotlight .gurzil-grid,
+  .gallery-grid,
+  .gurzil-gallery {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+}
+
+.motion-lines-section {
+  position: relative;
+}
+
+.motion-lines-heading p:not(.kicker) {
+  max-width: 680px;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.motion-lines-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.motion-lines-card {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: #111;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.motion-lines-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.motion-lines-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 40, 40, 0.38);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34);
+}
+
+@media (max-width: 1024px) {
+  .motion-lines-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .motion-lines-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .motion-lines-card {
+    border-radius: 14px;
   }
 }
