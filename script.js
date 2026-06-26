@@ -299,7 +299,7 @@ if (archiveGallery) {
       const offset = getArchiveOffset(cardIndex);
       const absOffset = Math.abs(offset);
       const direction = Math.sign(offset);
-      const isMobileArchive = window.innerWidth <= 640;
+      const isMobileArchive = window.innerWidth <= 768;
       const sideX = isMobileArchive ? 96 : 170;
       const farX = isMobileArchive ? 150 : 275;
       const farStep = isMobileArchive ? 44 : 66;
@@ -317,6 +317,9 @@ if (archiveGallery) {
       card.style.setProperty("--archive-filter", filter);
       card.style.setProperty("--archive-z", String(30 - Math.min(absOffset, 8)));
       card.classList.toggle("is-active", offset === 0);
+      card.classList.toggle("is-previous", offset === -1);
+      card.classList.toggle("is-next", offset === 1);
+      card.classList.toggle("is-far", absOffset > 1);
       card.setAttribute("aria-hidden", offset === 0 ? "false" : "true");
     });
   };
@@ -427,6 +430,9 @@ if (archiveLightboxImages.length) {
   const archiveLightboxItems = Array.from(archiveLightboxImages);
   let activeArchiveLightboxIndex = 0;
   let archiveLightboxCloseTimer;
+  let archiveLightboxImageTimer;
+  let archiveLightboxTouchStartX = 0;
+  let archiveLightboxTouchStartY = 0;
   const archiveLightbox = document.createElement("div");
   archiveLightbox.className = "archive-lightbox";
   archiveLightbox.setAttribute("role", "dialog");
@@ -452,9 +458,22 @@ if (archiveLightboxImages.length) {
     archiveLightboxImage.alt = image.alt || "Design Archive artwork preview";
   };
 
+  const changeArchiveLightboxImage = index => {
+    window.clearTimeout(archiveLightboxImageTimer);
+    archiveLightboxImage.classList.add("is-changing");
+    archiveLightboxImageTimer = window.setTimeout(() => {
+      setArchiveLightboxImage(index);
+      requestAnimationFrame(() => {
+        archiveLightboxImage.classList.remove("is-changing");
+      });
+    }, 90);
+  };
+
   const closeArchiveLightbox = () => {
     window.clearTimeout(archiveLightboxCloseTimer);
+    window.clearTimeout(archiveLightboxImageTimer);
     archiveLightbox.classList.remove("is-open");
+    archiveLightboxImage.classList.remove("is-changing");
     document.body.classList.remove("archive-lightbox-open");
     archiveLightboxCloseTimer = window.setTimeout(() => {
       if (!archiveLightbox.classList.contains("is-open")) {
@@ -473,18 +492,13 @@ if (archiveLightboxImages.length) {
   };
 
   const showArchiveLightboxImage = direction => {
-    setArchiveLightboxImage(activeArchiveLightboxIndex + direction);
+    changeArchiveLightboxImage(activeArchiveLightboxIndex + direction);
   };
 
   archiveLightboxItems.forEach((image, index) => {
     image.addEventListener("click", event => {
       event.stopPropagation();
       if (archiveLightboxClickBlocked) {
-        return;
-      }
-
-      if (index !== activeArchiveIndex) {
-        setActiveArchiveIndex(index);
         return;
       }
 
@@ -505,6 +519,21 @@ if (archiveLightboxImages.length) {
   archiveLightbox.addEventListener("click", event => {
     if (event.target === archiveLightbox) {
       closeArchiveLightbox();
+    }
+  });
+
+  archiveLightbox.addEventListener("pointerdown", event => {
+    archiveLightboxTouchStartX = event.clientX;
+    archiveLightboxTouchStartY = event.clientY;
+  });
+
+  archiveLightbox.addEventListener("pointerup", event => {
+    const deltaX = event.clientX - archiveLightboxTouchStartX;
+    const deltaY = event.clientY - archiveLightboxTouchStartY;
+
+    if (Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4) {
+      event.preventDefault();
+      showArchiveLightboxImage(deltaX < 0 ? 1 : -1);
     }
   });
 
