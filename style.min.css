@@ -1395,6 +1395,82 @@ footer > * {
   user-select: none;
 }
 
+body.archive-lightbox-open {
+  overflow: hidden;
+}
+
+.archive-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 44px);
+  background: rgba(0, 0, 0, 0.88);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.archive-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.archive-lightbox-image {
+  max-width: 90vw;
+  max-height: 88vh;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  border-radius: 18px;
+  display: block;
+  transform: scale(0.92);
+  transition: transform 260ms ease;
+}
+
+.archive-lightbox.is-open .archive-lightbox-image {
+  transform: scale(1);
+}
+
+.archive-lightbox-close {
+  position: fixed;
+  top: clamp(14px, 3vw, 28px);
+  right: clamp(14px, 3vw, 28px);
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.42);
+  font: 700 1rem/1 "Poppins", sans-serif;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.archive-lightbox-close:hover,
+.archive-lightbox-close:focus-visible {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.04);
+}
+
+@media (max-width: 640px) {
+  .archive-lightbox {
+    padding: 16px;
+  }
+
+  .archive-lightbox-image {
+    max-width: 92vw;
+    max-height: 84vh;
+    border-radius: 14px;
+  }
+}
+
 .archive-arrow {
   --magnet-x: 0px;
   --magnet-y: 0px;
@@ -1739,10 +1815,11 @@ footer > * {
 .motion-card video,
 .motion-card gif {
   width: 100%;
-  height: auto;
+  height: 100%;
   aspect-ratio: 16 / 9;
   display: block;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center center;
   border-radius: 20px;
   filter: contrast(1.06) brightness(0.88) saturate(0.95);
   transition:
@@ -4973,10 +5050,10 @@ body::after {
 .motion-card img,
 .motion-card gif {
   width: 100%;
-  height: auto;
+  height: 100%;
   min-height: 0;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
+  object-position: center center;
 }
 
 .motion-card {
@@ -6325,6 +6402,42 @@ body::after {
   box-shadow: none !important;
 }
 
+.project-card,
+.selected-visuals-grid .project-card,
+#work .project-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::after,
+.selected-visuals-grid .project-card::after,
+#work .project-card::after {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block !important;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 30, 30, 0.35),
+      transparent 14%,
+      transparent 86%,
+      rgba(255, 30, 30, 0.30)
+    ) !important;
+  box-shadow: none !important;
+  opacity: 0.22 !important;
+  transition: opacity 0.35s ease;
+}
+
+.project-card:hover::after,
+.selected-visuals-grid .project-card:hover::after,
+#work .project-card:hover::after {
+  opacity: 0.38 !important;
+}
+
 .service-copy::before {
   opacity: 0.32 !important;
   box-shadow: none !important;
@@ -6813,4 +6926,30 @@ footer::after {
   .motion-lines-card {
     border-radius: 14px;
   }
+}
+
+.project-image,
+.motion-card,
+.gallery-card,
+.gurzil-image-card {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.project-card img,
+.visual-card img,
+.archive-card img,
+.work-card img,
+.media-card img,
+.motion-card img,
+.motion-card video,
+.gallery-card img,
+.gurzil-image-card img,
+.cyber-card img,
+.showcase-card-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
 }

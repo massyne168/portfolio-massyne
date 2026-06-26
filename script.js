@@ -258,6 +258,7 @@ if (linkedSections.length) {
 }
 
 const archiveGallery = document.querySelector(".archive-track");
+let archiveLightboxClickBlocked = false;
 
 if (archiveGallery) {
   const archivePrev = document.querySelector(".archive-arrow-prev");
@@ -331,6 +332,7 @@ if (archiveGallery) {
 
   archiveGallery.addEventListener("pointerdown", event => {
     isDraggingArchive = true;
+    archiveLightboxClickBlocked = false;
     dragStartX = event.clientX;
     dragStartScroll = archiveGallery.scrollLeft;
     archiveGallery.classList.add("is-dragging");
@@ -343,6 +345,9 @@ if (archiveGallery) {
     }
 
     const dragDistance = event.clientX - dragStartX;
+    if (Math.abs(dragDistance) > 8) {
+      archiveLightboxClickBlocked = true;
+    }
     archiveDragLeft = dragStartScroll - dragDistance;
 
     if (!archiveDragFrame) {
@@ -365,6 +370,10 @@ if (archiveGallery) {
     if (archiveGallery.hasPointerCapture(event.pointerId)) {
       archiveGallery.releasePointerCapture(event.pointerId);
     }
+
+    window.setTimeout(() => {
+      archiveLightboxClickBlocked = false;
+    }, 0);
   };
 
   archiveGallery.addEventListener("pointerup", stopArchiveDrag);
@@ -388,6 +397,63 @@ if (archiveGallery) {
   archiveNext?.addEventListener("click", () => scrollArchiveByCards(1));
   window.addEventListener("resize", debounce(updateArchiveArrows), { passive: true });
   updateArchiveArrows();
+}
+
+const archiveLightboxImages = document.querySelectorAll(".creative-collection .archive-card .showcase-card-image");
+
+if (archiveLightboxImages.length) {
+  const archiveLightbox = document.createElement("div");
+  archiveLightbox.className = "archive-lightbox";
+  archiveLightbox.setAttribute("role", "dialog");
+  archiveLightbox.setAttribute("aria-modal", "true");
+  archiveLightbox.setAttribute("aria-label", "Design Archive image preview");
+  archiveLightbox.innerHTML = `
+    <button class="archive-lightbox-close" type="button" aria-label="Close image preview">X</button>
+    <img class="archive-lightbox-image" alt="" />
+  `;
+  document.body.appendChild(archiveLightbox);
+
+  const archiveLightboxImage = archiveLightbox.querySelector(".archive-lightbox-image");
+  const archiveLightboxClose = archiveLightbox.querySelector(".archive-lightbox-close");
+
+  const closeArchiveLightbox = () => {
+    archiveLightbox.classList.remove("is-open");
+    document.body.classList.remove("archive-lightbox-open");
+    archiveLightboxImage.removeAttribute("src");
+    archiveLightboxImage.alt = "";
+  };
+
+  const openArchiveLightbox = image => {
+    archiveLightboxImage.src = image.src;
+    archiveLightboxImage.alt = image.alt || "Design Archive artwork preview";
+    document.body.classList.add("archive-lightbox-open");
+    archiveLightbox.classList.add("is-open");
+    archiveLightboxClose.focus({ preventScroll: true });
+  };
+
+  archiveLightboxImages.forEach(image => {
+    image.addEventListener("click", event => {
+      event.stopPropagation();
+      if (archiveLightboxClickBlocked) {
+        return;
+      }
+      openArchiveLightbox(image);
+    });
+  });
+
+  archiveLightboxClose.addEventListener("click", closeArchiveLightbox);
+
+  archiveLightbox.addEventListener("click", event => {
+    if (event.target === archiveLightbox) {
+      closeArchiveLightbox();
+    }
+  });
+
+  window.addEventListener("keydown", event => {
+    if (event.key === "Escape" && archiveLightbox.classList.contains("is-open")) {
+      closeArchiveLightbox();
+    }
+  });
 }
 
 menuToggle.addEventListener("click", () => {
