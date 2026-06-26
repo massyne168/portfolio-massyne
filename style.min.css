@@ -6770,12 +6770,12 @@ footer::after {
 
 .motion-lines-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
 }
 
 .motion-lines-card {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1865 / 108;
   overflow: hidden;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -6799,14 +6799,14 @@ footer::after {
 
 @media (max-width: 1024px) {
   .motion-lines-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: 20px;
   }
 }
 
 @media (max-width: 640px) {
   .motion-lines-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }
 
