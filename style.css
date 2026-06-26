@@ -7563,3 +7563,146 @@ footer::after {
     animation: none !important;
   }
 }
+
+/* Reusable premium chrome edge-light for website cards. */
+.chrome-edge-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.09) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.42) !important,
+    0 0 0 1px rgba(255, 255, 255, 0.035) !important,
+    0 0 18px rgba(255, 255, 255, 0.055) !important;
+}
+
+.chrome-edge-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.chrome-edge-card::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block !important;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 0 24%, rgba(255, 255, 255, 0.42) 0 1px, rgba(255, 255, 255, 0.10) 3px, transparent 8px),
+    radial-gradient(circle at 100% 76%, rgba(255, 255, 255, 0.34) 0 1px, rgba(255, 255, 255, 0.08) 3px, transparent 8px),
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      transparent 18%,
+      rgba(255, 255, 255, 0.34) 26%,
+      rgba(255, 255, 255, 0.07) 30%,
+      transparent 36%,
+      transparent 100%
+    ) !important;
+  opacity: 0.42 !important;
+  box-shadow:
+    inset 1px 0 rgba(255, 255, 255, 0.18),
+    inset -1px 0 rgba(255, 255, 255, 0.10) !important;
+  transform: none !important;
+  animation: none !important;
+  transition: opacity 0.22s ease !important;
+}
+
+.chrome-edge-card::after {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: block !important;
+  height: auto;
+  border-radius: inherit;
+  pointer-events: none;
+  background: none !important;
+  opacity: 0.82 !important;
+  box-shadow:
+    inset 1px 0 rgba(255, 255, 255, 0.20),
+    inset -1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 -1px rgba(255, 255, 255, 0.08),
+    inset 0 -2px rgba(255, 255, 255, 0.035) !important;
+  transform: none !important;
+  animation: none !important;
+  transition: opacity 0.22s ease !important;
+}
+
+.chrome-edge-card:hover,
+.chrome-edge-card.is-visible:hover {
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.42) !important,
+    0 0 0 1px rgba(255, 255, 255, 0.05) !important,
+    0 0 20px rgba(255, 255, 255, 0.075) !important;
+}
+
+.chrome-edge-card:hover::before {
+  opacity: 0.58 !important;
+}
+
+.chrome-edge-card:hover::after {
+  opacity: 0.92 !important;
+}
+
+.chrome-edge-card:hover img,
+.chrome-edge-card:hover video,
+.chrome-edge-card.is-visible:hover img,
+.chrome-edge-card.is-visible:hover video {
+  transform: none !important;
+}
+
+.services-section .service-card.chrome-edge-card::before {
+  inset: 0 !important;
+  width: auto !important;
+  padding: 0 !important;
+  opacity: 0.32 !important;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      transparent 20%,
+      rgba(255, 255, 255, 0.24) 27%,
+      rgba(255, 255, 255, 0.06) 31%,
+      transparent 37%,
+      transparent 100%
+    ) !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  box-shadow:
+    inset 1px 0 rgba(255, 255, 255, 0.15),
+    inset -1px 0 rgba(255, 255, 255, 0.09) !important;
+}
+
+.services-section .service-card.chrome-edge-card::after {
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: auto !important;
+  height: 1px !important;
+  opacity: 0.18 !important;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.42),
+      transparent
+    ) !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.12) !important;
+}
+
+.services-section .service-card.chrome-edge-card:hover {
+  transform: translate3d(var(--magnet-x), var(--magnet-y), 0) !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  background:
+    radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0.055), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)) !important;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.42) !important,
+    0 0 0 1px rgba(255, 255, 255, 0.05) !important,
+    0 0 20px rgba(255, 255, 255, 0.075) !important;
+}
