@@ -259,82 +259,97 @@ if (linkedSections.length) {
 
 const archiveGallery = document.querySelector(".archive-track");
 let archiveLightboxClickBlocked = false;
+let activeArchiveIndex = 0;
+let setActiveArchiveIndex = () => {};
 
 if (archiveGallery) {
   const archivePrev = document.querySelector(".archive-arrow-prev");
   const archiveNext = document.querySelector(".archive-arrow-next");
+  const archiveCards = Array.from(archiveGallery.querySelectorAll(".archive-card"));
   let isDraggingArchive = false;
   let dragStartX = 0;
-  let dragStartScroll = 0;
-  let archiveScrollTimer;
-  let archiveWheelDelta = 0;
+  let dragCurrentX = 0;
+  let dragLastX = 0;
+  let dragLastTime = 0;
+  let dragVelocity = 0;
+  let archiveInertiaTimer;
   let archiveWheelFrame = null;
-  let archiveDragFrame = null;
-  let archiveDragLeft = 0;
+  let archiveWheelDelta = 0;
 
-  const getArchiveStep = () => {
-    const card = archiveGallery.querySelector(".archive-card");
-    if (!card) {
-      return Math.min(320, archiveGallery.clientWidth);
+  const normalizeArchiveIndex = index => (index + archiveCards.length) % archiveCards.length;
+
+  const getArchiveOffset = index => {
+    const total = archiveCards.length;
+    let offset = index - activeArchiveIndex;
+    if (offset > total / 2) {
+      offset -= total;
+    } else if (offset < -total / 2) {
+      offset += total;
+    }
+    return offset;
+  };
+
+  setActiveArchiveIndex = index => {
+    if (!archiveCards.length) {
+      return;
     }
 
-    const styles = window.getComputedStyle(archiveGallery);
-    const gap = Number.parseFloat(styles.columnGap || styles.gap || 0);
-    return card.getBoundingClientRect().width + gap;
-  };
+    activeArchiveIndex = normalizeArchiveIndex(index);
+    archiveCards.forEach((card, cardIndex) => {
+      const offset = getArchiveOffset(cardIndex);
+      const absOffset = Math.abs(offset);
+      const direction = Math.sign(offset);
+      const isMobileArchive = window.innerWidth <= 640;
+      const sideX = isMobileArchive ? 96 : 170;
+      const farX = isMobileArchive ? 150 : 275;
+      const farStep = isMobileArchive ? 44 : 66;
+      const translateX = absOffset === 0
+        ? 0
+        : direction * (absOffset === 1 ? sideX : farX + (Math.min(absOffset, 4) - 2) * farStep);
+      const translateZ = absOffset === 0 ? 120 : absOffset === 1 ? 0 : -160 - (Math.min(absOffset, 4) - 2) * 42;
+      const rotateY = absOffset === 0 ? 0 : direction * (absOffset === 1 ? -40 : -65);
+      const scale = absOffset === 0 ? 1 : absOffset === 1 ? 0.82 : 0.65;
+      const opacity = absOffset === 0 ? 1 : absOffset === 1 ? 0.55 : absOffset <= 4 ? 0.2 : 0;
+      const filter = absOffset === 0 ? "brightness(0.96) saturate(0.98) contrast(1.05)" : absOffset === 1 ? "brightness(0.58) saturate(0.86) contrast(1.04)" : "brightness(0.38) saturate(0.76) contrast(1.02)";
 
-  const updateArchiveArrows = () => {
-    const maxScroll = archiveGallery.scrollWidth - archiveGallery.clientWidth;
-    archivePrev?.classList.toggle("is-disabled", archiveGallery.scrollLeft <= 2);
-    archiveNext?.classList.toggle("is-disabled", archiveGallery.scrollLeft >= maxScroll - 2);
-  };
-
-  const snapArchiveToNearest = () => {
-    const step = getArchiveStep();
-    const target = Math.round(archiveGallery.scrollLeft / step) * step;
-    archiveGallery.scrollTo({
-      left: target,
-      behavior: "smooth"
+      card.style.setProperty("--archive-transform", `translate3d(calc(-50% + ${translateX}px), calc(-50% + var(--archive-float-y, 0px)), ${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`);
+      card.style.setProperty("--archive-opacity", String(opacity));
+      card.style.setProperty("--archive-filter", filter);
+      card.style.setProperty("--archive-z", String(30 - Math.min(absOffset, 8)));
+      card.classList.toggle("is-active", offset === 0);
+      card.setAttribute("aria-hidden", offset === 0 ? "false" : "true");
     });
   };
 
-  const scheduleArchiveSnap = () => {
-    window.clearTimeout(archiveScrollTimer);
-    archiveScrollTimer = window.setTimeout(snapArchiveToNearest, 180);
-  };
-
-  const scrollArchiveByCards = direction => {
-    archiveGallery.scrollBy({
-      left: direction * getArchiveStep(),
-      behavior: "smooth"
-    });
-    window.setTimeout(updateArchiveArrows, 420);
+  const moveArchive = direction => {
+    setActiveArchiveIndex(activeArchiveIndex + direction);
   };
 
   archiveGallery.addEventListener("wheel", event => {
     event.preventDefault();
     const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
-    archiveWheelDelta += delta * 0.85;
+    archiveWheelDelta += delta;
 
     if (!archiveWheelFrame) {
       archiveWheelFrame = requestAnimationFrame(() => {
-        archiveGallery.scrollBy({
-          left: archiveWheelDelta,
-          behavior: "auto"
-        });
+        if (Math.abs(archiveWheelDelta) > 18) {
+          moveArchive(archiveWheelDelta > 0 ? 1 : -1);
+        }
         archiveWheelDelta = 0;
         archiveWheelFrame = null;
       });
     }
-
-    scheduleArchiveSnap();
   }, { passive: false });
 
   archiveGallery.addEventListener("pointerdown", event => {
+    window.clearTimeout(archiveInertiaTimer);
     isDraggingArchive = true;
     archiveLightboxClickBlocked = false;
     dragStartX = event.clientX;
-    dragStartScroll = archiveGallery.scrollLeft;
+    dragCurrentX = event.clientX;
+    dragLastX = event.clientX;
+    dragLastTime = performance.now();
+    dragVelocity = 0;
     archiveGallery.classList.add("is-dragging");
     archiveGallery.setPointerCapture(event.pointerId);
   });
@@ -345,16 +360,14 @@ if (archiveGallery) {
     }
 
     const dragDistance = event.clientX - dragStartX;
+    const now = performance.now();
+    const elapsed = Math.max(1, now - dragLastTime);
+    dragVelocity = (event.clientX - dragLastX) / elapsed;
+    dragCurrentX = event.clientX;
+    dragLastX = event.clientX;
+    dragLastTime = now;
     if (Math.abs(dragDistance) > 8) {
       archiveLightboxClickBlocked = true;
-    }
-    archiveDragLeft = dragStartScroll - dragDistance;
-
-    if (!archiveDragFrame) {
-      archiveDragFrame = requestAnimationFrame(() => {
-        archiveGallery.scrollLeft = archiveDragLeft;
-        archiveDragFrame = null;
-      });
     }
   });
 
@@ -365,7 +378,16 @@ if (archiveGallery) {
 
     isDraggingArchive = false;
     archiveGallery.classList.remove("is-dragging");
-    snapArchiveToNearest();
+    const dragDistance = dragCurrentX - dragStartX;
+
+    if (Math.abs(dragDistance) > 42) {
+      const direction = dragDistance < 0 ? 1 : -1;
+      moveArchive(direction);
+
+      if (Math.abs(dragVelocity) > 0.85 || Math.abs(dragDistance) > 160) {
+        archiveInertiaTimer = window.setTimeout(() => moveArchive(direction), 190);
+      }
+    }
 
     if (archiveGallery.hasPointerCapture(event.pointerId)) {
       archiveGallery.releasePointerCapture(event.pointerId);
@@ -379,24 +401,24 @@ if (archiveGallery) {
   archiveGallery.addEventListener("pointerup", stopArchiveDrag);
   archiveGallery.addEventListener("pointercancel", stopArchiveDrag);
   archiveGallery.addEventListener("pointerleave", stopArchiveDrag);
-  let archiveArrowTicking = false;
-  const scheduleArchiveArrowUpdate = () => {
-    if (archiveArrowTicking) {
+  archivePrev?.addEventListener("click", () => moveArchive(-1));
+  archiveNext?.addEventListener("click", () => moveArchive(1));
+  window.addEventListener("keydown", event => {
+    const lightboxOpen = document.body.classList.contains("archive-lightbox-open");
+    if (lightboxOpen) {
       return;
     }
 
-    archiveArrowTicking = true;
-    requestAnimationFrame(() => {
-      updateArchiveArrows();
-      archiveArrowTicking = false;
-    });
-  };
-
-  archiveGallery.addEventListener("scroll", scheduleArchiveArrowUpdate, { passive: true });
-  archivePrev?.addEventListener("click", () => scrollArchiveByCards(-1));
-  archiveNext?.addEventListener("click", () => scrollArchiveByCards(1));
-  window.addEventListener("resize", debounce(updateArchiveArrows), { passive: true });
-  updateArchiveArrows();
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      moveArchive(-1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      moveArchive(1);
+    }
+  });
+  window.addEventListener("resize", debounce(() => setActiveArchiveIndex(activeArchiveIndex)), { passive: true });
+  setActiveArchiveIndex(0);
 }
 
 const archiveLightboxImages = document.querySelectorAll(".creative-collection .archive-card .showcase-card-image");
@@ -460,6 +482,12 @@ if (archiveLightboxImages.length) {
       if (archiveLightboxClickBlocked) {
         return;
       }
+
+      if (index !== activeArchiveIndex) {
+        setActiveArchiveIndex(index);
+        return;
+      }
+
       openArchiveLightbox(index);
     });
   });

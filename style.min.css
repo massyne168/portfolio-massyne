@@ -6997,3 +6997,250 @@ footer::after {
   object-position: center center !important;
   display: block !important;
 }
+
+.creative-collection .archive-showcase {
+  --archive-card-width: 320px;
+  --archive-card-height: 430px;
+  max-width: min(100%, 1080px) !important;
+  min-height: clamp(390px, 52vw, 560px);
+  display: grid;
+  align-items: center;
+  padding-inline: clamp(42px, 7vw, 78px);
+  perspective: 1200px;
+  overflow: hidden;
+}
+
+@property --archive-float-y {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.creative-collection .archive-track,
+.creative-collection .creative-collection-grid {
+  position: relative;
+  display: block !important;
+  width: 100%;
+  height: clamp(360px, 48vw, 520px);
+  max-width: none;
+  padding: 0 !important;
+  margin: 0 auto;
+  overflow: visible !important;
+  cursor: grab;
+  touch-action: pan-y;
+  transform-style: preserve-3d;
+  scroll-snap-type: none !important;
+  scrollbar-width: none;
+}
+
+.creative-collection .archive-track.is-dragging,
+.creative-collection .creative-collection-grid.is-dragging {
+  cursor: grabbing;
+}
+
+.creative-collection .archive-card {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  z-index: var(--archive-z, 1);
+  width: min(var(--archive-card-width), 72vw) !important;
+  height: var(--archive-card-height) !important;
+  flex: none !important;
+  opacity: var(--archive-opacity, 0);
+  border-radius: 24px;
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: var(--archive-transform) !important;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  filter: var(--archive-filter, brightness(0.52));
+  will-change: transform;
+  transition:
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s ease,
+    filter 0.55s ease;
+  pointer-events: auto;
+}
+
+.creative-collection .archive-card::before {
+  content: "";
+  position: absolute;
+  display: block !important;
+  left: 12%;
+  right: 12%;
+  bottom: -24px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55) !important;
+  filter: blur(14px);
+  opacity: 0.42 !important;
+  pointer-events: none;
+}
+
+.creative-collection .archive-card::after {
+  display: block !important;
+  opacity: 0 !important;
+  background:
+    linear-gradient(90deg, rgba(255, 30, 30, 0.28), transparent 18%, transparent 82%, rgba(255, 30, 30, 0.24)) !important;
+  box-shadow: 0 0 34px rgba(255, 30, 30, 0.18) !important;
+  transition: opacity 0.55s ease !important;
+}
+
+.creative-collection .archive-card .showcase-card-image {
+  filter: none !important;
+  transform: none !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.creative-collection .archive-card.is-active {
+  border-color: rgba(255, 30, 30, 0.34) !important;
+  animation: floatCard 4s infinite ease-in-out;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.54) !important;
+}
+
+.creative-collection .archive-card.is-active::after {
+  opacity: 0.34 !important;
+}
+
+.creative-collection .archive-card.is-active .showcase-card-image {
+  filter: none !important;
+}
+
+.creative-collection .archive-card:hover,
+.creative-collection .archive-card.is-visible:hover,
+.creative-collection .archive-card.show:hover {
+  transform: var(--archive-transform) !important;
+}
+
+@keyframes floatCard {
+  0%,
+  100% {
+    --archive-float-y: 0px;
+  }
+  50% {
+    --archive-float-y: -6px;
+  }
+}
+
+.creative-collection .archive-arrow {
+  top: 50%;
+  z-index: 40;
+}
+
+.creative-collection.is-visible .archive-drag-indicator,
+.creative-collection.reveal .archive-drag-indicator,
+.creative-collection.section-reveal.is-visible .archive-drag-indicator {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.archive-drag-indicator {
+  width: min(360px, 78vw);
+  margin: clamp(12px, 2vw, 22px) auto 0;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.archive-drag-line {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.archive-drag-dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #ff1f35;
+  box-shadow: 0 0 14px rgba(255, 31, 53, 0.72);
+  transform: translate3d(0, -50%, 0);
+  animation: archiveDragDot 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
+  will-change: transform;
+}
+
+.archive-drag-text {
+  color: rgba(255, 255, 255, 0.75);
+  font-family: "Space Grotesk", "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 8px;
+  line-height: 1;
+  white-space: nowrap;
+  animation: archiveDragTextPulse 2.8s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes archiveDragDot {
+  from {
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    transform: translate3d(calc(360px - 7px), -50%, 0);
+  }
+}
+
+@keyframes archiveDragTextPulse {
+  0%,
+  100% {
+    opacity: 0.68;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .creative-collection .archive-showcase {
+    --archive-card-width: min(74vw, 270px);
+    --archive-card-height: min(92vw, 360px);
+    min-height: 410px;
+    padding-inline: 34px;
+  }
+
+  .creative-collection .archive-track,
+  .creative-collection .creative-collection-grid {
+    height: 390px;
+  }
+
+  .archive-drag-indicator {
+    width: min(300px, 74vw);
+    margin-top: 10px;
+    transform: translate3d(0, 10px, 0) scale(0.92);
+  }
+
+  .creative-collection.is-visible .archive-drag-indicator,
+  .creative-collection.reveal .archive-drag-indicator,
+  .creative-collection.section-reveal.is-visible .archive-drag-indicator {
+    transform: translate3d(0, 0, 0) scale(0.92);
+  }
+
+  .archive-drag-text {
+    font-size: 11px;
+    letter-spacing: 5px;
+  }
+
+  @keyframes archiveDragDot {
+    from {
+      transform: translate3d(0, -50%, 0);
+    }
+    to {
+      transform: translate3d(calc(300px - 7px), -50%, 0);
+    }
+  }
+}
