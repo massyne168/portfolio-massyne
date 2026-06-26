@@ -275,6 +275,7 @@ if (archiveGallery) {
   let archiveInertiaTimer;
   let archiveWheelFrame = null;
   let archiveWheelDelta = 0;
+  let archiveScrollBlockTimer;
 
   const normalizeArchiveIndex = index => (index + archiveCards.length) % archiveCards.length;
 
@@ -320,12 +321,19 @@ if (archiveGallery) {
       card.classList.toggle("is-previous", offset === -1);
       card.classList.toggle("is-next", offset === 1);
       card.classList.toggle("is-far", absOffset > 1);
-      card.setAttribute("aria-hidden", offset === 0 ? "false" : "true");
+      card.setAttribute("aria-hidden", !isMobileArchive && offset !== 0 ? "true" : "false");
     });
   };
 
   const moveArchive = direction => {
     setActiveArchiveIndex(activeArchiveIndex + direction);
+    if (window.innerWidth <= 768) {
+      archiveCards[activeArchiveIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center"
+      });
+    }
   };
 
   archiveGallery.addEventListener("wheel", event => {
@@ -344,7 +352,23 @@ if (archiveGallery) {
     }
   }, { passive: false });
 
+  archiveGallery.addEventListener("scroll", () => {
+    if (window.innerWidth > 768) {
+      return;
+    }
+
+    archiveLightboxClickBlocked = true;
+    window.clearTimeout(archiveScrollBlockTimer);
+    archiveScrollBlockTimer = window.setTimeout(() => {
+      archiveLightboxClickBlocked = false;
+    }, 140);
+  }, { passive: true });
+
   archiveGallery.addEventListener("pointerdown", event => {
+    if (window.innerWidth <= 768) {
+      return;
+    }
+
     window.clearTimeout(archiveInertiaTimer);
     isDraggingArchive = true;
     archiveLightboxClickBlocked = false;
@@ -424,7 +448,17 @@ if (archiveGallery) {
   setActiveArchiveIndex(0);
 }
 
-const archiveLightboxImages = document.querySelectorAll(".creative-collection .archive-card .showcase-card-image");
+const portfolioLightboxSelectors = [
+  "#work .project-card img",
+  ".featured-grid img",
+  ".selected-visuals-grid img",
+  ".creative-collection .archive-card img",
+  ".motion-showcase img",
+  ".motion-lines-section .motion-lines-card img",
+  ".gurzil-spotlight .gurzil-logo-card img",
+  ".gurzil-spotlight .gurzil-image-card img"
+];
+const archiveLightboxImages = Array.from(new Set(document.querySelectorAll(portfolioLightboxSelectors.join(", "))));
 
 if (archiveLightboxImages.length) {
   const archiveLightboxItems = Array.from(archiveLightboxImages);
@@ -437,7 +471,7 @@ if (archiveLightboxImages.length) {
   archiveLightbox.className = "archive-lightbox";
   archiveLightbox.setAttribute("role", "dialog");
   archiveLightbox.setAttribute("aria-modal", "true");
-  archiveLightbox.setAttribute("aria-label", "Design Archive image preview");
+  archiveLightbox.setAttribute("aria-label", "Portfolio image preview");
   archiveLightbox.innerHTML = `
     <button class="archive-lightbox-close" type="button" aria-label="Close image preview">X</button>
     <button class="archive-lightbox-nav archive-lightbox-prev" type="button" aria-label="Previous image">&larr;</button>
@@ -454,8 +488,8 @@ if (archiveLightboxImages.length) {
   const setArchiveLightboxImage = index => {
     activeArchiveLightboxIndex = (index + archiveLightboxItems.length) % archiveLightboxItems.length;
     const image = archiveLightboxItems[activeArchiveLightboxIndex];
-    archiveLightboxImage.src = image.getAttribute("src");
-    archiveLightboxImage.alt = image.alt || "Design Archive artwork preview";
+    archiveLightboxImage.src = image.currentSrc || image.getAttribute("src");
+    archiveLightboxImage.alt = image.alt || "Portfolio image preview";
   };
 
   const changeArchiveLightboxImage = index => {

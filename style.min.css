@@ -1397,6 +1397,7 @@ footer > * {
 
 body.archive-lightbox-open {
   overflow: hidden;
+  touch-action: none;
 }
 
 .archive-lightbox {
@@ -1407,17 +1408,23 @@ body.archive-lightbox-open {
   place-items: center;
   padding: clamp(18px, 4vw, 44px);
   background: rgba(0, 0, 0, 0.92);
+  overflow: hidden;
+  touch-action: none;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 250ms ease, visibility 250ms ease;
+  transition:
+    opacity 250ms ease,
+    visibility 250ms ease;
 }
 
 .archive-lightbox.is-open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transition-duration: 300ms;
+  transition:
+    opacity 300ms ease,
+    visibility 300ms ease;
 }
 
 .archive-lightbox-image {
@@ -1428,13 +1435,23 @@ body.archive-lightbox-open {
   object-fit: contain !important;
   border-radius: 18px;
   display: block;
+  opacity: 0;
   transform: scale(0.9);
-  transition: transform 250ms ease;
+  transition:
+    opacity 250ms ease,
+    transform 300ms ease;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .archive-lightbox.is-open .archive-lightbox-image {
+  opacity: 1;
   transform: scale(1);
-  transition-duration: 300ms;
+}
+
+.archive-lightbox.is-open .archive-lightbox-image.is-changing {
+  opacity: 0;
+  transition-duration: 180ms;
 }
 
 .archive-lightbox-close,
@@ -1498,20 +1515,27 @@ body.archive-lightbox-open {
   }
 
   .archive-lightbox-image {
-    max-width: 92vw;
-    max-height: 86vh;
+    max-width: 94vw;
+    max-height: 82vh;
     border-radius: 14px;
   }
 
+  .archive-lightbox-close {
+    width: 48px;
+    height: 48px;
+    top: 12px;
+    right: 12px;
+  }
+
   .archive-lightbox-nav {
-    top: auto;
-    bottom: 18px;
-    transform: none;
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
   }
 
   .archive-lightbox-nav:hover,
   .archive-lightbox-nav:focus-visible {
-    transform: scale(1.04);
+    transform: translateY(-50%) scale(1.04);
   }
 }
 
@@ -7224,62 +7248,68 @@ footer::after {
     --archive-card-height: min(92vw, 360px);
     width: 100%;
     max-width: 100% !important;
-    min-height: 390px;
+    min-height: 0;
+    display: block;
     padding-inline: 42px !important;
     overflow: hidden !important;
-    perspective: none;
+    perspective: none !important;
   }
 
   .creative-collection .archive-track,
   .creative-collection .creative-collection-grid {
-    height: 370px;
-    overflow: hidden !important;
-    transform-style: flat;
-    touch-action: pan-y;
+    position: relative !important;
+    display: flex !important;
+    align-items: stretch;
+    gap: 16px;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-width: none;
+    margin: 0 auto;
+    padding: 0 0 14px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding-inline: 0;
+    -webkit-overflow-scrolling: touch;
+    transform-style: flat !important;
+    touch-action: pan-x pan-y;
   }
 
   .creative-collection .archive-card {
+    position: relative !important;
+    top: auto;
+    left: auto;
+    z-index: 1;
+    flex: 0 0 82vw !important;
     width: 82vw !important;
-    max-width: none !important;
+    max-width: 320px !important;
     height: min(92vw, 360px) !important;
-    transform-style: flat;
-    will-change: transform, opacity;
-    transition:
-      width 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.55s ease,
-      filter 0.55s ease;
-    pointer-events: none;
-  }
-
-  .creative-collection .archive-card.is-active {
-    z-index: 5;
-    opacity: 1;
+    min-height: 280px !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transform-style: flat !important;
+    animation: none !important;
     pointer-events: auto;
-    transform: translate3d(-50%, calc(-50% + var(--archive-float-y, 0px)), 0) scale(1) !important;
-  }
-
-  .creative-collection .archive-card.is-previous {
-    z-index: 1;
-    width: 55vw !important;
-    opacity: 0.25;
-    transform: translate3d(calc(-50% - 50vw), -50%, 0) !important;
-  }
-
-  .creative-collection .archive-card.is-next {
-    z-index: 1;
-    width: 55vw !important;
-    opacity: 0.25;
-    transform: translate3d(calc(-50% + 50vw), -50%, 0) !important;
-  }
-
-  .creative-collection .archive-card.is-far {
-    opacity: 0;
-    pointer-events: none;
+    scroll-snap-align: center;
+    transition:
+      opacity 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .creative-collection .archive-card::before {
     opacity: 0.26 !important;
+  }
+
+  .creative-collection .archive-card .showcase-card-image,
+  .creative-collection .archive-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transform: none !important;
   }
 
   .creative-collection .archive-arrow,
