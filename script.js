@@ -402,6 +402,9 @@ if (archiveGallery) {
 const archiveLightboxImages = document.querySelectorAll(".creative-collection .archive-card .showcase-card-image");
 
 if (archiveLightboxImages.length) {
+  const archiveLightboxItems = Array.from(archiveLightboxImages);
+  let activeArchiveLightboxIndex = 0;
+  let archiveLightboxCloseTimer;
   const archiveLightbox = document.createElement("div");
   archiveLightbox.className = "archive-lightbox";
   archiveLightbox.setAttribute("role", "dialog");
@@ -409,39 +412,67 @@ if (archiveLightboxImages.length) {
   archiveLightbox.setAttribute("aria-label", "Design Archive image preview");
   archiveLightbox.innerHTML = `
     <button class="archive-lightbox-close" type="button" aria-label="Close image preview">X</button>
+    <button class="archive-lightbox-nav archive-lightbox-prev" type="button" aria-label="Previous image">&larr;</button>
     <img class="archive-lightbox-image" alt="" />
+    <button class="archive-lightbox-nav archive-lightbox-next" type="button" aria-label="Next image">&rarr;</button>
   `;
   document.body.appendChild(archiveLightbox);
 
   const archiveLightboxImage = archiveLightbox.querySelector(".archive-lightbox-image");
   const archiveLightboxClose = archiveLightbox.querySelector(".archive-lightbox-close");
+  const archiveLightboxPrev = archiveLightbox.querySelector(".archive-lightbox-prev");
+  const archiveLightboxNext = archiveLightbox.querySelector(".archive-lightbox-next");
 
-  const closeArchiveLightbox = () => {
-    archiveLightbox.classList.remove("is-open");
-    document.body.classList.remove("archive-lightbox-open");
-    archiveLightboxImage.removeAttribute("src");
-    archiveLightboxImage.alt = "";
+  const setArchiveLightboxImage = index => {
+    activeArchiveLightboxIndex = (index + archiveLightboxItems.length) % archiveLightboxItems.length;
+    const image = archiveLightboxItems[activeArchiveLightboxIndex];
+    archiveLightboxImage.src = image.getAttribute("src");
+    archiveLightboxImage.alt = image.alt || "Design Archive artwork preview";
   };
 
-  const openArchiveLightbox = image => {
-    archiveLightboxImage.src = image.src;
-    archiveLightboxImage.alt = image.alt || "Design Archive artwork preview";
+  const closeArchiveLightbox = () => {
+    window.clearTimeout(archiveLightboxCloseTimer);
+    archiveLightbox.classList.remove("is-open");
+    document.body.classList.remove("archive-lightbox-open");
+    archiveLightboxCloseTimer = window.setTimeout(() => {
+      if (!archiveLightbox.classList.contains("is-open")) {
+        archiveLightboxImage.removeAttribute("src");
+        archiveLightboxImage.alt = "";
+      }
+    }, 250);
+  };
+
+  const openArchiveLightbox = index => {
+    window.clearTimeout(archiveLightboxCloseTimer);
+    setArchiveLightboxImage(index);
     document.body.classList.add("archive-lightbox-open");
     archiveLightbox.classList.add("is-open");
     archiveLightboxClose.focus({ preventScroll: true });
   };
 
-  archiveLightboxImages.forEach(image => {
+  const showArchiveLightboxImage = direction => {
+    setArchiveLightboxImage(activeArchiveLightboxIndex + direction);
+  };
+
+  archiveLightboxItems.forEach((image, index) => {
     image.addEventListener("click", event => {
       event.stopPropagation();
       if (archiveLightboxClickBlocked) {
         return;
       }
-      openArchiveLightbox(image);
+      openArchiveLightbox(index);
     });
   });
 
   archiveLightboxClose.addEventListener("click", closeArchiveLightbox);
+  archiveLightboxPrev.addEventListener("click", event => {
+    event.stopPropagation();
+    showArchiveLightboxImage(-1);
+  });
+  archiveLightboxNext.addEventListener("click", event => {
+    event.stopPropagation();
+    showArchiveLightboxImage(1);
+  });
 
   archiveLightbox.addEventListener("click", event => {
     if (event.target === archiveLightbox) {
@@ -450,8 +481,19 @@ if (archiveLightboxImages.length) {
   });
 
   window.addEventListener("keydown", event => {
-    if (event.key === "Escape" && archiveLightbox.classList.contains("is-open")) {
+    if (!archiveLightbox.classList.contains("is-open")) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
       closeArchiveLightbox();
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      showArchiveLightboxImage(-1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      showArchiveLightboxImage(1);
     }
   });
 }
