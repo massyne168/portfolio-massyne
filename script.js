@@ -17,7 +17,7 @@ document.querySelectorAll(
   card.classList.add("chrome-edge-card");
 });
 const revealDuration = 800;
-const finePointer = window.matchMedia("(pointer: fine) and (hover: hover)").matches;
+const finePointer = false;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let scrollIdleTimer;
 
@@ -271,6 +271,7 @@ if (archiveGallery) {
   const archivePrev = document.querySelector(".archive-arrow-prev");
   const archiveNext = document.querySelector(".archive-arrow-next");
   const archiveCards = Array.from(archiveGallery.querySelectorAll(".archive-card"));
+  const archiveMobileQuery = window.matchMedia("(max-width: 768px)");
   let isDraggingArchive = false;
   let dragStartX = 0;
   let dragCurrentX = 0;
@@ -283,6 +284,7 @@ if (archiveGallery) {
   let archiveScrollBlockTimer;
 
   const normalizeArchiveIndex = index => (index + archiveCards.length) % archiveCards.length;
+  const isMobileArchive = () => archiveMobileQuery.matches;
 
   const getArchiveOffset = index => {
     const total = archiveCards.length;
@@ -301,14 +303,26 @@ if (archiveGallery) {
     }
 
     activeArchiveIndex = normalizeArchiveIndex(index);
+
+    if (isMobileArchive()) {
+      archiveCards.forEach(card => {
+        card.style.removeProperty("--archive-transform");
+        card.style.removeProperty("--archive-opacity");
+        card.style.removeProperty("--archive-filter");
+        card.style.removeProperty("--archive-z");
+        card.classList.remove("is-active", "is-previous", "is-next", "is-far");
+        card.setAttribute("aria-hidden", "false");
+      });
+      return;
+    }
+
     archiveCards.forEach((card, cardIndex) => {
       const offset = getArchiveOffset(cardIndex);
       const absOffset = Math.abs(offset);
       const direction = Math.sign(offset);
-      const isMobileArchive = window.innerWidth <= 768;
-      const sideX = isMobileArchive ? 96 : 170;
-      const farX = isMobileArchive ? 150 : 275;
-      const farStep = isMobileArchive ? 44 : 66;
+      const sideX = 170;
+      const farX = 275;
+      const farStep = 66;
       const translateX = absOffset === 0
         ? 0
         : direction * (absOffset === 1 ? sideX : farX + (Math.min(absOffset, 4) - 2) * farStep);
@@ -326,13 +340,13 @@ if (archiveGallery) {
       card.classList.toggle("is-previous", offset === -1);
       card.classList.toggle("is-next", offset === 1);
       card.classList.toggle("is-far", absOffset > 1);
-      card.setAttribute("aria-hidden", !isMobileArchive && offset !== 0 ? "true" : "false");
+      card.setAttribute("aria-hidden", offset !== 0 ? "true" : "false");
     });
   };
 
   const moveArchive = direction => {
     setActiveArchiveIndex(activeArchiveIndex + direction);
-    if (window.innerWidth <= 768) {
+    if (isMobileArchive()) {
       archiveCards[activeArchiveIndex]?.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
@@ -342,6 +356,10 @@ if (archiveGallery) {
   };
 
   archiveGallery.addEventListener("wheel", event => {
+    if (isMobileArchive()) {
+      return;
+    }
+
     event.preventDefault();
     const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
     archiveWheelDelta += delta;
@@ -358,7 +376,7 @@ if (archiveGallery) {
   }, { passive: false });
 
   archiveGallery.addEventListener("scroll", () => {
-    if (window.innerWidth > 768) {
+    if (!isMobileArchive()) {
       return;
     }
 
@@ -370,7 +388,7 @@ if (archiveGallery) {
   }, { passive: true });
 
   archiveGallery.addEventListener("pointerdown", event => {
-    if (window.innerWidth <= 768) {
+    if (isMobileArchive()) {
       return;
     }
 
@@ -451,6 +469,135 @@ if (archiveGallery) {
   });
   window.addEventListener("resize", debounce(() => setActiveArchiveIndex(activeArchiveIndex)), { passive: true });
   setActiveArchiveIndex(0);
+}
+
+const archiveFilterButtons = document.querySelectorAll(".archive-filter");
+const archiveFilterCards = document.querySelectorAll(".archive-gallery-grid .archive-card");
+
+if (archiveFilterButtons.length && archiveFilterCards.length) {
+  archiveFilterButtons.forEach(button => {
+    button.setAttribute("aria-pressed", button.classList.contains("is-active") ? "true" : "false");
+
+    button.addEventListener("click", () => {
+      const filter = button.dataset.archiveFilter || "all";
+
+      archiveFilterButtons.forEach(filterButton => {
+        const isActive = filterButton === button;
+        filterButton.classList.toggle("is-active", isActive);
+        filterButton.setAttribute("aria-pressed", String(isActive));
+      });
+
+      archiveFilterCards.forEach(card => {
+        const matchesFilter = filter === "all" || card.dataset.category === filter;
+        window.clearTimeout(card.archiveFilterTimer);
+
+        if (matchesFilter) {
+          card.classList.remove("is-filter-hidden");
+          card.setAttribute("aria-hidden", "false");
+          requestAnimationFrame(() => {
+            card.classList.remove("is-filter-fading");
+          });
+          return;
+        }
+
+        card.classList.add("is-filter-fading");
+        card.setAttribute("aria-hidden", "true");
+        card.archiveFilterTimer = window.setTimeout(() => {
+          card.classList.add("is-filter-hidden");
+        }, 220);
+      });
+    });
+  });
+}
+
+const motionLinesMarquee = document.querySelector(".motion-lines-marquee");
+if (motionLinesMarquee) {
+  const motionLinesTrack = motionLinesMarquee.querySelector(".motion-lines-track");
+  const motionLinesImages = motionLinesMarquee.querySelectorAll("img");
+  let motionLinesAnimation = null;
+  let motionLinesDragging = false;
+  let motionLinesStartX = 0;
+  let motionLinesStartTime = 0;
+  let motionLinesLoopWidth = 1;
+
+  motionLinesImages.forEach(image => {
+    image.setAttribute("draggable", "false");
+  });
+
+  const getMotionLinesAnimation = () => {
+    motionLinesAnimation = motionLinesTrack?.getAnimations().find(animation => animation.animationName === "motionLinesMarquee") || null;
+    return motionLinesAnimation;
+  };
+
+  const getMotionLinesDuration = animation => {
+    const timing = animation.effect?.getComputedTiming();
+    return typeof timing?.duration === "number" && timing.duration > 0 ? timing.duration : 96000;
+  };
+
+  const normalizeMotionLinesTime = (time, duration) => ((time % duration) + duration) % duration;
+
+  const stopMotionLinesDrag = event => {
+    if (!motionLinesDragging) {
+      return;
+    }
+
+    motionLinesDragging = false;
+    motionLinesMarquee.classList.remove("is-dragging");
+
+    const animation = getMotionLinesAnimation();
+    if (animation) {
+      animation.play();
+    }
+
+    if (motionLinesMarquee.hasPointerCapture(event.pointerId)) {
+      motionLinesMarquee.releasePointerCapture(event.pointerId);
+    }
+
+    window.setTimeout(() => {
+      archiveLightboxClickBlocked = false;
+    }, 80);
+  };
+
+  motionLinesMarquee.addEventListener("pointerdown", event => {
+    const animation = getMotionLinesAnimation();
+    if (!animation || !motionLinesTrack) {
+      return;
+    }
+
+    motionLinesDragging = true;
+    motionLinesStartX = event.clientX;
+    motionLinesStartTime = Number(animation.currentTime) || 0;
+    motionLinesLoopWidth = Math.max(1, motionLinesTrack.scrollWidth / 2);
+    motionLinesMarquee.classList.add("is-dragging");
+    motionLinesMarquee.setPointerCapture(event.pointerId);
+    animation.pause();
+  });
+
+  motionLinesMarquee.addEventListener("pointermove", event => {
+    if (!motionLinesDragging) {
+      return;
+    }
+
+    const animation = getMotionLinesAnimation();
+    if (!animation) {
+      return;
+    }
+
+    const deltaX = event.clientX - motionLinesStartX;
+    const duration = getMotionLinesDuration(animation);
+    animation.currentTime = normalizeMotionLinesTime(
+      motionLinesStartTime - (deltaX / motionLinesLoopWidth) * duration,
+      duration
+    );
+
+    if (Math.abs(deltaX) > 8) {
+      archiveLightboxClickBlocked = true;
+    }
+  });
+
+  motionLinesMarquee.addEventListener("pointerup", stopMotionLinesDrag);
+  motionLinesMarquee.addEventListener("pointercancel", stopMotionLinesDrag);
+  motionLinesMarquee.addEventListener("pointerleave", stopMotionLinesDrag);
 }
 
 const portfolioLightboxSelectors = [

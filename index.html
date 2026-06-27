@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Orbitron:wght@800;900&family=Oxanium:wght@700;800&family=Poppins:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/hero.gif" type="image/gif" fetchpriority="high" />
-  <link rel="stylesheet" href="style.min.css" />
+  <link rel="stylesheet" href="style.css" />
   <script>
     const ACCESS_LOCK_ENABLED = true;
     const ACCESS_CODE = "MASSYNE2026";
@@ -1004,7 +1004,6 @@
 
     <section class="section motion-showcase section-reveal" id="motion-showcase" aria-labelledby="motion-showcase-title">
       <div class="section-heading motion-heading">
-        <p class="kicker">Motion Showcase</p>
         <h2 id="motion-showcase-title">Motion Showcase</h2>
         <p>Animated visuals and motion-based creative work.</p>
       </div>
@@ -1021,39 +1020,67 @@
 
     <section class="section motion-lines-section section-reveal" id="motion-lines" aria-labelledby="motion-lines-title">
       <div class="section-heading motion-lines-heading">
-        <p class="kicker">Motion Lines</p>
         <h2 id="motion-lines-title">Motion Lines</h2>
         <p>Animated visual assets and cinematic line motion designs.</p>
       </div>
 
-      <div class="motion-lines-grid" aria-label="Motion Lines animated visual assets">
-        <article class="motion-lines-card">
-          <img src="images/motion1.gif" alt="Motion Lines animated visual asset 1" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
-        <article class="motion-lines-card">
-          <img src="images/motion2.gif" alt="Motion Lines animated visual asset 2" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
-        <article class="motion-lines-card">
-          <img src="images/motion3.gif" alt="Motion Lines animated visual asset 3" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
-        <article class="motion-lines-card">
-          <img src="images/motion4.gif" alt="Motion Lines animated visual asset 4" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
-        <article class="motion-lines-card">
-          <img src="images/motion5.gif" alt="Motion Lines animated visual asset 5" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
-        <article class="motion-lines-card">
-          <img src="images/motion6.gif" alt="Motion Lines animated visual asset 6" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
-        <article class="motion-lines-card">
-          <img src="images/motion7.gif" alt="Motion Lines animated visual asset 7" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
-        <article class="motion-lines-card">
-          <img src="images/motion8.gif" alt="Motion Lines animated visual asset 8" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
-        <article class="motion-lines-card">
-          <img src="images/motion9.gif" alt="Motion Lines animated visual asset 9" width="1865" height="108" loading="lazy" decoding="async" />
-        </article>
+      <div class="motion-lines-marquee" aria-label="Motion Lines animated visual assets">
+        <div class="motion-lines-track">
+          <article class="motion-lines-card">
+            <img src="images/motion1.gif" alt="Motion Lines animated visual asset 1" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card">
+            <img src="images/motion2.gif" alt="Motion Lines animated visual asset 2" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card">
+            <img src="images/motion3.gif" alt="Motion Lines animated visual asset 3" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card">
+            <img src="images/motion4.gif" alt="Motion Lines animated visual asset 4" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card">
+            <img src="images/motion5.gif" alt="Motion Lines animated visual asset 5" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card">
+            <img src="images/motion6.gif" alt="Motion Lines animated visual asset 6" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card">
+            <img src="images/motion7.gif" alt="Motion Lines animated visual asset 7" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card">
+            <img src="images/motion8.gif" alt="Motion Lines animated visual asset 8" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card">
+            <img src="images/motion9.gif" alt="Motion Lines animated visual asset 9" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion1.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion2.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion3.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion4.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion5.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion6.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion7.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion8.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+          <article class="motion-lines-card" aria-hidden="true">
+            <img src="images/motion9.gif" alt="" width="1865" height="108" loading="lazy" decoding="async" />
+          </article>
+        </div>
       </div>
     </section>
 
@@ -1066,58 +1093,75 @@
         </p>
       </div>
 
-      <div class="archive-showcase">
-        <button class="archive-arrow archive-arrow-prev" type="button" aria-label="Previous archive cards">
-          <span aria-hidden="true"></span>
-        </button>
-        <div class="creative-collection-grid archive-track" aria-label="Design archive artwork">
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive1-1920.webp" srcset="images/optimized/archive1-480.webp 480w, images/optimized/archive1-800.webp 800w, images/optimized/archive1-1200.webp 1200w, images/optimized/archive1-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 1" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive2-1920.webp" srcset="images/optimized/archive2-480.webp 480w, images/optimized/archive2-800.webp 800w, images/optimized/archive2-1200.webp 1200w, images/optimized/archive2-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 2" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive3-1920.webp" srcset="images/optimized/archive3-480.webp 480w, images/optimized/archive3-800.webp 800w, images/optimized/archive3-1200.webp 1200w, images/optimized/archive3-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 3" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive4-1920.webp" srcset="images/optimized/archive4-480.webp 480w, images/optimized/archive4-800.webp 800w, images/optimized/archive4-1200.webp 1200w, images/optimized/archive4-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 4" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive5-1920.webp" srcset="images/optimized/archive5-480.webp 480w, images/optimized/archive5-800.webp 800w, images/optimized/archive5-1200.webp 1200w, images/optimized/archive5-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 5" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive6-1920.webp" srcset="images/optimized/archive6-480.webp 480w, images/optimized/archive6-800.webp 800w, images/optimized/archive6-1200.webp 1200w, images/optimized/archive6-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 6" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive7-1920.webp" srcset="images/optimized/archive7-480.webp 480w, images/optimized/archive7-800.webp 800w, images/optimized/archive7-1200.webp 1200w, images/optimized/archive7-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 7" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive8-1920.webp" srcset="images/optimized/archive8-480.webp 480w, images/optimized/archive8-800.webp 800w, images/optimized/archive8-1200.webp 1200w, images/optimized/archive8-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 8" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/optimized/archive9-1920.webp" srcset="images/optimized/archive9-480.webp 480w, images/optimized/archive9-800.webp 800w, images/optimized/archive9-1200.webp 1200w, images/optimized/archive9-1920.webp 1920w" sizes="(min-width: 1024px) 280px, (min-width: 640px) 240px, 180px" alt="Design archive artwork 9" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/archive10.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 10" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/archive11.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 11" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/archive12.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 12" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-          <article class="archive-card silver-light-card">
-            <img class="showcase-card-image" src="images/archive13.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 13" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
-          </article>
-        </div>
-        <button class="archive-arrow archive-arrow-next" type="button" aria-label="Next archive cards">
-          <span aria-hidden="true"></span>
-        </button>
+      <div class="archive-filter-bar" aria-label="Design archive filters">
+        <button class="archive-filter is-active" type="button" data-archive-filter="all">ALL</button>
+        <button class="archive-filter" type="button" data-archive-filter="posters">POSTERS</button>
+        <button class="archive-filter" type="button" data-archive-filter="logos">LOGOS</button>
+        <button class="archive-filter" type="button" data-archive-filter="branding">BRANDING</button>
+        <button class="archive-filter" type="button" data-archive-filter="experiments">EXPERIMENTS</button>
       </div>
-      <div class="archive-drag-indicator" aria-hidden="true">
-        <span class="archive-drag-line"><span class="archive-drag-dot"></span></span>
-        <span class="archive-drag-text"><span>&larr;</span> DRAG TO EXPLORE <span>&rarr;</span></span>
+
+      <div class="archive-gallery-grid" aria-label="Design archive artwork">
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive1.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 1" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive2.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 2" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive3.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 3" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive4.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 4" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive5.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 5" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="logos">
+            <img class="showcase-card-image" src="images/archive6.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 6" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="logos">
+            <img class="showcase-card-image" src="images/archive7.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 7" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive8.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 8" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive9.webp" sizes="(min-width: 1024px) 320px, 46vw" alt="Design archive artwork 9" width="1920" height="1080" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="logos">
+            <img class="showcase-card-image" src="images/archive14.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 14" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive15.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 15" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="experiments">
+            <img class="showcase-card-image" src="images/archive16.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 16" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive17.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 17" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive18.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 18" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="logos">
+            <img class="showcase-card-image" src="images/archive19.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 19" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="logos">
+            <img class="showcase-card-image" src="images/archive20.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 20" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="logos">
+            <img class="showcase-card-image" src="images/archive21.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 21" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive22.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 22" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive23.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 23" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
+          <article class="archive-card silver-light-card" data-category="posters">
+            <img class="showcase-card-image" src="images/archive24.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 24" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
+          </article>
       </div>
     </section>
 
@@ -1177,7 +1221,7 @@
           </article>
           <article class="about-card silver-light-card">
             <span>04</span>
-            <h3>Photo Manipulation</h3>
+            <h3>Motion Design</h3>
           </article>
         </div>
 
@@ -1284,8 +1328,8 @@
         <article class="service-card silver-light-card">
           <div class="service-copy">
             <span class="service-number"></span>
-            <h3>Photo Manipulation</h3>
-            <p>Imaginative edits that blur the line between real and art.</p>
+            <h3>Motion Design</h3>
+            <p>Animated visuals built for brands, campaigns, and digital content.</p>
             <span class="service-arrow" aria-hidden="true">&rarr;</span>
           </div>
         </article>
@@ -1367,7 +1411,7 @@
           <h2>Let's Build Something Amazing Together</h2>
           <p>
             For collaborations, freelance projects, branding, posters, gaming
-            artwork, or Dark Fantasy Poster Design projects, feel free to reach out.
+            artwork, or motion design projects, feel free to reach out.
           </p>
         </div>
 
@@ -1433,7 +1477,7 @@
     <p>&copy; 2026 All Rights Reserved</p>
   </footer>
 
-  <script src="script.min.js" defer></script>
+  <script src="script.js" defer></script>
   <script>
     (() => {
       const overlay = document.getElementById("accessLockOverlay");

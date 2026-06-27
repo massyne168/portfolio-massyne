@@ -7706,3 +7706,382 @@ footer::after {
     0 0 0 1px rgba(255, 255, 255, 0.05) !important,
     0 0 20px rgba(255, 255, 255, 0.075) !important;
 }
+
+/* Focused mobile cleanup: keep the archive as a simple native slider. */
+@media (max-width: 768px) {
+  .creative-collection .archive-showcase {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    display: block !important;
+    padding: 0 18px !important;
+    overflow: hidden !important;
+    perspective: none !important;
+  }
+
+  .creative-collection .archive-track,
+  .creative-collection .creative-collection-grid {
+    position: relative !important;
+    display: flex !important;
+    gap: 16px !important;
+    height: auto !important;
+    padding: 0 0 14px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+    transform-style: flat !important;
+    touch-action: pan-x;
+  }
+
+  .creative-collection .archive-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    flex: 0 0 min(78vw, 320px) !important;
+    width: min(78vw, 320px) !important;
+    height: min(88vw, 360px) !important;
+    min-height: 260px !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    animation: none !important;
+    scroll-snap-align: center;
+  }
+
+  .creative-collection .archive-card:hover,
+  .creative-collection .archive-card.is-visible:hover,
+  .creative-collection .archive-card.show:hover {
+    transform: none !important;
+  }
+}
+
+body,
+a,
+button,
+.menu-toggle,
+.project-card,
+.cyber-card,
+.service-card,
+.archive-card,
+.contact-card,
+.gurzil-logo-card,
+.gurzil-copy-card,
+.gurzil-image-card,
+.about-card,
+.about-skill-pills span,
+.motion-card,
+.card {
+  cursor: auto !important;
+}
+
+a,
+button,
+.menu-toggle,
+.archive-card,
+.project-card,
+.contact-card {
+  cursor: pointer !important;
+}
+
+.custom-cursor,
+.cursor-dot,
+.cursor-ring,
+.cursor-glow {
+  display: none !important;
+}
+
+/* Motion Lines: infinite horizontal banner showcase. */
+.motion-lines-section {
+  overflow: hidden !important;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.98), rgba(8, 8, 8, 0.98)) !important;
+}
+
+.motion-lines-section .motion-lines-marquee {
+  --motion-lines-gap: clamp(14px, 2vw, 24px);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.motion-lines-section .motion-lines-marquee.is-dragging {
+  cursor: grabbing;
+}
+
+.motion-lines-section .motion-lines-track {
+  display: flex !important;
+  align-items: center;
+  gap: var(--motion-lines-gap);
+  width: max-content;
+  padding: clamp(12px, 2.4vw, 24px) 0;
+  animation: motionLinesMarquee 96s linear infinite;
+  will-change: transform;
+}
+
+.motion-lines-section .motion-lines-marquee:hover .motion-lines-track,
+.motion-lines-section .motion-lines-marquee.is-dragging .motion-lines-track {
+  animation-play-state: paused;
+}
+
+.motion-lines-section .motion-lines-card {
+  position: relative !important;
+  flex: 0 0 min(80vw, 1400px) !important;
+  width: min(80vw, 1400px) !important;
+  aspect-ratio: 1865 / 108;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.025) !important;
+  box-shadow:
+    inset 1px 0 rgba(255, 255, 255, 0.16),
+    inset -1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 1px rgba(255, 255, 255, 0.10) !important;
+  filter: none !important;
+  transform: none !important;
+  transition: border-color 180ms ease, background-color 180ms ease !important;
+  cursor: pointer !important;
+}
+
+.motion-lines-section .motion-lines-card:hover {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  transform: none !important;
+  box-shadow:
+    inset 1px 0 rgba(255, 255, 255, 0.18),
+    inset -1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 1px rgba(255, 255, 255, 0.12) !important;
+}
+
+.motion-lines-section .motion-lines-card::before,
+.motion-lines-section .motion-lines-card::after {
+  display: none !important;
+}
+
+.motion-lines-section .motion-lines-card img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+@keyframes motionLinesMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(calc(-50% - (var(--motion-lines-gap) / 2)), 0, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  .motion-lines-section .motion-lines-card {
+    flex-basis: 90vw !important;
+    width: 90vw !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-lines-section .motion-lines-track {
+    animation: none !important;
+  }
+}
+
+.archive-lightbox {
+  background: rgba(0, 0, 0, 0.92) !important;
+}
+
+.archive-lightbox-image {
+  object-fit: contain !important;
+}
+
+/* Design Archive: clean filterable grid gallery. */
+.creative-collection .archive-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: min(100%, 980px);
+  margin: 28px auto 32px;
+}
+
+.creative-collection .archive-filter {
+  min-height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0 16px;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.035);
+  font-family: "Space Grotesk", "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.creative-collection .archive-filter:hover,
+.creative-collection .archive-filter:focus-visible,
+.creative-collection .archive-filter.is-active {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.26);
+  background: rgba(255, 30, 48, 0.14);
+  transform: translateY(-1px);
+}
+
+.creative-collection .archive-gallery-grid {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  column-count: 4;
+  column-gap: 22px;
+  overflow: visible !important;
+}
+
+.creative-collection .archive-gallery-grid .archive-card {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: auto !important;
+  display: inline-block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 0 22px !important;
+  break-inside: avoid;
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  animation: none !important;
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.34) !important,
+    inset 1px 0 rgba(255, 255, 255, 0.12),
+    inset -1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 1px rgba(255, 255, 255, 0.08) !important;
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease !important;
+}
+
+.creative-collection .archive-gallery-grid .archive-card:hover,
+.creative-collection .archive-gallery-grid .archive-card.is-visible:hover,
+.creative-collection .archive-gallery-grid .archive-card.show:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  transform: translateY(-6px) !important;
+  box-shadow:
+    0 24px 54px rgba(0, 0, 0, 0.42) !important,
+    inset 1px 0 rgba(255, 255, 255, 0.16),
+    inset -1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 1px rgba(255, 255, 255, 0.10) !important;
+}
+
+.creative-collection .archive-gallery-grid .archive-card::before {
+  content: "" !important;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block !important;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.20), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.08)),
+    radial-gradient(circle at 50% 100%, rgba(255, 30, 48, 0.10), transparent 48%) !important;
+  opacity: 0.46 !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+.creative-collection .archive-gallery-grid .archive-card::after {
+  display: none !important;
+}
+
+.creative-collection .archive-gallery-grid .archive-card img,
+.creative-collection .archive-gallery-grid .archive-card .showcase-card-image {
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: block !important;
+  object-fit: cover !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: transform 260ms ease !important;
+}
+
+.creative-collection .archive-gallery-grid .archive-card:hover img {
+  transform: scale(1.025) !important;
+}
+
+.creative-collection .archive-gallery-grid .archive-card.is-filter-fading {
+  opacity: 0 !important;
+  transform: translateY(8px) !important;
+  pointer-events: none;
+}
+
+.creative-collection .archive-gallery-grid .archive-card.is-filter-hidden {
+  display: none !important;
+}
+
+.creative-collection .archive-arrow,
+.creative-collection .archive-drag-indicator {
+  display: none !important;
+}
+
+@media (max-width: 1024px) {
+  .creative-collection .archive-gallery-grid {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 640px) {
+  .creative-collection .archive-filter-bar {
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 22px;
+    overflow-x: auto;
+    padding: 0 2px 4px;
+    scrollbar-width: none;
+  }
+
+  .creative-collection .archive-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .creative-collection .archive-filter {
+    flex: 0 0 auto;
+    min-height: 36px;
+    padding: 0 13px;
+    font-size: 11px;
+  }
+
+  .creative-collection .archive-gallery-grid {
+    column-count: 2;
+    column-gap: 14px;
+  }
+
+  .creative-collection .archive-gallery-grid .archive-card {
+    margin-bottom: 14px !important;
+    border-radius: 12px !important;
+  }
+}
