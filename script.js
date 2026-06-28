@@ -473,6 +473,7 @@ if (archiveGallery) {
 
 const archiveFilterButtons = document.querySelectorAll(".archive-filter");
 const archiveFilterCards = document.querySelectorAll(".archive-gallery-grid .archive-card");
+let syncMobileArchiveCarousel = () => {};
 
 if (archiveFilterButtons.length && archiveFilterCards.length) {
   archiveFilterButtons.forEach(button => {
@@ -506,8 +507,260 @@ if (archiveFilterButtons.length && archiveFilterCards.length) {
           card.classList.add("is-filter-hidden");
         }, 220);
       });
+
+      syncMobileArchiveCarousel();
+      window.setTimeout(syncMobileArchiveCarousel, 240);
     });
   });
+}
+
+const mobileArchiveGallery = document.querySelector(".archive-gallery-grid");
+
+if (mobileArchiveGallery) {
+  const mobileArchiveCards = Array.from(mobileArchiveGallery.querySelectorAll(".archive-card"));
+  const mobileArchiveQuery = window.matchMedia("(max-width: 768px)");
+  const mobileArchivePrev = document.querySelector(".archive-mobile-prev");
+  const mobileArchiveNext = document.querySelector(".archive-mobile-next");
+  const mobileArchiveDots = document.querySelector(".archive-mobile-dots");
+  let mobileArchiveIndex = 0;
+  let mobileArchiveDragging = false;
+  let mobileArchiveStartX = 0;
+  let mobileArchiveCurrentX = 0;
+  let mobileArchiveLastX = 0;
+  let mobileArchiveLastTime = 0;
+  let mobileArchiveVelocity = 0;
+
+  const getActiveArchiveFilter = () => document.querySelector(".archive-filter.is-active")?.dataset.archiveFilter || "all";
+
+  const getMobileArchiveCards = () => {
+    const filter = getActiveArchiveFilter();
+    return mobileArchiveCards.filter(card => filter === "all" || card.dataset.category === filter);
+  };
+
+  const normalizeMobileArchiveIndex = (index, total) => ((index % total) + total) % total;
+
+  const getMobileArchiveOffset = (card, visibleCards) => {
+    const index = visibleCards.indexOf(card);
+
+    if (index < 0) {
+      return null;
+    }
+
+    const total = visibleCards.length;
+    let offset = index - mobileArchiveIndex;
+
+    if (offset > total / 2) {
+      offset -= total;
+    } else if (offset < -total / 2) {
+      offset += total;
+    }
+
+    return offset;
+  };
+
+  const renderMobileArchiveDots = visibleCards => {
+    if (!mobileArchiveDots) {
+      return;
+    }
+
+    mobileArchiveDots.innerHTML = "";
+
+    visibleCards.forEach((card, index) => {
+      const dot = document.createElement("button");
+      const imageAlt = card.querySelector("img")?.alt || `archive image ${index + 1}`;
+      dot.className = "archive-mobile-dot";
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Show ${imageAlt}`);
+      dot.classList.toggle("is-active", index === mobileArchiveIndex);
+      dot.addEventListener("click", () => {
+        archiveLightboxClickBlocked = true;
+        setMobileArchiveIndex(index);
+        window.setTimeout(() => {
+          archiveLightboxClickBlocked = false;
+        }, 120);
+      });
+      mobileArchiveDots.appendChild(dot);
+    });
+  };
+
+  const clearMobileArchiveStyles = () => {
+    mobileArchiveCards.forEach(card => {
+      card.classList.remove("is-active", "is-previous", "is-next", "is-far");
+      card.style.removeProperty("--archive-mobile-transform");
+      card.style.removeProperty("--archive-mobile-opacity");
+      card.style.removeProperty("--archive-mobile-filter");
+      card.style.removeProperty("--archive-mobile-z");
+      card.style.removeProperty("--archive-mobile-pointer");
+      if (!card.classList.contains("is-filter-hidden")) {
+        card.setAttribute("aria-hidden", "false");
+      }
+    });
+
+    if (mobileArchiveDots) {
+      mobileArchiveDots.innerHTML = "";
+    }
+  };
+
+  const updateMobileArchive = () => {
+    if (!mobileArchiveQuery.matches) {
+      clearMobileArchiveStyles();
+      return;
+    }
+
+    const visibleCards = getMobileArchiveCards();
+
+    if (!visibleCards.length) {
+      clearMobileArchiveStyles();
+      return;
+    }
+
+    mobileArchiveIndex = normalizeMobileArchiveIndex(mobileArchiveIndex, visibleCards.length);
+
+    mobileArchiveCards.forEach(card => {
+      const offset = getMobileArchiveOffset(card, visibleCards);
+
+      if (offset === null) {
+        card.classList.remove("is-active", "is-previous", "is-next", "is-far");
+        card.style.setProperty("--archive-mobile-opacity", "0");
+        card.style.setProperty("--archive-mobile-pointer", "none");
+        card.setAttribute("aria-hidden", "true");
+        return;
+      }
+
+      const absOffset = Math.abs(offset);
+      const direction = Math.sign(offset);
+      const clampedOffset = Math.min(absOffset, 3);
+      const x = offset === 0 ? 0 : direction * (absOffset === 1 ? 34 : 50);
+      const z = offset === 0 ? 120 : absOffset === 1 ? -80 : -190 - (clampedOffset - 2) * 70;
+      const rotate = offset === 0 ? 0 : direction * (absOffset === 1 ? -42 : -58);
+      const scale = offset === 0 ? 1 : absOffset === 1 ? 0.78 : 0.62;
+      const opacity = offset === 0 ? 1 : absOffset === 1 ? 0.62 : absOffset === 2 ? 0.18 : 0;
+      const filter = offset === 0
+        ? "brightness(1) saturate(1) contrast(1.02)"
+        : absOffset === 1
+          ? "brightness(0.58) saturate(0.88) contrast(1.04)"
+          : "brightness(0.35) saturate(0.78) contrast(1.02)";
+
+      card.style.setProperty("--archive-mobile-transform", `translate3d(calc(-50% + ${x}vw), -50%, ${z}px) rotateY(${rotate}deg) scale(${scale})`);
+      card.style.setProperty("--archive-mobile-opacity", String(opacity));
+      card.style.setProperty("--archive-mobile-filter", filter);
+      card.style.setProperty("--archive-mobile-z", String(40 - clampedOffset));
+      card.style.setProperty("--archive-mobile-pointer", absOffset <= 1 ? "auto" : "none");
+      card.classList.toggle("is-active", offset === 0);
+      card.classList.toggle("is-previous", offset === -1);
+      card.classList.toggle("is-next", offset === 1);
+      card.classList.toggle("is-far", absOffset > 1);
+      card.setAttribute("aria-hidden", offset === 0 ? "false" : "true");
+    });
+
+    renderMobileArchiveDots(visibleCards);
+  };
+
+  function setMobileArchiveIndex(index) {
+    const visibleCards = getMobileArchiveCards();
+
+    if (!visibleCards.length) {
+      mobileArchiveIndex = 0;
+      updateMobileArchive();
+      return;
+    }
+
+    mobileArchiveIndex = normalizeMobileArchiveIndex(index, visibleCards.length);
+    updateMobileArchive();
+  }
+
+  const moveMobileArchive = direction => {
+    setMobileArchiveIndex(mobileArchiveIndex + direction);
+  };
+
+  syncMobileArchiveCarousel = () => {
+    const visibleCards = getMobileArchiveCards();
+    mobileArchiveIndex = visibleCards.length ? Math.min(mobileArchiveIndex, visibleCards.length - 1) : 0;
+    updateMobileArchive();
+  };
+
+  mobileArchiveGallery.addEventListener("pointerdown", event => {
+    if (!mobileArchiveQuery.matches) {
+      return;
+    }
+
+    mobileArchiveDragging = true;
+    mobileArchiveStartX = event.clientX;
+    mobileArchiveCurrentX = event.clientX;
+    mobileArchiveLastX = event.clientX;
+    mobileArchiveLastTime = performance.now();
+    mobileArchiveVelocity = 0;
+    archiveLightboxClickBlocked = false;
+    mobileArchiveGallery.classList.add("is-dragging");
+    mobileArchiveGallery.setPointerCapture(event.pointerId);
+  });
+
+  mobileArchiveGallery.addEventListener("pointermove", event => {
+    if (!mobileArchiveDragging) {
+      return;
+    }
+
+    const now = performance.now();
+    const elapsed = Math.max(1, now - mobileArchiveLastTime);
+    const distance = event.clientX - mobileArchiveStartX;
+    mobileArchiveVelocity = (event.clientX - mobileArchiveLastX) / elapsed;
+    mobileArchiveCurrentX = event.clientX;
+    mobileArchiveLastX = event.clientX;
+    mobileArchiveLastTime = now;
+
+    if (Math.abs(distance) > 8) {
+      archiveLightboxClickBlocked = true;
+      event.preventDefault();
+    }
+  });
+
+  const stopMobileArchiveDrag = event => {
+    if (!mobileArchiveDragging) {
+      return;
+    }
+
+    mobileArchiveDragging = false;
+    mobileArchiveGallery.classList.remove("is-dragging");
+    const distance = mobileArchiveCurrentX - mobileArchiveStartX;
+
+    if (Math.abs(distance) > 42) {
+      moveMobileArchive(distance < 0 ? 1 : -1);
+    } else if (Math.abs(mobileArchiveVelocity) > 0.7) {
+      moveMobileArchive(mobileArchiveVelocity < 0 ? 1 : -1);
+    }
+
+    if (mobileArchiveGallery.hasPointerCapture(event.pointerId)) {
+      mobileArchiveGallery.releasePointerCapture(event.pointerId);
+    }
+
+    window.setTimeout(() => {
+      archiveLightboxClickBlocked = false;
+    }, 120);
+  };
+
+  mobileArchiveGallery.addEventListener("pointerup", stopMobileArchiveDrag);
+  mobileArchiveGallery.addEventListener("pointercancel", stopMobileArchiveDrag);
+  mobileArchiveGallery.addEventListener("pointerleave", stopMobileArchiveDrag);
+
+  mobileArchivePrev?.addEventListener("click", () => {
+    archiveLightboxClickBlocked = true;
+    moveMobileArchive(-1);
+    window.setTimeout(() => {
+      archiveLightboxClickBlocked = false;
+    }, 120);
+  });
+
+  mobileArchiveNext?.addEventListener("click", () => {
+    archiveLightboxClickBlocked = true;
+    moveMobileArchive(1);
+    window.setTimeout(() => {
+      archiveLightboxClickBlocked = false;
+    }, 120);
+  });
+
+  mobileArchiveQuery.addEventListener("change", syncMobileArchiveCarousel);
+  window.addEventListener("resize", debounce(syncMobileArchiveCarousel), { passive: true });
+  syncMobileArchiveCarousel();
 }
 
 const motionLinesMarquee = document.querySelector(".motion-lines-marquee");
@@ -741,12 +994,7 @@ if (archiveLightboxImages.length) {
   });
 }
 
-menuToggle.addEventListener("click", () => {
-  if (window.innerWidth <= 768) {
-    closeMenu();
-    return;
-  }
-
+menuToggle?.addEventListener("click", () => {
   const isOpen = header.classList.toggle("menu-open");
   document.body.classList.toggle("menu-open", isOpen);
   menuToggle.classList.toggle("active", isOpen);

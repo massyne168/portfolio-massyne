@@ -8085,3 +8085,178 @@ button,
     border-radius: 12px !important;
   }
 }
+
+.creative-collection .archive-mobile-controls {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .creative-collection {
+    overflow: hidden;
+  }
+
+  .creative-collection .archive-gallery-grid {
+    --archive-mobile-card-width: clamp(230px, 68vw, 315px);
+    --archive-mobile-card-height: clamp(310px, 92vw, 430px);
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: var(--archive-mobile-card-height);
+    margin: 8px auto 0;
+    column-count: initial !important;
+    column-gap: 0 !important;
+    overflow: hidden !important;
+    perspective: 980px;
+    transform-style: preserve-3d;
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+    contain: layout paint;
+  }
+
+  .creative-collection .archive-gallery-grid.is-dragging {
+    cursor: grabbing;
+  }
+
+  .creative-collection .archive-gallery-grid .archive-card {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    z-index: var(--archive-mobile-z, 1) !important;
+    display: block !important;
+    width: var(--archive-mobile-card-width) !important;
+    height: var(--archive-mobile-card-height) !important;
+    margin: 0 !important;
+    border-radius: 16px !important;
+    opacity: var(--archive-mobile-opacity, 0) !important;
+    filter: var(--archive-mobile-filter, brightness(0.5)) !important;
+    transform: var(--archive-mobile-transform, translate3d(-50%, -50%, -220px) scale(0.64)) !important;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    pointer-events: var(--archive-mobile-pointer, none);
+    transition:
+      transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 320ms ease,
+      filter 320ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease !important;
+    will-change: transform, opacity;
+  }
+
+  .creative-collection .archive-gallery-grid .archive-card.is-filter-hidden {
+    display: none !important;
+  }
+
+  .creative-collection .archive-gallery-grid .archive-card.is-active {
+    border-color: rgba(255, 30, 48, 0.32) !important;
+    box-shadow:
+      0 28px 62px rgba(0, 0, 0, 0.48) !important,
+      inset 1px 0 rgba(255, 255, 255, 0.16),
+      inset -1px 0 rgba(255, 255, 255, 0.09),
+      inset 0 1px rgba(255, 255, 255, 0.10) !important;
+  }
+
+  .creative-collection .archive-gallery-grid .archive-card::before {
+    opacity: 0.34 !important;
+  }
+
+  .creative-collection .archive-gallery-grid .archive-card img,
+  .creative-collection .archive-gallery-grid .archive-card .showcase-card-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    background: #070707;
+    transform: none !important;
+  }
+
+  .creative-collection .archive-gallery-grid .archive-card:hover,
+  .creative-collection .archive-gallery-grid .archive-card.is-visible:hover,
+  .creative-collection .archive-gallery-grid .archive-card.show:hover {
+    transform: var(--archive-mobile-transform, translate3d(-50%, -50%, 0)) !important;
+  }
+
+  .creative-collection .archive-mobile-controls {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    align-items: center;
+    gap: 10px;
+    width: min(100%, 430px);
+    margin: 14px auto 0;
+    padding-inline: 10px;
+  }
+
+  .creative-collection .archive-mobile-arrow {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.055);
+    font-family: "Space Grotesk", "Poppins", sans-serif;
+    font-size: 18px;
+    line-height: 1;
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .creative-collection .archive-mobile-arrow:active {
+    transform: scale(0.94);
+  }
+
+  .creative-collection .archive-mobile-drag-text {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-family: "Space Grotesk", "Poppins", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.25;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .creative-collection .archive-mobile-dots {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    min-height: 18px;
+    margin-top: 2px;
+  }
+
+  .creative-collection .archive-mobile-dot {
+    width: 6px;
+    height: 6px;
+    border: 0;
+    border-radius: 999px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.28);
+    transition:
+      width 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .creative-collection .archive-mobile-dot.is-active {
+    width: 20px;
+    background: #ff1f35;
+  }
+}
+
+@media (max-width: 380px) {
+  .creative-collection .archive-mobile-drag-text {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+}

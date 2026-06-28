@@ -3,48 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="MASSYNE is a Graphic Designer and Motion Designer creating cinematic posters, brand identities, gaming artwork, and premium visual design." />
+  <meta name="description" content="Creative portfolio featuring branding, posters, motion design, logo collections, and digital artwork." />
   <meta name="keywords" content="MASSYNE, graphic designer, motion designer, motion design, cinematic posters, brand identity, gaming artwork, visual design" />
-  <meta property="og:title" content="MASSYNE | Graphic Designer & Motion Designer" />
-  <meta property="og:description" content="Premium graphic design and motion design portfolio by MASSYNE." />
+  <meta property="og:title" content="Massyne | Graphic Designer & Motion Designer" />
+  <meta property="og:description" content="Creative portfolio featuring branding, posters, motion design, logo collections, and digital artwork." />
+  <meta property="og:image" content="images/og-preview.jpg" />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://massyne.com/" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="MASSYNE graphic design and motion design portfolio preview" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MASSYNE | Graphic Designer & Motion Designer" />
-  <meta name="twitter:description" content="Premium graphic design and motion design portfolio by MASSYNE." />
-  <title>Portfolio | Massyne</title>
+  <meta name="twitter:title" content="Massyne | Graphic Designer & Motion Designer" />
+  <meta name="twitter:description" content="Creative portfolio featuring branding, posters, motion design, logo collections, and digital artwork." />
+  <meta name="twitter:image" content="images/og-preview.jpg" />
+  <title>Massyne | Graphic Designer & Motion Designer</title>
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Orbitron:wght@800;900&family=Oxanium:wght@700;800&family=Poppins:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/hero.gif" type="image/gif" fetchpriority="high" />
   <link rel="stylesheet" href="style.css" />
   <script>
-    const ACCESS_LOCK_ENABLED = true;
-    const ACCESS_CODE = "MASSYNE2026";
-    const ACCESS_DAYS = 5;
-    const ACCESS_STORAGE_KEY = "massyne_portfolio_access";
-    const ACCESS_START_KEY = "massyne_portfolio_access_start";
-
-    if (ACCESS_LOCK_ENABLED) {
-      try {
-        const accessStart = Number(localStorage.getItem(ACCESS_START_KEY)) || Date.now();
-        const accessTarget = accessStart + ACCESS_DAYS * 24 * 60 * 60 * 1000;
-
-        if (!localStorage.getItem(ACCESS_START_KEY)) {
-          localStorage.setItem(ACCESS_START_KEY, String(accessStart));
-        }
-
-        if (localStorage.getItem(ACCESS_STORAGE_KEY) === "granted" || Date.now() >= accessTarget) {
-          localStorage.setItem(ACCESS_STORAGE_KEY, "granted");
-        } else {
-          document.documentElement.classList.add("access-lock-enabled");
-        }
-      } catch (error) {
-        document.documentElement.classList.add("access-lock-enabled");
-      }
-    }
+    const ACCESS_LOCK_ENABLED = false;
   </script>
   <style>
     .coming-soon-overlay {
@@ -326,387 +311,9 @@
       }
     }
 
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    .access-lock-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 999999;
-      display: grid;
-      place-items: center;
-      min-height: 100svh;
-      padding: clamp(22px, 6vw, 64px);
-      overflow: hidden;
-      color: #fff;
-      background:
-        radial-gradient(circle at 50% 35%, rgba(210, 0, 24, 0.28), transparent 28%),
-        linear-gradient(130deg, rgba(255, 0, 30, 0.12), transparent 32%),
-        linear-gradient(180deg, #050505 0%, #010101 100%);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 520ms ease, visibility 520ms ease;
-    }
-
-    .access-lock-overlay::before,
-    .access-lock-overlay::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .access-lock-overlay::before {
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-      background-size: 72px 72px;
-      -webkit-mask-image: radial-gradient(circle at center, #000 0%, transparent 72%);
-      mask-image: radial-gradient(circle at center, #000 0%, transparent 72%);
-    }
-
-    .access-lock-overlay::after {
-      background:
-        linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.055), transparent),
-        radial-gradient(circle at center, transparent 42%, rgba(0, 0, 0, 0.78) 100%);
-      opacity: 0.45;
-    }
-
-    html.access-lock-enabled body {
-      overflow: hidden;
-    }
-
-    html.access-lock-enabled body > :not(.access-lock-overlay) {
-      visibility: hidden;
-    }
-
-    html.access-lock-enabled .access-lock-overlay {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    .access-lock-overlay.is-leaving {
-      opacity: 0;
-      visibility: visible;
-      pointer-events: none;
-    }
-
-    .access-lock-shell {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      width: min(100%, 500px);
-      align-items: center;
-      flex-direction: column;
-      text-align: center;
-      animation: accessLockFadeUp 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-    }
-
-    .access-lock-logo-wrap {
-      position: relative;
-      display: grid;
-      place-items: center;
-      width: clamp(112px, 24vw, 176px);
-      aspect-ratio: 1;
-      margin-bottom: clamp(20px, 4vw, 30px);
-    }
-
-    .access-lock-logo-wrap::before {
-      content: "";
-      position: absolute;
-      width: 120%;
-      aspect-ratio: 1;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(255, 0, 31, 0.38), rgba(255, 0, 31, 0.1) 42%, transparent 70%);
-      filter: blur(18px);
-      animation: accessLockGlow 5.5s ease-in-out infinite;
-    }
-
-    .access-lock-logo {
-      position: relative;
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 0 24px rgba(255, 0, 30, 0.42));
-    }
-
-    .access-lock-kicker,
-    .access-lock-subtitle,
-    .access-lock-countdown,
-    .access-lock-countdown-label,
-    .access-lock-countdown-note,
-    .access-lock-input,
-    .access-lock-button,
-    .access-lock-error {
-      font-family: "Space Grotesk", "Poppins", sans-serif;
-    }
-
-    .access-lock-kicker {
-      margin: 0 0 10px;
-      color: #ff1f35;
-      font-size: clamp(0.68rem, 2vw, 0.78rem);
-      font-weight: 700;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-    }
-
-    .access-lock-title {
-      margin: 0;
-      color: #fff;
-      font-family: "Monument Extended Black", "Monument Extended", "Orbitron", "Oxanium", sans-serif;
-      font-size: clamp(2.25rem, 8vw, 4.7rem);
-      font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      text-shadow: 0 0 26px rgba(255, 30, 30, 0.32);
-    }
-
-    .access-lock-subtitle {
-      margin: 14px 0 18px;
-      color: rgba(255, 255, 255, 0.72);
-      font-size: clamp(0.98rem, 2.4vw, 1.08rem);
-      font-weight: 500;
-    }
-
-    .access-lock-countdown {
-      display: grid;
-      gap: 8px;
-      width: min(100%, 430px);
-      margin: 0 0 22px;
-      padding: 14px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      background: rgba(8, 8, 8, 0.68);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 42px rgba(0, 0, 0, 0.28);
-    }
-
-    .access-lock-countdown-label,
-    .access-lock-countdown-note {
-      margin: 0;
-      color: rgba(255, 255, 255, 0.64);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .access-lock-countdown-time {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px 12px;
-      color: #fff;
-      font-size: clamp(0.78rem, 2vw, 0.92rem);
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .access-lock-countdown-time span {
-      color: #ff1f35;
-      text-shadow: 0 0 18px rgba(255, 31, 53, 0.32);
-    }
-
-    .access-lock-countdown-note {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-    }
-
-    .access-lock-form {
-      display: grid;
-      width: min(100%, 390px);
-      gap: 12px;
-    }
-
-    .access-lock-input,
-    .access-lock-button {
-      width: 100%;
-      min-height: 54px;
-      border-radius: 8px;
-      font-size: 0.94rem;
-      letter-spacing: 0.14em;
-    }
-
-    .access-lock-input {
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      padding: 0 18px;
-      color: #fff;
-      background: rgba(8, 8, 8, 0.86);
-      outline: none;
-      text-align: center;
-      text-transform: uppercase;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 46px rgba(0, 0, 0, 0.42);
-      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-    }
-
-    .access-lock-input:focus {
-      border-color: rgba(255, 31, 53, 0.72);
-      box-shadow: 0 0 0 3px rgba(255, 31, 53, 0.14), 0 18px 46px rgba(0, 0, 0, 0.42);
-    }
-
-    .access-lock-input::placeholder {
-      color: rgba(255, 255, 255, 0.36);
-    }
-
-    .access-lock-button {
-      border: 0;
-      color: #fff;
-      background: linear-gradient(135deg, #ff1f35, #8e0011);
-      font-weight: 800;
-      box-shadow: 0 18px 42px rgba(190, 0, 22, 0.28);
-      transition: transform 180ms ease, filter 180ms ease;
-    }
-
-    .access-lock-button:hover,
-    .access-lock-button:focus-visible {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
-    }
-
-    .access-lock-error {
-      min-height: 20px;
-      margin: 2px 0 0;
-      color: #ff3247;
-      font-size: 0.84rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .access-lock-form.is-shaking .access-lock-input {
-      animation: accessLockShake 360ms ease;
-      border-color: rgba(255, 31, 53, 0.9);
-    }
-
-    @keyframes accessLockFadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(16px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes accessLockGlow {
-      0%,
-      100% {
-        opacity: 0.7;
-        transform: scale(0.96);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.05);
-      }
-    }
-
-    @keyframes accessLockShake {
-      0%,
-      100% {
-        transform: translateX(0);
-      }
-      20%,
-      60% {
-        transform: translateX(-8px);
-      }
-      40%,
-      80% {
-        transform: translateX(8px);
-      }
-    }
-
-    @media (max-width: 520px) {
-      .access-lock-overlay {
-        padding: 22px 18px;
-      }
-
-      .access-lock-kicker {
-        letter-spacing: 0.2em;
-      }
-
-      .access-lock-form {
-        width: 100%;
-      }
-
-      .access-lock-countdown {
-        width: 100%;
-        padding: 12px 14px;
-      }
-
-      .access-lock-countdown-time {
-        gap: 6px 9px;
-        letter-spacing: 0.07em;
-      }
-
-      .access-lock-input,
-      .access-lock-button {
-        min-height: 58px;
-        font-size: 1rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .access-lock-overlay,
-      .access-lock-shell,
-      .access-lock-logo-wrap::before,
-      .access-lock-form.is-shaking .access-lock-input {
-        animation: none;
-        transition: none;
-      }
-    }
   </style>
 </head>
 <body class="is-loading">
-  <div class="access-lock-overlay" id="accessLockOverlay" aria-label="Private portfolio access" role="dialog" aria-modal="true">
-    <div class="access-lock-shell">
-      <div class="access-lock-logo-wrap" aria-hidden="true">
-        <img class="access-lock-logo" src="images/logo.png" alt="" width="512" height="512" decoding="async" />
-      </div>
-      <h1 class="access-lock-title">PRIVATE PORTFOLIO</h1>
-      <p class="access-lock-subtitle">Access will be available soon, or enter the code to continue.</p>
-      <div class="access-lock-countdown" aria-live="polite">
-        <p class="access-lock-countdown-label">Access will be available in:</p>
-        <div class="access-lock-countdown-time" aria-label="Access countdown">
-          <span id="accessDays">05</span> DAYS
-          <span id="accessHours">00</span> HOURS
-          <span id="accessMinutes">00</span> MIN
-          <span id="accessSeconds">00</span> SEC
-        </div>
-        <p class="access-lock-countdown-note">or enter code below</p>
-      </div>
-      <form class="access-lock-form" id="accessLockForm" novalidate>
-        <label class="sr-only" for="accessCodeInput">Access code</label>
-        <input
-          class="access-lock-input"
-          id="accessCodeInput"
-          type="password"
-          name="access-code"
-          inputmode="text"
-          autocomplete="off"
-          autocapitalize="characters"
-          spellcheck="false"
-          placeholder="ACCESS CODE"
-          aria-describedby="accessLockError"
-        />
-        <button class="access-lock-button" type="submit">ENTER CODE</button>
-        <p class="access-lock-error" id="accessLockError" role="alert" aria-live="polite"></p>
-      </form>
-    </div>
-  </div>
-
   <div class="cinematic-bg" aria-hidden="true">
     <span class="shape shape-1"></span>
     <span class="shape shape-2"></span>
@@ -749,7 +356,7 @@
     <section class="hero section-reveal" id="home">
       <div class="hero-content">
         <p class="kicker">2026 Portfolio</p>
-        <img class="hero-title-image" src="images/optimized/massyne-1000.webp" sizes="(min-width: 1440px) 40vw, (min-width: 1024px) 44vw, (min-width: 640px) 72vw, 92vw" alt="Massyne" width="1000" height="300" loading="lazy" decoding="async" />
+        <img class="hero-title-image" src="images/optimized/massyne-1000.webp" sizes="(min-width: 1440px) 40vw, (min-width: 1024px) 44vw, (min-width: 640px) 72vw, 92vw" alt="Massyne" width="1000" height="300" loading="eager" fetchpriority="high" decoding="async" />
         <p class="hero-subtitle">
           Creating bold cinematic visuals, Conceptual Character Poster, logos, branding
           identities, and modern digital designs.
@@ -1163,6 +770,13 @@
             <img class="showcase-card-image" src="images/archive24.webp" sizes="(min-width: 1024px) 320px, 78vw" alt="Design archive artwork 24" width="1080" height="1350" loading="lazy" decoding="async" draggable="false" />
           </article>
       </div>
+
+      <div class="archive-mobile-controls" aria-label="Design archive carousel controls">
+        <button class="archive-mobile-arrow archive-mobile-prev" type="button" aria-label="Previous design archive image">&larr;</button>
+        <p class="archive-mobile-drag-text">&larr; DRAG TO EXPLORE &rarr;</p>
+        <button class="archive-mobile-arrow archive-mobile-next" type="button" aria-label="Next design archive image">&rarr;</button>
+        <div class="archive-mobile-dots" aria-label="Design archive pagination"></div>
+      </div>
     </section>
 
     <section class="service-line-section">
@@ -1460,7 +1074,7 @@
         <div class="contact-actions">
           <a class="btn" href="mailto:aazizimassine@gmail.com">Start a Project</a>
           <a class="btn btn-ghost" href="#work">View Work</a>
-          <a class="btn btn-ghost" href="portfolio.pdf" download>Download Portfolio</a>
+          <a class="btn btn-ghost" href="files/portfolio.pdf" download>Download Portfolio</a>
         </div>
       </div>
     </section>
@@ -1471,135 +1085,12 @@
       <div class="footer-logo">
         <img src="images/optimized/logo-1016.webp" srcset="images/optimized/logo-480.webp 480w, images/optimized/logo-800.webp 800w, images/optimized/logo-1016.webp 1016w" sizes="100px" alt="MASSYNE logo" width="1016" height="716" loading="lazy" decoding="async" />
       </div>
-      <strong class="footer-name"></strong>
+      <strong class="footer-name">MASSYNE</strong>
       <span>Graphic Designer &amp; Motion Designer</span>
     </div>
-    <p>&copy; 2026 All Rights Reserved</p>
+    <p>&copy; 2026 MASSYNE. All Rights Reserved.</p>
   </footer>
 
   <script src="script.js" defer></script>
-  <script>
-    (() => {
-      const overlay = document.getElementById("accessLockOverlay");
-      const form = document.getElementById("accessLockForm");
-      const input = document.getElementById("accessCodeInput");
-      const error = document.getElementById("accessLockError");
-      const daysElement = document.getElementById("accessDays");
-      const hoursElement = document.getElementById("accessHours");
-      const minutesElement = document.getElementById("accessMinutes");
-      const secondsElement = document.getElementById("accessSeconds");
-
-      if (!overlay || !form || !input || !error || !daysElement || !hoursElement || !minutesElement || !secondsElement) {
-        return;
-      }
-
-      let countdownInterval;
-
-      const saveAccess = () => {
-        try {
-          localStorage.setItem(ACCESS_STORAGE_KEY, "granted");
-        } catch (storageError) {}
-      };
-
-      const unlockPortfolio = () => {
-        if (countdownInterval) {
-          window.clearInterval(countdownInterval);
-        }
-
-        document.documentElement.classList.remove("access-lock-enabled");
-        overlay.classList.add("is-leaving");
-        window.setTimeout(() => overlay.remove(), 560);
-      };
-
-      if (!ACCESS_LOCK_ENABLED) {
-        overlay?.remove();
-        return;
-      }
-
-      const getAccessStart = () => {
-        try {
-          const savedStart = Number(localStorage.getItem(ACCESS_START_KEY));
-
-          if (savedStart) {
-            return savedStart;
-          }
-
-          const newStart = Date.now();
-          localStorage.setItem(ACCESS_START_KEY, String(newStart));
-          return newStart;
-        } catch (storageError) {
-          return Date.now();
-        }
-      };
-
-      const accessTarget = getAccessStart() + ACCESS_DAYS * 24 * 60 * 60 * 1000;
-
-      try {
-        if (localStorage.getItem(ACCESS_STORAGE_KEY) === "granted") {
-          overlay.remove();
-          return;
-        }
-      } catch (storageError) {}
-
-      const showWrongCode = () => {
-        error.textContent = "Wrong code";
-        form.classList.remove("is-shaking");
-        void form.offsetWidth;
-        form.classList.add("is-shaking");
-        input.select();
-        window.setTimeout(() => form.classList.remove("is-shaking"), 380);
-      };
-
-      const padTime = (value) => String(value).padStart(2, "0");
-
-      const updateCountdown = () => {
-        const remaining = accessTarget - Date.now();
-
-        if (remaining <= 0) {
-          daysElement.textContent = "00";
-          hoursElement.textContent = "00";
-          minutesElement.textContent = "00";
-          secondsElement.textContent = "00";
-          saveAccess();
-          unlockPortfolio();
-          return;
-        }
-
-        const totalSeconds = Math.ceil(remaining / 1000);
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        daysElement.textContent = padTime(days);
-        hoursElement.textContent = padTime(hours);
-        minutesElement.textContent = padTime(minutes);
-        secondsElement.textContent = padTime(seconds);
-      };
-
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        if (input.value.trim().toUpperCase() === ACCESS_CODE.toUpperCase()) {
-          saveAccess();
-          unlockPortfolio();
-          return;
-        }
-
-        showWrongCode();
-      });
-
-      window.addEventListener("load", () => {
-        window.setTimeout(() => {
-          if (document.documentElement.classList.contains("access-lock-enabled")) {
-            input.focus();
-          }
-        }, 120);
-      });
-
-      updateCountdown();
-      countdownInterval = window.setInterval(updateCountdown, 1000);
-    })();
-  </script>
 </body>
 </html>
