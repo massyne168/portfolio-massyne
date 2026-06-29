@@ -202,11 +202,33 @@ const liveStatValues = document.querySelectorAll(".live-stat-value");
 if (liveStatsSection && liveStatValues.length) {
   let liveStatsVisible = false;
   let liveStatsStarted = false;
-  let liveStatsTimer;
 
-  const formatStatValue = value => new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: 0
-  }).format(Math.max(0, Math.round(Number(value) || 0)));
+  const launchStats = {
+    visitors: {
+      value: 1200,
+      suffix: "+",
+      display: "1.2K+"
+    },
+    countries: {
+      value: 6,
+      suffix: "+"
+    },
+    online: {
+      text: "Live"
+    }
+  };
+
+  const formatStatValue = value => {
+    const roundedValue = Math.max(0, Math.round(Number(value) || 0));
+
+    if (roundedValue >= 1000) {
+      return `${(roundedValue / 1000).toFixed(1).replace(/\.0$/, "")}K`;
+    }
+
+    return new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 0
+    }).format(roundedValue);
+  };
 
   const setStatText = (element, value) => {
     const suffix = element.dataset.countSuffix || "";
@@ -214,15 +236,21 @@ if (liveStatsSection && liveStatValues.length) {
   };
 
   const animateStatValue = (element, nextValue) => {
+    if (element.dataset.countText) {
+      element.textContent = element.dataset.countText;
+      return;
+    }
+
     const finalValue = Math.max(0, Number(nextValue) || 0);
-    const startValue = Number(element.dataset.currentValue || 0);
+    const storedStartValue = Number(element.dataset.currentValue || 1);
+    const startValue = finalValue > 0 ? Math.max(1, storedStartValue) : 0;
     const duration = 1200;
 
     element.dataset.countValue = String(finalValue);
 
     if (prefersReducedMotion || !liveStatsVisible) {
       element.dataset.currentValue = String(finalValue);
-      setStatText(element, finalValue);
+      element.textContent = element.dataset.countDisplay || `${formatStatValue(finalValue)}${element.dataset.countSuffix || ""}`;
       return;
     }
 
@@ -241,13 +269,13 @@ if (liveStatsSection && liveStatValues.length) {
       }
 
       element.dataset.currentValue = String(finalValue);
-      setStatText(element, finalValue);
+      element.textContent = element.dataset.countDisplay || `${formatStatValue(finalValue)}${element.dataset.countSuffix || ""}`;
     };
 
     requestAnimationFrame(step);
   };
 
-  const updateStat = (name, value) => {
+  const updateStat = (name, stat) => {
     const card = liveStatsSection.querySelector(`[data-live-stat="${name}"]`);
     const valueElement = card?.querySelector(".live-stat-value");
 
@@ -255,38 +283,16 @@ if (liveStatsSection && liveStatValues.length) {
       return;
     }
 
-    animateStatValue(valueElement, value);
-  };
-
-  const updateStaticStats = () => {
-    liveStatValues.forEach(element => {
-      const value = Number(element.dataset.countValue || 0);
-      animateStatValue(element, value);
-    });
-  };
-
-  const fetchLiveStats = async () => {
-    try {
-      const response = await fetch("/api/portfolio-stats", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ event: "presence" }),
-        keepalive: true
-      });
-
-      if (!response.ok) {
-        return;
-      }
-
-      const stats = await response.json();
-      updateStat("visitors", stats.visitors);
-      updateStat("countries", stats.countries);
-      updateStat("online", stats.online);
-    } catch (error) {
-      window.clearInterval(liveStatsTimer);
+    if (stat.text) {
+      valueElement.dataset.countText = stat.text;
+      valueElement.textContent = stat.text;
+      return;
     }
+
+    valueElement.dataset.countValue = String(stat.value);
+    valueElement.dataset.countSuffix = stat.suffix || "";
+    valueElement.dataset.countDisplay = stat.display || "";
+    animateStatValue(valueElement, stat.value);
   };
 
   const startLiveStats = () => {
@@ -295,9 +301,9 @@ if (liveStatsSection && liveStatValues.length) {
     }
 
     liveStatsStarted = true;
-    updateStaticStats();
-    fetchLiveStats();
-    liveStatsTimer = window.setInterval(fetchLiveStats, 20000);
+    Object.entries(launchStats).forEach(([name, stat]) => {
+      updateStat(name, stat);
+    });
   };
 
   if ("IntersectionObserver" in window) {
@@ -323,13 +329,6 @@ if (liveStatsSection && liveStatValues.length) {
     liveStatsVisible = true;
     startLiveStats();
   }
-
-  window.addEventListener("pagehide", () => {
-    window.clearInterval(liveStatsTimer);
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon("/api/portfolio-stats", JSON.stringify({ event: "close" }));
-    }
-  });
 }
 
 const motionVideos = document.querySelectorAll(".motion-card video");
