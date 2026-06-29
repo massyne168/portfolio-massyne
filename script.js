@@ -9,10 +9,10 @@ if (typeof window.CSS !== "undefined" && typeof window.CSS.registerProperty === 
 }
 
 const revealItems = document.querySelectorAll(
-  ".section-reveal, .project-card, .cyber-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card"
+  ".section-reveal, .project-card, .cyber-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .live-stat-card"
 );
 document.querySelectorAll(
-  ".card, .project-card, .selected-visuals-grid .project-card, .archive-card, .motion-card, .motion-lines-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .service-card, .contact-card, .about-card, .work-card, .image-card, .gif-card, .media-card, .visual-card, .portfolio-card, .gallery-card, .cyber-card, .silver-light-card"
+  ".card, .project-card, .selected-visuals-grid .project-card, .archive-card, .motion-card, .motion-lines-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .service-card, .contact-card, .about-card, .work-card, .image-card, .gif-card, .media-card, .visual-card, .portfolio-card, .gallery-card, .cyber-card, .silver-light-card, .live-stat-card"
 ).forEach(card => {
   card.classList.add("chrome-edge-card");
 });
@@ -195,6 +195,142 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   });
 });
+
+const liveStatsSection = document.querySelector(".live-portfolio-stats");
+const liveStatValues = document.querySelectorAll(".live-stat-value");
+
+if (liveStatsSection && liveStatValues.length) {
+  let liveStatsVisible = false;
+  let liveStatsStarted = false;
+  let liveStatsTimer;
+
+  const formatStatValue = value => new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0
+  }).format(Math.max(0, Math.round(Number(value) || 0)));
+
+  const setStatText = (element, value) => {
+    const suffix = element.dataset.countSuffix || "";
+    element.textContent = `${formatStatValue(value)}${suffix}`;
+  };
+
+  const animateStatValue = (element, nextValue) => {
+    const finalValue = Math.max(0, Number(nextValue) || 0);
+    const startValue = Number(element.dataset.currentValue || 0);
+    const duration = 1200;
+
+    element.dataset.countValue = String(finalValue);
+
+    if (prefersReducedMotion || !liveStatsVisible) {
+      element.dataset.currentValue = String(finalValue);
+      setStatText(element, finalValue);
+      return;
+    }
+
+    const startTime = performance.now();
+    const easeOutCubic = progress => 1 - Math.pow(1 - progress, 3);
+
+    const step = currentTime => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const currentValue = startValue + (finalValue - startValue) * easeOutCubic(progress);
+
+      setStatText(element, currentValue);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+        return;
+      }
+
+      element.dataset.currentValue = String(finalValue);
+      setStatText(element, finalValue);
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const updateStat = (name, value) => {
+    const card = liveStatsSection.querySelector(`[data-live-stat="${name}"]`);
+    const valueElement = card?.querySelector(".live-stat-value");
+
+    if (!valueElement) {
+      return;
+    }
+
+    animateStatValue(valueElement, value);
+  };
+
+  const updateStaticStats = () => {
+    liveStatValues.forEach(element => {
+      const value = Number(element.dataset.countValue || 0);
+      animateStatValue(element, value);
+    });
+  };
+
+  const fetchLiveStats = async () => {
+    try {
+      const response = await fetch("/api/portfolio-stats", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ event: "presence" }),
+        keepalive: true
+      });
+
+      if (!response.ok) {
+        return;
+      }
+
+      const stats = await response.json();
+      updateStat("visitors", stats.visitors);
+      updateStat("countries", stats.countries);
+      updateStat("online", stats.online);
+    } catch (error) {
+      window.clearInterval(liveStatsTimer);
+    }
+  };
+
+  const startLiveStats = () => {
+    if (liveStatsStarted) {
+      return;
+    }
+
+    liveStatsStarted = true;
+    updateStaticStats();
+    fetchLiveStats();
+    liveStatsTimer = window.setInterval(fetchLiveStats, 20000);
+  };
+
+  if ("IntersectionObserver" in window) {
+    const liveStatsObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          liveStatsVisible = true;
+          startLiveStats();
+          liveStatsObserver.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.25
+      }
+    );
+
+    liveStatsObserver.observe(liveStatsSection);
+  } else {
+    liveStatsVisible = true;
+    startLiveStats();
+  }
+
+  window.addEventListener("pagehide", () => {
+    window.clearInterval(liveStatsTimer);
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon("/api/portfolio-stats", JSON.stringify({ event: "close" }));
+    }
+  });
+}
 
 const motionVideos = document.querySelectorAll(".motion-card video");
 
