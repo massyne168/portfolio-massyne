@@ -803,15 +803,19 @@ p {
   gap: 8px;
   padding: 22px clamp(18px, 2vw, 28px);
   background: rgba(5, 5, 5, 0.58);
+  min-width: 0;
 }
 
 .hero-stat strong {
+  display: block;
+  max-width: 100%;
   color: #ffffff;
   font-family: "Bebas Neue", "Arial Black", sans-serif;
   font-size: clamp(2.8rem, 4.6vw, 4.3rem);
   font-weight: 900;
   line-height: 0.85;
   letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .hero-stat span {
