@@ -32,7 +32,7 @@ const markPageScrolling = () => {
 const pageLoader = document.querySelector("#pageLoader");
 const loaderPercent = document.querySelector("#loaderPercent");
 const loaderStatus = document.querySelector("#loaderStatus");
-const maximumLoadingTime = 2000;
+const maximumLoadingTime = 3000;
 let contentShown = false;
 
 const showContent = () => {
@@ -106,9 +106,6 @@ if (pageLoader && loaderPercent) {
   showContent();
 }
 
-window.addEventListener("load", () => {
-  showContent();
-}, { once: true });
 window.setTimeout(() => {
   showContent();
 }, maximumLoadingTime);
