@@ -32,7 +32,7 @@ const markPageScrolling = () => {
 const pageLoader = document.querySelector("#pageLoader");
 const loaderPercent = document.querySelector("#loaderPercent");
 const loaderStatus = document.querySelector("#loaderStatus");
-const maximumLoadingTime = 3000;
+const maximumLoadingTime = 2500;
 let contentShown = false;
 
 const showContent = () => {
@@ -66,6 +66,7 @@ const showContent = () => {
 };
 
 if (pageLoader && loaderPercent) {
+  loaderPercent.textContent = "1%";
   const loaderDuration = maximumLoadingTime;
   const loaderStatuses = [
     "Designing...",
@@ -79,7 +80,7 @@ if (pageLoader && loaderPercent) {
   const updateLoader = currentTime => {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / loaderDuration, 1);
-    const percentage = Math.round(progress * 100);
+    const percentage = Math.max(1, Math.round(progress * 100));
     const statusIndex = Math.min(Math.floor(progress * loaderStatuses.length), loaderStatuses.length - 1);
 
     loaderPercent.textContent = `${percentage}%`;
@@ -109,6 +110,38 @@ if (pageLoader && loaderPercent) {
 window.setTimeout(() => {
   showContent();
 }, maximumLoadingTime);
+
+window.addEventListener("DOMContentLoaded", () => {
+  window.setTimeout(showContent, Math.min(maximumLoadingTime, 2200));
+});
+
+window.addEventListener("load", showContent);
+
+const portfolioPdfPath = "images/massyne-portfolio.pdf";
+const portfolioButtons = document.querySelectorAll(`a[href="${portfolioPdfPath}"]`);
+if (window.location.protocol !== "file:") {
+  fetch(portfolioPdfPath, { method: "HEAD", cache: "no-store" })
+    .then(response => {
+      if (!response.ok) {
+        portfolioButtons.forEach(button => {
+          button.hidden = true;
+          button.setAttribute("aria-hidden", "true");
+        });
+      }
+    })
+    .catch(() => {
+      portfolioButtons.forEach(button => {
+        button.hidden = true;
+        button.setAttribute("aria-hidden", "true");
+      });
+    });
+}
+
+const motionShowcase = document.querySelector("#motion-showcase");
+if (motionShowcase && !motionShowcase.querySelector("img, video")) {
+  motionShowcase.previousElementSibling?.classList.contains("section-divider") && motionShowcase.previousElementSibling.remove();
+  motionShowcase.remove();
+}
 
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
@@ -903,96 +936,6 @@ if (mobileArchiveGallery) {
   syncMobileArchiveCarousel();
 }
 
-const motionLinesMarquee = document.querySelector(".motion-lines-marquee");
-if (motionLinesMarquee) {
-  const motionLinesTrack = motionLinesMarquee.querySelector(".motion-lines-track");
-  const motionLinesImages = motionLinesMarquee.querySelectorAll("img");
-  let motionLinesAnimation = null;
-  let motionLinesDragging = false;
-  let motionLinesStartX = 0;
-  let motionLinesStartTime = 0;
-  let motionLinesLoopWidth = 1;
-
-  motionLinesImages.forEach(image => {
-    image.setAttribute("draggable", "false");
-  });
-
-  const getMotionLinesAnimation = () => {
-    motionLinesAnimation = motionLinesTrack?.getAnimations().find(animation => animation.animationName === "motionLinesMarquee") || null;
-    return motionLinesAnimation;
-  };
-
-  const getMotionLinesDuration = animation => {
-    const timing = animation.effect?.getComputedTiming();
-    return typeof timing?.duration === "number" && timing.duration > 0 ? timing.duration : 96000;
-  };
-
-  const normalizeMotionLinesTime = (time, duration) => ((time % duration) + duration) % duration;
-
-  const stopMotionLinesDrag = event => {
-    if (!motionLinesDragging) {
-      return;
-    }
-
-    motionLinesDragging = false;
-    motionLinesMarquee.classList.remove("is-dragging");
-
-    const animation = getMotionLinesAnimation();
-    if (animation) {
-      animation.play();
-    }
-
-    if (motionLinesMarquee.hasPointerCapture(event.pointerId)) {
-      motionLinesMarquee.releasePointerCapture(event.pointerId);
-    }
-
-    window.setTimeout(() => {
-      archiveLightboxClickBlocked = false;
-    }, 80);
-  };
-
-  motionLinesMarquee.addEventListener("pointerdown", event => {
-    const animation = getMotionLinesAnimation();
-    if (!animation || !motionLinesTrack) {
-      return;
-    }
-
-    motionLinesDragging = true;
-    motionLinesStartX = event.clientX;
-    motionLinesStartTime = Number(animation.currentTime) || 0;
-    motionLinesLoopWidth = Math.max(1, motionLinesTrack.scrollWidth / 2);
-    motionLinesMarquee.classList.add("is-dragging");
-    motionLinesMarquee.setPointerCapture(event.pointerId);
-    animation.pause();
-  });
-
-  motionLinesMarquee.addEventListener("pointermove", event => {
-    if (!motionLinesDragging) {
-      return;
-    }
-
-    const animation = getMotionLinesAnimation();
-    if (!animation) {
-      return;
-    }
-
-    const deltaX = event.clientX - motionLinesStartX;
-    const duration = getMotionLinesDuration(animation);
-    animation.currentTime = normalizeMotionLinesTime(
-      motionLinesStartTime - (deltaX / motionLinesLoopWidth) * duration,
-      duration
-    );
-
-    if (Math.abs(deltaX) > 8) {
-      archiveLightboxClickBlocked = true;
-    }
-  });
-
-  motionLinesMarquee.addEventListener("pointerup", stopMotionLinesDrag);
-  motionLinesMarquee.addEventListener("pointercancel", stopMotionLinesDrag);
-  motionLinesMarquee.addEventListener("pointerleave", stopMotionLinesDrag);
-}
-
 const detailProjectCards = Array.from(document.querySelectorAll(".featured-project-card, .selected-visuals-grid .project-card"));
 
 if (detailProjectCards.length) {
@@ -1139,7 +1082,6 @@ const portfolioLightboxSelectors = [
   ".selected-visuals-grid img",
   ".creative-collection .archive-card img",
   ".motion-showcase img",
-  ".motion-lines-section .motion-lines-card img",
   ".gurzil-spotlight .gurzil-logo-card img",
   ".gurzil-spotlight .gurzil-image-card img"
 ];
@@ -1242,22 +1184,6 @@ if (archiveLightboxImages.length) {
 
       openArchiveLightbox(index);
     });
-  });
-
-  motionLinesMarquee?.addEventListener("click", event => {
-    if (archiveLightboxClickBlocked) {
-      return;
-    }
-
-    const motionLineCard = document
-      .elementFromPoint(event.clientX, event.clientY)
-      ?.closest(".motion-lines-section .motion-lines-card");
-    const motionLineImage = motionLineCard?.querySelector("img");
-    const imageIndex = archiveLightboxItems.indexOf(motionLineImage);
-
-    if (imageIndex >= 0) {
-      openArchiveLightbox(imageIndex);
-    }
   });
 
   archiveLightboxClose.addEventListener("click", closeArchiveLightbox);
