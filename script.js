@@ -9,12 +9,25 @@ if (typeof window.CSS !== "undefined" && typeof window.CSS.registerProperty === 
 }
 
 const revealItems = document.querySelectorAll(
-  ".section-reveal, .project-card, .cyber-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .live-stat-card"
+  ".section-reveal, .project-card, .cyber-card, .service-card, .archive-card, .restaurant-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .live-stat-card"
 );
 document.querySelectorAll(
-  ".card, .project-card, .selected-visuals-grid .project-card, .archive-card, .motion-card, .motion-lines-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .service-card, .contact-card, .about-card, .work-card, .image-card, .gif-card, .media-card, .visual-card, .portfolio-card, .gallery-card, .cyber-card, .silver-light-card, .live-stat-card"
+  ".card, .project-card, .selected-visuals-grid .project-card, .archive-card, .restaurant-card, .motion-card, .motion-lines-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .service-card, .contact-card, .about-card, .work-card, .image-card, .gif-card, .media-card, .visual-card, .portfolio-card, .gallery-card, .cyber-card, .silver-light-card, .live-stat-card"
 ).forEach(card => {
   card.classList.add("chrome-edge-card");
+});
+
+document.querySelectorAll(
+  "#work .project-card, .creative-collection .archive-card, .motion-showcase .motion-card, .motion-lines-card, .restaurant-showcase .restaurant-card, .gurzil-spotlight .gurzil-logo-card, .gurzil-spotlight .gurzil-copy-card, .gurzil-spotlight .gurzil-image-card"
+).forEach(card => {
+  if (card.querySelector(":scope > .premium-light-sweep")) {
+    return;
+  }
+
+  const lightSweep = document.createElement("span");
+  lightSweep.className = "premium-light-sweep";
+  lightSweep.setAttribute("aria-hidden", "true");
+  card.appendChild(lightSweep);
 });
 const revealDuration = 800;
 const finePointer = false;
@@ -1278,7 +1291,7 @@ if (finePointer) {
   const cursorDot = document.querySelector(".cursor-dot");
   const cursorRing = document.querySelector(".cursor-ring");
   const cursorGlow = document.querySelector(".cursor-glow");
-  const cursorTargets = document.querySelectorAll("a, button, .btn, .menu-toggle, .project-card, .cyber-card, .service-card, .archive-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .lv-glow-card");
+  const cursorTargets = document.querySelectorAll("a, button, .btn, .menu-toggle, .project-card, .cyber-card, .service-card, .archive-card, .restaurant-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .lv-glow-card");
 
   const mouse = {
     x: window.innerWidth / 2,
