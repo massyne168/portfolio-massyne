@@ -608,6 +608,11 @@ const archiveFilterCards = document.querySelectorAll(".archive-gallery-grid .arc
 let syncMobileArchiveCarousel = () => {};
 
 if (archiveFilterButtons.length && archiveFilterCards.length) {
+  const archiveCardMatchesFilter = (card, filter) => {
+    const categories = (card.dataset.category || "").split(/\s+/).filter(Boolean);
+    return filter === "all" || categories.includes(filter);
+  };
+
   archiveFilterButtons.forEach(button => {
     button.setAttribute("aria-pressed", button.classList.contains("is-active") ? "true" : "false");
 
@@ -621,7 +626,7 @@ if (archiveFilterButtons.length && archiveFilterCards.length) {
       });
 
       archiveFilterCards.forEach(card => {
-        const matchesFilter = filter === "all" || card.dataset.category === filter;
+        const matchesFilter = archiveCardMatchesFilter(card, filter);
         window.clearTimeout(card.archiveFilterTimer);
 
         if (matchesFilter) {
@@ -666,7 +671,10 @@ if (mobileArchiveGallery) {
 
   const getMobileArchiveCards = () => {
     const filter = getActiveArchiveFilter();
-    return mobileArchiveCards.filter(card => filter === "all" || card.dataset.category === filter);
+    return mobileArchiveCards.filter(card => {
+      const categories = (card.dataset.category || "").split(/\s+/).filter(Boolean);
+      return filter === "all" || categories.includes(filter);
+    });
   };
 
   const normalizeMobileArchiveIndex = (index, total) => ((index % total) + total) % total;
@@ -985,6 +993,146 @@ if (motionLinesMarquee) {
   motionLinesMarquee.addEventListener("pointerleave", stopMotionLinesDrag);
 }
 
+const detailProjectCards = Array.from(document.querySelectorAll(".featured-project-card, .selected-visuals-grid .project-card"));
+
+if (detailProjectCards.length) {
+  const projectDetailModal = document.createElement("div");
+  projectDetailModal.className = "project-detail-modal";
+  projectDetailModal.setAttribute("role", "dialog");
+  projectDetailModal.setAttribute("aria-modal", "true");
+  projectDetailModal.setAttribute("aria-label", "Project detail");
+  projectDetailModal.innerHTML = `
+    <div class="project-detail-dialog" role="document">
+      <button class="project-detail-close" type="button" aria-label="Close project detail">X</button>
+      <img class="project-detail-image" alt="" loading="lazy" decoding="async" />
+      <div class="project-detail-copy">
+        <span class="featured-project-label project-detail-category"></span>
+        <h2></h2>
+        <dl class="project-detail-meta">
+          <div>
+            <dt>Category</dt>
+            <dd data-project-detail-category></dd>
+          </div>
+          <div>
+            <dt>Year</dt>
+            <dd data-project-detail-year></dd>
+          </div>
+        </dl>
+        <p class="project-detail-story"></p>
+        <div class="project-detail-tools" aria-label="Tools used"></div>
+        <button class="btn btn-ghost project-detail-next" type="button">Next Project</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(projectDetailModal);
+
+  const projectDetailClose = projectDetailModal.querySelector(".project-detail-close");
+  const projectDetailImage = projectDetailModal.querySelector(".project-detail-image");
+  const projectDetailTitle = projectDetailModal.querySelector("h2");
+  const projectDetailCategoryLabel = projectDetailModal.querySelector(".project-detail-category");
+  const projectDetailCategory = projectDetailModal.querySelector("[data-project-detail-category]");
+  const projectDetailYear = projectDetailModal.querySelector("[data-project-detail-year]");
+  const projectDetailStory = projectDetailModal.querySelector(".project-detail-story");
+  const projectDetailTools = projectDetailModal.querySelector(".project-detail-tools");
+  const projectDetailNext = projectDetailModal.querySelector(".project-detail-next");
+  let activeProjectDetailIndex = 0;
+
+  const getDetailValue = (card, label) => {
+    const detailRows = Array.from(card.querySelectorAll(".project-details div, .featured-project-details div"));
+    const row = detailRows.find(item => item.querySelector("dt")?.textContent.trim().toLowerCase() === label);
+    return row?.querySelector("dd")?.textContent.trim() || "";
+  };
+
+  const getProjectDetail = card => {
+    const image = card.querySelector("img");
+    const title = getDetailValue(card, "project name") || card.querySelector(".featured-project-copy h3")?.textContent.trim() || image?.alt || "Project";
+    const category = getDetailValue(card, "category") || card.querySelector(".featured-project-label")?.textContent.trim() || "Creative Design";
+    const year = getDetailValue(card, "year") || "2026";
+    const tools = (card.dataset.projectTools || "Photoshop, Illustrator, Lightroom").split(",").map(tool => tool.trim()).filter(Boolean);
+
+    return {
+      title,
+      category,
+      year,
+      tools,
+      imageSrc: image?.currentSrc || image?.getAttribute("src") || "",
+      imageAlt: image?.alt || `${title} project image`,
+      story: card.dataset.projectStory || `${title} is a premium ${category.toLowerCase()} piece focused on atmosphere, composition, and polished visual impact.`
+    };
+  };
+
+  const renderProjectDetail = index => {
+    activeProjectDetailIndex = (index + detailProjectCards.length) % detailProjectCards.length;
+    const detail = getProjectDetail(detailProjectCards[activeProjectDetailIndex]);
+
+    projectDetailImage.src = detail.imageSrc;
+    projectDetailImage.alt = detail.imageAlt;
+    projectDetailTitle.textContent = detail.title;
+    projectDetailCategoryLabel.textContent = detail.category;
+    projectDetailCategory.textContent = detail.category;
+    projectDetailYear.textContent = detail.year;
+    projectDetailStory.textContent = detail.story;
+    projectDetailTools.innerHTML = "";
+    detail.tools.forEach(tool => {
+      const pill = document.createElement("span");
+      pill.textContent = tool;
+      projectDetailTools.appendChild(pill);
+    });
+  };
+
+  const openProjectDetail = index => {
+    renderProjectDetail(index);
+    projectDetailModal.classList.add("is-open");
+    document.body.classList.add("project-detail-open");
+    projectDetailClose.focus({ preventScroll: true });
+  };
+
+  const closeProjectDetail = () => {
+    projectDetailModal.classList.remove("is-open");
+    document.body.classList.remove("project-detail-open");
+  };
+
+  detailProjectCards.forEach((card, index) => {
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", `Open ${getProjectDetail(card).title} project detail`);
+
+    card.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      openProjectDetail(index);
+    }, true);
+
+    card.addEventListener("keydown", event => {
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+
+      event.preventDefault();
+      openProjectDetail(index);
+    });
+  });
+
+  projectDetailClose.addEventListener("click", closeProjectDetail);
+  projectDetailNext.addEventListener("click", () => renderProjectDetail(activeProjectDetailIndex + 1));
+  projectDetailModal.addEventListener("click", event => {
+    if (event.target === projectDetailModal) {
+      closeProjectDetail();
+    }
+  });
+
+  window.addEventListener("keydown", event => {
+    if (!projectDetailModal.classList.contains("is-open")) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeProjectDetail();
+    }
+  });
+}
+
 const portfolioLightboxSelectors = [
   "#work .project-card img",
   ".featured-grid img",
@@ -1022,8 +1170,27 @@ if (archiveLightboxImages.length) {
   const archiveLightboxPrev = archiveLightbox.querySelector(".archive-lightbox-prev");
   const archiveLightboxNext = archiveLightbox.querySelector(".archive-lightbox-next");
 
+  const isLightboxItemAvailable = image => {
+    const archiveCard = image.closest(".creative-collection .archive-card");
+    return !archiveCard || (!archiveCard.classList.contains("is-filter-hidden") && !archiveCard.classList.contains("is-filter-fading"));
+  };
+
+  const getAvailableLightboxIndex = (startIndex, direction = 1) => {
+    const step = direction < 0 ? -1 : 1;
+
+    for (let offset = 0; offset < archiveLightboxItems.length; offset += 1) {
+      const index = (startIndex + offset * step + archiveLightboxItems.length) % archiveLightboxItems.length;
+
+      if (isLightboxItemAvailable(archiveLightboxItems[index])) {
+        return index;
+      }
+    }
+
+    return startIndex;
+  };
+
   const setArchiveLightboxImage = index => {
-    activeArchiveLightboxIndex = (index + archiveLightboxItems.length) % archiveLightboxItems.length;
+    activeArchiveLightboxIndex = getAvailableLightboxIndex((index + archiveLightboxItems.length) % archiveLightboxItems.length);
     const image = archiveLightboxItems[activeArchiveLightboxIndex];
     archiveLightboxImage.src = image.currentSrc || image.getAttribute("src");
     archiveLightboxImage.alt = image.alt || "Portfolio image preview";
@@ -1063,18 +1230,34 @@ if (archiveLightboxImages.length) {
   };
 
   const showArchiveLightboxImage = direction => {
-    changeArchiveLightboxImage(activeArchiveLightboxIndex + direction);
+    changeArchiveLightboxImage(getAvailableLightboxIndex(activeArchiveLightboxIndex + direction, direction));
   };
 
   archiveLightboxItems.forEach((image, index) => {
     image.addEventListener("click", event => {
       event.stopPropagation();
-      if (archiveLightboxClickBlocked) {
+      if (archiveLightboxClickBlocked || !isLightboxItemAvailable(image)) {
         return;
       }
 
       openArchiveLightbox(index);
     });
+  });
+
+  motionLinesMarquee?.addEventListener("click", event => {
+    if (archiveLightboxClickBlocked) {
+      return;
+    }
+
+    const motionLineCard = document
+      .elementFromPoint(event.clientX, event.clientY)
+      ?.closest(".motion-lines-section .motion-lines-card");
+    const motionLineImage = motionLineCard?.querySelector("img");
+    const imageIndex = archiveLightboxItems.indexOf(motionLineImage);
+
+    if (imageIndex >= 0) {
+      openArchiveLightbox(imageIndex);
+    }
   });
 
   archiveLightboxClose.addEventListener("click", closeArchiveLightbox);
