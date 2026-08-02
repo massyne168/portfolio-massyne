@@ -1098,7 +1098,8 @@ const portfolioLightboxSelectors = [
   ".gurzil-spotlight .gurzil-logo-card img",
   ".gurzil-spotlight .gurzil-image-card img"
 ];
-const archiveLightboxImages = Array.from(new Set(document.querySelectorAll(portfolioLightboxSelectors.join(", "))));
+const archiveLightboxImages = Array.from(new Set(document.querySelectorAll(portfolioLightboxSelectors.join(", "))))
+  .filter(image => !image.closest("[data-lightbox-disabled='true']"));
 
 if (archiveLightboxImages.length) {
   const archiveLightboxItems = Array.from(archiveLightboxImages);

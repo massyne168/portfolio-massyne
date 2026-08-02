@@ -5290,7 +5290,7 @@ body::after {
 }
 
 .selected-visuals-grid {
-  grid-template-columns: repeat(3, minmax(280px, 420px));
+  grid-template-columns: repeat(4, minmax(280px, 420px));
   justify-content: center;
 }
 
