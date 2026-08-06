@@ -12,13 +12,13 @@ const revealItems = document.querySelectorAll(
   ".section-reveal, .project-card, .cyber-card, .service-card, .archive-card, .restaurant-card, .contact-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .about-card, .about-skill-pills span, .motion-card, .live-stat-card"
 );
 document.querySelectorAll(
-  ".card, .project-card, .selected-visuals-grid .project-card, .archive-card, .restaurant-card, .motion-card, .motion-lines-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .service-card, .contact-card, .about-card, .work-card, .image-card, .gif-card, .media-card, .visual-card, .portfolio-card, .gallery-card, .cyber-card, .silver-light-card, .live-stat-card"
+  ".card, .project-card, .selected-visuals-grid .project-card, .archive-card, .restaurant-card, .motion-card, .motion-lines-card, .gurzil-logo-card, .gurzil-copy-card, .gurzil-image-card, .service-card, .contact-card, .about-card, .work-card, .image-card, .gif-card, .media-card, .visual-card, .portfolio-card, .gallery-card, .cyber-card, .silver-light-card, .live-stat-card, .tool-card, .number-card"
 ).forEach(card => {
   card.classList.add("chrome-edge-card");
 });
 
 document.querySelectorAll(
-  "#work .project-card, .creative-collection .archive-card, .motion-showcase .motion-card, .motion-lines-card, .restaurant-showcase .restaurant-card, .gurzil-spotlight .gurzil-logo-card, .gurzil-spotlight .gurzil-copy-card, .gurzil-spotlight .gurzil-image-card"
+  "#work .project-card, .creative-collection .archive-card, .motion-showcase .motion-card, .motion-lines-card, .restaurant-showcase .restaurant-card, .gurzil-spotlight .gurzil-logo-card, .gurzil-spotlight .gurzil-copy-card, .gurzil-spotlight .gurzil-image-card, .services-section .service-card, .contact-card, .tool-card, .number-card"
 ).forEach(card => {
   if (card.querySelector(":scope > .premium-light-sweep")) {
     return;
@@ -33,6 +33,119 @@ const revealDuration = 800;
 const finePointer = false;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let scrollIdleTimer;
+
+document.querySelectorAll("img:not([loading])").forEach(image => {
+  image.setAttribute("loading", "lazy");
+});
+
+const heroVisual = document.querySelector(".hero-visual");
+
+if (heroVisual && !prefersReducedMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  let heroParallaxFrame = null;
+
+  const resetHeroParallax = () => {
+    heroVisual.style.setProperty("--hero-tilt-x", "0deg");
+    heroVisual.style.setProperty("--hero-tilt-y", "0deg");
+  };
+
+  heroVisual.addEventListener("pointermove", event => {
+    if (heroParallaxFrame) {
+      return;
+    }
+
+    heroParallaxFrame = requestAnimationFrame(() => {
+      const rect = heroVisual.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      const rotateY = Math.max(-3, Math.min(3, x * 6));
+      const rotateX = Math.max(-3, Math.min(3, y * -6));
+
+      heroVisual.style.setProperty("--hero-tilt-x", `${rotateX.toFixed(2)}deg`);
+      heroVisual.style.setProperty("--hero-tilt-y", `${rotateY.toFixed(2)}deg`);
+      heroParallaxFrame = null;
+    });
+  }, { passive: true });
+
+  heroVisual.addEventListener("pointerleave", resetHeroParallax);
+  heroVisual.addEventListener("blur", resetHeroParallax, true);
+}
+
+const heroStats = document.querySelector(".hero-stats");
+const heroStatValues = document.querySelectorAll(".hero-stat strong");
+
+if (heroStats && heroStatValues.length) {
+  let heroStatsStarted = false;
+
+  const parseHeroStat = value => {
+    const text = value.trim();
+    const number = Number(text.replace(/[^\d.]/g, ""));
+    return {
+      number: Number.isFinite(number) ? number : 0,
+      suffix: text.replace(/[\d.]/g, "")
+    };
+  };
+
+  const formatHeroStat = (number, suffix) => `${Math.round(number)}${suffix}`;
+
+  const animateHeroStats = () => {
+    if (heroStatsStarted) {
+      return;
+    }
+
+    heroStatsStarted = true;
+
+    heroStatValues.forEach(valueElement => {
+      const { number, suffix } = parseHeroStat(valueElement.textContent);
+      valueElement.dataset.finalText = valueElement.textContent.trim();
+
+      if (prefersReducedMotion || number <= 0) {
+        valueElement.textContent = valueElement.dataset.finalText;
+        return;
+      }
+
+      const duration = 1150;
+      const startTime = performance.now();
+      const easeOutCubic = progress => 1 - Math.pow(1 - progress, 3);
+
+      const step = currentTime => {
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        valueElement.textContent = formatHeroStat(number * easeOutCubic(progress), suffix);
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+          return;
+        }
+
+        valueElement.textContent = valueElement.dataset.finalText;
+      };
+
+      valueElement.textContent = formatHeroStat(0, suffix);
+      requestAnimationFrame(step);
+    });
+  };
+
+  if ("IntersectionObserver" in window) {
+    const heroStatsObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          animateHeroStats();
+          heroStatsObserver.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.35
+      }
+    );
+
+    heroStatsObserver.observe(heroStats);
+  } else {
+    animateHeroStats();
+  }
+}
 
 const markPageScrolling = () => {
   document.body.classList.add("is-scrolling");
@@ -438,6 +551,38 @@ if (linkedSections.length) {
   );
 
   linkedSections.forEach(section => activeSectionObserver.observe(section));
+
+  let activeNavTicking = false;
+  const syncActiveLinkFromScroll = () => {
+    const probeY = window.scrollY + Math.max(120, window.innerHeight * 0.34);
+    const activeSection = linkedSections.reduce((currentSection, section) => {
+      if (section.offsetTop <= probeY) {
+        return section;
+      }
+
+      return currentSection;
+    }, linkedSections[0]);
+
+    if (activeSection?.id) {
+      setActiveLink(activeSection.id);
+    }
+  };
+
+  const scheduleActiveLinkSync = () => {
+    if (activeNavTicking) {
+      return;
+    }
+
+    activeNavTicking = true;
+    requestAnimationFrame(() => {
+      syncActiveLinkFromScroll();
+      activeNavTicking = false;
+    });
+  };
+
+  window.addEventListener("scroll", scheduleActiveLinkSync, { passive: true });
+  window.addEventListener("resize", debounce(syncActiveLinkFromScroll), { passive: true });
+  window.addEventListener("load", syncActiveLinkFromScroll);
 }
 
 const archiveGallery = document.querySelector(".archive-track");
@@ -1116,7 +1261,7 @@ if (archiveLightboxImages.length) {
   archiveLightbox.innerHTML = `
     <button class="archive-lightbox-close" type="button" aria-label="Close image preview">X</button>
     <button class="archive-lightbox-nav archive-lightbox-prev" type="button" aria-label="Previous image">&larr;</button>
-    <img class="archive-lightbox-image" alt="" />
+    <img class="archive-lightbox-image" alt="" loading="lazy" decoding="async" />
     <button class="archive-lightbox-nav archive-lightbox-next" type="button" aria-label="Next image">&rarr;</button>
   `;
   document.body.appendChild(archiveLightbox);
