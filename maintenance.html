@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#050505" />
+  <title>MASSYNE — Maintenance</title>
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="maintenance.css" />
+</head>
+<body>
+  <main class="maintenance">
+    <div class="maintenance-grid" aria-hidden="true"></div>
+    <section class="maintenance-card" aria-labelledby="maintenance-title">
+      <p class="maintenance-brand">MASSYNE</p>
+      <p class="maintenance-kicker">Portfolio update in progress</p>
+      <h1 id="maintenance-title">Something sharper is taking shape.</h1>
+      <p class="maintenance-copy">
+        The portfolio is temporarily offline while new work and improvements are being prepared.
+        Please check back soon.
+      </p>
+      <div class="maintenance-status" role="status">
+        <span aria-hidden="true"></span>
+        Maintenance mode active
+      </div>
+
+      <details class="owner-access">
+        <summary>Owner access</summary>
+        <form id="ownerLogin" class="owner-form" novalidate>
+          <label for="ownerPassword">Private password</label>
+          <div class="password-row">
+            <input id="ownerPassword" name="password" type="password" autocomplete="current-password" required />
+            <button type="submit">Unlock</button>
+          </div>
+          <p id="loginMessage" class="login-message" aria-live="polite"></p>
+        </form>
+      </details>
+    </section>
+    <p class="maintenance-footer">Graphic Design <span>/</span> Motion Design <span>/</span> Visual Identity</p>
+  </main>
+  <script src="maintenance.js" defer></script>
+</body>
+</html>
