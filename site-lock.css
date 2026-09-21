@@ -1,0 +1,174 @@
+.site-lock {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: none;
+  min-height: 100svh;
+  place-items: center;
+  padding: clamp(24px, 6vw, 72px);
+  overflow: auto;
+  color: #fff;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(231, 0, 27, 0.16), transparent 31%),
+    radial-gradient(circle at 84% 82%, rgba(231, 0, 27, 0.08), transparent 28%),
+    linear-gradient(145deg, #090909, #030303 64%);
+  font-family: "Inter", "Poppins", sans-serif;
+}
+
+.site-lock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, #000, transparent 76%);
+}
+
+html.site-locked,
+html.site-locked body {
+  overflow: hidden;
+}
+
+html.site-locked .site-lock {
+  display: grid;
+}
+
+.site-lock-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 680px);
+}
+
+.site-lock-brand,
+.site-lock-kicker,
+.site-lock-copy,
+.site-lock-message {
+  margin: 0;
+}
+
+.site-lock-brand {
+  color: #e7001b;
+  font-family: "Space Grotesk", "Poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.42em;
+}
+
+.site-lock-kicker {
+  margin-top: clamp(52px, 9vw, 92px);
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.site-lock h1 {
+  margin: 12px 0 0;
+  color: #fff;
+  font-family: "Space Grotesk", "Poppins", sans-serif;
+  font-size: clamp(3.4rem, 9vw, 6.8rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+}
+
+.site-lock-copy {
+  max-width: 540px;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+  line-height: 1.7;
+}
+
+.site-lock-form {
+  width: min(100%, 520px);
+  margin-top: clamp(34px, 5vw, 52px);
+}
+
+.site-lock-form label {
+  display: block;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.site-lock-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.site-lock-row input,
+.site-lock-row button {
+  min-height: 58px;
+  border-radius: 2px;
+  font: inherit;
+}
+
+.site-lock-row input {
+  min-width: 0;
+  padding: 0 18px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  outline: none;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.site-lock-row input:focus {
+  border-color: rgba(231, 0, 27, 0.8);
+  box-shadow: 0 0 0 3px rgba(231, 0, 27, 0.12);
+}
+
+.site-lock-row button {
+  padding: 0 28px;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid #e7001b;
+  background: #e7001b;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.site-lock-message {
+  min-height: 1.4em;
+  margin-top: 12px;
+  color: #ff6476;
+  font-size: 0.8rem;
+}
+
+.site-lock.is-unlocking {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+@media (max-width: 540px) {
+  .site-lock {
+    align-items: start;
+    padding: 64px 20px;
+  }
+
+  .site-lock h1 {
+    font-size: clamp(3.2rem, 16vw, 5rem);
+  }
+
+  .site-lock-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-lock.is-unlocking {
+    transition: none;
+  }
+}

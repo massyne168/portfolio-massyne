@@ -27,7 +27,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Orbitron:wght@800;900&family=Oxanium:wght@700;800&family=Poppins:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="site-lock.css" />
   <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    try {
+      if (new URLSearchParams(location.search).has("lock")) {
+        localStorage.removeItem("massyne_site_unlocked");
+      }
+      if (localStorage.getItem("massyne_site_unlocked") !== "yes") {
+        document.documentElement.classList.add("site-locked");
+      }
+    } catch (error) {
+      document.documentElement.classList.add("site-locked");
+    }
+  </script>
   <style>
     .coming-soon-overlay {
       position: fixed;
@@ -311,6 +324,23 @@
   </style>
 </head>
 <body class="is-loading">
+  <section class="site-lock" id="siteLock" aria-labelledby="siteLockTitle">
+    <div class="site-lock-panel">
+      <p class="site-lock-brand">MASSYNE</p>
+      <p class="site-lock-kicker">Private portfolio</p>
+      <h1 id="siteLockTitle">Enter password</h1>
+      <p class="site-lock-copy">This website is currently private. Enter the access password to continue.</p>
+      <form class="site-lock-form" id="siteLockForm" novalidate>
+        <label for="siteLockPassword">Password</label>
+        <div class="site-lock-row">
+          <input id="siteLockPassword" name="password" type="password" autocomplete="current-password" required autofocus />
+          <button type="submit">Unlock</button>
+        </div>
+        <p class="site-lock-message" id="siteLockMessage" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
   <div class="cinematic-bg" aria-hidden="true">
     <span class="shape shape-1"></span>
     <span class="shape shape-2"></span>
@@ -1310,6 +1340,7 @@
     <p>&copy; 2026 All Rights Reserved</p>
   </footer>
 
+  <script src="site-lock.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 </html>

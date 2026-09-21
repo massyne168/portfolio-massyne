@@ -1,7 +1,0 @@
-{
-  "name": "massyne-portfolio",
-  "private": true,
-  "dependencies": {
-    "@vercel/functions": "latest"
-  }
-}
