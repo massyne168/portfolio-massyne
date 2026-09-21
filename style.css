@@ -9755,3 +9755,77 @@ button,
     transform: none !important;
   }
 }
+
+/* Final performance overrides must follow the premium theme overrides. */
+.hero-media > video,
+.motion-card > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-header,
+.site-header.is-scrolled {
+  background: linear-gradient(180deg, rgba(3, 3, 3, 0.96), rgba(3, 3, 3, 0.9)) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.animated-bg::after,
+.hero-visual,
+.hero-media,
+.hero-visual::before,
+.hero-media::before,
+.service-card::before {
+  animation: none !important;
+}
+
+.hero-visual,
+.hero-media {
+  will-change: auto !important;
+}
+
+body.is-scrolling .premium-light-sweep,
+body.is-scrolling .archive-drag-dot,
+body.is-scrolling .archive-drag-text {
+  animation-play-state: paused !important;
+}
+
+main > section:not(.perf-visible),
+main > section:not(.perf-visible) *,
+.site-footer:not(.perf-visible),
+.site-footer:not(.perf-visible) * {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  .cinematic-bg .shape,
+  .premium-light-sweep,
+  .archive-drag-dot,
+  .archive-drag-text {
+    animation: none !important;
+  }
+
+  .project-card,
+  .service-card,
+  .archive-card,
+  .motion-card,
+  .contact-card {
+    will-change: auto !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

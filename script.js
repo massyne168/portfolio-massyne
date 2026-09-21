@@ -42,6 +42,18 @@ const heroVisual = document.querySelector(".hero-visual");
 
 if (heroVisual && !prefersReducedMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
   let heroParallaxFrame = null;
+  let heroVisualRect = null;
+
+  const measureHeroVisual = () => {
+    heroVisualRect = heroVisual.getBoundingClientRect();
+  };
+
+  measureHeroVisual();
+  let heroMeasureTimer;
+  window.addEventListener("resize", () => {
+    window.clearTimeout(heroMeasureTimer);
+    heroMeasureTimer = window.setTimeout(measureHeroVisual, 160);
+  }, { passive: true });
 
   const resetHeroParallax = () => {
     heroVisual.style.setProperty("--hero-tilt-x", "0deg");
@@ -54,7 +66,11 @@ if (heroVisual && !prefersReducedMotion && window.matchMedia("(hover: hover) and
     }
 
     heroParallaxFrame = requestAnimationFrame(() => {
-      const rect = heroVisual.getBoundingClientRect();
+      const rect = heroVisualRect;
+      if (!rect?.width || !rect?.height) {
+        heroParallaxFrame = null;
+        return;
+      }
       const x = (event.clientX - rect.left) / rect.width - 0.5;
       const y = (event.clientY - rect.top) / rect.height - 0.5;
       const rotateY = Math.max(-3, Math.min(3, x * 6));
@@ -487,29 +503,56 @@ if (liveStatsSection && liveStatValues.length) {
   }
 }
 
-const motionVideos = document.querySelectorAll(".motion-card video");
+const managedVideos = document.querySelectorAll("video[data-managed-video]");
 
-if (motionVideos.length && !prefersReducedMotion) {
-  const motionObserver = new IntersectionObserver(
+if (managedVideos.length) {
+  const visibleVideos = new Set();
+  const syncVideoPlayback = video => {
+    const shouldPlay = !prefersReducedMotion && !document.hidden && visibleVideos.has(video);
+    if (shouldPlay) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  };
+
+  const videoObserver = new IntersectionObserver(
     entries => {
       entries.forEach(entry => {
         const video = entry.target;
-
-        if (entry.isIntersecting) {
-          video.play().catch(() => {});
-          return;
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
+          visibleVideos.add(video);
+        } else {
+          visibleVideos.delete(video);
         }
-
-        video.pause();
+        syncVideoPlayback(video);
       });
     },
     {
-      rootMargin: "160px 0px",
-      threshold: 0.2
+      rootMargin: "80px 0px",
+      threshold: [0, 0.12, 0.5]
     }
   );
 
-  motionVideos.forEach(video => motionObserver.observe(video));
+  managedVideos.forEach(video => {
+    video.pause();
+    videoObserver.observe(video);
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    managedVideos.forEach(syncVideoPlayback);
+  });
+}
+
+const animationRegions = document.querySelectorAll("main > section, .site-footer");
+if (animationRegions.length && "IntersectionObserver" in window) {
+  const animationRegionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle("perf-visible", entry.isIntersecting);
+    });
+  }, { rootMargin: "180px 0px", threshold: 0 });
+
+  animationRegions.forEach(region => animationRegionObserver.observe(region));
 }
 
 const closeMenu = () => {
@@ -535,6 +578,14 @@ const setActiveLink = id => {
 
 if (linkedSections.length) {
   setActiveLink("home");
+  let sectionOffsets = [];
+
+  const cacheSectionOffsets = () => {
+    sectionOffsets = linkedSections.map(section => ({
+      id: section.id,
+      top: section.offsetTop
+    }));
+  };
 
   const activeSectionObserver = new IntersectionObserver(
     entries => {
@@ -555,8 +606,8 @@ if (linkedSections.length) {
   let activeNavTicking = false;
   const syncActiveLinkFromScroll = () => {
     const probeY = window.scrollY + Math.max(120, window.innerHeight * 0.34);
-    const activeSection = linkedSections.reduce((currentSection, section) => {
-      if (section.offsetTop <= probeY) {
+    const activeSection = sectionOffsets.reduce((currentSection, section) => {
+      if (section.top <= probeY) {
         return section;
       }
 
@@ -581,8 +632,19 @@ if (linkedSections.length) {
   };
 
   window.addEventListener("scroll", scheduleActiveLinkSync, { passive: true });
-  window.addEventListener("resize", debounce(syncActiveLinkFromScroll), { passive: true });
-  window.addEventListener("load", syncActiveLinkFromScroll);
+  const refreshSectionOffsets = debounce(() => {
+    cacheSectionOffsets();
+    syncActiveLinkFromScroll();
+  });
+
+  cacheSectionOffsets();
+  window.addEventListener("resize", refreshSectionOffsets, { passive: true });
+  window.addEventListener("load", refreshSectionOffsets);
+  document.fonts?.ready.then(refreshSectionOffsets);
+  if ("ResizeObserver" in window) {
+    const sectionResizeObserver = new ResizeObserver(refreshSectionOffsets);
+    linkedSections.forEach(section => sectionResizeObserver.observe(section));
+  }
 }
 
 const archiveGallery = document.querySelector(".archive-track");
