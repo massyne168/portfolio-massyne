@@ -38,54 +38,6 @@ document.querySelectorAll("img:not([loading])").forEach(image => {
   image.setAttribute("loading", "lazy");
 });
 
-const heroVisual = document.querySelector(".hero-visual");
-
-if (heroVisual && !prefersReducedMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-  let heroParallaxFrame = null;
-  let heroVisualRect = null;
-
-  const measureHeroVisual = () => {
-    heroVisualRect = heroVisual.getBoundingClientRect();
-  };
-
-  measureHeroVisual();
-  let heroMeasureTimer;
-  window.addEventListener("resize", () => {
-    window.clearTimeout(heroMeasureTimer);
-    heroMeasureTimer = window.setTimeout(measureHeroVisual, 160);
-  }, { passive: true });
-
-  const resetHeroParallax = () => {
-    heroVisual.style.setProperty("--hero-tilt-x", "0deg");
-    heroVisual.style.setProperty("--hero-tilt-y", "0deg");
-  };
-
-  heroVisual.addEventListener("pointermove", event => {
-    if (heroParallaxFrame) {
-      return;
-    }
-
-    heroParallaxFrame = requestAnimationFrame(() => {
-      const rect = heroVisualRect;
-      if (!rect?.width || !rect?.height) {
-        heroParallaxFrame = null;
-        return;
-      }
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      const rotateY = Math.max(-3, Math.min(3, x * 6));
-      const rotateX = Math.max(-3, Math.min(3, y * -6));
-
-      heroVisual.style.setProperty("--hero-tilt-x", `${rotateX.toFixed(2)}deg`);
-      heroVisual.style.setProperty("--hero-tilt-y", `${rotateY.toFixed(2)}deg`);
-      heroParallaxFrame = null;
-    });
-  }, { passive: true });
-
-  heroVisual.addEventListener("pointerleave", resetHeroParallax);
-  heroVisual.addEventListener("blur", resetHeroParallax, true);
-}
-
 const heroStats = document.querySelector(".hero-stats");
 const heroStatValues = document.querySelectorAll(".hero-stat strong");
 
@@ -194,7 +146,7 @@ const showContent = () => {
     item.style.transitionDelay = "";
   });
 
-  document.querySelectorAll("main, .hero, .hero-content, .hero-image, .hero-visual, section, [data-animate], .reveal").forEach(item => {
+  document.querySelectorAll("main, .hero, .hero-content, .hero-image, section, [data-animate], .reveal").forEach(item => {
     item.style.opacity = "1";
     item.style.visibility = "visible";
   });
