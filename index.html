@@ -27,6 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Orbitron:wght@800;900&family=Oxanium:wght@700;800&family=Poppins:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="hero-world.css" />
   <link rel="stylesheet" href="site-lock.css" />
   <script defer src="/_vercel/insights/script.js"></script>
   <script>
@@ -327,9 +328,10 @@
   <section class="site-lock" id="siteLock" aria-labelledby="siteLockTitle">
     <div class="site-lock-panel">
       <p class="site-lock-brand">MASSYNE</p>
-      <p class="site-lock-kicker">Private portfolio</p>
-      <h1 id="siteLockTitle">Enter password</h1>
-      <p class="site-lock-copy">This website is currently private. Enter the access password to continue.</p>
+      <p class="site-lock-kicker">WEBSITE UPDATE</p>
+      <h1 id="siteLockTitle">PORTFOLIO UNDER MAINTENANCE</h1>
+      <p class="site-lock-copy">I’m updating my portfolio with new work and a refreshed experience. Please check back soon.</p>
+      <p class="site-lock-preview">Have an access password? Enter it below to preview the portfolio.</p>
       <form class="site-lock-form" id="siteLockForm" novalidate>
         <label for="siteLockPassword">Password</label>
         <div class="site-lock-row">
@@ -370,53 +372,58 @@
       <span></span>
     </button>
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="#home">Home</a>
       <a href="#work">Work</a>
       <a href="#about">About</a>
-      <a href="#gurzil-team">TEAM</a>
-      <a href="#services">Services</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main>
-    <section class="hero section-reveal" id="home">
-      <div class="hero-content">
-        <p class="kicker">2026 Portfolio</p>
-        <h1 class="hero-heading">
-          <span>MASSYNE</span>
-          Visual stories with a cinematic edge.
-        </h1>
-        <p class="hero-subtitle">
-          I’m a graphic and motion designer creating bold identities, conceptual posters,
-          and modern digital experiences with clarity, atmosphere, and purpose.
-        </p>
-        <div class="hero-support">
-          <div class="hero-stats" aria-label="Portfolio highlights">
-            <div class="hero-stat">
-              <strong>25+</strong>
-              <span>Projects</span>
-            </div>
-            <div class="hero-stat">
-              <strong>3+</strong>
-              <span>Years Experience</span>
-            </div>
-            <div class="hero-stat">
-              <strong>100%</strong>
-              <span>Creative Focus</span>
-            </div>
-          </div>
-          <p class="hero-disciplines">
-            Branding <span aria-hidden="true">/</span> Posters <span aria-hidden="true">/</span>
-            Concept Art <span aria-hidden="true">/</span> Motion Design <span aria-hidden="true">/</span>
-            Logo Design
-          </p>
+    <section class="world-hero section-reveal" id="home" aria-labelledby="world-hero-title">
+      <div class="world-hero-intro">
+        <div class="world-hero-copy">
+          <p class="world-hero-label">MASSYNE <span aria-hidden="true">—</span> GRAPHIC DESIGNER</p>
+          <h1 id="world-hero-title">Explore my creative world.</h1>
+          <p class="world-hero-summary">Brand identities, expressive posters, and motion with character.</p>
         </div>
-        <div class="hero-actions">
-          <a class="btn" href="#work">View Work</a>
-          <a class="btn btn-ghost" href="#contact">Contact Me</a>
-          <a class="hero-download" href="images/massyne-portfolio.pdf" download>Download Portfolio <span aria-hidden="true">↓</span></a>
+        <div class="world-hero-aside">
+          <p>Branding / Posters / Concept Art / Motion / Logo Design</p>
+          <a href="#contact">Start a conversation <span aria-hidden="true">↗</span></a>
         </div>
+      </div>
+
+      <div class="world-gateways" aria-label="Explore portfolio categories">
+        <a class="world-gateway world-gateway-branding" href="#selected-works" data-hero-filter="branding">
+          <img src="images/archive28.webp" alt="Gurzil identity artwork representing branding projects" width="1080" height="1350" loading="eager" decoding="async" fetchpriority="high" />
+          <span class="world-gateway-shade" aria-hidden="true"></span>
+          <span class="world-gateway-number">01</span>
+          <span class="world-gateway-title">Branding</span>
+          <span class="world-gateway-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="world-gateway world-gateway-posters" href="#selected-works" data-hero-filter="posters">
+          <img src="images/card13.webp" alt="Velocity biker poster representing poster design projects" width="1200" height="1600" loading="eager" decoding="async" />
+          <span class="world-gateway-shade" aria-hidden="true"></span>
+          <span class="world-gateway-number">02</span>
+          <span class="world-gateway-title">Posters</span>
+          <span class="world-gateway-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="world-gateway world-gateway-motion" href="#motion-showcase">
+          <img src="images/optimized/motion-hero.jpg" alt="Frame from a MASSYNE motion design project" width="560" height="560" loading="eager" decoding="async" />
+          <span class="world-gateway-shade" aria-hidden="true"></span>
+          <span class="world-gateway-number">03</span>
+          <span class="world-gateway-title">Motion</span>
+          <span class="world-gateway-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="world-gateway world-gateway-experimental" href="#selected-works" data-hero-filter="experiments">
+          <img src="images/archive16.webp" alt="Color-driven digital artwork representing experimental projects" width="2048" height="1024" loading="eager" decoding="async" />
+          <span class="world-gateway-shade" aria-hidden="true"></span>
+          <span class="world-gateway-number">04</span>
+          <span class="world-gateway-title">Experimental</span>
+          <span class="world-gateway-arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
     </section>
 

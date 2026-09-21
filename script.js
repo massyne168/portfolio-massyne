@@ -856,6 +856,17 @@ if (archiveFilterButtons.length && archiveFilterCards.length) {
   });
 }
 
+document.querySelectorAll("[data-hero-filter]").forEach(gateway => {
+  gateway.addEventListener("click", () => {
+    const filter = gateway.dataset.heroFilter;
+    const matchingFilter = Array.from(archiveFilterButtons).find(
+      button => button.dataset.archiveFilter === filter
+    );
+
+    matchingFilter?.click();
+  });
+});
+
 const mobileArchiveGallery = document.querySelector(".archive-gallery-grid");
 
 if (mobileArchiveGallery) {
