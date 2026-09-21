@@ -326,23 +326,45 @@
 </head>
 <body class="is-loading">
   <section class="site-lock" id="siteLock" aria-labelledby="siteLockTitle">
-    <div class="site-lock-panel">
-      <p class="site-lock-brand">
-        <img class="site-lock-logo" src="images/optimized/logo-480.webp" alt="" />
-        <span>MASSYNE</span>
-      </p>
-      <p class="site-lock-kicker">WEBSITE UPDATE</p>
-      <h1 id="siteLockTitle">PORTFOLIO UNDER MAINTENANCE</h1>
-      <p class="site-lock-copy">I’m updating my portfolio with new work and a refreshed experience. Please check back soon.</p>
-      <p class="site-lock-preview">Have an access password? Enter it below to preview the portfolio.</p>
-      <form class="site-lock-form" id="siteLockForm" novalidate>
-        <label for="siteLockPassword">Password</label>
-        <div class="site-lock-row">
-          <input id="siteLockPassword" name="password" type="password" autocomplete="current-password" required autofocus />
-          <button type="submit">Unlock</button>
+    <div class="site-lock-shell">
+      <div class="site-lock-layout">
+        <div class="site-lock-panel">
+          <p class="site-lock-brand">
+            <img src="images/optimized/logo-480.webp" alt="" />
+            <span>MASSYNE</span>
+          </p>
+          <p class="site-lock-kicker">PORTFOLIO IN PROGRESS</p>
+          <h1 id="siteLockTitle">A NEW CHAPTER IS TAKING SHAPE.</h1>
+          <p class="site-lock-copy">My portfolio is currently under maintenance. I’m refining the experience and adding new work. Check back soon.</p>
+          <div class="site-lock-access">
+            <button class="site-lock-disclosure" id="siteLockDisclosure" type="button" aria-expanded="false" aria-controls="siteLockAccess">
+              <span>Private access</span><span class="site-lock-toggle" aria-hidden="true">+</span>
+            </button>
+            <div id="siteLockAccess" hidden>
+              <p class="site-lock-preview">Have an access password? Enter it below to preview the portfolio.</p>
+              <form class="site-lock-form" id="siteLockForm" novalidate>
+                <label for="siteLockPassword">Password</label>
+                <div class="site-lock-row">
+                  <input id="siteLockPassword" name="password" type="password" autocomplete="current-password" required aria-describedby="siteLockMessage" />
+                  <button type="submit">Unlock</button>
+                </div>
+                <p class="site-lock-message" id="siteLockMessage" aria-live="polite"></p>
+              </form>
+            </div>
+          </div>
         </div>
-        <p class="site-lock-message" id="siteLockMessage" aria-live="polite"></p>
-      </form>
+        <div class="site-lock-art" aria-hidden="true">
+          <p class="site-lock-art-label">MASSYNE / SELECTED WORK</p>
+          <div class="site-lock-orbit">
+            <span class="site-lock-guide site-lock-guide-horizontal"></span>
+            <span class="site-lock-guide site-lock-guide-vertical"></span>
+            <span class="site-lock-orbit-mark"></span>
+            <img src="images/optimized/logo-480.webp" alt="" />
+          </div>
+          <p class="site-lock-art-status"><span></span>STATUS: UNDER MAINTENANCE</p>
+        </div>
+      </div>
+      <footer class="site-lock-footer"><p>Thanks for stopping by.</p><span aria-hidden="true">M / WORK IN PROGRESS</span></footer>
     </div>
   </section>
 

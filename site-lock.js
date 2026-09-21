@@ -31,3 +31,14 @@ siteLockForm?.addEventListener("submit", event => {
   siteLockMessage.textContent = "Incorrect password. Please try again.";
   siteLockPassword.select();
 });
+
+const siteLockDisclosure = document.querySelector("#siteLockDisclosure");
+const siteLockAccess = document.querySelector("#siteLockAccess");
+
+siteLockDisclosure?.addEventListener("click", () => {
+  const expanded = siteLockDisclosure.getAttribute("aria-expanded") !== "true";
+  siteLockDisclosure.setAttribute("aria-expanded", String(expanded));
+  siteLockAccess.hidden = !expanded;
+  siteLockDisclosure.querySelector(".site-lock-toggle").textContent = expanded ? "−" : "+";
+  if (expanded) siteLockPassword.focus();
+});
