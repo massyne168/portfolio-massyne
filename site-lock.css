@@ -43,8 +43,8 @@ html.site-locked .site-lock { display: flex; }
 .site-lock-status { position: relative; width: fit-content; margin: 0; color: var(--lock-orange); font-family: "Space Grotesk", sans-serif; font-size: clamp(24px, 3.1vw, 46px); font-weight: 500; line-height: 1.13; letter-spacing: -.035em; }
 .site-lock-status > span { display: inline-block; margin-left: .4em; font-size: .8em; }
 .site-lock-copy { max-width: 340px; margin: 24px 0 0; color: #c7c1b9; font-size: 14px; line-height: 1.85; letter-spacing: 0; }
-.site-lock-art { position: absolute; z-index: 1; top: 120px; right: 5%; width: 48%; margin: 0; padding: 34px 0 28px; pointer-events: none; }
-.site-lock-art img { display: block; width: 100%; height: auto; opacity: .33; }
+.site-lock-art { position: absolute; z-index: 1; top: 100px; right: 5%; width: 46%; margin: 0; padding: 0; pointer-events: none; }
+.site-lock-art img { display: block; width: 100%; height: auto; max-height: 340px; object-fit: contain; opacity: .33; }
 .site-lock-art-coordinate, .site-lock-art-caption { display: block; color: #b7a394; }
 .site-lock-art-coordinate { margin-bottom: 22px; text-align: right; }
 .site-lock-art-caption { margin-top: 25px; text-align: right; font-size: 9px; }
