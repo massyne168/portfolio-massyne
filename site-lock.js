@@ -1,44 +1,58 @@
-const SITE_PASSWORD = "MASSYNE2026";
-const UNLOCK_KEY = "massyne_site_unlocked";
-const siteLock = document.querySelector("#siteLock");
-const siteLockForm = document.querySelector("#siteLockForm");
-const siteLockPassword = document.querySelector("#siteLockPassword");
-const siteLockMessage = document.querySelector("#siteLockMessage");
+/* Client-side preview gate. Keep all access-screen behavior scoped here. */
+(() => {
+  const lock = document.querySelector("#siteLock");
+  const form = document.querySelector("#siteLockForm");
+  const input = document.querySelector("#siteLockPassword");
+  const message = document.querySelector("#siteLockMessage");
+  if (!lock || !form || !input || !message) return;
 
-const unlockSite = () => {
-  try {
-    localStorage.setItem(UNLOCK_KEY, "yes");
-  } catch (error) {
-    // Access remains available for the current page when storage is blocked.
+  const root = document.documentElement;
+  const key = "massyne_site_unlocked";
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const siblings = [...document.body.children].filter(element => element !== lock && !["SCRIPT", "STYLE"].includes(element.tagName));
+  const previousInert = new Map(siblings.map(element => [element, element.inert]));
+  let unlocking = false;
+
+  if (root.classList.contains("site-locked")) {
+    siblings.forEach(element => { element.inert = true; });
   }
 
-  siteLock.classList.add("is-unlocking");
-  window.setTimeout(() => {
-    document.documentElement.classList.remove("site-locked");
-    siteLock.classList.remove("is-unlocking");
-  }, 220);
-};
+  input.addEventListener("input", () => {
+    input.removeAttribute("aria-invalid");
+    message.textContent = "";
+  });
 
-siteLockForm?.addEventListener("submit", event => {
-  event.preventDefault();
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    if (unlocking) return;
+    if (input.value !== "MASSYNE") {
+      message.textContent = "Incorrect access code. Please try again.";
+      input.setAttribute("aria-invalid", "true");
+      input.focus();
+      input.select();
+      return;
+    }
 
-  if (siteLockPassword.value === SITE_PASSWORD) {
-    siteLockMessage.textContent = "";
-    unlockSite();
-    return;
-  }
-
-  siteLockMessage.textContent = "Incorrect password. Please try again.";
-  siteLockPassword.select();
-});
-
-const siteLockDisclosure = document.querySelector("#siteLockDisclosure");
-const siteLockAccess = document.querySelector("#siteLockAccess");
-
-siteLockDisclosure?.addEventListener("click", () => {
-  const expanded = siteLockDisclosure.getAttribute("aria-expanded") !== "true";
-  siteLockDisclosure.setAttribute("aria-expanded", String(expanded));
-  siteLockAccess.hidden = !expanded;
-  siteLockDisclosure.querySelector(".site-lock-toggle").textContent = expanded ? "−" : "+";
-  if (expanded) siteLockPassword.focus();
-});
+    unlocking = true;
+    message.textContent = "Access granted.";
+    input.removeAttribute("aria-invalid");
+    try { localStorage.setItem(key, "yes"); } catch (error) {
+      // Still allow access for this visit when storage is unavailable.
+    }
+    // Consume the reset flag so reloading after entry remembers access.
+    const url = new URL(window.location.href);
+    if (url.searchParams.has("lock")) {
+      url.searchParams.delete("lock");
+      try { history.replaceState(history.state, "", url); } catch (error) { /* Optional URL cleanup. */ }
+    }
+    lock.classList.add("is-unlocking");
+    window.setTimeout(() => {
+      root.classList.remove("site-locked");
+      lock.classList.remove("is-unlocking");
+      siblings.forEach(element => { element.inert = previousInert.get(element); });
+      input.value = "";
+      const destination = document.querySelector(".site-header a, main a, main button");
+      destination?.focus({ preventScroll: true });
+    }, reducedMotion.matches ? 0 : 800);
+  });
+})();

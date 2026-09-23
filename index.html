@@ -326,44 +326,32 @@
 </head>
 <body class="is-loading">
   <section class="site-lock" id="siteLock" aria-labelledby="siteLockTitle">
+    <div class="site-lock-light" aria-hidden="true"></div>
     <div class="site-lock-shell">
       <div class="site-lock-masthead">
-        <p class="site-lock-brand"><img src="images/optimized/logo-480.webp" width="1016" height="716" alt="" /><span>MASSYNE</span></p>
-        <span class="site-lock-edition">INDEPENDENT DESIGNER / CREATIVE PORTFOLIO</span>
-        <span class="site-lock-index" aria-hidden="true">M—01</span>
+        <span class="site-lock-brand">MASSYNE<span aria-hidden="true">®</span></span>
+        <span class="site-lock-edition">INDEPENDENT DESIGN &amp; MOTION</span>
+        <span class="site-lock-status"><i aria-hidden="true"></i> PRIVATE PREVIEW</span>
       </div>
-      <div class="site-lock-layout">
-        <p class="site-lock-kicker">SELECTED WORK / NEW CHAPTER</p>
-        <h1 id="siteLockTitle">PORTFOLIO<span aria-hidden="true">®</span></h1>
-        <div class="site-lock-art" aria-hidden="true">
-          <span class="site-lock-art-coordinate">M / VISUAL STUDIES</span>
-          <img src="images/optimized/logo-800.webp" width="1016" height="716" alt="" decoding="async" />
-          <span class="site-lock-art-caption">THE SAME VISION. A NEW PERSPECTIVE.</span>
+      <div class="site-lock-content">
+        <div class="site-lock-art">
+          <span class="site-lock-orbit" aria-hidden="true"></span>
+          <span class="site-lock-orbit-inner" aria-hidden="true"></span>
+          <img src="images/optimized/logo-800.webp" width="1016" height="716" alt="MASSYNE logo" decoding="async" />
         </div>
-        <div class="site-lock-panel">
-          <h2 class="site-lock-status">UNDER<br />MAINTENANCE<span aria-hidden="true">↗</span></h2>
-          <p class="site-lock-copy">I’m refining my portfolio and adding new work. Check back soon.</p>
-          <div class="site-lock-access">
-            <button class="site-lock-disclosure" id="siteLockDisclosure" type="button" aria-expanded="false" aria-controls="siteLockAccess">
-              <span>Private access</span><span class="site-lock-toggle" aria-hidden="true">+</span>
-            </button>
-            <div id="siteLockAccess" hidden>
-              <p class="site-lock-preview">Have an access password? Enter it below to preview the portfolio.</p>
-              <form class="site-lock-form" id="siteLockForm" novalidate>
-                <label for="siteLockPassword">Password</label>
-                <div class="site-lock-row">
-                  <input id="siteLockPassword" name="password" type="password" autocomplete="current-password" required aria-describedby="siteLockMessage" />
-                  <button type="submit">Unlock</button>
-                </div>
-                <p class="site-lock-message" id="siteLockMessage" aria-live="polite"></p>
-              </form>
-            </div>
+        <p class="site-lock-kicker">THE NEXT CHAPTER</p>
+        <h1 id="siteLockTitle">NEW WORK<br /><span>IN PROGRESS</span></h1>
+        <p class="site-lock-copy">A new selection of identities, posters and motion is being prepared.</p>
+        <form class="site-lock-form" id="siteLockForm" novalidate>
+          <label for="siteLockPassword">YOUR PRIVATE ACCESS</label>
+          <div class="site-lock-row">
+            <input id="siteLockPassword" name="password" type="password" placeholder="Access code" autocomplete="current-password" spellcheck="false" required aria-describedby="siteLockMessage" />
+            <button type="submit">Enter <span aria-hidden="true">↗</span></button>
           </div>
-        </div>
-        <span class="site-lock-side-label">VISUAL IDENTITY</span>
+          <p class="site-lock-message" id="siteLockMessage" aria-live="polite"></p>
+        </form>
       </div>
-      <div class="site-lock-disciplines" aria-label="Creative disciplines"><span>01 / GRAPHIC DESIGN</span><span>02 / VISUAL IDENTITY</span><span>03 / MOTION</span></div>
-      <footer class="site-lock-footer"><p>Thanks for stopping by.</p><span>MASSYNE / WORK IN PROGRESS</span></footer>
+      <footer class="site-lock-footer"><span>IDENTITIES / POSTERS / MOTION</span><span class="site-lock-footer-note">A new perspective. The same vision.</span><span>M—01 <span aria-hidden="true">©</span> 2026</span></footer>
     </div>
   </section>
 
