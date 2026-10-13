@@ -104,3 +104,14 @@ document.addEventListener('visibilitychange', () => {
   else requestDrift();
 });
 configureDrift();
+
+// Touch swipe is a progressive enhancement for the native artwork preview.
+let previewTouchStart = 0;
+dialog.addEventListener('touchstart', event => {
+  previewTouchStart = event.changedTouches[0].screenX;
+}, { passive: true });
+dialog.addEventListener('touchend', event => {
+  const distance = event.changedTouches[0].screenX - previewTouchStart;
+  if (Math.abs(distance) < 45) return;
+  render(distance < 0 ? current + 1 : current - 1);
+}, { passive: true });
