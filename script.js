@@ -53,4 +53,46 @@
       item.addEventListener('pointerleave', () => cursor.classList.remove('is-active'));
     });
   }
+
+  if (!reduce && matchMedia('(pointer:fine)').matches) {
+    const hero = document.querySelector('.hero');
+    let frame = 0, pointer = null;
+    hero?.addEventListener('pointermove', event => {
+      pointer = event;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        const rect = hero.getBoundingClientRect();
+        const x = (pointer.clientX - rect.left) / rect.width - .5;
+        const y = (pointer.clientY - rect.top) / rect.height - .5;
+        hero.style.setProperty('--depth-x', (x * 7).toFixed(2) + 'px');
+        hero.style.setProperty('--depth-y', (y * 7).toFixed(2) + 'px');
+        frame = 0;
+      });
+    });
+    hero?.addEventListener('pointerleave', () => { hero.style.setProperty('--depth-x','0px'); hero.style.setProperty('--depth-y','0px'); });
+    document.querySelectorAll('.glass-card').forEach(card => {
+      let cardFrame = 0, last;
+      card.addEventListener('pointermove', event => {
+        last = event;
+        if (cardFrame) return;
+        cardFrame = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = (last.clientX - rect.left) / rect.width - .5;
+          const y = (last.clientY - rect.top) / rect.height - .5;
+          card.style.transform = 'translateY(-4px) rotateX(' + (-y * 2.1).toFixed(2) + 'deg) rotateY(' + (x * 2.1).toFixed(2) + 'deg)';
+          card.style.setProperty('--shine-x', ((x + .5) * 100).toFixed(0) + '%');
+          card.style.setProperty('--shine-y', ((y + .5) * 100).toFixed(0) + '%');
+          cardFrame = 0;
+        });
+      });
+      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+    });
+    document.querySelectorAll('.magnetic').forEach(button => {
+      button.addEventListener('pointermove', event => {
+        const rect = button.getBoundingClientRect();
+        button.style.transform = 'translate(' + ((event.clientX - rect.left - rect.width / 2) * .14).toFixed(1) + 'px,' + ((event.clientY - rect.top - rect.height / 2) * .14).toFixed(1) + 'px)';
+      });
+      button.addEventListener('pointerleave', () => { button.style.transform = ''; });
+    });
+  }
 })();
