@@ -63,24 +63,38 @@
     button.setAttribute("aria-pressed", String(button.classList.contains("active")))
   );
 
-  // Native accessible image preview, including pointer and keyboard activation.
+  // Native accessible image preview. Arrow keys stay within the originating gallery.
   const dialog = document.querySelector(".lightbox");
   const previewImage = dialog?.querySelector("img");
   const previewLabel = dialog?.querySelector("p");
-  document.querySelectorAll(".image-open").forEach(item => {
+  const closePreview = dialog?.querySelector("button");
+  let previewItems = [];
+  let previewIndex = -1;
+  let previewTrigger = null;
+  const imageOpeners = Array.from(document.querySelectorAll(".image-open"));
+  const showPreview = index => {
+    const item = previewItems[index];
+    const image = item?.querySelector("img");
+    if (!image || !dialog || !previewImage) return;
+    previewIndex = index;
+    previewImage.src = image.currentSrc || image.src;
+    previewImage.alt = image.alt;
+    if (previewLabel) previewLabel.textContent = image.alt + " — " + (index + 1) + " of " + previewItems.length;
+    if (!dialog.open) {
+      dialog.showModal();
+      closePreview?.focus();
+    }
+  };
+  imageOpeners.forEach(item => {
     const open = () => {
-      const image = item.querySelector("img");
-      if (!image || !dialog || !previewImage) return;
-      previewImage.src = image.currentSrc || image.src;
-      previewImage.alt = image.alt;
-      if (previewLabel) previewLabel.textContent = image.alt;
-      if (!dialog.open) dialog.showModal();
+      const gallery = item.closest(".project-grid, .identity-gallery, .self-brand, .archive-grid") || item.parentElement;
+      previewItems = Array.from(gallery?.querySelectorAll(".image-open") || [item]);
+      previewTrigger = item;
+      showPreview(Math.max(0, previewItems.indexOf(item)));
     };
     item.setAttribute("tabindex", "0");
     item.setAttribute("role", "button");
-    if (!item.hasAttribute("aria-label")) {
-      item.setAttribute("aria-label", "Preview " + (item.querySelector("img")?.alt || "artwork"));
-    }
+    if (!item.hasAttribute("aria-label")) item.setAttribute("aria-label", "Preview " + (item.querySelector("img")?.alt || "artwork"));
     item.addEventListener("click", open);
     item.addEventListener("keydown", event => {
       if (event.key === "Enter" || event.key === " ") {
@@ -89,9 +103,20 @@
       }
     });
   });
-  dialog?.querySelector("button")?.addEventListener("click", () => dialog.close());
-  dialog?.addEventListener("click", event => {
-    if (event.target === dialog) dialog.close();
+  closePreview?.addEventListener("click", () => dialog.close());
+  dialog?.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+  dialog?.addEventListener("keydown", event => {
+    if (previewItems.length < 2) return;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      event.preventDefault(); showPreview((previewIndex + 1) % previewItems.length);
+    }
+    if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      event.preventDefault(); showPreview((previewIndex - 1 + previewItems.length) % previewItems.length);
+    }
+  });
+  dialog?.addEventListener("close", () => {
+    previewTrigger?.focus();
+    previewItems = []; previewIndex = -1; previewTrigger = null;
   });
 
   // Opt-in section reveals: hidden state is added only when observation is supported.
