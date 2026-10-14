@@ -43,4 +43,14 @@
     }), {threshold:.08});
     document.querySelectorAll('.section,.contact').forEach(section => observer.observe(section));
   }
+
+  if (!reduce && matchMedia('(pointer:fine)').matches) {
+    const cursor = document.createElement('div');
+    cursor.className = 'cursor'; document.body.append(cursor);
+    window.addEventListener('pointermove', event => { cursor.style.left = event.clientX + 'px'; cursor.style.top = event.clientY + 'px'; }, {passive:true});
+    document.querySelectorAll('a,button,.image-open,video').forEach(item => {
+      item.addEventListener('pointerenter', () => cursor.classList.add('is-active'));
+      item.addEventListener('pointerleave', () => cursor.classList.remove('is-active'));
+    });
+  }
 })();
