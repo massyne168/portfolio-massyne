@@ -1,98 +1,131 @@
 (() => {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const menu = document.querySelector('.menu');
-  const nav = document.querySelector('#nav');
-  menu?.addEventListener('click', () => {
-    const open = nav.classList.toggle('is-open');
-    menu.setAttribute('aria-expanded', String(open));
+  "use strict";
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const nav = document.querySelector("#nav");
+  const menu = document.querySelector(".menu");
+  const header = document.querySelector(".site-header");
+  const progress = document.querySelector(".scroll-progress");
+
+  const closeMenu = () => {
+    if (!nav || !menu) return;
+    nav.classList.remove("is-open");
+    menu.setAttribute("aria-expanded", "false");
+  };
+  menu?.addEventListener("click", () => {
+    const isOpen = nav?.classList.toggle("is-open") ?? false;
+    menu.setAttribute("aria-expanded", String(isOpen));
   });
-  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    nav.classList.remove('is-open'); menu?.setAttribute('aria-expanded','false');
-  }));
-  const filters = document.querySelectorAll('[data-filter]');
-  const archiveItems = document.querySelectorAll('.archive-item');
-  filters.forEach(button => button.addEventListener('click', () => {
+  nav?.querySelectorAll("a").forEach(anchor =>
+    anchor.addEventListener("click", closeMenu)
+  );
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeMenu();
+  });
+  document.addEventListener("click", event => {
+    if (header && !header.contains(event.target)) closeMenu();
+  });
+
+  // Native scrolling with a very lightweight, non-invasive progress indicator.
+  let scrollFrame = 0;
+  const updateScroll = () => {
+    const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const value = Math.min(1, Math.max(0, window.scrollY / scrollRange));
+    progress?.style.setProperty("--scroll-progress", value);
+    header?.classList.toggle("is-scrolled", window.scrollY > 18);
+    scrollFrame = 0;
+  };
+  const requestScrollUpdate = () => {
+    if (scrollFrame) return;
+    scrollFrame = window.requestAnimationFrame(updateScroll);
+  };
+  window.addEventListener("scroll", requestScrollUpdate, { passive:true });
+  window.addEventListener("resize", requestScrollUpdate, { passive:true });
+  updateScroll();
+
+  // Keep all archive assets, while letting visitors switch categories.
+  const archiveItems = Array.from(document.querySelectorAll(".archive-item"));
+  const filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
+  filterButtons.forEach(button => button.addEventListener("click", () => {
     const filter = button.dataset.filter;
-    filters.forEach(item => item.classList.toggle('active', item === button));
+    filterButtons.forEach(item => {
+      const selected = item === button;
+      item.classList.toggle("active", selected);
+      item.setAttribute("aria-pressed", String(selected));
+    });
     archiveItems.forEach(item => {
-      const visible = filter === 'all' || item.dataset.category.split(' ').includes(filter);
-      item.classList.toggle('is-hidden', !visible);
+      const categories = (item.dataset.category || "").split(/\s+/);
+      const visible = filter === "all" || categories.includes(filter);
+      item.classList.toggle("is-hidden", !visible);
+      item.toggleAttribute("hidden", !visible);
     });
   }));
-  const dialog = document.querySelector('.lightbox');
-  const preview = dialog?.querySelector('img');
-  const label = dialog?.querySelector('p');
-  document.querySelectorAll('.image-open').forEach(item => {
-    item.addEventListener('click', () => {
-      const image = item.querySelector('img');
-      if (!image || !dialog) return;
-      preview.src = image.currentSrc || image.src;
-      preview.alt = image.alt;
-      label.textContent = image.alt;
-      dialog.showModal();
+  filterButtons.forEach(button =>
+    button.setAttribute("aria-pressed", String(button.classList.contains("active")))
+  );
+
+  // Native accessible image preview, including pointer and keyboard activation.
+  const dialog = document.querySelector(".lightbox");
+  const previewImage = dialog?.querySelector("img");
+  const previewLabel = dialog?.querySelector("p");
+  document.querySelectorAll(".image-open").forEach(item => {
+    const open = () => {
+      const image = item.querySelector("img");
+      if (!image || !dialog || !previewImage) return;
+      previewImage.src = image.currentSrc || image.src;
+      previewImage.alt = image.alt;
+      if (previewLabel) previewLabel.textContent = image.alt;
+      if (!dialog.open) dialog.showModal();
+    };
+    item.setAttribute("tabindex", "0");
+    item.setAttribute("role", "button");
+    if (!item.hasAttribute("aria-label")) {
+      item.setAttribute("aria-label", "Preview " + (item.querySelector("img")?.alt || "artwork"));
+    }
+    item.addEventListener("click", open);
+    item.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open();
+      }
     });
-    item.addEventListener('keydown', event => { if (event.key === 'Enter') item.click(); });
-    item.setAttribute('tabindex','0');
-    item.setAttribute('role','button');
   });
-  dialog?.querySelector('button').addEventListener('click', () => dialog.close());
-  dialog?.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
-  if (!reduce && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'translateY(0)'}],{duration:520,fill:'both',easing:'cubic-bezier(.2,.65,.2,1)'}); observer.unobserve(entry.target); }
-    }), {threshold:.08});
-    document.querySelectorAll('.section,.contact').forEach(section => observer.observe(section));
-  }
+  dialog?.querySelector("button")?.addEventListener("click", () => dialog.close());
+  dialog?.addEventListener("click", event => {
+    if (event.target === dialog) dialog.close();
+  });
 
-  if (!reduce && matchMedia('(pointer:fine)').matches) {
-    const cursor = document.createElement('div');
-    cursor.className = 'cursor'; document.body.append(cursor);
-    window.addEventListener('pointermove', event => { cursor.style.left = event.clientX + 'px'; cursor.style.top = event.clientY + 'px'; }, {passive:true});
-    document.querySelectorAll('a,button,.image-open,video').forEach(item => {
-      item.addEventListener('pointerenter', () => cursor.classList.add('is-active'));
-      item.addEventListener('pointerleave', () => cursor.classList.remove('is-active'));
-    });
-  }
-
-  if (!reduce && matchMedia('(pointer:fine)').matches) {
-    const hero = document.querySelector('.hero');
-    let frame = 0, pointer = null;
-    hero?.addEventListener('pointermove', event => {
-      pointer = event;
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        const rect = hero.getBoundingClientRect();
-        const x = (pointer.clientX - rect.left) / rect.width - .5;
-        const y = (pointer.clientY - rect.top) / rect.height - .5;
-        hero.style.setProperty('--depth-x', (x * 7).toFixed(2) + 'px');
-        hero.style.setProperty('--depth-y', (y * 7).toFixed(2) + 'px');
-        frame = 0;
+  // Opt-in section reveals: hidden state is added only when observation is supported.
+  const targets = [...document.querySelectorAll(".section-head, .identity-top, .about > div, .contact > h2")];
+  let revealObserver;
+  const resetReveals = () => {
+    revealObserver?.disconnect();
+    targets.forEach(el => el.classList.remove("reveal-pending"));
+    targets.forEach(el => el.classList.add("reveal-visible"));
+  };
+  const setupReveals = () => {
+    if (motionQuery.matches || !("IntersectionObserver" in window)) {
+      resetReveals();
+      return;
+    }
+    revealObserver?.disconnect();
+    revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove("reveal-pending");
+          entry.target.classList.add("reveal-visible");
+          revealObserver.unobserve(entry.target);
+        }
       });
+    }, { threshold: .08, rootMargin: "0px 0px 40px 0px" });
+    targets.forEach(el => {
+      el.classList.remove("reveal-visible");
+      el.classList.add("reveal-pending");
+      revealObserver.observe(el);
     });
-    hero?.addEventListener('pointerleave', () => { hero.style.setProperty('--depth-x','0px'); hero.style.setProperty('--depth-y','0px'); });
-    document.querySelectorAll('.glass-card').forEach(card => {
-      let cardFrame = 0, last;
-      card.addEventListener('pointermove', event => {
-        last = event;
-        if (cardFrame) return;
-        cardFrame = requestAnimationFrame(() => {
-          const rect = card.getBoundingClientRect();
-          const x = (last.clientX - rect.left) / rect.width - .5;
-          const y = (last.clientY - rect.top) / rect.height - .5;
-          card.style.transform = 'translateY(-4px) rotateX(' + (-y * 2.1).toFixed(2) + 'deg) rotateY(' + (x * 2.1).toFixed(2) + 'deg)';
-          card.style.setProperty('--shine-x', ((x + .5) * 100).toFixed(0) + '%');
-          card.style.setProperty('--shine-y', ((y + .5) * 100).toFixed(0) + '%');
-          cardFrame = 0;
-        });
-      });
-      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-    });
-    document.querySelectorAll('.magnetic').forEach(button => {
-      button.addEventListener('pointermove', event => {
-        const rect = button.getBoundingClientRect();
-        button.style.transform = 'translate(' + ((event.clientX - rect.left - rect.width / 2) * .14).toFixed(1) + 'px,' + ((event.clientY - rect.top - rect.height / 2) * .14).toFixed(1) + 'px)';
-      });
-      button.addEventListener('pointerleave', () => { button.style.transform = ''; });
-    });
-  }
+  };
+  setupReveals();
+  motionQuery.addEventListener?.("change", event => {
+    if (event.matches) resetReveals();
+    else setupReveals();
+  });
 })();
