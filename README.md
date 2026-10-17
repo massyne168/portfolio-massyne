@@ -13,6 +13,12 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 - `project-data.js` — the definitive collection of 15 completed case study entries: the 14 completed featured projects and Gurzil Team. The two Coming Soon concepts do not have fake case studies.
 - `case-study.js` and `case-study.css` — case-study navigation, full-size original artwork viewer, and responsive layouts.
 
+### Art-directed portrait
+
+- The homepage Hero has a **Cinematic Identity Card** that uses the existing, unmodified `assets/massyne-hero-portrait.png` photograph. The card uses a clean dark-crimson halo, subtle elliptical orbit, muted background `M.` mark, micro-sized editorial side label, precise corner marks, and a refined `M/01 — THE CREATIVE` identifier instead of the old rotated red sticker.
+- `portrait-art-direction.css` owns all portrait decoration and responsive layouts. `portrait-motion.js` gently shifts **only the background lighting** on fine-pointer hover; the portrait image itself does not warp. Both honor reduced motion.
+- To use a different portrait, replace `assets/massyne-hero-portrait.png` with a higher-quality PNG using the same filename, ideally with a transparent background. The image's source, alt text and surrounding site components remain intact.
+
 ### Branding & introduction
 
 - The **compact** upper-left header branding on the home and project pages uses the original white MASSYNE logo from `images/optimized/logo-1016.webp`, with a lighter mobile variant at `images/optimized/logo-480.webp`.
