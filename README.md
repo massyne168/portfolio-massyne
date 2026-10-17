@@ -13,6 +13,13 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 - `project-data.js` — the definitive collection of 15 completed case study entries: the 14 completed featured projects and Gurzil Team. The two Coming Soon concepts do not have fake case studies.
 - `case-study.js` and `case-study.css` — case-study navigation, full-size original artwork viewer, and responsive layouts.
 
+### Branding & introduction
+
+- The upper-right header branding on the home and project pages uses the original white MASSYNE logo from `images/optimized/logo-1016.webp`, with a lighter mobile variant at `images/optimized/logo-480.webp`.
+- `brand-loader.css` / `brand-loader.js` add a clean 0–100% branded intro over 3.45 seconds (roughly 3.8 seconds including fade-out). This is **first visit per browser tab/session** only, so navigating between case studies is instantaneous.
+- Add `?intro=1` to either page URL to replay the intro for review. **Skip intro** is supported and people using reduced-motion preferences do not see the delayed intro.
+- The loader is hidden without JavaScript rather than trapping visitors on a non-functional splash screen.
+
 ### Other files
 
 - `style.css` — base responsive design and typography.
