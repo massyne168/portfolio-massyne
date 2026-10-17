@@ -63,7 +63,7 @@ body.case-study-page{background:#09090c;color:#f1efeb}
 .case-step{font:500 .61rem var(--mono);text-transform:uppercase;color:#c53a4c}
 .case-project-link strong{font:500 clamp(1.25rem,2.35vw,2.8rem)/1.08 var(--display);letter-spacing:-.05em}
 .case-contact{
- max-width:none;background:radial-gradient(ellipse 85% 120% at 85% 85%,rgba(173,24,48,.18),transparent 63%),#160d12;
+ max-width:none;background:radial-gradient(ellipse 75% 46% at 50% 110%,rgba(190,31,60,.17),transparent 79%),#140d12;
  border-top:1px solid #70303b;padding-block:clamp(82px,9vw,145px);text-align:center
 }
 .case-contact .eyebrow{color:#f04863}
