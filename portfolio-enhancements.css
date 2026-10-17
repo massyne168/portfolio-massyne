@@ -243,3 +243,104 @@
   .hero-v2-content > *,.hero-v2-portrait picture img{animation:none!important}
   .hero-button-primary,.hero-button-quiet,.contact-v2-button,.about-v2-link,.project-grid .project[data-case-study]::after{transition:none}
 }
+
+
+/* 2026-10-17: crisp portrait + resolution-independent cinematic glass */
+.hero.hero-v2 {
+  background:
+    radial-gradient(ellipse at 72% 43%,rgba(189,37,68,.10),transparent 49%),
+    radial-gradient(ellipse at 8% 82%,rgba(100,37,62,.08),transparent 55%),
+    #09090c;
+}
+.hero-v2 .hero-ambient {
+  opacity:.6;
+  background:radial-gradient(ellipse,rgba(160,21,51,.14),transparent 66%);
+  filter:blur(52px);
+  pointer-events:none;
+}
+.hero-v2-portrait {
+  overflow:hidden;
+  clip-path:none !important;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.27);
+  background:
+    radial-gradient(ellipse at 64% 28%,rgba(237,72,105,.3),transparent 48%),
+    linear-gradient(139deg,rgba(153,126,157,.16) 0%,rgba(57,38,55,.62) 51%,rgba(22,17,29,.94) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.42),
+    inset 0 0 0 9px rgba(255,255,255,.035),
+    0 30px 90px rgba(0,0,0,.48),
+    0 0 65px rgba(178,35,64,.08);
+  -webkit-backdrop-filter:blur(22px) saturate(1.35);
+  backdrop-filter:blur(22px) saturate(1.35);
+}
+.hero-v2-portrait::after {
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  background:
+    linear-gradient(136deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.015) 22%,transparent 35%),
+    linear-gradient(180deg,transparent 67%,rgba(7,6,12,.5));
+}
+.hero-v2-portrait::before{
+  display:none;
+}
+.hero-v2-portrait > picture {
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  z-index:1;
+}
+.hero-v2-portrait picture img {
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:50% 50%;
+  filter:contrast(1.04) grayscale(1);
+  image-rendering:auto;
+  transform:none;
+  animation:hero-portrait-appear 1s cubic-bezier(.2,.65,.26,1) both;
+}
+.hero-portrait-halo {
+  z-index:0;
+  opacity:.63;
+  bottom:-17%;
+  mix-blend-mode:screen;
+  filter:blur(45px);
+}
+.hero-v2-portrait figcaption {z-index:4}
+.hero-portrait-stamp {z-index:5}
+.about-v2-image {
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.23);
+  background:
+    radial-gradient(ellipse at 75% 22%,rgba(216,53,81,.22),transparent 54%),
+    linear-gradient(150deg,rgba(116,89,116,.2),rgba(24,21,32,.92));
+  box-shadow:0 23px 65px rgba(0,0,0,.43),inset 0 1px rgba(255,255,255,.24);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+  overflow:hidden;
+}
+.about-v2-image picture{
+  position:absolute;inset:0;display:block;width:100%;height:100%;
+}
+.about-v2-image picture img{
+  width:100%;height:100%;object-fit:contain;object-position:center;
+  image-rendering:auto;filter:contrast(1.04) grayscale(1);
+}
+.about-v2-image::after{z-index:1}
+.about-image-label{z-index:2}
+@media(max-width:800px){
+  .hero-v2-portrait{border-radius:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-v2-portrait picture img{animation:none!important}
+}
