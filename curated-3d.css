@@ -174,3 +174,118 @@
   }
   .carousel-actions button{transition:none}
 }
+
+
+/* MASSYNE / Curated Works — restrained orbiting edge light + gentle media motion.
+   Rotating light is painted only into a thin rim, never over the artwork.
+   The controller limits animated cards to nearby/in-viewport items. */
+@property --massyne-edge-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes massyne-edge-orbit {
+  to { --massyne-edge-angle: 360deg; }
+}
+@keyframes massyne-media-breathe {
+  0%,100% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(0,-5px,0); }
+}
+
+/* CSS edge mask: a single bright crimson-white segment travels along all four sides. */
+.project-grid > .project::before,
+.project-grid[data-view="3d"].carousel-ready > .project::before {
+  content:"";
+  display:block;
+  position:absolute;
+  inset:0;
+  width:auto;
+  height:auto;
+  aspect-ratio:auto;
+  border:0;
+  padding:2px;
+  border-radius:inherit;
+  z-index:4;
+  pointer-events:none;
+  opacity:0;
+  transform:none;
+  background:conic-gradient(
+    from var(--massyne-edge-angle),
+    transparent 0deg,
+    transparent 242deg,
+    rgba(203,35,57,.12) 268deg,
+    rgba(238,52,75,.9) 289deg,
+    rgba(255,239,235,1) 305deg,
+    rgba(238,52,75,.75) 324deg,
+    transparent 346deg
+  );
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  transition:opacity 250ms ease;
+}
+
+/* Only visible cards illuminate: nearby carousel cards + grid cards in the viewport. */
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near::before,
+.project-grid[data-view="grid"] > .project.is-in-viewport::before,
+.project-grid[data-view="index"] > .project:is(:hover,:focus-visible)::before {
+  opacity:.88;
+  animation:massyne-edge-orbit 7.8s linear infinite;
+  animation-delay:calc(var(--massyne-fx-order,0) * -.32s);
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active::before,
+.project-grid[data-view="grid"] > .project:is(:hover,:focus-visible)::before {
+  opacity:1;
+  animation-duration:5.7s;
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near img {
+  animation:massyne-media-breathe 7.2s ease-in-out infinite;
+  animation-delay:calc(var(--massyne-fx-order,0) * -.29s);
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active img {
+  animation-duration:6.2s;
+}
+.project-grid[data-view="grid"] > .project.is-in-viewport img {
+  animation:massyne-media-breathe 9s ease-in-out infinite;
+  animation-delay:calc(var(--massyne-fx-order,0) * -.28s);
+}
+.project-grid[data-view="grid"] > .project:is(:hover,:focus-visible) img,
+.project-grid[data-view="3d"].carousel-ready > .project:hover img {
+  animation-play-state:paused;
+}
+
+/* Pointer dragging, hidden tabs and reduced-motion should cost no animation frames. */
+.project-grid.is-dragging > .project::before,
+.project-grid.is-dragging > .project img,
+.project-grid.is-fx-hidden > .project::before,
+.project-grid.is-fx-hidden > .project img,
+.project-grid.is-fx-offscreen > .project::before,
+.project-grid.is-fx-offscreen > .project img {
+  animation-play-state:paused !important;
+}
+.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside::before,
+.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside img {
+  animation:none;
+}
+@media (max-width:550px) {
+  .project-grid > .project::before,
+  .project-grid[data-view="3d"].carousel-ready > .project::before {
+    padding:1.5px;
+  }
+  .project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near img {
+    animation-duration:8.5s;
+  }
+  .project-grid[data-view="grid"] > .project.is-in-viewport img {
+    animation:none;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .project-grid > .project::before,
+  .project-grid[data-view="3d"].carousel-ready > .project::before,
+  .project-grid > .project img {
+    animation:none !important;
+    transition:none !important;
+  }
+  .project-grid > .project::before { opacity:0 !important; }
+}

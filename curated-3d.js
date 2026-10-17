@@ -19,6 +19,25 @@
   if (!grid || !stage || !controls || !cards.length || buttons.length < 2) return;
 
   const count = cards.length;
+
+  // Offset the orbit phase so neighbouring borders never flash in sync.
+  cards.forEach((card, index) => {
+    card.style.setProperty("--massyne-fx-order", String(index));
+  });
+
+  // Animate grid cards only while they're on screen; the 3D view separately
+  // animates only the current card and its immediate neighbours.
+  if ("IntersectionObserver" in window) {
+    const fxObserver = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        entry.target.classList.toggle("is-in-viewport", entry.isIntersecting);
+      }
+    }, { threshold: .015, rootMargin: "70px 0px" });
+    cards.forEach(card => fxObserver.observe(card));
+  } else {
+    cards.forEach(card => card.classList.add("is-in-viewport"));
+  }
+
   const validModes = new Set(["3d", "grid", "index"]);
   let mode = "grid";
   let active = 0;
@@ -74,6 +93,7 @@
       card.style.setProperty("--carousel-brightness", Math.max(0.67, 1 - amount * 0.105).toFixed(3));
 
       card.classList.toggle("is-carousel-active", center);
+      card.classList.toggle("is-carousel-near", !outside && amount < 1.65);
       card.classList.toggle("carousel-outside", outside);
       card.style.pointerEvents = amount < 2.25 && !outside ? "auto" : "none";
       card.setAttribute("aria-hidden", String(!center));
@@ -165,7 +185,7 @@
       render();
     } else {
       cards.forEach(card => {
-        card.classList.remove("is-carousel-active", "carousel-outside");
+        card.classList.remove("is-carousel-active", "is-carousel-near", "carousel-outside");
         card.removeAttribute("aria-hidden");
         card.style.pointerEvents = "";
         if (card.classList.contains("image-open")) card.tabIndex = 0;
@@ -288,12 +308,14 @@
   });
   controls.addEventListener("pointerleave", () => { hovering = false; });
 
+  grid.classList.add("is-fx-offscreen");
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
       visible = entries.some(entry => entry.isIntersecting);
+      grid.classList.toggle("is-fx-offscreen", !visible);
     }, { threshold: 0.22 });
     observer.observe(stage);
-  } else visible = true;
+  } else { visible = true; grid.classList.remove("is-fx-offscreen"); }
 
   let resizeFrame = 0;
   window.addEventListener("resize", () => {
@@ -315,7 +337,10 @@
     updateToggle();
     updatePlayback();
   });
-  document.addEventListener("visibilitychange", updatePlayback);
+  document.addEventListener("visibilitychange", () => {
+    grid.classList.toggle("is-fx-hidden", document.hidden);
+    updatePlayback();
+  });
 
   // Reduced-motion viewers start in the static grid but can explicitly choose 3D.
   setView(motion.matches ? "grid" : "3d");
