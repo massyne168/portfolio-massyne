@@ -89,7 +89,7 @@
   object-fit:contain;
   object-position:center bottom;
   image-rendering:auto;
-  filter:grayscale(1) contrast(1.045) drop-shadow(0 11px 18px rgba(0,0,0,.23));
+  filter:grayscale(1) contrast(1.045) drop-shadow(0 0 15px rgba(223,38,74,.27)) drop-shadow(0 11px 18px rgba(0,0,0,.23));
   animation:frameless-portrait-arrival 1.05s cubic-bezier(.16,.72,.27,1) both;
 }
 .portrait-freeform .portrait-ground-glow{
