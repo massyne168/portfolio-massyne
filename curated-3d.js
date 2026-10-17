@@ -93,7 +93,7 @@
       card.style.setProperty("--carousel-brightness", Math.max(0.67, 1 - amount * 0.105).toFixed(3));
 
       card.classList.toggle("is-carousel-active", center);
-      card.classList.toggle("is-carousel-near", !outside && amount < 2.16);
+      card.classList.toggle("is-carousel-near", !outside && amount < 1.65);
       card.classList.toggle("carousel-outside", outside);
       card.style.pointerEvents = amount < 2.25 && !outside ? "auto" : "none";
       card.setAttribute("aria-hidden", String(!center));
@@ -308,12 +308,14 @@
   });
   controls.addEventListener("pointerleave", () => { hovering = false; });
 
+  grid.classList.add("is-fx-offscreen");
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
       visible = entries.some(entry => entry.isIntersecting);
+      grid.classList.toggle("is-fx-offscreen", !visible);
     }, { threshold: 0.22 });
     observer.observe(stage);
-  } else visible = true;
+  } else { visible = true; grid.classList.remove("is-fx-offscreen"); }
 
   let resizeFrame = 0;
   window.addEventListener("resize", () => {
