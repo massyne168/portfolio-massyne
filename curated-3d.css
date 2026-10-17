@@ -5,15 +5,17 @@
   margin-inline:calc(-1 * clamp(20px,4.3vw,72px));
   overflow:hidden;
   isolation:isolate;
-  background:
-    radial-gradient(ellipse 44% 64% at 50% 53%,rgba(142,17,35,.14),transparent 75%),
-    linear-gradient(180deg,#09090c 0%,#111014 53%,#09090c 100%);
+  background:#09090c;
 }
 .curated-stage.carousel-active::before{
-  content:"";position:absolute;z-index:0;left:50%;top:12%;height:76%;width:min(650px,80vw);
-  border-radius:50%;transform:translateX(-50%);
-  border:1px solid rgba(205,40,65,.08);box-shadow:0 0 0 48px rgba(205,40,65,.013);
-  pointer-events:none
+  /* A single, smooth bottom glow. No rings, textures or central haze. */
+  content:"";
+  position:absolute;z-index:0;left:50%;bottom:-120px;
+  width:min(1120px,115vw);height:clamp(220px,32vw,340px);
+  transform:translateX(-50%);
+  border:0;box-shadow:none;border-radius:50%;
+  background:radial-gradient(ellipse 55% 70% at 50% 52%,rgba(218,39,76,.19),rgba(112,20,42,.06) 55%,transparent 82%);
+  pointer-events:none;
 }
 .curated-stage.carousel-active::after{
   content:"";position:absolute;z-index:31;inset:0;pointer-events:none;
