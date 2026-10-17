@@ -15,9 +15,9 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 
 ### Branding & introduction
 
-- The upper-right header branding on the home and project pages uses the original white MASSYNE logo from `images/optimized/logo-1016.webp`, with a lighter mobile variant at `images/optimized/logo-480.webp`.
-- `brand-loader.css` / `brand-loader.js` add a clean 0–100% branded intro over 3.45 seconds (roughly 3.8 seconds including fade-out). This is **first visit per browser tab/session** only, so navigating between case studies is instantaneous.
-- Add `?intro=1` to either page URL to replay the intro for review. **Skip intro** is supported and people using reduced-motion preferences do not see the delayed intro.
+- The upper-left header branding on the home and project pages uses the original white MASSYNE logo from `images/optimized/logo-1016.webp`, with a lighter mobile variant at `images/optimized/logo-480.webp`.
+- `brand-loader.css` / `brand-loader.js` add a clean 0–100% branded intro over 3.45 seconds (roughly 3.8 seconds including fade-out). It runs on **every page load and every browser refresh (F5 / Ctrl+R)**; it no longer caches the intro in session storage.
+- **Skip intro** works every time. People using reduced-motion preferences do not see the delayed intro.
 - The loader is hidden without JavaScript rather than trapping visitors on a non-functional splash screen.
 
 ### Other files
