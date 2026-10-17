@@ -1,4 +1,4 @@
-/* MASSYNE / Refreshable branded intro — 0 to 100 in 3.45s, no libraries.
+/* MASSYNE / Cinematic signature intro — 0 to 100 in 3.45s, no libraries.
    Runs on every full document load, including F5/Refresh.
    Reduced motion, background tabs, and navigation fail safely. */
 (() => {
@@ -8,7 +8,17 @@
   const count = overlay.querySelector(".loader-count");
   const bar = overlay.querySelector(".loader-progress-fill");
   const progress = overlay.querySelector("[role=progressbar]");
+  const progressLight = overlay.querySelector(".intro-progress-light");
   const skip = overlay.querySelector(".loader-skip");
+  const status = overlay.querySelector(".intro-status");
+  const stages = [...overlay.querySelectorAll("[data-intro-stage]")];
+  const phaseLabels = [
+    "ESTABLISHING IDENTITY",
+    "CURATING VISUAL WORLDS",
+    "IGNITING MOTION",
+    "OPENING THE EXPERIENCE"
+  ];
+  let currentPhase = -1;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   // Replay on every page load/refresh rather than relying on session storage.
   // Accessibility exception: never delay visitors requesting reduced motion.
@@ -24,12 +34,26 @@
   const previousInert = blocked.map(node => !!node.inert);
 
   const update = fraction => {
-    const value = Math.min(100, Math.max(0, Math.floor(fraction * 100)));
+    const clamped = Math.max(0, Math.min(1, fraction));
+    // One tiny CSS variable drives the scanning light and progress indicator.
+    overlay.style.setProperty("--intro-progress", clamped.toFixed(4));
+    if (progressLight) progressLight.style.left = (clamped * 100).toFixed(2) + "%";
+    const value = Math.min(100, Math.max(0, Math.floor(clamped * 100)));
     if (value === previous) return;
     previous = value;
     if (count) count.textContent = String(value).padStart(2, "0");
-    if (bar) bar.style.transform = "scaleX(" + value / 100 + ")";
+    if (bar) bar.style.transform = "scaleX(" + clamped + ")";
     if (progress) progress.setAttribute("aria-valuenow", String(value));
+    const phase = Math.min(3, Math.floor(value / 25));
+    if (phase !== currentPhase) {
+      currentPhase = phase;
+      if (status) status.textContent = phaseLabels[phase];
+      stages.forEach((step, index) => {
+        step.classList.toggle("is-active", index === phase);
+        step.classList.toggle("is-done", index < phase);
+      });
+    }
+    if (value === 100 && status) status.textContent = "WELCOME TO MASSYNE";
   };
   const finish = () => {
     if (finished) return;
@@ -51,7 +75,7 @@
         document.querySelector(".site-header .brand-logo")?.focus({preventScroll:true});
       }
     }
-    window.setTimeout(() => { overlay.hidden = true; }, 390);
+    window.setTimeout(() => { overlay.hidden = true; }, 670);
   };
 
   overlay.hidden = false;
