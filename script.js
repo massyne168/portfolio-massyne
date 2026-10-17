@@ -5,6 +5,14 @@
   const menu = document.querySelector(".menu");
   const header = document.querySelector(".site-header");
   const progress = document.querySelector(".scroll-progress");
+  // Derive the editorial count from the actual gallery so reorganizing
+  // projects cannot leave an outdated "08 PROJECTS" label behind.
+  const countLabel = document.querySelector(".project-count-label");
+  const curatedCards = document.querySelectorAll(".project-grid > .project");
+  if (countLabel) {
+    countLabel.textContent = "CURATED WORKS — " + String(curatedCards.length).padStart(2, "0") + " PROJECTS";
+  }
+
 
   const closeMenu = () => {
     if (!nav || !menu) return;
