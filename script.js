@@ -33,6 +33,27 @@
     if (header && !header.contains(event.target)) closeMenu();
   });
 
+  // Premium navigation: mark the visible portfolio section (not just the last clicked link).
+  // Keep the indicator accessible via aria-current and update within the existing RAF scroll loop.
+  const sectionLinks = [...(nav?.querySelectorAll('a[href^="#"]') || [])];
+  const sectionTargets = sectionLinks
+    .map(link => ({ link, section: document.getElementById(link.getAttribute("href").slice(1)) }))
+    .filter(item => item.section);
+  let currentSectionLink = null;
+  const syncActiveSection = () => {
+    const threshold = Math.min(window.innerHeight * .34, 300);
+    let active = null;
+    for (const item of sectionTargets) {
+      if (item.section.getBoundingClientRect().top <= threshold) active = item.link;
+    }
+    if (active === currentSectionLink) return;
+    currentSectionLink = active;
+    for (const item of sectionTargets) {
+      if (item.link === active) item.link.setAttribute("aria-current", "location");
+      else item.link.removeAttribute("aria-current");
+    }
+  };
+
   // Native scrolling with a very lightweight, non-invasive progress indicator.
   let scrollFrame = 0;
   const updateScroll = () => {
@@ -40,6 +61,7 @@
     const value = Math.min(1, Math.max(0, window.scrollY / scrollRange));
     progress?.style.setProperty("--scroll-progress", value);
     header?.classList.toggle("is-scrolled", window.scrollY > 18);
+    syncActiveSection();
     scrollFrame = 0;
   };
   const requestScrollUpdate = () => {
@@ -49,6 +71,8 @@
   window.addEventListener("scroll", requestScrollUpdate, { passive:true });
   window.addEventListener("resize", requestScrollUpdate, { passive:true });
   updateScroll();
+  window.addEventListener("hashchange", requestScrollUpdate);
+  window.addEventListener("load", requestScrollUpdate, {once:true});
 
   // Keep all archive assets, while letting visitors switch categories.
   const archiveItems = Array.from(document.querySelectorAll(".archive-item"));
