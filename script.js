@@ -127,27 +127,7 @@
     previewItems = []; previewIndex = -1; previewTrigger = null;
   });
 
-  // Switch between a curated visual gallery and a compact project index.
-  const projectGrid = document.querySelector(".project-grid");
-  const viewButtons = [...document.querySelectorAll(".view-switch button[data-view]")];
-  viewButtons.forEach(button => button.addEventListener("click", () => {
-    if (!projectGrid) return;
-    const nextView = button.dataset.view;
-    if (nextView !== "grid" && nextView !== "index") return;
-    if (projectGrid.dataset.view === nextView) return;
-    projectGrid.dataset.view = nextView;
-    viewButtons.forEach(item => {
-      item.setAttribute("aria-pressed", String(item.dataset.view === nextView));
-    });
-    if (!motionQuery.matches && typeof Element.prototype.animate === "function") {
-      projectGrid.querySelectorAll(".project").forEach((card, index) => {
-        card.animate([
-          { opacity: .55, transform: "translateY(8px)" },
-          { opacity: 1, transform: "translateY(0)" }
-        ], { duration: 260 + Math.min(index, 7) * 30, easing: "cubic-bezier(.2,.7,.2,1)" });
-      });
-    }
-  }));
+  // Curated Works view switching is provided by curated-3d.js.
 
   // Opt-in section reveals: hidden state is added only when observation is supported.
   const targets = [...document.querySelectorAll(".section-head, .identity-top, .about > div, .contact > h2")];
