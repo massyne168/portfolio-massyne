@@ -259,7 +259,9 @@
 .project-grid.is-dragging > .project::before,
 .project-grid.is-dragging > .project img,
 .project-grid.is-fx-hidden > .project::before,
-.project-grid.is-fx-hidden > .project img {
+.project-grid.is-fx-hidden > .project img,
+.project-grid.is-fx-offscreen > .project::before,
+.project-grid.is-fx-offscreen > .project img {
   animation-play-state:paused !important;
 }
 .project-grid[data-view="3d"].carousel-ready > .project.carousel-outside::before,
