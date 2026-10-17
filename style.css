@@ -373,3 +373,38 @@ footer a:last-child{color:var(--red-bright)}
 @media(prefers-reduced-motion:reduce){
   .hero-title h1::after{animation:none}
 }
+
+
+/* Restored portfolio pieces — keep all sixteen works curated and responsive. */
+.project-grid[data-view="grid"] > .project:nth-child(n+9):nth-child(-n+14) {
+  grid-column:span 4;
+}
+.project-grid[data-view="grid"] > .project:nth-child(n+9):nth-child(-n+14) img {
+  aspect-ratio:1.22;
+}
+.project-grid[data-view="grid"] > .project:nth-child(15),
+.project-grid[data-view="grid"] > .project:nth-child(16) {
+  grid-column:span 6;
+}
+.project-grid[data-view="grid"] > .project:nth-child(n+15) img {
+  aspect-ratio:1.28;
+}
+.project-grid .project-upcoming{opacity:.78;cursor:default}
+.project-grid .project-upcoming::after{display:none}
+.project-grid .project-upcoming img,
+.project-grid .project-upcoming:hover img{
+  filter:grayscale(.22) brightness(.86);
+  transform:none;
+}
+.project-grid .project-upcoming b{
+  color:#f0b5bd;font-weight:500;font-size:.58rem;letter-spacing:.035em;
+}
+.project-grid[data-view="index"] > .project.project-upcoming::after{display:none}
+@media(max-width:850px){
+  .project-grid[data-view="grid"] > .project:nth-child(n+9){grid-column:span 6}
+  .project-grid[data-view="grid"] > .project:nth-child(n+9) img{aspect-ratio:1.12}
+}
+@media(max-width:550px){
+  .project-grid[data-view="grid"] > .project:nth-child(n+9){grid-column:span 6}
+  .project-grid[data-view="grid"] > .project:nth-child(n+9) img{aspect-ratio:1.02}
+}
