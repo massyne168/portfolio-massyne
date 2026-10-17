@@ -1,36 +1,48 @@
-# MASSYNE portfolio
+# MASSYNE — Graphic & Motion Design Portfolio
 
-Complete static website redesign. Open index.html in a browser, or serve this folder using any static web server. No package installation or compilation is required. Deploy index.html, style.css, script.js, assets/ and images/ together.
+Official source for [portfolio-massyne.vercel.app](https://portfolio-massyne.vercel.app/).
 
-## Design and behavior
-Editorial art-book direction: oversized MASSYNE masthead, warm paper and ink with vermilion accents, an angled Veiled Sorrow hero study, a consistent three-column desktop gallery and two-column mobile gallery with uncropped 4:3 media frames. Brief artwork entrance and one-time scroll reveals respect reduced-motion preferences. Native image previews, archive filters, mobile navigation and click-to-play videos remain. No animation library, font download or continuous animation loop.
+## Website
 
-All existing project image files, six motion videos, portfolio PDF, social and contact destinations are retained. Existing project cards labeled as upcoming are retained as supplied. Empty restaurant coming-soon cards, sample testimonial, live counters and decorative loading screens were removed from the active page. Legacy private-preview gating is not loaded by this redesigned entry page. No deployment was performed.
+A fast, responsive static creative portfolio with an editorial **Cinematic Red** visual direction. No npm build or JavaScript framework is required.
 
-## Validation
-Executed in headless Chrome, including actual device emulation at 320px and 390px and desktop at 1440px. Checks passed for horizontal overflow, navigation targets, archive filtering, preview opening/next/closing, mobile menu state, and six playable video controls. Local asset references resolve. Desktop and mobile screenshots were visually reviewed. This static site has no build command.
+### Main pages
 
-## Asset note
-The hero now features existing Veiled Sorrow artwork. The previous portrait asset remains on disk but is not loaded. No replacement project artwork was generated.
+- `index.html` — portrait-led Cinematic Hero 2.0, Curated Works, Gurzil Team branding, Motion, Archive, About / Designer Identity, Contact.
+- `project.html?work=<slug>` — a single accessible project-detail template that renders an original artwork case study based on the URL.
+- `project-data.js` — the definitive collection of 15 completed case study entries: the 14 completed featured projects and Gurzil Team. The two Coming Soon concepts do not have fake case studies.
+- `case-study.js` and `case-study.css` — case-study navigation, full-size original artwork viewer, and responsive layouts.
 
-The Behance reference returned HTTP 403 in the available fetch tool, so the redesign follows the requested bold typography, energetic composition and strong hierarchy without claiming a direct visual match.
+### Other files
 
-## Files
-- index.html: complete page and existing portfolio content
-- style.css: full responsive design
-- script.js: menu, filters, image previews and video controls
-- images/ and assets/: original media and PDF
-- api/: existing optional endpoints, unchanged
+- `style.css` — base responsive design and typography.
+- `portfolio-enhancements.css` — cinematic personal-portrait hero, project hover, About and Contact upgrades.
+- `script.js` — navigation, the archive filters, preview lightboxes, completed featured-work links, and scroll reveals.
+- `curated-3d.css` / `curated-3d.js` — 3D carousel with touch/mouse dragging, Gallery / Grid / Index views, rotating crimson border lights, reduced-motion awareness.
+- `images/massyne-portrait-2026.avif` — optimized user-supplied black-and-white portrait used in Hero and About. Older browsers can use the existing fallback asset `assets/massyne-hero-portrait.png`.
 
-The original entry files are backed up locally under .codex-tmp/redesign-backup (excluded from delivery ZIP). Existing legacy hero/lock files remain in the working directory but are not used by the redesigned site.
+## Content preservation
 
-## Editorial refinement validation
-Chrome checks passed at 320px, 390px and 1440px for navigation, filters, image previews, mobile menu and six video controls. Desktop and mobile hero/project screenshots were visually reviewed. Narrow heading overflow was corrected using client-width checks. Existing delivery ZIP predates this refinement; deploy the source files listed above.
+The public portfolio keeps **16 Curated Works cards (14 completed + 2 upcoming)**, **23 Archive pieces**, six playable motion studies, Gurzil Team's original brand gallery, the original PDF, social destinations and contacts.
 
-## Motion and graphic details
-Print registration corners and orbit dividers extend the editorial identity. A short page entrance, one-time heading reveals, local preview/filter transitions, and fine-pointer project hovers use native CSS/Web Animations. Artwork remains visible without JavaScript. Desktop image drift is bounded to 7px, observes only visible images, batches geometry reads before writes, and schedules frames only in response to scroll/resize. Touch layouts keep images stationary. Live reduced-motion changes cancel animations, reset drift and disable smooth scrolling. No dependencies or media were added.
+Do not remove or rename any image/videos referenced by the HTML or `project-data.js` without updating their source paths.
 
-Chrome validation passed at 320px, 390px and 1440px: no horizontal overflow, navigation, filters, previews, mobile menu, and six video controls. Live reduced-motion checks confirmed zero running animations, zero observed drift targets, cleared drift styles, and automatic scroll behavior.
+## Updating a project case study
 
-## Curated gallery refinement
-All 16 selected pieces, 23 archive studies, four brand visuals, the brand logo and six motion clips are retained. Asset-reference comparison found no removals. Added collection jump navigation and visible captions to archive, brand and motion cards; untitled archive items use neutral category/study numbers. Shared frame proportions, tighter spacing and responsive typography shorten browsing without hiding projects. Browser checks passed at 320, 390, 768 and 1440px for overflow, navigation, filters, previews and reduced motion. Desktop and phone gallery screenshots were visually reviewed; caption alignment and frame sizing were refined afterward. Source files are current; the existing ZIP predates these refinements.
+Edit the matching object in `project-data.js`. Use a unique `slug`, original `image` path, `category`, `year`, `focus`, `summary` and optional `gallery`. The detail page generates its title and navigation automatically.
+
+To add a new *completed* featured project, add a `.project` card with `data-case-study="<slug>"` in `index.html` and a matching `project-data.js` entry. Upcoming concepts should stay clearly labeled and non-clickable.
+
+## Accessibility and performance
+
+All artwork uses local media. Main interactions support keyboard controls. A native dialog displays full artwork. Reduced-motion preferences turn off continuous motion and default the 3D gallery to a static view. Carousels and effects pause when outside the viewport. Scroll and drag use lightweight CSS transformations.
+
+## Deployment
+
+Static hosting works on Vercel or any standard static file server. Serve the repository root directly, keeping all `.html`, `.css`, `.js`, `assets/` and `images/` files together.
+
+Deployment does not require a build command.
+
+## Notes
+
+Project copy is an editorial description of the existing artwork; it does not assert unknown client work, production process, project-specific software or fabricated mockups. Additional original process images can be added later to each project's `gallery`.
