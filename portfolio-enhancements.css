@@ -169,7 +169,7 @@
 .about-v2-link:hover{color:#fa7385}
 /* End-chapter CTA */
 .contact.contact-v2{
-  background:radial-gradient(ellipse 75% 80% at 85% 85%,rgba(169,28,49,.25),transparent 72%),#1b0d13;
+  background:radial-gradient(ellipse 78% 48% at 50% 110%,rgba(190,31,60,.18),transparent 80%),#140d12;
   border-top:1px solid #772b39;padding-block:clamp(80px,9vw,140px)
 }
 .contact.contact-v2::before{display:none}
@@ -247,16 +247,13 @@
 
 /* 2026-10-17: crisp portrait + resolution-independent cinematic glass */
 .hero.hero-v2 {
+  /* Flat obsidian background with one soft crimson light source at the bottom. */
   background:
-    radial-gradient(ellipse at 72% 43%,rgba(189,37,68,.10),transparent 49%),
-    radial-gradient(ellipse at 8% 82%,rgba(100,37,62,.08),transparent 55%),
+    radial-gradient(ellipse 68% 30% at 50% 110%, rgba(210,36,67,.17), rgba(126,22,45,.045) 56%, transparent 85%),
     #09090c;
 }
 .hero-v2 .hero-ambient {
-  opacity:.6;
-  background:radial-gradient(ellipse,rgba(160,21,51,.14),transparent 66%);
-  filter:blur(52px);
-  pointer-events:none;
+  display:none; /* No extra light sources, textures or blurred noise layers. */
 }
 .hero-v2-portrait {
   overflow:hidden;
