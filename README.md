@@ -16,7 +16,7 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 ### Branding & introduction
 
 - The **compact** upper-left header branding on the home and project pages uses the original white MASSYNE logo from `images/optimized/logo-1016.webp`, with a lighter mobile variant at `images/optimized/logo-480.webp`.
-- `brand-loader.css`, `editorial-loader.css` and `brand-loader.js` provide a cinematic editorial loading screen with a compact official logo, 'DESIGN IN MOTION.' typography, a 0–100% progress meter, and a thin red progress line over 3.45 seconds. It plays on **every F5 / Refresh** and retains Skip intro and reduced-motion behavior.
+- `brand-loader.css`, `editorial-loader.css` and `brand-loader.js` deliver **MASSYNE Signature Sequence**: a clean high-end black/crimson intro with the official logo, masked MASSYNE typography, 'Beyond ordinary.' serif line, 4 synchronized creative stages (Identity / Visuals / Motion / Experience), an animated scanning rim, and 0–100% progress over **3.45 seconds**. The final cinematic shutter exit takes approximately 0.6 seconds. It runs on **every F5 / Refresh**, retains Skip Intro and the reduced-motion bypass, and uses no media-heavy effects or noise.
 - **Skip intro** works every time. People using reduced-motion preferences do not see the delayed intro.
 - The loader is hidden without JavaScript rather than trapping visitors on a non-functional splash screen.
 
