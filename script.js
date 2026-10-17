@@ -71,6 +71,29 @@
     button.setAttribute("aria-pressed", String(button.classList.contains("active")))
   );
 
+
+  // Completed featured works now open dedicated case studies.
+  // The 3D controller captures side-card clicks first; centred clicks navigate.
+  const curated = document.querySelector(".project-grid");
+  const navigateToCase = card => {
+    const slug = card?.dataset.caseStudy;
+    if (!slug) return;
+    window.location.assign("project.html?work=" + encodeURIComponent(slug));
+  };
+  curated?.querySelectorAll(".project[data-case-study]").forEach(card => {
+    card.setAttribute("role","link");
+    card.setAttribute("aria-label","Explore " + (card.querySelector("h3")?.textContent || "selected") + " project");
+    card.addEventListener("click", () => navigateToCase(card));
+    card.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        // On 3D, only the centred card is actionable (controller owns side-card selection).
+        if (curated.dataset.view !== "3d" || card.classList.contains("is-carousel-active"))
+          navigateToCase(card);
+      }
+    });
+  });
+
   // Native accessible image preview. Arrow keys stay within the originating gallery.
   const dialog = document.querySelector(".lightbox");
   const previewImage = dialog?.querySelector("img");
@@ -79,7 +102,7 @@
   let previewItems = [];
   let previewIndex = -1;
   let previewTrigger = null;
-  const imageOpeners = Array.from(document.querySelectorAll(".image-open"));
+  const imageOpeners = Array.from(document.querySelectorAll(".image-open:not(.project-grid .project)"));
   const showPreview = index => {
     const item = previewItems[index];
     const image = item?.querySelector("img");
