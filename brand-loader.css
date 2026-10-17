@@ -123,27 +123,27 @@ html.intro-active,body.intro-active{overflow:hidden;scroll-behavior:auto}
 }
 
 
-/* Premium left-side editorial navigation / right-side MASSYNE brand.
+/* Premium right-side editorial navigation / left-side MASSYNE brand.
    Intentionally scoped to the header to avoid affecting page/section navigation. */
 .site-header.brand-header {
   display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-columns:auto minmax(0,1fr);
   align-items:center;
   column-gap:clamp(16px,3vw,48px);
   flex-direction:initial;
 }
 .site-header.brand-header .brand-logo {
-  grid-column:2;
+  grid-column:1;
   grid-row:1;
-  justify-self:end;
+  justify-self:start;
   margin:0;
 }
 .site-header.brand-header nav {
-  grid-column:1;
+  grid-column:2;
   grid-row:1;
   display:inline-flex;
   align-items:center;
-  justify-self:start;
+  justify-self:end;
   gap:clamp(1px,.25vw,5px);
   min-width:0;
   width:max-content;
@@ -240,9 +240,9 @@ html.intro-active,body.intro-active{overflow:hidden;scroll-behavior:auto}
 }
 .site-header.brand-header nav a.nav-contact::after{display:none}
 .site-header.brand-header .menu{
-  grid-column:1;
+  grid-column:2;
   grid-row:1;
-  justify-self:start;
+  justify-self:end;
   margin:0;
 }
 @media(min-width:851px) and (max-width:1150px){
@@ -258,13 +258,13 @@ html.intro-active,body.intro-active{overflow:hidden;scroll-behavior:auto}
 @media(max-width:850px){
   .site-header.brand-header{
     height:66px;
-    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-columns:auto minmax(0,1fr);
     padding-inline:clamp(18px,4.3vw,35px);
   }
   .site-header.brand-header .menu{
     display:inline-flex;
     align-items:center;
-    justify-self:start;
+    justify-self:end;
     gap:12px;
     min-height:43px;
     padding:10px 15px;

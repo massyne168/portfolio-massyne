@@ -1,6 +1,6 @@
-/* MASSYNE / First-visit intro — 0 to 100 in 3.45s, no libraries.
-   Plays once per tab/session; add ?intro=1 to explicitly replay.
-   Reduced motion, failed storage, background tabs, and navigation fail safely. */
+/* MASSYNE / Refreshable branded intro — 0 to 100 in 3.45s, no libraries.
+   Runs on every full document load, including F5/Refresh.
+   Reduced motion, background tabs, and navigation fail safely. */
 (() => {
   "use strict";
   const overlay = document.querySelector(".site-preloader");
@@ -10,12 +10,9 @@
   const progress = overlay.querySelector("[role=progressbar]");
   const skip = overlay.querySelector(".loader-skip");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const params = new URLSearchParams(window.location.search);
-  const forceReplay = params.get("intro") === "1";
-  const storageKey = "massyne:cinematic-intro:v1";
-  let alreadyPlayed = false;
-  try { alreadyPlayed = window.sessionStorage.getItem(storageKey) === "yes"; } catch (_) {}
-  if (reduced || (alreadyPlayed && !forceReplay)) return;
+  // Replay on every page load/refresh rather than relying on session storage.
+  // Accessibility exception: never delay visitors requesting reduced motion.
+  if (reduced) return;
 
   const DURATION_MS = 3450;
   let raf = 0;
@@ -40,7 +37,6 @@
     window.cancelAnimationFrame(raf);
     window.clearTimeout(watchdog);
     update(1);
-    try { window.sessionStorage.setItem(storageKey, "yes"); } catch (_) {}
     document.documentElement.classList.remove("intro-active");
     document.body.classList.remove("intro-active");
     blocked.forEach((node, i) => { node.inert = previousInert[i]; });
