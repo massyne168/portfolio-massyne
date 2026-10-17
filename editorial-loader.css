@@ -255,7 +255,7 @@ html.intro-active,body.intro-active{overflow:hidden;scroll-behavior:auto}
 }
 .intro-progress-light{
   position:absolute;top:50%;
-  left:calc(var(--intro-progress,0)*100%);
+  left:0; /* JS updates this to a valid percentage alongside the counter. */
   transform:translate(-50%,-50%);
   width:45px;height:16px;
   border-radius:50%;
@@ -376,6 +376,17 @@ html.intro-active,body.intro-active{overflow:hidden;scroll-behavior:auto}
   .intro-tagline em{font-size:min(5vw,3.2rem)}
   .intro-main-bottom{margin-top:17px}
   .intro-number{font-size:4.1rem}
+}
+@media(max-height:700px) and (max-width:650px){
+  .site-preloader{overflow-y:auto}
+  .intro-shell{height:auto;min-height:100svh;gap:3px;padding-block:15px}
+  .intro-logo{height:43px;width:67px}
+  .intro-main{padding-block:14px}
+  .intro-frame{min-height:155px;margin-top:13px;padding-block:25px}
+  .intro-main-bottom{margin-top:11px}
+  .intro-status-line{margin-bottom:9px}
+  .intro-number{font-size:3.65rem}
+  .intro-controls{margin-top:10px}
 }
 @media(prefers-reduced-motion:reduce){
   .intro-logo,.intro-word>span,.intro-tagline em{animation:none!important}
