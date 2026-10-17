@@ -29,7 +29,7 @@
   let visible = false;
   let hovering = false;
   let userPaused = false;
-  let lastInteraction = 0;
+  let lastInteraction = -1000000;
   let playback = null;
   let wheelAt = 0;
   let renderFrame = 0;
@@ -47,7 +47,7 @@
 
   const measureStep = () => {
     if (mode !== "3d") return;
-    const width = cards[0].getBoundingClientRect().width;
+    const width = cards[0].offsetWidth;
     if (width > 0) slideStep = width * (window.innerWidth < 560 ? 0.74 : 0.91);
   };
 
@@ -229,7 +229,6 @@
     if (mode !== "3d" || (event.pointerType === "mouse" && event.button !== 0)) return;
     drag = { id: event.pointerId, x: event.clientX, y: event.clientY, dx: 0, moving: false };
     userAction();
-    try { grid.setPointerCapture(event.pointerId); } catch (_) { /* Native scrolling may own the pointer. */ }
   });
 
   grid.addEventListener("pointermove", event => {
@@ -239,6 +238,7 @@
     if (!drag.moving && Math.abs(dx) > 9 && Math.abs(dx) > Math.abs(dy) * 1.12) {
       drag.moving = true;
       grid.classList.add("is-dragging");
+      try { grid.setPointerCapture(event.pointerId); } catch (_) { /* Native scrolling may own the pointer. */ }
     }
     if (!drag.moving) return;
     drag.dx = dx;
