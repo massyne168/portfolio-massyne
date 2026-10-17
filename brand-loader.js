@@ -8,6 +8,7 @@
   const count = overlay.querySelector(".loader-count");
   const bar = overlay.querySelector(".loader-progress-fill");
   const progress = overlay.querySelector("[role=progressbar]");
+  const progressLight = overlay.querySelector(".intro-progress-light");
   const skip = overlay.querySelector(".loader-skip");
   const status = overlay.querySelector(".intro-status");
   const stages = [...overlay.querySelectorAll("[data-intro-stage]")];
@@ -36,6 +37,7 @@
     const clamped = Math.max(0, Math.min(1, fraction));
     // One tiny CSS variable drives the scanning light and progress indicator.
     overlay.style.setProperty("--intro-progress", clamped.toFixed(4));
+    if (progressLight) progressLight.style.left = (clamped * 100).toFixed(2) + "%";
     const value = Math.min(100, Math.max(0, Math.floor(clamped * 100)));
     if (value === previous) return;
     previous = value;
