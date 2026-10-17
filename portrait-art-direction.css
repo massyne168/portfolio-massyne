@@ -1,241 +1,186 @@
-/* MASSYNE / ART-DIRECTED PORTRAIT
-   Premium creative-identity treatment. Source photograph is untouched.
-   No grain, scanline or noise texture. CSS-only clean gradients & vector geometry. */
+/* MASSYNE — FRAMELESS CUTOUT PORTRAIT
+   One transparent PNG floating inside the Hero with cinematic lighting behind it.
+   No cards, borders, labels, rings, stickers, textures or visible crop rectangles. */
 
-.hero-v2-portrait.portrait-art-directed{
+.hero-v2-portrait.portrait-art-directed.portrait-freeform{
   --portrait-light-x:0px;
   --portrait-light-y:0px;
-  --portrait-red:#ed3b55;
+  grid-column:2;
+  grid-row:2/4;
+  align-self:stretch;
   position:relative;
-  overflow:hidden;
+  z-index:1;
+  min-height:clamp(500px,54vw,730px);
+  margin:0;
+  padding:0;
+  overflow:visible;
   isolation:isolate;
   clip-path:none!important;
-  border:1px solid rgba(235,214,221,.23);
-  border-radius:clamp(17px,2vw,25px);
-  background:
-    radial-gradient(ellipse 58% 48% at 53% 26%,rgba(171,47,79,.20),transparent 84%),
-    linear-gradient(147deg,#28232d 0%,#241923 40%,#141219 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.21),
-    0 24px 82px rgba(0,0,0,.43),
-    0 0 0 6px rgba(255,255,255,.012);
-  transition:border-color .45s ease,box-shadow .5s ease;
-  transform:translateZ(0);
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
 }
-.hero-v2-portrait.portrait-art-directed:hover{
-  border-color:rgba(243,80,107,.45);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.27),
-    0 30px 96px rgba(0,0,0,.54),
-    0 0 42px rgba(210,42,77,.08);
+.hero-v2-portrait.portrait-art-directed.portrait-freeform::before,
+.hero-v2-portrait.portrait-art-directed.portrait-freeform::after{
+  content:none!important;
+  display:none!important;
 }
-.hero-v2-portrait.portrait-art-directed::before{
-  content:"";
-  position:absolute;inset:0;z-index:1;
-  display:block;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.11),transparent 19%),
-    linear-gradient(0deg,rgba(8,7,12,.3),transparent 33%);
-  pointer-events:none;
-}
-.hero-v2-portrait.portrait-art-directed::after{
-  content:"";
-  position:absolute;inset:0;z-index:5;
-  display:block;
-  border:1px solid rgba(255,255,255,.045);
-  border-radius:inherit;
-  background:linear-gradient(180deg,transparent 68%,rgba(8,7,11,.17) 84%,rgba(8,7,11,.58) 100%);
-  pointer-events:none;
-}
-.portrait-art-directed .portrait-aura{
-  position:absolute;z-index:0;pointer-events:none;
-  left:-15%;top:-8%;width:130%;height:86%;
-  background:
-    radial-gradient(ellipse 31% 29% at 55% 27%,rgba(238,59,87,.25),transparent 88%),
-    radial-gradient(ellipse 45% 38% at 38% 63%,rgba(197,54,91,.13),transparent 89%);
-  transform:translate3d(var(--portrait-light-x),var(--portrait-light-y),0);
-  transition:transform .42s cubic-bezier(.2,.55,.24,1);
-  will-change:transform;
-}
-.portrait-art-directed .portrait-halo-ring{
-  position:absolute;z-index:1;pointer-events:none;
-  left:13%;top:10%;
-  width:74%;height:55%;
-  border-radius:50%;
-  border:1px solid rgba(238,87,112,.20);
-  border-left-color:rgba(239,102,122,.075);
-  border-bottom-color:rgba(240,178,190,.09);
-  box-shadow:0 0 45px rgba(210,42,72,.08),inset 0 0 25px rgba(224,54,86,.055);
-  transform:rotate(-14deg);
-  opacity:.86;
-  transition:opacity .45s,transform .75s cubic-bezier(.2,.7,.3,1);
-}
-.portrait-art-directed:hover .portrait-halo-ring{
-  transform:rotate(-9deg) scale(1.03);opacity:1;
-}
-.portrait-art-directed .portrait-giant-type{
+/* Back lighting is an independent layer: face pixels never get blurred. */
+.portrait-freeform .portrait-aura{
   position:absolute;
-  z-index:1;pointer-events:none;
-  right:-7%;bottom:13%;
-  font:700 clamp(11rem,30vw,27rem)/.8 var(--display);
-  letter-spacing:-.13em;
-  color:rgba(245,224,230,.052);
-  user-select:none;
-}
-.hero-v2-portrait.portrait-art-directed > picture{
-  position:absolute;z-index:3;
-  display:block;width:100%;height:100%;inset:0;
-}
-.hero-v2-portrait.portrait-art-directed picture img{
+  z-index:0;
+  inset:0 -19% 1% -17%;
   display:block;
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:contain;object-position:center center;
-  image-rendering:auto;
-  filter:grayscale(1) contrast(1.055) drop-shadow(0 16px 22px rgba(0,0,0,.25));
-  transform:translateZ(0);
-  animation:hero-portrait-appear .85s cubic-bezier(.16,.72,.26,1) both;
-}
-.portrait-art-directed .portrait-top-label{
-  position:absolute;z-index:7;
-  top:clamp(15px,2.5vw,29px);
-  right:clamp(15px,2.5vw,29px);
-  width:clamp(112px,10vw,142px);
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:7px 12px;
-  align-items:start;
-  padding:clamp(11px,1.4vw,16px);
-  border:1px solid rgba(255,255,255,.19);
-  border-left:2px solid rgba(242,69,97,.94);
-  background:rgba(14,12,17,.71);
-  -webkit-backdrop-filter:blur(10px);
-  backdrop-filter:blur(10px);
-  border-radius:2px;
-  color:#eee8ea;
-  transform:none;
-  box-shadow:0 8px 20px rgba(0,0,0,.2);
-}
-.portrait-top-label .portrait-tag-index{
-  color:#f35e75;
-  font:600 clamp(.86rem,1.2vw,1.13rem)/1.1 var(--display);
-  letter-spacing:-.04em;
-}
-.portrait-top-label .portrait-tag-name{
-  grid-column:1;
-  grid-row:2;
-  color:#c5b8bd;
-  font:500 clamp(.49rem,.59vw,.59rem)/1.45 var(--mono);
-  letter-spacing:.1em;
-}
-.portrait-top-label .portrait-tag-arrow{
-  grid-column:2;grid-row:1;
-  color:#f35e75;
-  font:400 1.1rem/1 var(--display);
-}
-.portrait-art-directed .portrait-side-label{
-  position:absolute;z-index:5;
-  left:clamp(11px,1.6vw,21px);
-  top:41%;
-  transform-origin:left center;
-  transform:rotate(-90deg) translateX(-50%);
-  color:rgba(239,225,229,.66);
-  font:500 clamp(.45rem,.57vw,.58rem)/1.2 var(--mono);
-  letter-spacing:.15em;
-  white-space:nowrap;
-  pointer-events:none;
-}
-.portrait-art-directed .portrait-light-edge{
-  position:absolute;z-index:6;
-  left:0;
-  top:23%;
-  width:2px;height:30%;
-  background:linear-gradient(to bottom,transparent,#f05776 43%,rgba(218,32,68,.18) 80%,transparent);
-  box-shadow:0 0 12px rgba(240,45,84,.32);
-  pointer-events:none;
-  animation:portrait-edge-glide 9s ease-in-out infinite alternate;
-}
-@keyframes portrait-edge-glide{
-  from{transform:translateY(-7px);opacity:.63}
-  to{transform:translateY(23px);opacity:1}
-}
-.portrait-art-directed .portrait-corners{
-  position:absolute;z-index:6;
-  inset:clamp(11px,1.4vw,20px);
-  pointer-events:none;
-}
-.portrait-corners span{position:absolute;width:15px;height:15px;opacity:.52}
-.portrait-corners span:nth-child(1){left:0;top:0;border-top:1px solid #e7adb9;border-left:1px solid #e7adb9}
-.portrait-corners span:nth-child(2){right:0;top:0;border-top:1px solid #e7adb9;border-right:1px solid #e7adb9}
-.portrait-corners span:nth-child(3){left:0;bottom:0;border-bottom:1px solid #e7adb9;border-left:1px solid #e7adb9}
-.portrait-corners span:nth-child(4){right:0;bottom:0;border-bottom:1px solid #e7adb9;border-right:1px solid #e7adb9}
-.hero-v2-portrait.portrait-art-directed figcaption.portrait-caption{
-  position:absolute;z-index:8;
-  bottom:0;left:0;right:0;
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:15px;
-  padding:clamp(63px,8vw,109px) clamp(19px,2.5vw,32px) clamp(17px,2vw,25px);
-  background:linear-gradient(to bottom,transparent,rgba(10,8,14,.47) 62%,rgba(10,8,14,.80));
   border:0;
-  text-transform:none;
-  color:#fff;
-  font-family:var(--mono);
+  background:
+    radial-gradient(ellipse 48% 38% at 52% 31%,rgba(202,37,70,.36) 0%,rgba(141,25,49,.16) 48%,transparent 100%),
+    radial-gradient(ellipse 70% 32% at 48% 80%,rgba(179,30,61,.11),transparent 83%);
+  filter:blur(35px);
+  opacity:.86;
+  transform:translate3d(var(--portrait-light-x),var(--portrait-light-y),0);
+  transition:transform .4s cubic-bezier(.22,.65,.26,1);
+  pointer-events:none;
 }
-.portrait-caption > span:first-child{
-  display:flex;
-  flex-direction:column;
-  gap:9px;
+.portrait-freeform .portrait-backlight{
+  position:absolute;
+  z-index:1;
+  display:block;
+  inset:5% -8% 13%;
+  background:
+    radial-gradient(ellipse 25% 26% at 28% 27%,rgba(233,45,79,.25),transparent 98%),
+    radial-gradient(ellipse 25% 28% at 72% 32%,rgba(211,31,61,.21),transparent 98%),
+    radial-gradient(ellipse 55% 40% at 53% 51%,rgba(147,20,44,.16),transparent 91%);
+  filter:blur(46px);
+  opacity:.95;
+  pointer-events:none;
 }
-.portrait-caption strong{
-  font:700 clamp(1.1rem,1.75vw,1.7rem)/1 var(--display);
-  letter-spacing:-.055em;
+.portrait-freeform .portrait-backlight-core{
+  position:absolute;
+  z-index:2;
+  display:block;
+  inset:7% 2% 18%;
+  border-radius:50%;
+  background:radial-gradient(ellipse 55% 46% at 50% 36%,rgba(218,32,66,.13),transparent 98%);
+  filter:blur(18px);
+  opacity:.9;
+  pointer-events:none;
 }
-.portrait-caption .portrait-tiny-dot{color:#e73c56}
-.portrait-caption small{
-  color:#bcb3b9;
-  font:500 clamp(.49rem,.59vw,.6rem)/1.5 var(--mono);
-  letter-spacing:.12em;
-  white-space:nowrap;
+/* Transparent source PNG is the actual foreground, intentionally borderless. */
+.hero-v2-portrait.portrait-art-directed.portrait-freeform > picture{
+  position:absolute;
+  z-index:3;
+  display:block;
+  inset:-1% -9% -4%;
+  width:auto;
+  height:auto;
+  overflow:visible;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 81%,rgba(0,0,0,.89) 89%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 81%,rgba(0,0,0,.89) 89%,transparent 100%);
 }
-.portrait-caption .portrait-fig-id{
-  color:#cec3c7;
-  font:500 clamp(.49rem,.60vw,.60rem)/1.85 var(--mono);
-  letter-spacing:.07em;
-  white-space:nowrap;
-  text-align:right;
+.hero-v2-portrait.portrait-art-directed.portrait-freeform picture img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center bottom;
+  image-rendering:auto;
+  filter:grayscale(1) contrast(1.045) drop-shadow(0 0 15px rgba(223,38,74,.27)) drop-shadow(0 11px 18px rgba(0,0,0,.23));
+  animation:frameless-portrait-arrival 1.05s cubic-bezier(.16,.72,.27,1) both;
 }
-.portrait-fig-id i{font:normal 1.13em var(--display);color:#ea4b64}
-@media(max-width:1050px){
-  .portrait-art-directed .portrait-giant-type{font-size:clamp(12rem,23vw,21rem)}
+.portrait-freeform .portrait-ground-glow{
+  position:absolute;
+  z-index:4;
+  left:2%;
+  right:2%;
+  bottom:0;
+  height:15%;
+  border-radius:50%;
+  background:radial-gradient(ellipse 65% 35% at 50% 82%,rgba(218,36,69,.15),transparent 82%);
+  filter:blur(28px);
+  opacity:.78;
+  pointer-events:none;
+}
+@keyframes frameless-portrait-arrival{
+  from{opacity:0;transform:translate3d(0,25px,0) scale(.99)}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1)}
+}
+@media(min-width:1280px){
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform > picture{
+    inset:-2% -15% -4% -14%;
+  }
+  .portrait-freeform .portrait-aura{
+    inset:0 -22% 3% -21%;
+  }
+}
+@media(max-width:1050px) and (min-width:801px){
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform{
+    min-height:520px;
+  }
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform > picture{
+    inset:0 -12% -3%;
+  }
 }
 @media(max-width:800px){
-  .hero-v2-portrait.portrait-art-directed{border-radius:21px}
-  .portrait-art-directed .portrait-halo-ring{top:5%;height:56%}
-  .portrait-art-directed .portrait-giant-type{font-size:clamp(14rem,42vw,23rem)}
-  .portrait-art-directed .portrait-side-label{font-size:.54rem}
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform{
+    grid-column:1/-1;
+    grid-row:3;
+    min-height:0;
+    max-height:630px;
+    aspect-ratio:4/3;
+    align-self:stretch;
+  }
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform > picture{
+    inset:-7% -6% -4%;
+  }
+  .portrait-freeform .portrait-aura{
+    inset:-7% 0 -6%;
+    filter:blur(35px);
+  }
+  .portrait-freeform .portrait-backlight{
+    inset:0 3% 14%;
+  }
+  .portrait-freeform .portrait-ground-glow{
+    bottom:0;
+    height:20%;
+  }
 }
 @media(max-width:550px){
-  .hero-v2-portrait.portrait-art-directed{border-radius:18px}
-  .portrait-art-directed .portrait-top-label{width:109px;top:15px;right:15px;padding:10px}
-  .portrait-art-directed .portrait-side-label{left:12px;top:39%;font-size:.47rem}
-  .portrait-art-directed .portrait-giant-type{right:-3%;bottom:16%;font-size:58vw}
-  .hero-v2-portrait.portrait-art-directed figcaption.portrait-caption{padding:65px 18px 16px}
-  .portrait-caption small,.portrait-caption .portrait-fig-id{font-size:.49rem}
-  .portrait-caption strong{font-size:1.08rem}
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform{
+    min-height:0;
+    max-height:none;
+    aspect-ratio:4/4.35;
+  }
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform > picture{
+    inset:-5% -11% -2%;
+  }
+  .portrait-freeform .portrait-aura{
+    inset:-4% -12% 3%;
+    opacity:.68;
+    filter:blur(29px);
+  }
+  .portrait-freeform .portrait-backlight{
+    inset:5% -2% 18%;
+    opacity:.75;
+    filter:blur(30px);
+  }
+  .portrait-freeform .portrait-backlight-core{
+    opacity:.65;
+  }
 }
-@media(max-width:370px){
-  .portrait-caption .portrait-fig-id{font-size:.43rem}
-  .portrait-caption small{letter-spacing:.05em;font-size:.43rem}
-  .portrait-art-directed .portrait-side-label{display:none}
+@media(max-width:360px){
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform > picture{
+    inset:-4% -7% -2%;
+  }
 }
 @media(prefers-reduced-motion:reduce){
-  .hero-v2-portrait.portrait-art-directed,
-  .hero-v2-portrait.portrait-art-directed picture img,
-  .portrait-art-directed .portrait-halo-ring,
-  .portrait-art-directed .portrait-aura,
-  .portrait-art-directed .portrait-light-edge{
+  .portrait-freeform .portrait-aura,
+  .hero-v2-portrait.portrait-art-directed.portrait-freeform picture img{
     animation:none!important;
     transition:none!important;
-    will-change:auto!important;
   }
 }
