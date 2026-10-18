@@ -1,4 +1,4 @@
-/* Portfolio project metadata: grounded in existing content; no invented client or tool claims. */
+/* Selected MASSYNE artwork metadata. Editorial observations, not invented client outcomes or process claims. */
 window.MASSYNE_PROJECTS = [
   {
     "slug": "veiled-sorrow",
@@ -11,6 +11,22 @@ window.MASSYNE_PROJECTS = [
     "number": "01",
     "gallery": [
       "images/featured-project.webp"
+    ],
+    "concept": "An exploration of concealed emotion, where a single image carries a larger story.",
+    "direction": "The composition leans into restraint: atmospheric imagery, visual tension and a cinematic poster rhythm.",
+    "details": [
+      {
+        "title": "Emotional contrast",
+        "description": "An atmospheric focal point that lets the mood speak before the typography"
+      },
+      {
+        "title": "Poster hierarchy",
+        "description": "Information held in a supporting role to the central image"
+      },
+      {
+        "title": "Visual storytelling",
+        "description": "A mood-led scene that invites the viewer to look a second time"
+      }
     ]
   },
   {
@@ -24,6 +40,22 @@ window.MASSYNE_PROJECTS = [
     "number": "02",
     "gallery": [
       "images/optimized/work1-1400.webp"
+    ],
+    "concept": "A gaming-led image study with the visual intensity of a cinematic campaign.",
+    "direction": "The framing borrows from game-key-art language: identifiable subject, dramatic environment and a crisp information hierarchy.",
+    "details": [
+      {
+        "title": "Hero subject",
+        "description": "The character-driven focal area gives the poster immediate energy"
+      },
+      {
+        "title": "Graphic layers",
+        "description": "Supporting typography and framing details build the campaign feel"
+      },
+      {
+        "title": "Cinematic direction",
+        "description": "Depth and dramatic atmosphere connect the scene"
+      }
     ]
   },
   {
@@ -37,6 +69,22 @@ window.MASSYNE_PROJECTS = [
     "number": "03",
     "gallery": [
       "images/card14.webp"
+    ],
+    "concept": "A poster built around the visual impact of a short statement.",
+    "direction": "Expressive lettering and high-contrast imagery work together as a single message rather than separate elements.",
+    "details": [
+      {
+        "title": "Statement first",
+        "description": "The headline sets the visual rhythm"
+      },
+      {
+        "title": "Expressive type",
+        "description": "Lettering behaves like part of the image"
+      },
+      {
+        "title": "Impact",
+        "description": "A concentrated palette and direct composition keep the message memorable"
+      }
     ]
   },
   {
@@ -50,6 +98,22 @@ window.MASSYNE_PROJECTS = [
     "number": "04",
     "gallery": [
       "images/optimized/work3-1400.webp"
+    ],
+    "concept": "An imagined dark-fantasy world condensed into one poster frame.",
+    "direction": "The visual direction uses regal symbolism, dramatic atmosphere and typography that feels part of the world.",
+    "details": [
+      {
+        "title": "Fantasy subject",
+        "description": "The central figure gives the scene its narrative centre"
+      },
+      {
+        "title": "World building",
+        "description": "Textures, background and tone suggest a wider story"
+      },
+      {
+        "title": "Title treatment",
+        "description": "Editorial contrast between a bold title and supporting detail"
+      }
     ]
   },
   {
@@ -63,6 +127,22 @@ window.MASSYNE_PROJECTS = [
     "number": "05",
     "gallery": [
       "images/card13.webp"
+    ],
+    "concept": "A motorsport-inspired poster study about speed, movement and attitude.",
+    "direction": "Diagonal energy, a bold subject and compact visual details give the artwork a fast-paced feel.",
+    "details": [
+      {
+        "title": "Motion cues",
+        "description": "Composition and direction imply movement even in a still image"
+      },
+      {
+        "title": "Subject clarity",
+        "description": "The rider becomes the immediate focal point"
+      },
+      {
+        "title": "Visual pace",
+        "description": "Typography and framing reinforce the energy of the theme"
+      }
     ]
   },
   {
@@ -76,6 +156,22 @@ window.MASSYNE_PROJECTS = [
     "number": "06",
     "gallery": [
       "images/optimized/work2-1400.webp"
+    ],
+    "concept": "A darker editorial visual study driven by tension and atmosphere.",
+    "direction": "A deliberately cinematic composition gives the poster emotional weight without relying on a dense layout.",
+    "details": [
+      {
+        "title": "Narrative mood",
+        "description": "A charged focal scene establishes the tone"
+      },
+      {
+        "title": "Light and shadow",
+        "description": "Contrast separates the subject from the surrounding story"
+      },
+      {
+        "title": "Editorial finish",
+        "description": "Supporting elements stay subordinate to the image"
+      }
     ]
   },
   {
@@ -89,6 +185,22 @@ window.MASSYNE_PROJECTS = [
     "number": "07",
     "gallery": [
       "images/optimized/work4-1400.webp"
+    ],
+    "concept": "A character portrait presented with the presence of a film-poster visual.",
+    "direction": "The direction places character and silhouette at the heart of a restrained but dramatic composition.",
+    "details": [
+      {
+        "title": "Subject presence",
+        "description": "The figure anchors the entire page"
+      },
+      {
+        "title": "Strong framing",
+        "description": "The artwork creates a sense of scale and importance"
+      },
+      {
+        "title": "Poster rhythm",
+        "description": "Type and graphic elements reinforce the scene"
+      }
     ]
   },
   {
@@ -102,6 +214,22 @@ window.MASSYNE_PROJECTS = [
     "number": "08",
     "gallery": [
       "images/optimized/card8-1400.webp"
+    ],
+    "concept": "A dark-fantasy image with the mood of a story at its turning point.",
+    "direction": "The visual structure emphasizes drama, layered space and an expressive focal moment.",
+    "details": [
+      {
+        "title": "Narrative tension",
+        "description": "The image suggests a moment within a larger fantasy world"
+      },
+      {
+        "title": "Depth",
+        "description": "Foreground and background work together to create dimension"
+      },
+      {
+        "title": "Cinematic atmosphere",
+        "description": "Shadow and mood support the central action"
+      }
     ]
   },
   {
@@ -115,6 +243,22 @@ window.MASSYNE_PROJECTS = [
     "number": "09",
     "gallery": [
       "images/optimized/card10-1400.webp"
+    ],
+    "concept": "An experiment in letting typography carry a fantasy world.",
+    "direction": "Letterforms and visual imagery share the lead, creating a title treatment that feels illustrated.",
+    "details": [
+      {
+        "title": "Expressive lettering",
+        "description": "Typography takes on the weight of a hero image"
+      },
+      {
+        "title": "Fantasy language",
+        "description": "The visual details suggest scale and myth"
+      },
+      {
+        "title": "Composed hierarchy",
+        "description": "Graphic and image elements are balanced within a poster format"
+      }
     ]
   },
   {
@@ -128,6 +272,22 @@ window.MASSYNE_PROJECTS = [
     "number": "10",
     "gallery": [
       "images/optimized/card11-1400.webp"
+    ],
+    "concept": "A nocturnal visual exploration shaped by darkness, depth and atmosphere.",
+    "direction": "The poster uses night-inspired contrast to create a quiet but striking identity.",
+    "details": [
+      {
+        "title": "Nocturnal mood",
+        "description": "Dark surroundings support the theme"
+      },
+      {
+        "title": "Focused contrast",
+        "description": "Selective areas carry the viewer’s attention"
+      },
+      {
+        "title": "Atmospheric finish",
+        "description": "Depth and visual texture bring the scene together"
+      }
     ]
   },
   {
@@ -141,6 +301,22 @@ window.MASSYNE_PROJECTS = [
     "number": "11",
     "gallery": [
       "images/optimized/card12-1400.webp"
+    ],
+    "concept": "A fantasy character study that gives stillness its own sense of power.",
+    "direction": "Instead of leaning only on action, the composition emphasizes pause, presence and storytelling.",
+    "details": [
+      {
+        "title": "Character focus",
+        "description": "The figure carries the narrative"
+      },
+      {
+        "title": "Pause and scale",
+        "description": "The scene is built around an expressive quiet moment"
+      },
+      {
+        "title": "Dramatic tone",
+        "description": "Lighting and contrast give the artwork its weight"
+      }
     ]
   },
   {
@@ -154,6 +330,22 @@ window.MASSYNE_PROJECTS = [
     "number": "12",
     "gallery": [
       "images/optimized/card9-1400.webp"
+    ],
+    "concept": "A more surreal variation of the Veiled Sorrow visual idea.",
+    "direction": "An altered visual language gives familiar emotion a more dreamlike and conceptual direction.",
+    "details": [
+      {
+        "title": "Surreal treatment",
+        "description": "Unusual associations give the image its character"
+      },
+      {
+        "title": "Emotional framing",
+        "description": "The focal point remains connected to the original theme"
+      },
+      {
+        "title": "Alternate interpretation",
+        "description": "A separate study in how one idea can shift visual tone"
+      }
     ]
   },
   {
@@ -167,6 +359,22 @@ window.MASSYNE_PROJECTS = [
     "number": "13",
     "gallery": [
       "images/archive25.webp"
+    ],
+    "concept": "A premium graphic identity experiment focused on form and presence.",
+    "direction": "Material-inspired styling and a restrained composition lend the mark an elevated, display-ready feel.",
+    "details": [
+      {
+        "title": "Graphic form",
+        "description": "A strong central shape establishes the character"
+      },
+      {
+        "title": "Finish",
+        "description": "Surface styling creates a premium visual impression"
+      },
+      {
+        "title": "Presentation",
+        "description": "Spacing and hierarchy make the study feel intentional"
+      }
     ]
   },
   {
@@ -180,6 +388,22 @@ window.MASSYNE_PROJECTS = [
     "number": "14",
     "gallery": [
       "images/archive26.webp"
+    ],
+    "concept": "An experimental self-branding visual built around a metallic-inspired identity.",
+    "direction": "High-gloss graphic form and minimal surrounding detail give the piece a futuristic editorial tone.",
+    "details": [
+      {
+        "title": "Chrome character",
+        "description": "The material treatment gives the mark its personality"
+      },
+      {
+        "title": "Self-branding",
+        "description": "Visual experimentation explores a distinct identity direction"
+      },
+      {
+        "title": "Minimal frame",
+        "description": "Space around the mark keeps the form prominent"
+      }
     ]
   },
   {
@@ -197,6 +421,22 @@ window.MASSYNE_PROJECTS = [
       "images/optimized/gurzil3-1920.webp",
       "images/optimized/gurzil4-1920.webp",
       "images/optimized/gurzil-logo-1000.webp"
+    ],
+    "concept": "A visual identity world shaped by gaming culture, bold graphic form and streetwear energy.",
+    "direction": "The collection brings a core symbol into several presentations, letting the identity live beyond a single mark.",
+    "details": [
+      {
+        "title": "Core mark",
+        "description": "A strong emblem creates a recognizable center"
+      },
+      {
+        "title": "Application",
+        "description": "Multiple original artworks show the identity across different expressions"
+      },
+      {
+        "title": "Consistent language",
+        "description": "The imagery holds together through shared style and attitude"
+      }
     ]
   }
 ];

@@ -20,9 +20,16 @@
   ];
   let currentPhase = -1;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // Replay on every page load/refresh rather than relying on session storage.
-  // Accessibility exception: never delay visitors requesting reduced motion.
-  if (reduced) return;
+  // F5 / hard refresh always replays the 3.45s cinematic intro as requested.
+  // Only explicit same-site project navigation skips it once, to allow a true
+  // continuous image transition. The one-time flag is immediately consumed.
+  let projectNavigation = false;
+  try {
+    projectNavigation = window.sessionStorage.getItem("massyne:skip-intro-once") === "yes";
+    window.sessionStorage.removeItem("massyne:skip-intro-once");
+  } catch (_) {}
+  const navType = window.performance.getEntriesByType?.("navigation")?.[0]?.type;
+  if (reduced || (projectNavigation && navType !== "reload")) return;
 
   const DURATION_MS = 3450;
   let raf = 0;
