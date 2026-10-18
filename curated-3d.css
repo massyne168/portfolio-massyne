@@ -291,3 +291,90 @@
   }
   .project-grid > .project::before { opacity:0 !important; }
 }
+
+
+/* Unified premium tableau — 2026-10-18.
+   One artwork size in Grid and 3D; original artwork always fully visible. */
+.project-grid[data-view="grid"]{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(20px,2.5vw,36px);
+  align-items:stretch;
+}
+.project-grid[data-view="grid"] > .project:nth-child(n){
+  grid-column:auto!important;
+  width:100%;
+  align-self:stretch;
+  min-width:0;
+}
+.project-grid[data-view="grid"] > .project:nth-child(n) img{
+  box-sizing:border-box;
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:4 / 5;
+  object-fit:contain;
+  object-position:center;
+  padding:clamp(11px,1.35vw,20px);
+  border:clamp(8px,.9vw,13px) solid #121014;
+  border-radius:2px;
+  background:#eae6e0;
+  box-shadow:0 0 0 1px #554950,0 0 0 3px #242027,
+    inset 0 0 0 1px #a49c94,
+    10px 17px 26px rgba(0,0,0,.38),19px 28px 39px rgba(0,0,0,.22);
+  transform:none;
+  filter:none;
+  animation:none;
+  transition:box-shadow .3s ease,filter .3s ease;
+}
+.project-grid[data-view="grid"] > .project:nth-child(n):hover img,
+.project-grid[data-view="grid"] > .project:nth-child(n):focus-visible img{
+  transform:none;
+  filter:none;
+  box-shadow:0 0 0 1px #7a6066,0 0 0 3px #292026,
+    inset 0 0 0 1px #a49c94,
+    12px 21px 31px rgba(0,0,0,.45),20px 33px 48px rgba(0,0,0,.25);
+}
+.project-grid[data-view="grid"] > .project:nth-child(n) > div{
+  min-height:85px;
+}
+.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n) img{
+  box-sizing:border-box;
+  width:100%;
+  height:auto;
+  aspect-ratio:4 / 5;
+  padding:clamp(10px,1vw,15px);
+  border:8px solid #0e0c10;
+  border-radius:2px;
+  background:#eae6e0;
+  box-shadow:inset 0 0 0 1px #9c948e,0 8px 19px #0008;
+  object-fit:contain;
+  object-position:center;
+  transform:none;
+  filter:none;
+  animation:none;
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near img,
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active img,
+.project-grid[data-view="grid"] > .project.is-in-viewport img{
+  animation:none;
+}
+@media(max-width:900px){
+  .project-grid[data-view="grid"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:550px){
+  .project-grid[data-view="grid"]{grid-template-columns:minmax(0,1fr);gap:32px}
+  .project-grid[data-view="grid"] > .project:nth-child(n){
+    grid-column:1/-1!important;
+    max-width:430px;
+    margin-inline:auto;
+  }
+  .project-grid[data-view="grid"] > .project:nth-child(n) img{
+    padding:12px;
+    border-width:9px;
+  }
+  .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n) img{
+    padding:9px;
+    border-width:7px;
+  }
+}
