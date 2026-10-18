@@ -8,7 +8,7 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 
 ### Main pages
 
-- `index.html` — portrait-led Cinematic Hero 2.0, **21 Curated Works**, Gurzil Team, **Services**, **expanded 20-project apparel and glass-framed mockups**, six Motion videos and interactive reel, Archive, About/CV, availability and Contact/Project Brief.
+- `index.html` — portrait-led Cinematic Hero 2.0, **21 Curated Works**, Gurzil Team, **Services**, **20-project artwork-first editorial Studio Showcase**, six Motion videos and interactive reel, Archive, About/CV, availability and Contact/Project Brief.
 - `projects/<slug>.html` — **20 unique, static, pre-rendered and indexable project pages**, with artwork, concept, visual direction, authentic crops, 3 design observations, original gallery and previous/next navigation.
 - `project.html?work=<slug>` — a backwards-compatible dynamic template (marked `noindex` to prevent duplicate search results).
 - `project-data.js` — the definitive collection of 20 completed case study entries, each with unique editorial descriptions/visual notes; 19 completed featured projects and Gurzil Team. The two Coming Soon concepts do not have fake case studies.
@@ -17,7 +17,7 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 ### Branding & introduction
 
 - The **compact** upper-left header branding on the home and project pages uses the original white MASSYNE logo from `images/optimized/logo-1016.webp`, with a lighter mobile variant at `images/optimized/logo-480.webp`.
-- `signature-intro-v3.css` and `brand-loader.js` now run the new MASSYNE Signature Opening: expressive typography, editorial red accents, a minimal progress line, Skip Intro and a 1.88-second duration. It runs only on first external entry or an explicit F5/Refresh; navigation between portfolio projects skips it. Reduced-motion bypass remains. Previous loader CSS remains archived but is not used.
+- `signature-intro-v3.css` and `brand-loader.js` now run the new MASSYNE Signature Opening: expressive typography, editorial red accents, a minimal progress line, Skip Intro and a 1.12-second progress and 0.35-second exit. It runs only on first tab entry or an explicit F5/Refresh; navigation between portfolio projects skips it. Reduced-motion bypass remains. Previous loader CSS remains archived but is not used.
 - **Skip intro** works every time. People using reduced-motion preferences do not see the delayed intro.
 - The loader is hidden without JavaScript rather than trapping visitors on a non-functional splash screen.
 
@@ -44,14 +44,14 @@ Edit `project-data.js` first; the script populates the legacy template and the 2
 
 ## Next-Level portfolio presentation — October 18, 2026
 
-- **Real-artwork premium mockups:** `index.html#presentation` offers a 20-artwork interactive gallery of glass-framed wall prints and wearable hoodie/T-shirt art concepts, plus five new cinematic photographic previews. The 20 case-study pages (and legacy dynamic template) now have two tailored presentation scenes rendered from their existing original images. No fake client outcome, no generated asset, no claim of actually printed products.
+- **Art-object presentation:** `index.html#presentation` contains one generous editorial stage, all 20 completed artworks in an accessible thumbnail rail, and Gallery Frame / Textile Study / Original Artwork modes. The five new cinematic designs are preserved. The 20 case-study pages use two deliberate presentations, not synthetic hoodie illustrations.
 - **Creative interactions:** `next-level.css` / `next-level.js` add small (≤5px), reduced-motion-aware pointer reactions on selected CTAs, plus optional IntersectionObserver section reveals; never override the 3D carousel or the entry-only Signature Opening v3.
 - **Professional resume:** `resume.html` is a readable accessible CV plus **Print / Save as PDF**; `assets/MASSYNE-Resume.pdf` is a **5,914-byte 1-page PDF** with real portfolio links and existing contact details. No unknown degrees, employment years or languages are invented. Download links are in the About section.
 - **Availability:** `availability.js` is the one-file status control: `inquiries`, `open`, `limited`, or `closed`. Defaults to neutral **OPEN FOR CREATIVE INQUIRIES**; do not mark the designer as booked or available without confirmation. Status appears in Hero and Contact.
 - **Privacy-aware analytics:** `portfolio-analytics.js` progressively injects Vercel Web Analytics and Speed Insights in Vercel production only, and optionally sends generic project/CV/contact/showreel category events (no email, form text or visitor identifiers). **Dashboard activation remains required** to see metrics. Custom events may require a paid Vercel plan.
 - **Performance changes:** 9 Curated Work cards now use existing responsive WebP sources, all 23 Archive images decode asynchronously with low fetch priority, and the new mockup assets use lazy loading. Original files/media retained. See [PERFORMANCE_AUDIT.md](PERFORMANCE_AUDIT.md) for verified media sizes and remaining manual work.
 
-## October 18 — New Artworks & Product Mockup Showroom
+## October 18 — Final Art-Object Presentation
 
 Five user-supplied original designs were added as WebP originals plus 420px mobile previews: GLORY, NOCTURNE — RED SUN, ENVY, NOCTURNE — DARK VEIL and THE LAST OATH. These five appear in the 3D Curated Works gallery and have original case studies with unique descriptions, concept, art direction, three detail observations and source artwork.
 
@@ -85,3 +85,10 @@ Deployment does not require a build command.
 ## Notes
 
 Project copy is an editorial description of the existing artwork; it does not assert unknown client work, production process, project-specific software or fabricated mockups. Additional original process images can be added later to each project's `gallery`.
+
+## Final Visual and Loading Refinement (October 18)
+
+- **Official logo:** compact **top-left** header logo (68–88px on desktop and mobile) via `studio-polish.css`. The prior header logo sizing was lost when the loader stylesheet was replaced.
+- **Mockups:** the repetitive artificial hoodie/frame cards have been replaced with a substantial single-stage portfolio exhibition, honest collectible frame and textile art studies, and unobstructed original artwork. Every one of the 20 finished projects is accessible without "Show more".
+- **Intro:** the new Signature Index uses a 1.12-second animated progress bar + 0.35-second fade, runs on first entry per tab and F5/Reload, and **never** replays during navigation between projects. The existing Skip button and reduced-motion bypass remain.
+- **Preserved:** 21 Curated Works cards, 20 completed case studies, 23 Archive works, 6 original motion videos, original portrait, 3D swipe carousel, Contact, Services, CV, SEO and original asset paths.
