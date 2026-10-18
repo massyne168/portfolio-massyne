@@ -56,7 +56,7 @@ Edit `project-data.js` first; the script populates the legacy template and the 2
 Five user-supplied original designs were added as WebP originals plus 420px mobile previews: GLORY, NOCTURNE — RED SUN, ENVY, NOCTURNE — DARK VEIL and THE LAST OATH. These five appear in the 3D Curated Works gallery and have original case studies with unique descriptions, concept, art direction, three detail observations and source artwork.
 
 - The homepage contains 21 Curated Works cards: 19 finished pieces and 2 clearly marked upcoming concepts. Gurzil Team remains a separate branded case study, making 20 published case-study pages.
-- The former three-card mockup display is replaced by an expandable 20-project showroom with controls for Studio Mix, Glass Frames and Hoodies / T-shirts. Every project has a reflective wall frame and a dark garment mockup using its original art. The five new designs also have optional photographic concept scenes; these are visualizations, not evidence of a printed or commercial product.
+- The former three-card mockup display was replaced with a 20-project artwork showroom. The latest Grand Gallery direction standardizes every completed project into one large glass-framed tableau, with no garment view or fake printed product. These are digital concept visualizations, not claims of client production.
 - Art assets are stored under images/curated/ in optimized full and 420px WebP formats. Case studies and home cards use lazy loading as appropriate.
 - The new visual Signature Opening lasts approximately 1.88 seconds, runs on initial external entry and browser F5/reload, and never replays on normal same-site navigation between works. Reduced-motion preferences bypass it entirely.
 
@@ -86,9 +86,16 @@ Deployment does not require a build command.
 
 Project copy is an editorial description of the existing artwork; it does not assert unknown client work, production process, project-specific software or fabricated mockups. Additional original process images can be added later to each project's `gallery`.
 
-## Final Visual and Loading Refinement (October 18)
+## Grand Gallery and Opening Frame 04 — October 18
 
-- **Official logo:** compact **top-left** header logo (68–88px on desktop and mobile) via `studio-polish.css`. The prior header logo sizing was lost when the loader stylesheet was replaced.
-- **Mockups:** the repetitive artificial hoodie/frame cards have been replaced with a substantial single-stage portfolio exhibition, honest collectible frame and textile art studies, and unobstructed original artwork. Every one of the 20 finished projects is accessible without "Show more".
-- **Intro:** the new Signature Index uses a 1.12-second animated progress bar + 0.35-second fade, runs on first entry per tab and F5/Reload, and **never** replays during navigation between projects. The existing Skip button and reduced-motion bypass remain.
-- **Preserved:** 21 Curated Works cards, 20 completed case studies, 23 Archive works, 6 original motion videos, original portrait, 3D swipe carousel, Contact, Services, CV, SEO and original asset paths.
+**The user's most recent visual direction takes priority:** all 20 completed artwork case studies are displayed in one **identical, large museum-style glass frame**, rather than a mixed grid of tiny frames, pseudo-hoodie cards and assorted shapes.
+
+- The homepage `#presentation` exhibition shows a **single enormous 4:5 glass frame** on a gallery wall, with a horizontal rail for choosing any of the **20 original completed artworks**. The original designs remain intact and use `object-fit:contain` in the same-sized mat: no cropping or stretching when the image dimensions vary. A details panel links to each full Case Study.
+- Every `projects/<slug>.html` file (20 total) and legacy `project.html` use the exact same `museum-case` gallery section and CSS. A single large, consistent glass frame replaces the previous side-by-side small print and textile mockups. Original artwork images and galleries are preserved.
+- `grand-gallery.css` implements the uniform 4:5 museum frames, faux glass reflection, consistent large wall stages and compact, readable mobile dimensions without new image downloads. These frames are clearly described as digital mockups, not physical client installations.
+- The old garment and original-art modes are intentionally removed from the homepage showroom after the user requested **only one large gallery painting format**. The original art remains inspectable in the full Case Study artwork viewer and original galleries.
+- `atelier-gallery.js` retains direct user project switching and keyboard navigation without automatically scrolling to the showroom on site load.
+- The new `studio-entry.css` is **Opening Frame 04**: a distinct modern graphic-studio intro featuring MASSYNE's official logo, large cut typography, subtle red lines and responsive 0–100 progress. It replaces the former Signature Index style in the homepage, legacy case template and 20 static case studies.
+- The original `brand-loader.js` logic is preserved: show the intro on **first entry per tab** and explicit F5/Refresh; **do not replay** during normal internal navigation between projects or browser back/forward. Also respects Skip, reduced-motion and 1.12s progress + 0.35s exit.
+- **Preserved:** 21 Curated Works cards (19 completed + 2 upcoming), all five newly uploaded artworks, 20 completed case-study pages including Gurzil Team, 23 Archive works, six original motion clips, red/black theme, portrait, 3D drag carousel, Contact, CV, Services and SEO.
+
