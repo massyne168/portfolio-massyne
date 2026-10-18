@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /.codex-tmp/
+Disallow: /.codex/
+Disallow: /api/
+Disallow: /*.zip$
+Sitemap: https://portfolio-massyne.vercel.app/sitemap.xml

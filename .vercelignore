@@ -1,0 +1,5 @@
+# Deployment exclusions: preserve source history on GitHub; avoid uploading archives/QA caches via Vercel CLI.
+.codex-tmp/
+.codex/
+MASSYNE-portfolio-*.zip
+*.log
