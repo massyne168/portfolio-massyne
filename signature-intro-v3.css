@@ -54,3 +54,16 @@ html.intro-active,body.intro-active{overflow:hidden!important}
  .intro-v3-subtitle strong{font-size:.5rem}
 }
 @media(prefers-reduced-motion:reduce){.site-preloader,.intro-v3-title span,.intro-v3-bottom-rail .loader-skip{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}}
+
+/* Short laptop windows / landscape phones — keep Skip and progress visible. */
+@media(max-height:560px){
+ .site-preloader{min-height:0}
+ .intro-v3{padding-block:13px}
+ .intro-v3-center{min-height:0;padding:12px 0}
+ .intro-v3-title{font-size:clamp(3.2rem,11vh,6rem)}
+ .intro-v3-cross{width:22px;height:22px;margin-bottom:10px}
+ .intro-v3-subtitle{margin-top:12px}
+ .intro-v3-subtitle em{font-size:clamp(1.3rem,4vh,2rem)}
+ .intro-v3-meter-label{margin-bottom:8px}
+ .intro-v3-bottom-rail{margin-top:10px}
+}
