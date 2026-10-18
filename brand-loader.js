@@ -18,6 +18,20 @@
  try {
    if(document.referrer) sameSiteReferrer=new URL(document.referrer).origin===window.location.origin;
  }catch(_){}
+ // Catch all ordinary in-site link navigation (including gallery and resume).
+ // The one-use flag is ignored on F5/Reload and cleared immediately on the next page.
+ document.addEventListener("click", event => {
+   const link=event.target?.closest?.("a[href]");
+   if (!link || (event.button !== 0 && event.button !== undefined) ||
+       event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
+       link.target === "_blank" || link.hasAttribute("download")) return;
+   try {
+     const url=new URL(link.href,window.location.href);
+     if (url.origin === window.location.origin) {
+       window.sessionStorage.setItem("massyne:skip-intro-once","yes");
+     }
+   } catch (_) {}
+ }, {capture:true,passive:true});
  const internalNavigation=(navType!=="reload")&&(explicitProjectClick||sameSiteReferrer||navType==="back_forward");
  if(motion.matches||internalNavigation)return;
 
