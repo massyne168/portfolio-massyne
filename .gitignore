@@ -1,0 +1,23 @@
+# Browser automation profiles and local execution state — never publish these.
+# Gitignore prevents NEW additions; existing tracked files are removed in this change.
+.codex-tmp/
+chrome-cdp/
+chrome-hero/
+playwright-report/
+test-results/
+*.log
+
+# Local machine / editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.vercel/
+node_modules/
