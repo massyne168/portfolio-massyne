@@ -1,0 +1,191 @@
+/* MASSYNE / Studio Refinement — October 2026
+   Large editorial artwork display. No faux hoodie shapes, repeated tiny cards,
+   new media downloads or effects that disrupt the original 3D gallery. */
+
+/* REGRESSION FIX — the logo lost its sizing CSS when the intro stylesheet was replaced.
+   Set an explicit compact left-aligned header mark on all pages and screen sizes. */
+.site-header.brand-header{
+  flex-direction:row!important;align-items:center;justify-content:space-between;
+  gap:clamp(14px,2.2vw,26px);
+}
+.site-header.brand-header .brand-logo{
+  order:0;display:flex;align-items:center;justify-content:center;
+  flex:0 0 clamp(70px,6.4vw,88px)!important;
+  width:clamp(70px,6.4vw,88px)!important;
+  min-width:0;max-width:88px!important;
+  height:53px!important;max-height:53px!important;
+  margin:0!important;padding:0!important;overflow:hidden;
+}
+.site-header.brand-header .brand-logo picture{
+  width:100%;height:100%;display:block;min-width:0;flex:1;
+}
+.site-header.brand-header .brand-logo picture img{
+  display:block;width:100%!important;height:100%!important;max-width:100%;
+  object-fit:contain!important;object-position:left center;
+}
+.site-header.brand-header .site-nav{order:1;margin-left:auto!important;margin-right:0!important}
+.site-header.brand-header .menu{order:2}
+@media(max-width:850px){
+  .site-header.brand-header .brand-logo{flex-basis:74px!important;width:74px!important;max-width:74px!important;height:48px!important}
+  .site-header.brand-header .menu{margin-left:auto!important;margin-right:0!important}
+  .site-header.brand-header .site-nav{margin:0!important}
+}
+@media(max-width:370px){
+  .site-header.brand-header .brand-logo{flex-basis:68px!important;width:68px!important;max-width:68px!important;height:45px!important}
+}
+
+/* Artwork-first showcase — a single cohesive stage, not twenty repetitive fake product cards */
+.atelier-gallery{position:relative;isolation:isolate;background:#0c0b0e;color:#f2edef;border-block:1px solid rgba(255,255,255,.09);padding:clamp(75px,9vw,130px) clamp(20px,4.3vw,72px) clamp(75px,8vw,125px)}
+.atelier-wrap{width:100%;max-width:1480px;margin-inline:auto}
+.atelier-heading{display:grid;grid-template-columns:minmax(0,1.17fr) minmax(0,.83fr);gap:clamp(20px,5vw,95px);align-items:end;margin-bottom:clamp(33px,5.2vw,70px)}
+.atelier-heading .eyebrow{font:500 .63rem/1.5 var(--mono);letter-spacing:.13em;color:#ea5974}
+.atelier-heading h2{margin:15px 0 0;font:600 clamp(3.65rem,7.4vw,8.8rem)/.92 var(--display);letter-spacing:-.085em}
+.atelier-heading h2 em{color:#df4159;font:400 italic 1.05em var(--serif)}
+.atelier-heading-side{display:flex;flex-direction:column;gap:clamp(22px,3vw,48px);padding-bottom:4px}
+.atelier-heading-side p{max-width:450px;margin:0;color:#c7bfc3;font:400 clamp(.88rem,1.04vw,1rem)/1.85 var(--body)}
+.atelier-heading-side span{color:#bc9ba3;font:500 .6rem/1.5 var(--mono);letter-spacing:.09em}
+.atelier-main{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(270px,.68fr);background:#101015;border:1px solid rgba(255,255,255,.12);min-width:0}
+.atelier-stage{position:relative;height:clamp(510px,52vw,735px);overflow:hidden;background:#1c181b;isolation:isolate}
+.atelier-stage-top,.atelier-stage-bottom{position:absolute;z-index:8;left:clamp(17px,2.4vw,34px);right:clamp(17px,2.4vw,34px);display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none;color:#e2d7db;font:500 .58rem/1.65 var(--mono);letter-spacing:.12em;text-shadow:0 2px 9px #000}
+.atelier-stage-top{top:clamp(17px,2.4vw,32px)}.atelier-stage-bottom{bottom:clamp(17px,2.4vw,32px)}
+.atelier-set{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s ease;display:flex;align-items:center;justify-content:center}
+.atelier-stage[data-mode="frame"] .atelier-set--frame,
+.atelier-stage[data-mode="textile"] .atelier-set--textile,
+.atelier-stage[data-mode="original"] .atelier-set--original{opacity:1;visibility:visible}
+.atelier-set--frame{
+  background:
+  radial-gradient(ellipse 38% 48% at 53% 14%,rgba(255,236,217,.15),transparent 85%),
+  linear-gradient(107deg,#262227 0%,#353035 47%,#1b181c 100%);
+}
+.atelier-set--frame:before{content:"";position:absolute;left:0;right:0;top:0;height:68%;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.055),transparent 32% 76%,rgba(0,0,0,.2))}
+.atelier-wall-light{position:absolute;inset:0;background:radial-gradient(ellipse at 49% 30%,rgba(245,225,199,.12),transparent 62%);pointer-events:none}
+.atelier-framed-art{
+  position:relative;display:block;z-index:2;
+  height:76%;max-height:590px;
+  aspect-ratio:0.78;
+  padding:clamp(8px,1.15vw,16px);
+  border:clamp(7px,.9vw,13px) solid #161216;
+  background:linear-gradient(130deg,#71676c,#0b0a0d 28%,#221b20 80%,#534950);
+  box-shadow:
+    3px 3px 2px rgba(255,255,255,.18) inset,
+    3px 4px 8px #000 inset,
+    1px 2px 0 rgba(0,0,0,.4),
+    24px 32px 34px rgba(0,0,0,.44),
+    0 53px 80px rgba(0,0,0,.28);
+  transform:perspective(1350px) rotateY(-3deg);
+}
+.atelier-frame-mat{display:block;width:100%;height:100%;padding:3.6%;background:#e8e4df;box-shadow:0 0 0 1px #a49da0 inset,0 1px 6px #0007 inset}
+.atelier-frame-mat img{display:block;width:100%;height:100%;object-fit:fill}
+.atelier-glass{position:absolute;inset:0;pointer-events:none;border:1px solid rgba(255,255,255,.28);background:linear-gradient(125deg,rgba(255,255,255,.135),transparent 14% 50%,rgba(255,255,255,.025) 55%,transparent 62%)}
+.atelier-floor-shadow{position:absolute;inset:auto 9% 0;height:12%;background:radial-gradient(ellipse,rgba(0,0,0,.32),transparent 70%);pointer-events:none;width:82%}
+.atelier-set--textile{
+  background:
+  radial-gradient(ellipse 70% 70% at 55% 50%,rgba(132,39,57,.14),transparent 75%),
+  linear-gradient(126deg,#262026,#131115 44%,#292026);
+}
+.atelier-textile{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  width:min(68%,510px);height:78%;
+  transform:rotate(-3deg);
+  background:linear-gradient(115deg,rgba(255,255,255,.065),transparent 23%,rgba(0,0,0,.32) 62%,rgba(255,255,255,.04)),#19181b;
+  box-shadow:0 13px 5px rgba(0,0,0,.18),-21px 25px 65px rgba(0,0,0,.38),12px 22px 44px rgba(0,0,0,.5),inset 0 -1px 3px rgba(255,255,255,.12);
+  overflow:hidden;
+}
+.atelier-textile::before{content:"";position:absolute;inset:2.5% 0 auto;height:5%;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(0,0,0,.55);z-index:3;opacity:.7}
+.atelier-textile::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:4;background:linear-gradient(103deg,rgba(255,255,255,.075),transparent 17% 75%,rgba(0,0,0,.18));mix-blend-mode:screen}
+.atelier-textile-crease{position:absolute;left:3%;right:3%;bottom:5%;height:24%;border-bottom:1px solid rgba(255,255,255,.1);background:linear-gradient(0deg,rgba(0,0,0,.22),transparent);pointer-events:none}
+.atelier-textile img{display:block;width:59%;height:60%;object-fit:contain;opacity:.94;filter:contrast(.97);box-shadow:0 2px 14px rgba(0,0,0,.21)}
+.atelier-set--original{padding:clamp(40px,6vw,80px);background:radial-gradient(ellipse at center,rgba(103,30,44,.11),transparent 70%),#0b0b0e}
+.atelier-set--original img{max-width:100%;max-height:100%;width:auto;height:auto;display:block;object-fit:contain;box-shadow:0 26px 65px rgba(0,0,0,.55)}
+.atelier-info{display:flex;flex-direction:column;min-width:0;justify-content:space-between;border-left:1px solid rgba(255,255,255,.13);padding:clamp(24px,3.5vw,54px)}
+.atelier-info-top{display:flex;justify-content:space-between;align-items:center;color:#a99ca4;font:500 .58rem/1.6 var(--mono);letter-spacing:.08em}
+.atelier-red-dot{width:8px;height:8px;border-radius:50%;background:#e9405d;box-shadow:0 0 0 5px rgba(233,64,93,.09)}
+.atelier-art-details{margin:clamp(26px,3vw,50px) 0}
+.atelier-art-details>p:first-child{font:500 .63rem/1.6 var(--mono);letter-spacing:.08em;color:#e7667d;text-transform:uppercase}
+.atelier-art-details h3{font:600 clamp(2.5rem,4.3vw,5.6rem)/.94 var(--display);letter-spacing:-.075em;overflow-wrap:anywhere;margin:18px 0 30px}
+.atelier-fine-rule{width:64px;height:2px;background:#d6324f;margin-bottom:25px}
+.atelier-art-details>p:last-child{color:#c6bec3;font:400 .92rem/1.8 var(--body);max-width:390px}
+.atelier-label{font:500 .62rem/1.7 var(--mono);color:#aaa0a5;letter-spacing:.1em;margin:0 0 12px}
+.atelier-switch{display:flex;flex-direction:column;gap:6px}
+.atelier-switch button{min-height:46px;cursor:pointer;text-align:left;font:500 .68rem/1.6 var(--mono);letter-spacing:.045em;border:1px solid rgba(255,255,255,.16);color:#b8afb4;background:transparent;padding:11px 14px;transition:background .2s,border-color .2s,color .2s}
+.atelier-switch button:hover,.atelier-switch button:focus-visible{border-color:rgba(233,76,101,.72);color:#fff}
+.atelier-switch button[aria-pressed="true"]{color:#fff;background:#291218;border-color:#aa2941}
+.atelier-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#a89fa4;font:500 .55rem/1.5 var(--mono);letter-spacing:.05em;margin-top:23px}
+.atelier-view-project{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:54px;margin-top:21px;padding:15px 17px;color:#fff;background:#b82b45;border:1px solid #cb3853;font:500 .66rem/1.5 var(--mono);letter-spacing:.07em;transition:background .23s}
+.atelier-view-project:hover{background:#d53553}
+.atelier-view-project:focus-visible,.atelier-thumb:focus-visible,.atelier-switch button:focus-visible{outline:2px solid #f0647e;outline-offset:3px}
+.atelier-selection{padding:clamp(20px,3vw,41px) 0 0}
+.atelier-rail-head{display:flex;justify-content:space-between;gap:12px;font:500 .58rem/1.6 var(--mono);letter-spacing:.11em;color:#ada3a9;margin:0 0 15px}
+.atelier-rail{display:flex;gap:clamp(10px,1.1vw,17px);overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;scrollbar-color:#9f3147 #19171b;scrollbar-width:thin;padding:7px 4px 18px}
+.atelier-thumb{flex:0 0 clamp(83px,9vw,123px);min-width:0;border:1px solid rgba(255,255,255,.17);background:#17151a;padding:5px;cursor:pointer;position:relative;scroll-snap-align:center;transition:border-color .2s,transform .2s}
+.atelier-thumb.is-selected{border-color:#ed4b68;background:#29171d}
+.atelier-thumb:hover{border-color:#c44560;transform:translateY(-3px)}
+.atelier-thumb img{display:block;width:100%;height:clamp(112px,13vw,169px);object-fit:cover;object-position:center;filter:saturate(.83)}
+.atelier-thumb.is-selected img{filter:none}
+.atelier-thumb span{position:absolute;bottom:9px;left:9px;padding:5px 7px;background:rgba(7,6,9,.83);font:500 .51rem var(--mono);color:#e9dce0}
+.atelier-disclaimer{font:400 .71rem/1.75 var(--body);color:#92878f;margin:15px 0 0;max-width:900px}
+
+/* CASE STUDIES — original art as a large framed exhibit + clean creative textile panel */
+.case-mockup.atelier-case{border-bottom:1px solid rgba(255,255,255,.12);padding:clamp(70px,8vw,115px) 0}
+.atelier-case-header{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:end;gap:28px;margin-bottom:clamp(32px,5vw,58px)}
+.atelier-case-header .eyebrow{color:#ec5d78}
+.atelier-case-header h2{font:600 clamp(3rem,6vw,6rem)/.95 var(--display);letter-spacing:-.079em;margin:16px 0 0}
+.atelier-case-header h2 em{font:400 italic 1.05em var(--serif);color:#df405b}
+.atelier-case-header p:last-child{max-width:400px;font:.89rem/1.78 var(--body);color:#b9acb4}
+.atelier-case-grid{display:grid;grid-template-columns:1.07fr .93fr;gap:clamp(13px,2vw,27px)}
+.atelier-case-item{margin:0;min-width:0}
+.atelier-case-item .atelier-case-scene{position:relative;height:clamp(430px,48vw,675px);overflow:hidden}
+.atelier-case-scene--wall{display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 48% 18%,rgba(254,240,211,.18),transparent 60%),linear-gradient(135deg,#302a2e,#1f1b20 75%);}
+.atelier-case-scene--wall:after{content:"";pointer-events:none;position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.12),transparent 50%,rgba(0,0,0,.16))}
+.atelier-case-frame{position:relative;display:block;width:auto;height:81%;aspect-ratio:.76;border:10px solid #0a090c;background:#ded7d3;padding:9px;box-shadow:0 0 0 2px rgba(255,255,255,.19),18px 34px 45px rgba(0,0,0,.53),inset 0 2px 4px #0009;transform:perspective(1200px) rotateY(-4deg)}
+.atelier-case-frame img{display:block;width:100%;height:100%;object-fit:fill;border:7px solid #e9e3db}
+.atelier-case-scene--fabric{display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 70% 35%,rgba(159,41,70,.12),transparent 75%),linear-gradient(128deg,#302b31,#111015 78%)}
+.atelier-case-fabric{position:relative;width:min(74%,440px);height:74%;display:flex;align-items:center;justify-content:center;background:linear-gradient(132deg,#302c31,#161418 21%,#0d0c0e 69%,#312930);box-shadow:14px 36px 50px rgba(0,0,0,.52),inset 0 0 2px rgba(255,255,255,.15);transform:rotate(3deg)}
+.atelier-case-fabric img{width:63%;height:70%;display:block;object-fit:contain;box-shadow:0 1px 8px rgba(0,0,0,.3)}
+.atelier-case-item figcaption{display:flex;flex-direction:column;gap:7px;padding-top:21px;color:#a89fa6;font:.76rem/1.5 var(--body)}
+.atelier-case-item figcaption strong{color:#e7dde1;font:500 .62rem/1.65 var(--mono);letter-spacing:.07em}
+.atelier-case-note{color:#93898d;font:.73rem/1.7 var(--body);margin:20px 0 0}
+
+@media(max-width:1080px){
+ .atelier-main{grid-template-columns:minmax(0,1fr) minmax(240px,.72fr)}
+ .atelier-info{padding:25px}
+ .atelier-stage{height:clamp(510px,58vw,680px)}
+ .atelier-art-details h3{font-size:clamp(2.1rem,4vw,3.7rem)}
+}
+@media(max-width:770px){
+ .atelier-heading,.atelier-case-header{grid-template-columns:1fr}
+ .atelier-heading-side{gap:18px}
+ .atelier-main{grid-template-columns:1fr}
+ .atelier-stage{height:clamp(465px,83vw,660px)}
+ .atelier-info{border-left:0;border-top:1px solid rgba(255,255,255,.13);padding:clamp(24px,5vw,36px)}
+ .atelier-art-details{margin:25px 0}
+ .atelier-art-details h3{margin:12px 0 18px}
+ .atelier-info-bottom{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+ .atelier-info-bottom .atelier-label,.atelier-switch{grid-column:1}
+ .atelier-meta{grid-column:2;grid-row:1/3;margin:0;align-self:center}
+ .atelier-view-project{grid-column:1/-1}
+ .atelier-case-grid{grid-template-columns:1fr}
+ .atelier-case-item .atelier-case-scene{height:clamp(430px,88vw,630px)}
+}
+@media(max-width:540px){
+ .atelier-gallery{padding:66px 17px 76px}
+ .atelier-heading h2{font-size:clamp(3.2rem,13vw,5.4rem)}
+ .atelier-stage{height:clamp(390px,122vw,580px)}
+ .atelier-stage-top,.atelier-stage-bottom{font-size:.47rem;left:15px;right:15px}
+ .atelier-framed-art{height:74%;padding:7px;border-width:7px}
+ .atelier-textile{width:74%;height:72%}
+ .atelier-textile img{width:66%;height:58%}
+ .atelier-info-bottom{display:block}
+ .atelier-meta{margin-top:16px}
+ .atelier-rail-head{font-size:.49rem}
+ .atelier-thumb{flex-basis:91px}
+ .atelier-thumb img{height:122px}
+ .atelier-case-header h2{font-size:clamp(2.85rem,12.5vw,4.8rem)}
+ .atelier-case-frame{height:75%;border-width:7px}
+ .atelier-case-frame img{border-width:5px}
+ .atelier-case-item .atelier-case-scene{height:clamp(390px,110vw,520px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .atelier-set,.atelier-view-project,.atelier-switch button,.atelier-thumb{transition:none!important}
+ .atelier-thumb:hover{transform:none}
+}
