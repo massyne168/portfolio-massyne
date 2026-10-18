@@ -1,106 +1,116 @@
-/* MASSYNE / Cinematic signature intro — 0 to 100 in 3.45s, no libraries.
-   Runs on every full document load, including F5/Refresh.
-   Reduced motion, background tabs, and navigation fail safely. */
+/* MASSYNE / 2026 STUDIO OPENING.
+   Show only on first direct arrival in a tab or an explicit browser refresh (F5).
+   Never interrupt clicking through internal projects, About, Services or other pages.
+   Pure browser CSS/JS: no external packages, heavy media or persistent tracking. */
 (() => {
   "use strict";
   const overlay = document.querySelector(".site-preloader");
   if (!overlay) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const navInfo = window.performance.getEntriesByType?.("navigation")?.[0];
+  const explicitReload = navInfo?.type === "reload";
+  const firstViewKey = "massyne:studio-intro-seen";
+  const navigationKey = "massyne:skip-intro-once";
+
+  // Mark every genuine internal navigation, not only the carousel/next-project
+  // clicks. Native browser refresh never dispatches the click event.
+  document.addEventListener("click", event => {
+    if (event.defaultPrevented || event.button !== 0 ||
+        event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const link = event.target?.closest?.("a[href]");
+    if (!link || (link.target && link.target !== "_self") || link.hasAttribute("download")) return;
+    try {
+      const destination = new URL(link.href, document.baseURI);
+      if (destination.origin === window.location.origin &&
+          (destination.pathname !== window.location.pathname ||
+           destination.search !== window.location.search)) {
+        window.sessionStorage.setItem(navigationKey, "yes");
+      }
+    } catch (_) {}
+  }, {capture:true});
+
+  let visited = false, internalFlag = false;
+  try {
+    visited = window.sessionStorage.getItem(firstViewKey) === "yes";
+    internalFlag = window.sessionStorage.getItem(navigationKey) === "yes";
+    window.sessionStorage.removeItem(navigationKey);
+  } catch (_) { /* Private/incognito storage denied; rely on referrer instead. */ }
+  let internalReferrer = false;
+  try {
+    internalReferrer = Boolean(document.referrer) &&
+      new URL(document.referrer).origin === window.location.origin;
+  } catch (_) {}
+
+  // A genuine browser refresh wins even when session flags/referrer exist.
+  // A visitor who opens a new tab directly gets one introduction; internal
+  // links always skip. Reloading any page deliberately replays the intro.
+  const shouldShow = !reduced &&
+    (explicitReload || (!visited && !internalFlag && !internalReferrer));
+  if (!shouldShow) {
+    overlay.hidden = true;
+    overlay.setAttribute("aria-hidden", "true");
+    return;
+  }
+  try { window.sessionStorage.setItem(firstViewKey, "yes"); } catch (_) {}
+
   const count = overlay.querySelector(".loader-count");
   const bar = overlay.querySelector(".loader-progress-fill");
-  const progress = overlay.querySelector("[role=progressbar]");
-  const progressLight = overlay.querySelector(".intro-progress-light");
-  const skip = overlay.querySelector(".loader-skip");
+  const progress = overlay.querySelector('[role="progressbar"]');
   const status = overlay.querySelector(".intro-status");
-  const stages = [...overlay.querySelectorAll("[data-intro-stage]")];
-  const phaseLabels = [
-    "ESTABLISHING IDENTITY",
-    "CURATING VISUAL WORLDS",
-    "IGNITING MOTION",
-    "OPENING THE EXPERIENCE"
-  ];
-  let currentPhase = -1;
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // F5 / hard refresh always replays the 3.45s cinematic intro as requested.
-  // Only explicit same-site project navigation skips it once, to allow a true
-  // continuous image transition. The one-time flag is immediately consumed.
-  let projectNavigation = false;
-  try {
-    projectNavigation = window.sessionStorage.getItem("massyne:skip-intro-once") === "yes";
-    window.sessionStorage.removeItem("massyne:skip-intro-once");
-  } catch (_) {}
-  const navType = window.performance.getEntriesByType?.("navigation")?.[0]?.type;
-  if (reduced || (projectNavigation && navType !== "reload")) return;
+  const skip = overlay.querySelector(".loader-skip");
+  const pageElements = [...document.querySelectorAll("header.site-header,main,footer")];
+  const oldInert = pageElements.map(el => el.inert);
+  const startingFocus = document.activeElement;
+  let raf = 0, watchdog = 0, endTimer = 0, complete = false;
+  const DURATION_MS = 1950;
+  const labelAt = ["PREPARING THE STUDIO", "CURATING THE WORK", "OPENING THE PORTFOLIO", "WELCOME TO MASSYNE"];
 
-  const DURATION_MS = 3450;
-  let raf = 0;
-  let watchdog = 0;
-  let finished = false;
-  let previous = -1;
-  const originallyFocused = document.activeElement;
-  const blocked = [...document.querySelectorAll("header.site-header,main,footer")];
-  const previousInert = blocked.map(node => !!node.inert);
-
-  const update = fraction => {
-    const clamped = Math.max(0, Math.min(1, fraction));
-    // One tiny CSS variable drives the scanning light and progress indicator.
-    overlay.style.setProperty("--intro-progress", clamped.toFixed(4));
-    if (progressLight) progressLight.style.left = (clamped * 100).toFixed(2) + "%";
-    const value = Math.min(100, Math.max(0, Math.floor(clamped * 100)));
-    if (value === previous) return;
-    previous = value;
-    if (count) count.textContent = String(value).padStart(2, "0");
-    if (bar) bar.style.transform = "scaleX(" + clamped + ")";
-    if (progress) progress.setAttribute("aria-valuenow", String(value));
-    const phase = Math.min(3, Math.floor(value / 25));
-    if (phase !== currentPhase) {
-      currentPhase = phase;
-      if (status) status.textContent = phaseLabels[phase];
-      stages.forEach((step, index) => {
-        step.classList.toggle("is-active", index === phase);
-        step.classList.toggle("is-done", index < phase);
-      });
-    }
-    if (value === 100 && status) status.textContent = "WELCOME TO MASSYNE";
+  const progressTo = fraction => {
+    const amount = Math.min(1,Math.max(0,fraction));
+    const percent = Math.floor(amount * 100);
+    if (count) count.textContent = String(percent).padStart(2,"0");
+    if (bar) bar.style.transform = "scaleX(" + amount.toFixed(4) + ")";
+    if (progress) progress.setAttribute("aria-valuenow",String(percent));
+    if (status) status.textContent = labelAt[Math.min(3,Math.floor(amount * 4))];
   };
   const finish = () => {
-    if (finished) return;
-    finished = true;
+    if (complete) return;
+    complete = true;
     window.cancelAnimationFrame(raf);
     window.clearTimeout(watchdog);
-    update(1);
+    progressTo(1);
+    overlay.classList.add("is-leaving");
     document.documentElement.classList.remove("intro-active");
     document.body.classList.remove("intro-active");
-    blocked.forEach((node, i) => { node.inert = previousInert[i]; });
-    overlay.classList.add("is-leaving");
-    overlay.setAttribute("aria-hidden", "true");
-
-    if (document.activeElement === skip) {
-      if (originallyFocused && originallyFocused !== document.body &&
-          typeof originallyFocused.focus === "function") {
-        originallyFocused.focus({preventScroll:true});
-      } else {
-        document.querySelector(".site-header .brand-logo")?.focus({preventScroll:true});
-      }
+    pageElements.forEach((node,i) => {node.inert = oldInert[i];});
+    if (startingFocus && typeof startingFocus.focus === "function" &&
+        startingFocus.isConnected && startingFocus !== document.body) {
+      startingFocus.focus({preventScroll:true});
     }
-    window.setTimeout(() => { overlay.hidden = true; }, 670);
+    endTimer = window.setTimeout(() => {
+      overlay.hidden = true;
+      overlay.setAttribute("aria-hidden","true");
+    }, 520);
   };
 
   overlay.hidden = false;
-  overlay.setAttribute("aria-hidden", "false");
+  overlay.setAttribute("aria-hidden","false");
+  overlay.classList.remove("is-leaving");
   document.documentElement.classList.add("intro-active");
   document.body.classList.add("intro-active");
-  blocked.forEach(node => { node.inert = true; });
-  update(0);
-  skip?.addEventListener("click", finish);
-  const startedAt = window.performance.now();
-  const tick = now => {
-    if (finished) return;
-    update((now - startedAt) / DURATION_MS);
-    if (now - startedAt >= DURATION_MS) finish();
-    else raf = window.requestAnimationFrame(tick);
+  pageElements.forEach(el => { el.inert = true; });
+  progressTo(0);
+  skip?.addEventListener("click",finish);
+  const begin = window.performance.now();
+  const frame = now => {
+    if (complete) return;
+    const elapsed = now - begin;
+    progressTo(elapsed / DURATION_MS);
+    if (elapsed >= DURATION_MS) finish();
+    else raf = window.requestAnimationFrame(frame);
   };
-  raf = window.requestAnimationFrame(tick);
-  watchdog = window.setTimeout(finish, 4600);
+  raf = window.requestAnimationFrame(frame);
+  watchdog = window.setTimeout(finish, 3400);
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) finish();
   });
