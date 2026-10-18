@@ -96,24 +96,36 @@
   );
 
 
-  // Completed featured works now open dedicated case studies.
-  // The 3D controller captures side-card clicks first; centred clicks navigate.
+  // Completed featured works use real crawlable <a> links to static project pages.
+  // The existing 3D controller still focuses side cards on click before navigation.
   const curated = document.querySelector(".project-grid");
+  const prepareProjectTransition = card => {
+    const src = card?.querySelector("img");
+    if (src && !motionQuery.matches) src.style.viewTransitionName = "project-hero";
+    try { window.sessionStorage.setItem("massyne:skip-intro-once", "yes"); } catch (_) {}
+  };
   const navigateToCase = card => {
     const slug = card?.dataset.caseStudy;
     if (!slug) return;
-    window.location.assign("project.html?work=" + encodeURIComponent(slug));
+    prepareProjectTransition(card);
+    window.location.assign(new URL("projects/" + encodeURIComponent(slug) + ".html", document.baseURI).href);
   };
   curated?.querySelectorAll(".project[data-case-study]").forEach(card => {
-    card.setAttribute("role","link");
-    card.setAttribute("aria-label","Explore " + (card.querySelector("h3")?.textContent || "selected") + " project");
-    card.addEventListener("click", () => navigateToCase(card));
+    card.addEventListener("click", event => {
+      // Native title link is important for search engines and keyboard access.
+      if (event.target.closest("a.project-card-anchor")) {
+        prepareProjectTransition(card);
+        return;
+      }
+      navigateToCase(card);
+    });
     card.addEventListener("keydown", event => {
+      if (event.target.closest("a")) return; // Native link owns its own Enter key.
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        // On 3D, only the centred card is actionable (controller owns side-card selection).
-        if (curated.dataset.view !== "3d" || card.classList.contains("is-carousel-active"))
+        if (curated.dataset.view !== "3d" || card.classList.contains("is-carousel-active")) {
           navigateToCase(card);
+        }
       }
     });
   });
