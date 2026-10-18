@@ -8,10 +8,11 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 
 ### Main pages
 
-- `index.html` — portrait-led Cinematic Hero 2.0, Curated Works, Gurzil Team branding, Motion, Archive, About / Designer Identity, Contact.
-- `project.html?work=<slug>` — a single accessible project-detail template that renders an original artwork case study based on the URL.
-- `project-data.js` — the definitive collection of 15 completed case study entries: the 14 completed featured projects and Gurzil Team. The two Coming Soon concepts do not have fake case studies.
-- `case-study.js` and `case-study.css` — case-study navigation, full-size original artwork viewer, and responsive layouts.
+- `index.html` — portrait-led Cinematic Hero 2.0, Curated Works, Gurzil Team, **Services**, **30-second original motion reel**, existing six Motion videos, Archive, About / Designer Identity and **Contact / Project Brief**.
+- `projects/<slug>.html` — **15 unique, static, pre-rendered and indexable project pages**, with artwork, concept, visual direction, authentic crops, 3 design observations, original gallery and previous/next navigation.
+- `project.html?work=<slug>` — a backwards-compatible dynamic template (marked `noindex` to prevent duplicate search results).
+- `project-data.js` — the definitive collection of 15 completed case study entries, each with unique editorial descriptions/visual notes; 14 completed featured projects and Gurzil Team. The two Coming Soon concepts do not have fake case studies.
+- `case-study.js`, `case-study.css` and `studio-upgrade.css` — accessible rich case-study navigation, full-size original artwork viewer, responsive concept/details layouts and progressive-enhancement cross-document transitions.
 
 ### Branding & introduction
 
@@ -26,7 +27,20 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 - `portfolio-enhancements.css` — cinematic personal-portrait hero, project hover, About and Contact upgrades.
 - `script.js` — navigation, the archive filters, preview lightboxes, completed featured-work links, and scroll reveals.
 - `curated-3d.css` / `curated-3d.js` — 3D carousel with touch/mouse dragging, Gallery / Grid / Index views, rotating crimson border lights, reduced-motion awareness.
-- `images/massyne-portrait-2026.avif` — optimized user-supplied black-and-white portrait used in Hero and About. Older browsers can use the existing fallback asset `assets/massyne-hero-portrait.png`.
+- `assets/massyne-hero-portrait.png` — existing transparent personal portrait used in both Hero and About (the heavily compressed historical AVIF is no longer referenced).
+
+## Studio enhancements (October 2026)
+
+- **Services / What I Do:** four concise offerings linking to real project examples: Poster & Key Art, Visual Identity, Art Direction and Motion Graphics.
+- **Project Brief:** a client-side form in Contact that validates required fields and opens an editable `mailto:` message addressed to the existing email. A Copy Brief button offers a clipboard fallback. **No API is configured, nothing is saved on the site, and no email is claimed to be sent** until the visitor sends it from their own email client.
+- **Motion Reel:** `studio-upgrade.js` takes the original 6 MP4 motion studies and plays up to 5 seconds from each, in sequence, after a visitor explicitly presses Play. No duplicate edited reel file, third-party package or autoplay with sound. The original six videos remain below the reel and now use `preload="none"` until requested.
+- **Navigation transitions:** supported browsers animate matching project artwork between the gallery and static project pages using standard `@view-transition`. The 3D selection behavior is unchanged. A one-use session flag bypasses the intro **only on an intentional project-to-project navigation**, not on refresh. **F5 continues to show the original 3.45s Signature Sequence intro**.
+- **SEO:** `sitemap.xml`, `robots.txt`, branded `404.html`, canonical + social metadata and structured data. All 15 case-study pages have content in their HTML before JavaScript executes.
+- **Performance:** all six standalone MP4s are lazy-on-interaction (`preload="none"`); original artwork images are lazy where appropriate. `.vercelignore` avoids shipping large legacy ZIPs and local QA caches via Vercel CLI. All original assets stay safely in GitHub.
+
+## Updating case studies
+
+Edit `project-data.js` first; the script populates the legacy template and the 15 pre-rendered HTML snapshots. When you change a project title, summary, images or design notes, **regenerate the matching `projects/<slug>.html` snapshot** so SEO HTML stays in sync. Current snapshots are deliberately static rather than relying on browser-only rendering.
 
 ## Content preservation
 
