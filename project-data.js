@@ -1,4 +1,4 @@
-/* Selected MASSYNE artwork metadata. Editorial observations, not invented client outcomes or process claims. */
+/* MASSYNE — individual original artwork captions and grounded concept notes. */
 window.MASSYNE_PROJECTS = [
   {
     "slug": "veiled-sorrow",
@@ -437,6 +437,151 @@ window.MASSYNE_PROJECTS = [
         "title": "Consistent language",
         "description": "The imagery holds together through shared style and attitude"
       }
+    ]
+  },
+  {
+    "slug": "glory",
+    "title": "Glory",
+    "category": "Cinematic Medieval Poster Design",
+    "image": "images/curated/glory.webp",
+    "focus": "Resilience / golden-hour atmosphere",
+    "summary": "A cinematic medieval poster capturing the quiet strength of a fallen warrior beneath a blazing sunset, where endurance matters more than triumph.",
+    "concept": "Glory explores the moment after conflict: a lone knight in heavy armor sits among ruins, suggesting that strength can live in stillness as well as victory.",
+    "direction": "Oversized heritage-inspired serif lettering, scorched orange skies and dark metallic textures form an emotionally charged, film-poster composition.",
+    "details": [
+      {
+        "title": "The aftermath",
+        "description": "A seated armored figure suggests reflection and persistence rather than a conventional heroic action pose."
+      },
+      {
+        "title": "Fire and steel",
+        "description": "Molten-orange light against near-black armor creates dramatic depth and a strong visual focal point."
+      },
+      {
+        "title": "Monumental lettering",
+        "description": "The wide GLORY headline anchors the composition without overpowering its intimate narrative."
+      }
+    ],
+    "year": "2026",
+    "number": "16",
+    "gallery": [
+      "images/curated/glory.webp"
+    ]
+  },
+  {
+    "slug": "nocturne-red-sun",
+    "title": "Nocturne — Red Sun",
+    "category": "Gothic Plague Doctor Poster",
+    "image": "images/curated/nocturne-red-sun.webp",
+    "focus": "Gothic character / red sun",
+    "summary": "An arresting gothic character poster featuring a plague-doctor figure against a crimson sun, with distressed antique typography and archival details.",
+    "concept": "Nocturne — Red Sun imagines a silent wanderer in a ruined world. The masked figure and circular red backdrop evoke mystery, survival and ritual.",
+    "direction": "Weathered ivory paper, high-contrast black armor, a vermilion disc and monumental condensed lettering give the piece its collectible-print character.",
+    "details": [
+      {
+        "title": "Gothic silhouette",
+        "description": "The beaked mask, wide hat and polearm create a distinctive instantly readable subject."
+      },
+      {
+        "title": "Red sun motif",
+        "description": "A single bold crimson circle organizes the scene and heightens its sense of otherworldliness."
+      },
+      {
+        "title": "Antique print texture",
+        "description": "Distressed lettering and ornamental markings create an aged editorial identity."
+      }
+    ],
+    "year": "2026",
+    "number": "17",
+    "gallery": [
+      "images/curated/nocturne-red-sun.webp"
+    ]
+  },
+  {
+    "slug": "envy",
+    "title": "Envy",
+    "category": "Dark Fantasy Editorial Poster",
+    "image": "images/curated/envy.webp",
+    "focus": "Emotion / sharp red-black hierarchy",
+    "summary": "A fierce red-and-black editorial poster exploring envy through veiled eyes, thorned crown imagery and oversized distressed typography.",
+    "concept": "Envy turns a difficult emotion into a visual persona: a veiled face, restrictive hands and thorn-like ornament create a haunting symbolic portrait.",
+    "direction": "Vivid coral-red fields, carved black display type and an expressive central figure carry an intense contemporary gothic tone.",
+    "details": [
+      {
+        "title": "Expressive portrait",
+        "description": "Hands conceal part of the face, allowing gesture to convey conflict and restraint."
+      },
+      {
+        "title": "Typographic tension",
+        "description": "Large black letters merge with ornamental spikes to intensify the graphic rhythm."
+      },
+      {
+        "title": "Two-color intensity",
+        "description": "A limited red-and-black palette keeps the character and message striking even at small scale."
+      }
+    ],
+    "year": "2026",
+    "number": "18",
+    "gallery": [
+      "images/curated/envy.webp"
+    ]
+  },
+  {
+    "slug": "nocturne-dark-veil",
+    "title": "Nocturne — Dark Veil",
+    "category": "Monochrome Gothic Editorial Poster",
+    "image": "images/curated/nocturne-dark-veil.webp",
+    "focus": "Monochrome / archival symbolism",
+    "summary": "A monochrome gothic editorial study bringing intricate typographic systems and archival markings around a shadowed veiled portrait.",
+    "concept": "Nocturne — Dark Veil treats darkness as an aesthetic atmosphere. A crown-like headdress and veiled portrait are framed by symbolic diagrams and coded notes.",
+    "direction": "Silver-gray oversized lettering, black portrait photography-inspired imagery, fine grid symbols and restrained red accents form a detailed collector-style cover.",
+    "details": [
+      {
+        "title": "Quiet portrait",
+        "description": "Soft grayscale contrast and covered features build an inward-looking emotional atmosphere."
+      },
+      {
+        "title": "Archival language",
+        "description": "Diagram-like details, labels and measured alignment surround the central character."
+      },
+      {
+        "title": "Restrained chroma",
+        "description": "Almost-total monochrome allows tiny crimson elements to sharpen the mood."
+      }
+    ],
+    "year": "2026",
+    "number": "19",
+    "gallery": [
+      "images/curated/nocturne-dark-veil.webp"
+    ]
+  },
+  {
+    "slug": "the-last-oath",
+    "title": "The Last Oath",
+    "category": "Cinematic Fantasy Key Art",
+    "image": "images/curated/the-last-oath.webp",
+    "focus": "Knight / loyalty / sunset atmosphere",
+    "summary": "A grand dark-fantasy key-art poster depicting an armored knight before a burning kingdom, built around sacrifice, loyalty and the weight of a final promise.",
+    "concept": "The Last Oath follows a solitary knight who carries duty through the ruins of a fading kingdom, balancing heroic scale with an elegiac mood.",
+    "direction": "A copper sunset, detailed metal armor, sweeping burgundy cape and oversized classical serif title create a dramatic premium fantasy-poster aesthetic.",
+    "details": [
+      {
+        "title": "Heroic center",
+        "description": "The knight's vertical silhouette carries the scene and anchors the layered landscape."
+      },
+      {
+        "title": "World beyond",
+        "description": "Distant towers and a fiery horizon hint at the story and its stakes."
+      },
+      {
+        "title": "Mythic headline",
+        "description": "Oversized weathered serif lettering gives the composition the presence of a saga."
+      }
+    ],
+    "year": "2026",
+    "number": "20",
+    "gallery": [
+      "images/curated/the-last-oath.webp"
     ]
   }
 ];
