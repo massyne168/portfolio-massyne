@@ -118,6 +118,13 @@
   set("case-next-title", next.title);
   find("case-prev-link")?.setAttribute("href", projectHref(previous));
   find("case-next-link")?.setAttribute("href", projectHref(next));
+  // Preserve the 3.45s loader on F5 while allowing seamless intentional project-to-project transitions.
+  ["case-prev-link","case-next-link"].forEach(id => {
+    find(id)?.addEventListener("click", event => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      try { window.sessionStorage.setItem("massyne:skip-intro-once","yes"); } catch (_) {}
+    });
+  });
 
   // The full artwork viewer is a native accessible dialog, not another page load.
   const dialog = document.querySelector(".case-fullscreen");
