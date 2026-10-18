@@ -1,0 +1,111 @@
+/* MASSYNE / Grand Gallery — one premium glass-frame format for every original artwork.
+   Every visual has the same physical frame aspect ratio, dimensions, and placement.
+   Landscape artwork is contained, never cropped or stretched. */
+:root { --gallery-dark:#0d0b0f;--gallery-wall:#262328;--gallery-red:#df3f5b; }
+.atelier-gallery{background:#0b0a0d;padding-block:clamp(78px,8vw,130px)}
+.atelier-heading{margin-bottom:clamp(34px,5vw,65px)}
+.atelier-heading-side p{max-width:550px}
+.atelier-main{display:flex;flex-direction:column;max-width:1320px;margin:0 auto;min-width:0;border:1px solid rgba(255,255,255,.15);background:#111015}
+.atelier-stage{height:clamp(710px,79vw,995px);min-height:0;display:flex;justify-content:center;align-items:center;overflow:hidden;background:var(--gallery-wall)}
+.atelier-set--frame{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse 48% 32% at 50% 12%,rgba(255,239,220,.16),transparent 78%),linear-gradient(108deg,#272429 0%,#393338 51%,#211d22 100%)}
+.atelier-set--frame::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,rgba(255,255,255,.055),transparent 35% 68%,rgba(0,0,0,.16))}
+.atelier-wall-light{background:radial-gradient(ellipse 54% 58% at 49% 38%,rgba(243,225,196,.13),transparent 73%)}
+.atelier-framed-art{
+ width:auto;height:79%;max-height:820px;max-width:84%;aspect-ratio:4 / 5;
+ padding:clamp(9px,1.35vw,20px);flex:none;
+ border:clamp(10px,1.16vw,17px) solid #0c0b0e;
+ border-radius:1px;position:relative;
+ background:linear-gradient(125deg,#272129 0%,#0b0a0e 32%,#383139 55%,#110f13 100%);
+ transform:perspective(1500px) rotateY(-1.3deg);
+ box-shadow:0 0 0 1px #5d555c,0 0 0 3px rgba(255,255,255,.07),
+ inset 2px 2px 2px rgba(255,255,255,.18),inset -2px -2px 6px rgba(0,0,0,.9),
+ 18px 25px 27px rgba(0,0,0,.32),32px 60px 95px rgba(0,0,0,.37);
+}
+.atelier-frame-mat{width:100%;height:100%;padding:3.2%;background:#eeeae5;box-shadow:0 0 0 1px #d3c9c4 inset,0 0 5px #0004 inset;display:grid;place-items:center}
+.atelier-frame-mat img{width:100%;height:100%;object-fit:contain;object-position:center;background:#eeeae5;display:block}
+.atelier-glass{inset:0;background:linear-gradient(124deg,rgba(255,255,255,.18),rgba(255,255,255,.024) 11%,transparent 24% 57%,rgba(255,255,255,.04) 65%,transparent 73%);border:1px solid rgba(255,255,255,.17)}
+.atelier-stage-top,.atelier-stage-bottom{z-index:8;text-shadow:0 2px 9px #000;letter-spacing:.12em}
+.atelier-info{display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.55fr);gap:clamp(18px,3vw,50px);border:0;border-top:1px solid rgba(255,255,255,.14);padding:clamp(26px,3.4vw,46px);align-items:center}
+.atelier-info-top{grid-column:1/-1}
+.atelier-art-details{margin:0}
+.atelier-art-details>p:first-child{margin:0}
+.atelier-art-details h3{font-size:clamp(2.5rem,4.4vw,5.2rem);margin:12px 0 17px}
+.atelier-fine-rule{margin-bottom:17px}
+.atelier-art-details>p:last-child{max-width:750px;margin:0}
+.atelier-info-bottom{display:flex;flex-direction:column;justify-content:center;gap:15px}
+.atelier-info-bottom .atelier-label,.atelier-switch{display:none!important}
+.atelier-meta{margin:0}
+.atelier-view-project{margin-top:0;min-height:56px}
+.atelier-selection{max-width:1320px;margin:0 auto}
+.atelier-rail{gap:clamp(9px,1.4vw,16px)}
+.atelier-thumb{flex-basis:clamp(92px,9.3vw,132px)}
+.atelier-thumb img{height:clamp(125px,13vw,176px)}
+.atelier-disclaimer{max-width:1320px;margin:18px auto 0}
+.atelier-set--textile,.atelier-set--original{display:none!important}
+
+/* Exactly ONE gallery-sized artwork presentation on every case-study page. */
+.case-mockup.museum-case{max-width:none;padding:clamp(75px,9vw,128px) 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.museum-case-header{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(22px,6vw,90px);align-items:end;margin-bottom:clamp(31px,4vw,60px)}
+.museum-case-header .eyebrow{color:#ee5973}
+.museum-case-header h2{font:600 clamp(3.2rem,6.7vw,7.1rem)/.92 var(--display);letter-spacing:-.083em;margin:18px 0 0}
+.museum-case-header h2 em{font:400 italic 1.08em var(--serif);color:#e44461}
+.museum-case-header>p{max-width:510px;color:#c3b7be;font:.92rem/1.85 var(--body);margin:0}
+.museum-exhibit{margin:0;max-width:100%}
+.museum-wall{
+ height:clamp(700px,76vw,1020px);
+ position:relative;isolation:isolate;overflow:hidden;
+ display:flex;align-items:center;justify-content:center;
+ background:radial-gradient(ellipse 45% 35% at 48% 15%,rgba(255,238,216,.2),transparent 82%),linear-gradient(115deg,#242027,#363138 46%,#221e24);
+ border:1px solid rgba(255,255,255,.1);
+}
+.museum-wall::before{content:"";position:absolute;inset:0;background:linear-gradient(95deg,rgba(0,0,0,.16),transparent 35% 68%,rgba(0,0,0,.14));pointer-events:none}
+.museum-wall::after{content:"";position:absolute;left:9%;right:9%;bottom:5%;height:8%;background:radial-gradient(ellipse,rgba(0,0,0,.3),transparent 68%);pointer-events:none}
+.museum-topline{position:absolute;top:clamp(19px,3vw,35px);left:clamp(20px,3vw,44px);right:clamp(20px,3vw,44px);display:flex;justify-content:space-between;gap:10px;color:#d9c9cf;letter-spacing:.14em;font:500 .6rem/1.6 var(--mono);text-shadow:0 1px 4px #000;z-index:5}
+.museum-picture{
+ position:relative;z-index:2;
+ height:78%;max-height:810px;max-width:86%;width:auto;aspect-ratio:4 / 5;
+ padding:clamp(9px,1.4vw,20px);flex:none;border:clamp(10px,1.18vw,17px) solid #0a090d;
+ background:linear-gradient(128deg,#29242b,#08070a 32%,#332c33 69%,#141015);
+ box-shadow:0 0 0 1px #645960,0 0 0 3px rgba(255,255,255,.055),inset 2px 2px 3px rgba(255,255,255,.17),inset -3px -2px 7px #000b,23px 30px 35px rgba(0,0,0,.36),35px 58px 88px #0006;
+ transform:perspective(1650px) rotateY(-1.5deg);
+}
+.museum-mat{display:grid;place-items:center;width:100%;height:100%;background:#eeeae5;padding:3.2%;box-shadow:0 0 2px 1px rgba(0,0,0,.25) inset}
+.museum-mat img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#eeeae5;max-width:100%;max-height:100%}
+.museum-glass{pointer-events:none;position:absolute;inset:0;border:1px solid rgba(255,255,255,.26);background:linear-gradient(121deg,rgba(255,255,255,.17),rgba(255,255,255,.012) 14%,transparent 27% 56%,rgba(255,255,255,.045) 67%,transparent 75%)}
+.museum-plaque{position:absolute;bottom:clamp(19px,3vw,36px);left:50%;transform:translateX(-50%);white-space:nowrap;max-width:95%;color:#eee3e8;font:500 .58rem/1.5 var(--mono);letter-spacing:.1em;text-align:center;text-shadow:0 1px 5px #000;z-index:4}
+.museum-exhibit>figcaption{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:24px 1px 0;color:#bcb0b8;font:.81rem/1.7 var(--body)}
+.museum-exhibit figcaption strong{font:600 .68rem/1.6 var(--mono);letter-spacing:.09em;color:#ebe2e6}
+.museum-case-note{margin:15px 0 0;color:#9c8f97;font:.73rem/1.7 var(--body)}
+
+/* consistent physical frame size without responsive overflow */
+@media(max-width:960px){
+ .atelier-stage{height:clamp(630px,87vw,900px)}
+ .museum-wall{height:clamp(580px,90vw,850px)}
+ .atelier-info{grid-template-columns:1fr}
+ .atelier-info-bottom{gap:20px}
+}
+@media(max-width:700px){
+ .atelier-heading-side span{font-size:.55rem}
+ .atelier-stage{height:clamp(470px,130vw,720px)}
+ .atelier-framed-art{height:75%;padding:8px;border-width:9px;max-width:88%}
+ .atelier-frame-mat{padding:3%}
+ .atelier-info{padding:27px 22px}
+ .atelier-meta{font-size:.54rem}
+ .museum-case-header{grid-template-columns:1fr}
+ .museum-case-header h2{font-size:clamp(3rem,12vw,5.4rem)}
+ .museum-wall{height:clamp(465px,125vw,750px)}
+ .museum-picture{height:76%;padding:8px;border-width:9px;max-width:89%}
+ .museum-mat{padding:3%}
+ .museum-topline,.museum-plaque{font-size:.5rem;letter-spacing:.07em}
+}
+@media(max-width:420px){
+ .atelier-stage{height:clamp(430px,140vw,580px)}
+ .atelier-stage-top,.atelier-stage-bottom{font-size:.49rem;letter-spacing:.04em}
+ .atelier-framed-art{height:72%;border-width:8px;padding:6px}
+ .museum-wall{height:clamp(435px,145vw,580px)}
+ .museum-picture{height:72%;border-width:8px;padding:6px}
+ .museum-topline,.museum-plaque{font-size:.43rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .atelier-framed-art,.museum-picture{transform:none}
+}
