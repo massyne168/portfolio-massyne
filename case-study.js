@@ -1,13 +1,19 @@
-/* MASSYNE — truthful, lightweight case study renderer. */
+/* MASSYNE — semantic case study pages + source-grounded project data. */
 (() => {
   "use strict";
   const collection = Array.isArray(window.MASSYNE_PROJECTS) ? window.MASSYNE_PROJECTS : [];
   const params = new URLSearchParams(window.location.search);
-  const slug = params.get("work");
+  const slugFromPath = window.location.pathname.match(/\/projects\/([a-z0-9-]+)\.html$/)?.[1];
+  const slug = slugFromPath || params.get("work");
   const project = collection.find(item => item.slug === slug);
   const find = id => document.getElementById(id);
-  const set = (id, text) => { const node = find(id); if (node) node.textContent = text; };
+  const set = (id, value) => {
+    const element = find(id);
+    if (element) element.textContent = value || "";
+  };
+  const projectHref = item => new URL("projects/" + encodeURIComponent(item.slug) + ".html", document.baseURI).href;
 
+  // The same menu behaviour works for both the legacy query page and static project routes.
   const menu = document.querySelector(".menu");
   const nav = document.getElementById("nav");
   menu?.addEventListener("click", () => {
@@ -27,28 +33,26 @@
   const header = document.querySelector(".site-header");
   window.addEventListener("scroll", () => {
     header?.classList.toggle("is-scrolled", window.scrollY > 12);
-  }, { passive: true });
+  }, {passive:true});
 
   if (!project) {
     set("case-title", "Project not found.");
     set("case-summary", "This project isn't in the current portfolio collection.");
     set("case-category", "Portfolio / Not found");
     document.title = "Project not found — MASSYNE";
-    document.querySelector(".case-hero-visual")?.remove();
-    document.querySelector(".case-details")?.remove();
-    document.querySelector(".case-visuals")?.remove();
-    document.querySelector(".case-next")?.remove();
+    [".case-hero-visual",".case-details",".case-story",".case-design",".case-visuals",".case-next"]
+      .forEach(selector => document.querySelector(selector)?.remove());
     return;
   }
   const index = collection.indexOf(project);
   const previous = collection[(index - 1 + collection.length) % collection.length];
   const next = collection[(index + 1) % collection.length];
-  const fallback = String(index + 1).padStart(2, "0");
+  const number = project.number || String(index + 1).padStart(2, "0");
 
-  document.title = project.title + " — MASSYNE Portfolio";
+  document.title = project.title + " — MASSYNE | Selected Work";
   document.querySelector('meta[name="description"]')?.setAttribute("content", project.summary);
-  set("case-number", project.number || fallback);
-  set("case-detail-number", project.number || fallback);
+  set("case-number", number);
+  set("case-detail-number", number);
   set("case-category", project.category + " / " + project.year);
   set("case-title", project.title);
   set("case-summary", project.summary);
@@ -57,46 +61,77 @@
   set("case-fact-category", project.category);
   set("case-fact-year", project.year);
   set("case-fact-focus", project.focus);
+  set("case-concept", project.concept);
+  set("case-direction", project.direction);
+
   const artwork = find("case-artwork");
   if (artwork) {
     artwork.src = project.image;
     artwork.alt = project.title + " — original artwork by MASSYNE";
   }
+  const cropped = find("case-detail-art");
+  if (cropped) {
+    cropped.src = project.image;
+    cropped.alt = "Closer crop from " + project.title + ", original artwork";
+  }
+
+  const insights = find("case-insights");
+  if (insights) {
+    insights.replaceChildren();
+    (project.details || []).forEach((detail, i) => {
+      const article = document.createElement("article");
+      article.className = "case-insight";
+      const numberLabel = document.createElement("span");
+      numberLabel.textContent = String(i + 1).padStart(2, "0");
+      const content = document.createElement("div");
+      const title = document.createElement("h3");
+      title.textContent = detail.title;
+      const description = document.createElement("p");
+      description.textContent = detail.description;
+      content.append(title, description);
+      article.append(numberLabel,content);
+      insights.append(article);
+    });
+  }
 
   const gal = find("case-gallery");
   const gallery = Array.isArray(project.gallery) ? project.gallery : [project.image];
   if (gal) {
+    gal.replaceChildren();
     gallery.forEach((src, i) => {
       const figure = document.createElement("figure");
       figure.className = "case-gallery-piece";
       const image = document.createElement("img");
       image.src = src;
-      image.alt = project.title + (gallery.length > 1 ? " — original artwork " + (i + 1) : " — visual detail");
+      image.alt = project.title + (gallery.length > 1 ? " — original artwork " + (i + 1) : " — full composition");
       image.loading = "lazy";
       image.decoding = "async";
       const caption = document.createElement("figcaption");
       caption.textContent = gallery.length > 1
         ? "Artwork " + String(i + 1).padStart(2, "0") + " / " + String(gallery.length).padStart(2, "0")
-        : "Detail view / Original composition";
-      figure.append(image, caption);
+        : "Original artwork / Full composition";
+      figure.append(image,caption);
       gal.append(figure);
     });
   }
   set("case-prev-title", previous.title);
   set("case-next-title", next.title);
-  find("case-prev-link")?.setAttribute("href", "project.html?work=" + encodeURIComponent(previous.slug));
-  find("case-next-link")?.setAttribute("href", "project.html?work=" + encodeURIComponent(next.slug));
+  find("case-prev-link")?.setAttribute("href", projectHref(previous));
+  find("case-next-link")?.setAttribute("href", projectHref(next));
 
+  // The full artwork viewer is a native accessible dialog, not another page load.
   const dialog = document.querySelector(".case-fullscreen");
   const dialogImage = dialog?.querySelector("img");
   const closeButton = dialog?.querySelector("button");
   find("case-zoom")?.addEventListener("click", () => {
-    if (!dialog || !dialogImage || !artwork) return;
+    if (!dialog || !dialogImage || !artwork || typeof dialog.showModal !== "function") return;
     dialogImage.src = artwork.src;
     dialogImage.alt = artwork.alt;
     dialog.showModal();
     closeButton?.focus();
   });
   closeButton?.addEventListener("click", () => dialog?.close());
-  dialog?.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+  dialog?.addEventListener("click", event => {
+    if (event.target === dialog) dialog.close();
+  });
 })();
