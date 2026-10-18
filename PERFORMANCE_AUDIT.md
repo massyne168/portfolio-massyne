@@ -10,8 +10,14 @@ This report is **not** a live Lighthouse/PageSpeed benchmark and does not invent
 - **Git history still retains older commits containing these files.** Removing a folder from HEAD does not scrub them from previous public commits, forks, caches, or clones. As repository owner, assess whether any real sessions/secrets could have been exposed, invalidate affected sessions/tokens if appropriate, and plan a separate coordinated Git history cleanup with collaborators.
 - This is a repository privacy/security improvement; it does **not** claim a measured Core Web Vitals speed increase, though it reduces the working-tree footprint and avoids accidental redeployment of temporary browser profiles.
 
+## October 18 update — 21 works and realistic mockup system
+- Five user-supplied source posters were added in optimized full and 420px WebP renditions. Source previews are cropped to the original poster bounds, removing only the surrounding blurred screenshot background.
+- 21 Curated Works cards now represent 19 completed pieces and two upcoming entries. The independent Gurzil Team case study gives a total of 20 completed case-study pages.
+- The new 20-project mockup showroom offers Studio Mix, Glass Frames and Hoodies/T-shirts; case-study pages show two framed/wearable original-artwork concepts each. The five new works include additional editorial renders clearly marked as concepts.
+- The Signature Opening was replaced with a lightweight 1.88-second typography-focused design. It appears only on first external entry and explicit F5/Reload, not internal navigation. No actual Lighthouse metrics have been measured; preserve this distinction.
+
 ## Delivered optimizations
-- Preserved responsive 3D gallery, Signature Sequence loader, existing 16 Curated Works (14 completed + 2 upcoming), 23 Archive works, and original six MP4s.
+- Preserved responsive 3D gallery, Signature Sequence loader, existing 21 Curated Works (19 completed + 2 upcoming), 23 Archive works, and original six MP4s.
 - Added responsive `srcset` / `sizes` to **nine** featured artwork images with verified existing 480px, 800px, 1200px and 1400px WebP renditions. Small devices should download a correspondingly smaller rendition.
 - All 23 archive images have `loading="lazy"`, `decoding="async"`, and `fetchpriority="low"`. Their paint is eligible for CSS `content-visibility:auto` where supported.
 - Motion-video tiles continue to use `preload="none"`; interactive showreel does not preload six MP4s automatically.
@@ -49,7 +55,7 @@ The source code is wired for Vercel's framework-free Web Analytics script and Sp
 - Run a real **mobile** and **desktop** Lighthouse/PageSpeed report for homepage, `/projects/veiled-sorrow.html` and `/resume.html`.
 - Look at LCP, INP and CLS, then repeat with browser cache disabled.
 - Check 320px, 375px, 768px, 1024px and 1440px widths for layout overflow, contrast, and image sizing.
-- Assess if the **3.45-second intentional intro every F5**, previously requested by the owner, harms engagement; it's intentionally preserved here. It will affect the user's perceived loading experience, even if page resources have finished.
+- Assess if the new **1.88-second entry-only / F5 Signature Opening** affects the first impression (internal project navigation now skips it). It will affect the user's perceived loading experience, even if page resources have finished.
 - Downsize the five >1.4MiB archive source images to practical WebP dimensions and visually verify the replacements before deploying; actual optimized source-file bytes remain future work.
 - The PDF portfolio is still 30.76 MiB; resize/compress and visually inspect separately before changing the download link.
 
@@ -62,4 +68,4 @@ Open `availability.js` and update only the `status` field:
 Commit to `main` after reviewing the factual state. The site cannot infer real-time availability.
 
 ## Mockups disclosure
-New Wall / Editorial / Digital presentation scenes reuse original artwork and are labeled **concept visualizations**. They are not a claim of physical production, client campaigns or fabricated case-study outcomes.
+New Wall Glass / Hoodie / T-shirt product concept scenes reuse original artwork and are labeled **concept visualizations**. They are not a claim of physical production, client campaigns or fabricated case-study outcomes.
