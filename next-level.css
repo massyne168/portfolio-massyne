@@ -30,11 +30,11 @@
 .presentation-card:first-child .presentation-visual{background:radial-gradient(ellipse at 40% 95%,rgba(122,44,58,.27),transparent 57%),linear-gradient(130deg,#302b30 0%,#161519 55%,#30282e 100%)}
 .presentation-card:nth-child(2) .presentation-visual{background:linear-gradient(125deg,#1c1b20,#37343a 50%,#17161a)}
 .presentation-card:nth-child(3) .presentation-visual{background:radial-gradient(ellipse at 45% 80%,rgba(210,44,73,.13),transparent 70%),#16141a}
-.presentation-card figcaption{display:flex;align-items:center;justify-content:space-between;gap:11px;padding:19px 20px 23px;color:#ece7e9}
-.presentation-card figcaption>span{display:flex;flex-direction:column;gap:7px;min-width:0}
-.presentation-card strong{font:500 clamp(1.15rem,1.6vw,1.65rem)/1.12 var(--display);letter-spacing:-.055em}
-.presentation-card small{font:500 .53rem/1.4 var(--mono);letter-spacing:.085em;color:#a99ea4}
-.presentation-card figcaption>i{font:400 1.25rem var(--display);font-style:normal;color:#ed4a65}
+.presentation-card .presentation-caption{display:flex;align-items:center;justify-content:space-between;gap:11px;padding:19px 20px 23px;color:#ece7e9}
+.presentation-card .presentation-caption>span{display:flex;flex-direction:column;gap:7px;min-width:0}
+.presentation-card .presentation-caption strong{font:500 clamp(1.15rem,1.6vw,1.65rem)/1.12 var(--display);letter-spacing:-.055em}
+.presentation-card .presentation-caption small{font:500 .53rem/1.4 var(--mono);letter-spacing:.085em;color:#a99ea4}
+.presentation-card .presentation-caption>i{font:400 1.25rem var(--display);font-style:normal;color:#ed4a65}
 .presentation-footnote{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:22px;color:#918a8f;font:500 .57rem/1.7 var(--mono);letter-spacing:.05em}
 .presentation-footnote span:first-child{max-width:690px}
 
@@ -162,3 +162,6 @@
  .resume-page .eyebrow{color:#b02541}
  .availability-strip,.resume-cta{display:none!important}
 }
+
+/* Paint lower archive cards only when scrolled into view. CSS aspect boxes remain stable. */
+@supports (content-visibility:auto){.archive-item{content-visibility:auto;contain-intrinsic-size:auto 360px}}
