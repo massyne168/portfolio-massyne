@@ -10,10 +10,10 @@ This report is **not** a live Lighthouse/PageSpeed benchmark and does not invent
 - **Git history still retains older commits containing these files.** Removing a folder from HEAD does not scrub them from previous public commits, forks, caches, or clones. As repository owner, assess whether any real sessions/secrets could have been exposed, invalidate affected sessions/tokens if appropriate, and plan a separate coordinated Git history cleanup with collaborators.
 - This is a repository privacy/security improvement; it does **not** claim a measured Core Web Vitals speed increase, though it reduces the working-tree footprint and avoids accidental redeployment of temporary browser profiles.
 
-## October 18 update — 21 works and realistic mockup system
+## October 18 update — 21 works and refined art-object presentation
 - Five user-supplied source posters were added in optimized full and 420px WebP renditions. Source previews are cropped to the original poster bounds, removing only the surrounding blurred screenshot background.
 - 21 Curated Works cards now represent 19 completed pieces and two upcoming entries. The independent Gurzil Team case study gives a total of 20 completed case-study pages.
-- The new 20-project mockup showroom offers Studio Mix, Glass Frames and Hoodies/T-shirts; case-study pages show two framed/wearable original-artwork concepts each. The five new works include additional editorial renders clearly marked as concepts.
+- The 20-project gallery now uses one large original-artwork stage, an always-visible scrollable selection rail, and Gallery Frame / Textile Study / Original Art controls. The fake CSS hoodie illustrations are retired. All 20 case studies keep two honest concept visualizations.
 - The Signature Opening was replaced with a lightweight 1.88-second typography-focused design. It appears only on first external entry and explicit F5/Reload, not internal navigation. No actual Lighthouse metrics have been measured; preserve this distinction.
 
 ## Delivered optimizations
@@ -68,4 +68,9 @@ Open `availability.js` and update only the `status` field:
 Commit to `main` after reviewing the factual state. The site cannot infer real-time availability.
 
 ## Mockups disclosure
-New Wall Glass / Hoodie / T-shirt product concept scenes reuse original artwork and are labeled **concept visualizations**. They are not a claim of physical production, client campaigns or fabricated case-study outcomes.
+The Gallery Frame and Textile Study views reuse original artwork and are labeled **concept visualizations**. They are not a claim of physical production, client campaigns or fabricated case-study outcomes.
+
+## Navigation/logo regression fix
+- Restored explicit compact top-left logo sizing across all pages.
+- Switched loader to first-entry-per-tab / F5-only behavior with session awareness and a 1.12-second progress sequence.
+- These source changes do not constitute a verified mobile Lighthouse score. No new image or video assets were downloaded for the redesigned gallery.

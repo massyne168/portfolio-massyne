@@ -1,108 +1,112 @@
-/* MASSYNE Signature Opening / 2026 V3
-   Intro only on first external entry or explicit browser Reload/F5.
-   Internal navigations, carousel-to-project changes and back/forward stay instant. */
+/* MASSYNE — Signature Introduction / Studio Edition.
+   Display on FIRST ENTRY per tab or explicit browser Reload / F5 only.
+   Do not replay on gallery → case study → next/previous → back to home.
+   Keep this lightweight, accessible, interruptible and reduced-motion safe. */
 (() => {
- "use strict";
- const overlay=document.querySelector(".site-preloader");
- if(!overlay)return;
+  "use strict";
+  const overlay=document.querySelector(".site-preloader");
+  if(!overlay)return;
+  const html=document.documentElement,body=document.body;
+  const motion=window.matchMedia("(prefers-reduced-motion: reduce)");
+  const navType=window.performance.getEntriesByType?.("navigation")?.[0]?.type || "navigate";
+  const storageKey="massyne:studio-intro-seen";
+  const navigationKey="massyne:skip-intro-once";
+  let seen=false,followingInternalLink=false;
+  try {
+    seen=window.sessionStorage.getItem(storageKey)==="yes";
+    followingInternalLink=window.sessionStorage.getItem(navigationKey)==="yes";
+    window.sessionStorage.removeItem(navigationKey);
+  }catch(_){}
+  // Internal navigation must never trigger the overlay, even if the destination
+  // doesn't have the full site's navigational JavaScript.
+  let sameSiteReferrer=false;
+  try {
+    if(document.referrer) sameSiteReferrer=new URL(document.referrer).origin===window.location.origin;
+  }catch(_){}
+  document.addEventListener("click",event=>{
+    const link=event.target?.closest?.("a[href]");
+    if(!link||event.defaultPrevented||(event.button!==0&&event.button!==undefined)||
+        event.ctrlKey||event.metaKey||event.shiftKey||event.altKey||
+        link.target==="_blank"||link.hasAttribute("download"))return;
+    try {
+      const href=new URL(link.href,window.location.href);
+      if(href.origin===window.location.origin){
+        window.sessionStorage.setItem(storageKey,"yes");
+        window.sessionStorage.setItem(navigationKey,"yes");
+      }
+    }catch(_){}
+  },{capture:true,passive:true});
 
- const motion=window.matchMedia("(prefers-reduced-motion: reduce)");
- const nav=window.performance.getEntriesByType?.("navigation")?.[0];
- const navType=nav?.type||"navigate";
- let explicitProjectClick=false;
- try {
-   explicitProjectClick=window.sessionStorage.getItem("massyne:skip-intro-once")==="yes";
-   window.sessionStorage.removeItem("massyne:skip-intro-once");
- } catch(_){}
- let sameSiteReferrer=false;
- try {
-   if(document.referrer) sameSiteReferrer=new URL(document.referrer).origin===window.location.origin;
- }catch(_){}
- // Catch all ordinary in-site link navigation (including gallery and resume).
- // The one-use flag is ignored on F5/Reload and cleared immediately on the next page.
- document.addEventListener("click", event => {
-   const link=event.target?.closest?.("a[href]");
-   if (!link || (event.button !== 0 && event.button !== undefined) ||
-       event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
-       link.target === "_blank" || link.hasAttribute("download")) return;
-   try {
-     const url=new URL(link.href,window.location.href);
-     if (url.origin === window.location.origin) {
-       window.sessionStorage.setItem("massyne:skip-intro-once","yes");
-     }
-   } catch (_) {}
- }, {capture:true,passive:true});
- const internalNavigation=(navType!=="reload")&&(explicitProjectClick||sameSiteReferrer||navType==="back_forward");
- // Internal pages never display a stale overlay restored from the back-forward cache.
- window.addEventListener("pageshow", event => {
-   if(event.persisted){
-     overlay.hidden=true;
-     overlay.setAttribute("aria-hidden","true");
-     document.documentElement.classList.remove("intro-active");
-     document.body.classList.remove("intro-active");
-     document.querySelectorAll("header.site-header,main,footer").forEach(el => { el.inert=false; });
-   }
- });
- if(motion.matches||internalNavigation){
-   overlay.hidden=true;
-   overlay.setAttribute("aria-hidden","true");
-   return;
- }
+  const shouldSkip=motion.matches ||
+    (navType!=="reload"&&(seen||followingInternalLink||sameSiteReferrer||navType==="back_forward"));
+  const blocked=[...document.querySelectorAll("header.site-header,main,footer")];
+  const release=()=>{
+    overlay.hidden=true;
+    overlay.setAttribute("aria-hidden","true");
+    html.classList.remove("intro-active");
+    body.classList.remove("intro-active");
+    blocked.forEach(node=>{node.inert=false});
+  };
+  if(shouldSkip){release();return}
 
- const count=overlay.querySelector(".loader-count");
- const bar=overlay.querySelector(".loader-progress-fill");
- const progress=overlay.querySelector('[role="progressbar"]');
- const status=overlay.querySelector(".intro-status");
- const skip=overlay.querySelector(".loader-skip");
- const initialFocus=document.activeElement;
- const blocked=[...document.querySelectorAll("header.site-header,main,footer")];
- const originalInert=blocked.map(element=>!!element.inert);
- const DURATION=1500;
- const LEAVE=490;
- let raf=0,watchdog=0,done=false,previous=-1;
+  try{window.sessionStorage.setItem(storageKey,"yes")}catch(_){}
+  const count=overlay.querySelector(".loader-count");
+  const bar=overlay.querySelector(".loader-progress-fill");
+  const progress=overlay.querySelector('[role="progressbar"]');
+  const status=overlay.querySelector(".intro-status");
+  const skip=overlay.querySelector(".loader-skip");
+  const previousInert=blocked.map(node=>!!node.inert);
+  const originalFocus=document.activeElement;
+  const duration=1120,fade=350;
+  let raf=0,watchdog=0,exitTimer=0,finished=false,lastNumber=-1;
 
- const setProgress=(value)=>{
-   const bounded=Math.max(0,Math.min(100,Math.floor(value)));
-   if(bounded===previous)return;
-   previous=bounded;
-   if(count)count.textContent=String(bounded).padStart(2,"0");
-   if(bar)bar.style.transform="scaleX("+(bounded/100).toFixed(4)+")";
-   if(progress)progress.setAttribute("aria-valuenow",String(bounded));
-   if(status)status.textContent=bounded===100?"READY / ENTER THE WORK":bounded>=63?"COMPOSING THE EXPERIENCE":bounded>=26?"SELECTING THE VISUALS":"OPENING THE STUDIO";
- };
- const finish=()=>{
-   if(done)return;
-   done=true;
-   window.cancelAnimationFrame(raf);
-   window.clearTimeout(watchdog);
-   setProgress(100);
-   document.documentElement.classList.remove("intro-active");
-   document.body.classList.remove("intro-active");
-   blocked.forEach((node,i)=>{node.inert=originalInert[i];});
-   overlay.classList.add("is-leaving");
-   overlay.setAttribute("aria-hidden","true");
-   if(document.activeElement===skip){
-     if(initialFocus && initialFocus!==document.body && typeof initialFocus.focus==="function") initialFocus.focus({preventScroll:true});
-     else document.querySelector(".site-header .brand-logo")?.focus({preventScroll:true});
-   }
-   window.setTimeout(()=>{overlay.hidden=true;},LEAVE);
- };
- overlay.hidden=false;
- overlay.setAttribute("aria-hidden","false");
- document.documentElement.classList.add("intro-active");
- document.body.classList.add("intro-active");
- blocked.forEach(el=>{el.inert=true});
- setProgress(0);
- skip?.addEventListener("click",finish);
- const start=window.performance.now();
- const tick=now=>{
-   if(done)return;
-   setProgress((now-start)/DURATION*100);
-   if(now-start>=DURATION)finish();
-   else raf=window.requestAnimationFrame(tick);
- };
- raf=window.requestAnimationFrame(tick);
- watchdog=window.setTimeout(finish,DURATION+1200);
- document.addEventListener("visibilitychange",()=>{if(document.hidden)finish()});
- window.addEventListener("pagehide",finish,{once:true});
+  const render=value=>{
+    const percent=Math.max(0,Math.min(100,Math.floor(value)));
+    if(percent===lastNumber)return;
+    lastNumber=percent;
+    if(count)count.textContent=String(percent).padStart(2,"0");
+    if(bar)bar.style.transform="scaleX("+(percent/100).toFixed(4)+")";
+    if(progress)progress.setAttribute("aria-valuenow",String(percent));
+    if(status)status.textContent=percent===100?"READY / ENTER THE WORK":percent>=65?"FINALISING THE DETAILS":percent>=30?"CURATING THE EXPERIENCE":"ESTABLISHING IDENTITY";
+  };
+  const finish=({instant=false}={})=>{
+    if(finished)return;
+    finished=true;
+    window.cancelAnimationFrame(raf);
+    window.clearTimeout(watchdog);
+    render(100);
+    html.classList.remove("intro-active");
+    body.classList.remove("intro-active");
+    blocked.forEach((node,i)=>{node.inert=previousInert[i]});
+    overlay.setAttribute("aria-hidden","true");
+    if(document.activeElement===skip){
+      const target=originalFocus&&originalFocus!==body?originalFocus:document.querySelector(".site-header .brand-logo");
+      target?.focus?.({preventScroll:true});
+    }
+    if(instant){overlay.hidden=true;return}
+    overlay.classList.add("is-leaving");
+    exitTimer=window.setTimeout(()=>{overlay.hidden=true},fade);
+  };
+
+  overlay.hidden=false;
+  overlay.classList.remove("is-leaving");
+  overlay.setAttribute("aria-hidden","false");
+  html.classList.add("intro-active");
+  body.classList.add("intro-active");
+  blocked.forEach(node=>{node.inert=true});
+  render(0);
+  skip?.addEventListener("click",()=>finish());
+  overlay.addEventListener("keydown",event=>{if(event.key==="Escape")finish()});
+  const start=window.performance.now();
+  const tick=now=>{
+    if(finished)return;
+    render((now-start)/duration*100);
+    if(now-start>=duration)finish();
+    else raf=window.requestAnimationFrame(tick);
+  };
+  raf=window.requestAnimationFrame(tick);
+  watchdog=window.setTimeout(()=>finish(),duration+1000);
+  document.addEventListener("visibilitychange",()=>{if(document.hidden)finish({instant:true})});
+  window.addEventListener("pagehide",()=>finish({instant:true}),{once:true});
+  window.addEventListener("pageshow",event=>{if(event.persisted)finish({instant:true})});
 })();

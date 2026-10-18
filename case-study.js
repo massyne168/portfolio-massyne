@@ -69,9 +69,6 @@
     artwork.src = project.image;
     artwork.alt = project.title + " — original artwork by MASSYNE";
   }
-  const shirtSlugs = new Set(["envy","nocturne-dark-veil","power-speaks","legends","silver-throne","mssn-chrome","gurzil-team"]);
-  const garment = document.querySelector(".real-scene--wear");
-  if (garment) garment.dataset.garment = shirtSlugs.has(project.slug) ? "tee" : "hoodie";
   document.querySelectorAll("[data-mockup-art]").forEach(image => {
     image.src = project.image;
     image.alt = ""; // Decorative presentation of the already captioned original artwork.
