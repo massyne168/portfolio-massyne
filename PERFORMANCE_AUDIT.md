@@ -3,6 +3,13 @@ Audited: 2026-10-18 · Repository: massyne168/portfolio-massyne
 Scope: static source, media sizes, progressive enhancements, and instrumentation.
 This report is **not** a live Lighthouse/PageSpeed benchmark and does not invent visitor counts.
 
+## Repository privacy and deployment hygiene — verified 2026-10-18
+
+- The **public GitHub repository** accidentally contained a committed `.codex-tmp/` folder with ~1,400 automated Chromium test/runtime files. Some files had browser-profile names such as `Cookies`, `Login Data`, and `History`. **No credential content was inspected or reproduced in this audit.**
+- This maintenance change removes **only that temporary directory from the current tracked tree** and adds `.gitignore` rules to discourage it from being committed again. All original artwork, 3D, site content, PDFs, JS/CSS, projects and design ZIPs stay in the repository.
+- **Git history still retains older commits containing these files.** Removing a folder from HEAD does not scrub them from previous public commits, forks, caches, or clones. As repository owner, assess whether any real sessions/secrets could have been exposed, invalidate affected sessions/tokens if appropriate, and plan a separate coordinated Git history cleanup with collaborators.
+- This is a repository privacy/security improvement; it does **not** claim a measured Core Web Vitals speed increase, though it reduces the working-tree footprint and avoids accidental redeployment of temporary browser profiles.
+
 ## Delivered optimizations
 - Preserved responsive 3D gallery, Signature Sequence loader, existing 16 Curated Works (14 completed + 2 upcoming), 23 Archive works, and original six MP4s.
 - Added responsive `srcset` / `sizes` to **nine** featured artwork images with verified existing 480px, 800px, 1200px and 1400px WebP renditions. Small devices should download a correspondingly smaller rendition.
