@@ -29,7 +29,7 @@
     if(title)title.textContent=name;
     if(category)category.textContent=genre;
     if(year)year.textContent=(meta?.year||btn.dataset.year||"2026")+" / ARTWORK";
-    if(desc)desc.textContent=meta?.summary||"An original visual design by MASSYNE.";
+    if(desc)desc.textContent=meta?.summary||btn.dataset.summary||"An original visual design by MASSYNE.";
     if(count)count.textContent=String(selected+1).padStart(2,"0")+" / "+items.length;
     if(link){
       link.href="projects/"+encodeURIComponent(slug)+".html";
