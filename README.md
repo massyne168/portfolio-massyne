@@ -17,7 +17,7 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 ### Branding & introduction
 
 - The **compact** upper-left header branding on the home and project pages uses the original white MASSYNE logo from `images/optimized/logo-1016.webp`, with a lighter mobile variant at `images/optimized/logo-480.webp`.
-- `signature-intro-v3.css` and `brand-loader.js` now run the new MASSYNE Signature Opening: expressive typography, editorial red accents, a minimal progress line, Skip Intro and a 1.12-second progress and 0.35-second exit. It runs only on first tab entry or an explicit F5/Refresh; navigation between portfolio projects skips it. Reduced-motion bypass remains. Previous loader CSS remains archived but is not used.
+- `signature-intro-v3.css` and `brand-loader.js` now run the new MASSYNE Signature Opening: expressive typography, editorial red accents, a minimal progress line, Skip Intro and a 1.12-second progress and 0.35-second exit. It runs only on first tab entry or an explicit F5/Refresh; navigation between portfolio projects skips it. Reduced-motion bypass remains. Previous unused loader CSS remains archived but is not used.
 - **Skip intro** works every time. People using reduced-motion preferences do not see the delayed intro.
 - The loader is hidden without JavaScript rather than trapping visitors on a non-functional splash screen.
 
