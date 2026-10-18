@@ -75,6 +75,8 @@
 .brief-copy{border:1px solid rgba(255,255,255,.2);background:transparent;color:#f2edef}
 .brief-note{max-width:520px;color:#a99ba1;font:400 .77rem/1.65 var(--body);margin:17px 0 0}
 .brief-feedback{min-height:21px;color:#f899a8;font:500 .65rem/1.6 var(--mono);margin:9px 0 0}
+.brief-output{display:block;width:100%;min-height:175px;margin-top:13px;padding:14px;background:#20161e;color:#f1e6ea;border:1px solid #ed4763;font:400 .78rem/1.6 var(--mono);resize:vertical}
+.brief-output[hidden]{display:none!important}
 
 /* SHOWREEL — real six existing MP4 clips, intentionally user-initiated */
 .studio-showreel{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);min-height:clamp(350px,40vw,560px);margin:0 0 clamp(43px,6vw,80px);background:#111015;border:1px solid rgba(255,255,255,.12)}
