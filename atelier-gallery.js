@@ -18,6 +18,7 @@
   const projectBySlug=new Map(projects.map(item=>[item.slug,item]));
   let selected=0;
   let mode="frame";
+  let hasRendered=false;
   const choose=(index,{moveFocus=false}={})=>{
     if(!items.length)return;
     selected=(index+items.length)%items.length;
@@ -46,7 +47,11 @@
       item.setAttribute("aria-pressed",String(active));
     });
     if(moveFocus)btn.focus({preventScroll:true});
-    btn.scrollIntoView?.({block:"nearest",inline:"nearest",behavior:"auto"});
+    // Do not auto-scroll the visitor to the gallery on initial page load.
+    // Scroll the thumbnail rail only after a deliberate user selection.
+    if(hasRendered) btn.scrollIntoView?.({block:"nearest",inline:"nearest",behavior:"auto"});
+    hasRendered=true;
+    stage.setAttribute("aria-label","Large glass frame displaying "+name+" — original artwork");
   };
   const switchMode=(next)=>{
     if(!["frame","textile","original"].includes(next))return;
@@ -54,7 +59,7 @@
     stage.dataset.mode=next;
     modes.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.atelierMode===next)));
     const selectedButton=modes.find(button=>button.dataset.atelierMode===next);
-    stage.setAttribute("aria-label","Artwork presentation — "+(selectedButton?.textContent?.trim()||next));
+    // Artwork-specific accessible label is set by choose().
   };
   items.forEach((button,i)=>button.addEventListener("click",()=>choose(i)));
   rail.addEventListener("keydown",event=>{
