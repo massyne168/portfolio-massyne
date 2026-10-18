@@ -52,10 +52,17 @@
       await navigator.clipboard.writeText(text);
       note("Brief copied. Paste it into an email to " + recipient + ".");
     } catch (_) {
-      // A read-only selectable fallback still works on insecure contexts or denied permissions.
-      const field = document.getElementById("brief-message");
-      field?.focus();
-      note("Automatic copy was blocked. Use the email button, or copy the text from your fields.");
+      // Manual copy fallback: show the complete composed brief, preselect it for Ctrl+C.
+      const output = document.getElementById("brief-output");
+      if (output) {
+        output.hidden = false;
+        output.value = text;
+        output.focus();
+        output.select();
+        note("Clipboard permission unavailable. Press Ctrl+C (or Copy on mobile) to copy the selected brief.");
+      } else {
+        note("Clipboard unavailable. Use the email button instead.");
+      }
     }
   });
 
