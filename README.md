@@ -8,7 +8,7 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 
 ### Main pages
 
-- `index.html` — portrait-led Cinematic Hero 2.0, Curated Works, Gurzil Team, **Services**, **30-second original motion reel**, existing six Motion videos, Archive, About / Designer Identity and **Contact / Project Brief**.
+- `index.html` — portrait-led Cinematic Hero 2.0, Curated Works, Gurzil Team, **Services**, **premium conceptual mockups**, six Motion videos and interactive reel, Archive, About/CV, availability and Contact/Project Brief.
 - `projects/<slug>.html` — **15 unique, static, pre-rendered and indexable project pages**, with artwork, concept, visual direction, authentic crops, 3 design observations, original gallery and previous/next navigation.
 - `project.html?work=<slug>` — a backwards-compatible dynamic template (marked `noindex` to prevent duplicate search results).
 - `project-data.js` — the definitive collection of 15 completed case study entries, each with unique editorial descriptions/visual notes; 14 completed featured projects and Gurzil Team. The two Coming Soon concepts do not have fake case studies.
@@ -41,6 +41,15 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 ## Updating case studies
 
 Edit `project-data.js` first; the script populates the legacy template and the 15 pre-rendered HTML snapshots. When you change a project title, summary, images or design notes, **regenerate the matching `projects/<slug>.html` snapshot** so SEO HTML stays in sync. Current snapshots are deliberately static rather than relying on browser-only rendering.
+
+## Next-Level portfolio presentation — October 18, 2026
+
+- **Real-artwork premium mockups:** `index.html#presentation` has a poster-wall, editorial cover and digital-branding conceptual scene. The 15 case-study pages (and legacy dynamic template) now have two tailored presentation scenes rendered from their existing original images. No fake client outcome, no generated asset, no claim of actually printed products.
+- **Creative interactions:** `next-level.css` / `next-level.js` add small (≤5px), reduced-motion-aware pointer reactions on selected CTAs, plus optional IntersectionObserver section reveals; never override the 3D carousel or the Signature Sequence intro.
+- **Professional resume:** `resume.html` is a readable accessible CV plus **Print / Save as PDF**; `assets/MASSYNE-Resume.pdf` is a **5,914-byte 1-page PDF** with real portfolio links and existing contact details. No unknown degrees, employment years or languages are invented. Download links are in the About section.
+- **Availability:** `availability.js` is the one-file status control: `inquiries`, `open`, `limited`, or `closed`. Defaults to neutral **OPEN FOR CREATIVE INQUIRIES**; do not mark the designer as booked or available without confirmation. Status appears in Hero and Contact.
+- **Privacy-aware analytics:** `portfolio-analytics.js` progressively injects Vercel Web Analytics and Speed Insights in Vercel production only, and optionally sends generic project/CV/contact/showreel category events (no email, form text or visitor identifiers). **Dashboard activation remains required** to see metrics. Custom events may require a paid Vercel plan.
+- **Performance changes:** 9 Curated Work cards now use existing responsive WebP sources, all 23 Archive images decode asynchronously with low fetch priority, and the new mockup assets use lazy loading. Original files/media retained. See [PERFORMANCE_AUDIT.md](PERFORMANCE_AUDIT.md) for verified media sizes and remaining manual work.
 
 ## Content preservation
 

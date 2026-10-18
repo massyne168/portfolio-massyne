@@ -40,7 +40,7 @@
     set("case-summary", "This project isn't in the current portfolio collection.");
     set("case-category", "Portfolio / Not found");
     document.title = "Project not found — MASSYNE";
-    [".case-hero-visual",".case-details",".case-story",".case-design",".case-visuals",".case-next"]
+    [".case-hero-visual",".case-details",".case-story",".case-design",".case-mockup",".case-visuals",".case-next"]
       .forEach(selector => document.querySelector(selector)?.remove());
     return;
   }
@@ -69,6 +69,10 @@
     artwork.src = project.image;
     artwork.alt = project.title + " — original artwork by MASSYNE";
   }
+  document.querySelectorAll("[data-mockup-art]").forEach(image => {
+    image.src = project.image;
+    image.alt = ""; // Decorative presentation of the already captioned original artwork.
+  });
   const cropped = find("case-detail-art");
   if (cropped) {
     cropped.src = project.image;
