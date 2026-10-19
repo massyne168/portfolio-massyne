@@ -1,0 +1,4 @@
+/* Lightweight navigation between artwork pages. */
+@media(prefers-reduced-motion:no-preference){
+ html.project-is-leaving main{opacity:.15;transform:translateY(7px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}
+}
