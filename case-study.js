@@ -1,6 +1,27 @@
 /* MASSYNE — semantic case study pages + source-grounded project data. */
 (() => {
   "use strict";
+  /* Lightweight exits to next/previous artwork or back to gallery. */
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let leaving = false;
+    document.addEventListener("click", event => {
+      const link = event.target.closest?.("a[href]");
+      if (!link || event.defaultPrevented || event.button !== 0 ||
+          event.ctrlKey || event.metaKey || event.shiftKey || event.altKey ||
+          link.target === "_blank" || link.hasAttribute("download") || leaving) return;
+      const url = new URL(link.href, window.location.href);
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      const project = /^\\/projects\\/[^/]+\\.html$/.test(url.pathname);
+      if (!project && !(url.pathname === "/" && url.hash === "#work")) return;
+      event.preventDefault();
+      leaving = true;
+      document.documentElement.classList.add("project-is-leaving");
+      window.setTimeout(() => window.location.assign(url.href), 180);
+    }, true);
+    window.addEventListener("pageshow", event => {
+      if (event.persisted) { leaving = false; document.documentElement.classList.remove("project-is-leaving"); }
+    });
+  }
   const collection = Array.isArray(window.MASSYNE_PROJECTS) ? window.MASSYNE_PROJECTS : [];
   const params = new URLSearchParams(window.location.search);
   const slugFromPath = window.location.pathname.match(/\/projects\/([a-z0-9-]+)\.html$/)?.[1];
