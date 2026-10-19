@@ -72,3 +72,18 @@ html.intro-active,body.intro-active{overflow:hidden!important;scroll-behavior:au
 @media(prefers-reduced-motion:reduce){
  .loader-curved-gallery .loader-curve-card{animation:none!important;opacity:.55!important;transform:none!important}
 }
+
+/* 43-work gallery: 20 curated + 23 archive artworks. Compact, staggered, legible. */
+.site-preloader .loader-curved-gallery{
+ grid-template-columns:repeat(9,minmax(0,1fr));
+ grid-template-rows:repeat(5,minmax(0,1fr));
+ gap:clamp(4px,.55vw,9px);
+}
+.loader-curved-gallery .loader-curve-card{animation-delay:calc(.08s + var(--card-index) * .032s)}
+@media(max-width:720px){
+ .site-preloader .loader-curved-gallery{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  grid-template-rows:repeat(9,minmax(0,1fr));
+  gap:4px;
+ }
+}
