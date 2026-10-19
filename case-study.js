@@ -79,6 +79,38 @@
     cropped.alt = "Closer crop from " + project.title + ", original artwork";
   }
 
+  // Editorial in-context presentation of the supplied artwork, not a fabricated product photograph.
+  const storySection = document.querySelector(".case-story");
+  if (storySection && project.image && !document.querySelector(".case-presentation")) {
+    const section = document.createElement("section");
+    section.className = "case-presentation";
+    section.setAttribute("aria-label", "Artwork presentation");
+    const heading = document.createElement("div");
+    heading.className = "case-presentation-heading";
+    const kicker = document.createElement("span");
+    kicker.textContent = "ARTWORK / PRESENTATION";
+    const title = document.createElement("h2");
+    title.textContent = "Made to be seen.";
+    const note = document.createElement("p");
+    note.textContent = "A gallery-wall visualization of the original artwork.";
+    heading.append(kicker, title, note);
+    const scene = document.createElement("figure");
+    scene.className = "case-presentation-scene";
+    const frame = document.createElement("div");
+    frame.className = "case-presentation-frame";
+    const image = document.createElement("img");
+    image.src = project.image;
+    image.alt = project.title + " — original artwork presented in a digital gallery frame";
+    image.loading = "lazy";
+    image.decoding = "async";
+    frame.append(image);
+    const caption = document.createElement("figcaption");
+    caption.textContent = "DIGITAL PRESENTATION / ORIGINAL ARTWORK";
+    scene.append(frame, caption);
+    section.append(heading, scene);
+    storySection.before(section);
+  }
+
   const insights = find("case-insights");
   if (insights) {
     insights.replaceChildren();
