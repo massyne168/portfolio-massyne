@@ -355,3 +355,28 @@
 @media(prefers-reduced-motion:reduce){
   .project-grid .carousel-edge-light rect{animation:none!important}
 }
+
+/* Gallery view isolation: the 3D SVG tracer must never consume layout space in Grid/Index. */
+.project-grid:not([data-view="3d"]) > .project .carousel-edge-light{display:none!important}
+.project-grid[data-view="grid"]{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:start}
+.project-grid[data-view="grid"] > .project{position:relative;min-width:0;max-width:100%;height:auto;transform:none;opacity:1;visibility:visible}
+.project-grid[data-view="grid"] > .project img{display:block;max-width:100%;aspect-ratio:14/11;object-fit:contain}
+.project-grid[data-view="index"]{display:block;width:100%;height:auto;perspective:none}
+.project-grid[data-view="index"] > .project{
+ position:relative;display:grid;grid-template-columns:minmax(115px,22%) minmax(0,1fr);
+ align-items:center;gap:clamp(16px,3vw,44px);width:100%;max-width:100%;
+ height:auto;transform:none;opacity:1;visibility:visible;min-width:0;
+}
+.project-grid[data-view="index"] > .project > img{
+ display:block;width:100%;max-width:100%;max-height:220px;
+ aspect-ratio:14/11;object-fit:contain;
+}
+.project-grid[data-view="index"] > .project > div{min-width:0}
+.project-grid[data-view="index"] > .project h3{overflow-wrap:anywhere}
+@media(max-width:600px){
+ .project-grid[data-view="grid"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+ .project-grid[data-view="grid"] > .project:nth-child(n){grid-column:span 1;min-width:0}
+ .project-grid[data-view="index"] > .project{grid-template-columns:minmax(90px,32%) minmax(0,1fr);gap:13px}
+ .project-grid[data-view="index"] > .project > img{max-height:155px}
+}
+@media(max-width:380px){.project-grid[data-view="grid"]{grid-template-columns:1fr}}
