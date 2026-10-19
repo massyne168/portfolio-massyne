@@ -189,3 +189,46 @@
  .atelier-set,.atelier-view-project,.atelier-switch button,.atelier-thumb{transition:none!important}
  .atelier-thumb:hover{transform:none}
 }
+
+
+/* Premium editorial ribbon — refined hero-to-work divider */
+.ticker{
+  position:relative;
+  isolation:isolate;
+  display:flex;
+  align-items:center;
+  min-height:47px;
+  overflow:hidden;
+  padding:13px 0;
+  border-block:0;
+  background:linear-gradient(90deg,#09090c 0%,#141015 50%,#09090c 100%);
+  color:#c8bcc1;
+  font-size:.6rem;
+  letter-spacing:.19em;
+}
+.ticker::before,.ticker::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  left:clamp(18px,4.3vw,72px);
+  right:clamp(18px,4.3vw,72px);
+  height:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(207,54,79,.18) 15%,rgba(241,103,123,.65) 50%,rgba(207,54,79,.18) 85%,transparent);
+}
+.ticker::before{top:0}
+.ticker::after{bottom:0;opacity:.55}
+.ticker span{
+  position:relative;
+  z-index:1;
+  padding-inline:24px;
+  text-shadow:0 0 14px rgba(206,52,78,.10);
+  will-change:transform;
+}
+@media (prefers-reduced-motion:reduce){
+  .ticker span{animation:none!important;will-change:auto}
+}
+@media (max-width:600px){
+  .ticker{min-height:40px;padding-block:10px;font-size:.55rem;letter-spacing:.14em}
+  .ticker span{padding-inline:15px}
+}
