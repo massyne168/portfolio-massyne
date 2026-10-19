@@ -259,44 +259,36 @@
   .ticker .ticker-track{animation:none!important;will-change:auto}
 }
 
-/* Orbiting crimson edge light on the actual 3D artwork cards. */
-@property --card-light-angle {
-  syntax:"<angle>";
-  inherits:false;
-  initial-value:0deg;
-}
-.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n)::before{
-  content:"";
+/* SVG perimeter light: reliable on transformed 3D artwork cards. */
+.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n)::before{display:none}
+.project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light{
   display:block;
   position:absolute;
   inset:-1px;
-  width:auto;
-  height:auto;
-  aspect-ratio:auto;
-  z-index:5;
-  border:2px solid transparent;
-  border-radius:inherit;
+  width:calc(100% + 2px);
+  height:calc(100% + 2px);
+  z-index:6;
+  overflow:visible;
   pointer-events:none;
-  opacity:.55;
-  background:conic-gradient(from var(--card-light-angle),
-    transparent 0deg,transparent 235deg,
-    rgba(247,66,97,.18) 275deg,
-    #ffb2c0 310deg,#ec284c 332deg,transparent 359deg) border-box;
-  -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;
-  mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
-  mask-composite:exclude;
-  transform:none;
-  transition:opacity .3s ease;
-  animation:card-crimson-orbit 4.8s linear infinite;
+  opacity:.65;
+  filter:drop-shadow(0 0 3px rgba(255,50,88,.7));
 }
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active::before{
+.project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light rect{
+  fill:none;
+  stroke:#ff486b;
+  stroke-width:1.8;
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:round;
+  stroke-dasharray:14 86;
+  stroke-dashoffset:0;
+  animation:carousel-edge-trace 5s linear infinite;
+  animation-delay:var(--edge-delay,0s);
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active .carousel-edge-light{
   opacity:1;
-  filter:drop-shadow(0 0 5px rgba(235,45,78,.6));
+  filter:drop-shadow(0 0 5px rgba(255,58,96,.9));
 }
-@keyframes card-crimson-orbit{to{--card-light-angle:360deg}}
+@keyframes carousel-edge-trace{to{stroke-dashoffset:-100}}
 @media (prefers-reduced-motion:reduce){
-  .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n)::before{
-    animation:none;opacity:.5;transition:none;
-  }
+  .project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light rect{animation:none;stroke-dasharray:100 0;opacity:.5}
 }
