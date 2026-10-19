@@ -1,4 +1,4 @@
-/* MASSYNE — Signature Introduction / Studio Edition.
+/* MASSYNE — Signature Fade v5 / Clean Studio Entrance.
    Display on FIRST ENTRY per tab or explicit browser Reload / F5 only.
    Do not replay on gallery → case study → next/previous → back to home.
    Keep this lightweight, accessible, interruptible and reduced-motion safe. */
@@ -37,8 +37,13 @@
     }catch(_){}
   },{capture:true,passive:true});
 
+  // Never interrupt ordinary case-study navigation, even if session storage
+  // or referrer metadata is unavailable. Explicit F5 still replays the intro.
+  const onProjectPage=body.classList.contains("case-study-page") ||
+    !!document.getElementById("case-content") ||
+    /^\/projects\//.test(window.location.pathname);
   const shouldSkip=motion.matches ||
-    (navType!=="reload"&&(seen||followingInternalLink||sameSiteReferrer||navType==="back_forward"));
+    (navType!=="reload"&&(onProjectPage||seen||followingInternalLink||sameSiteReferrer||navType==="back_forward"));
   const blocked=[...document.querySelectorAll("header.site-header,main,footer")];
   const release=()=>{
     overlay.hidden=true;
@@ -57,7 +62,7 @@
   const skip=overlay.querySelector(".loader-skip");
   const previousInert=blocked.map(node=>!!node.inert);
   const originalFocus=document.activeElement;
-  const duration=1120,fade=350;
+  const duration=920,fade=340;
   let raf=0,watchdog=0,exitTimer=0,finished=false,lastNumber=-1;
 
   const render=value=>{
@@ -67,7 +72,7 @@
     if(count)count.textContent=String(percent).padStart(2,"0");
     if(bar)bar.style.transform="scaleX("+(percent/100).toFixed(4)+")";
     if(progress)progress.setAttribute("aria-valuenow",String(percent));
-    if(status)status.textContent=percent===100?"READY / ENTER THE WORK":percent>=65?"FINALISING THE DETAILS":percent>=30?"CURATING THE EXPERIENCE":"ESTABLISHING IDENTITY";
+    if(status)status.textContent=percent===100?"WELCOME TO MASSYNE":"OPENING PORTFOLIO";
   };
   const finish=({instant=false}={})=>{
     if(finished)return;
