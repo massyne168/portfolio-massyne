@@ -146,3 +146,5 @@ body.case-study-page{background:#09090c;color:#f1efeb}
  .case-presentation-frame{padding:8px}
  .case-presentation-heading h2{font-size:clamp(2rem,10vw,3.4rem)}
 }
+
+@media(prefers-reduced-motion:no-preference){html.project-is-leaving main{opacity:.15;transform:translateY(7px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}}
