@@ -1,7 +1,7 @@
 /* MASSYNE visible desktop creative cursor — no drag interception. */
 (() => {
  "use strict";
- const fine=matchMedia("(any-pointer: fine)");
+ const fine=matchMedia("(hover: hover) and (pointer: fine)");
  const reduced=matchMedia("(prefers-reduced-motion: reduce)");
  if(!fine.matches||reduced.matches)return;
  const cursor=document.createElement("div");
@@ -17,7 +17,7 @@
    if(!raf)raf=requestAnimationFrame(paint);
    cursor.classList.toggle("is-visible",!document.documentElement.classList.contains("intro-active"));
    const card=event.target.closest?.(".project.image-open, .archive-item.image-open");
-   const dragging=Boolean(event.buttons||document.querySelector(".is-dragging"));
+   const dragging=Boolean(event.buttons||document.querySelector(".project-grid.is-dragging"));
    cursor.classList.toggle("is-project",Boolean(card&&!dragging));
  },{passive:true});
  document.addEventListener("pointerdown",()=>cursor.classList.remove("is-project"),{passive:true});
