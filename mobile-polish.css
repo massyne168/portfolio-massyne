@@ -1,0 +1,40 @@
+/* MASSYNE Mobile Polish — responsive safety layer, no layout redesign. */
+@media(max-width:768px){
+ html,body{max-width:100%;overflow-x:clip}
+ main,main>section,header,footer{min-width:0;max-width:100%}
+ :is(.section,.container,.project-grid,.archive-grid,.project-brief,.contact-v2-bottom,.case-story-grid,.case-presentation-scene){min-width:0}
+ :is(h1,h2,h3,p,.case-story,.case-description,.contact-v2 .email){overflow-wrap:break-word}
+ img,video,canvas,iframe{max-width:100%}
+ .project-grid[data-view="grid"] > .project,
+ .project-grid[data-view="index"] > .project{min-width:0}
+ .project-grid[data-view="grid"] > .project > img{width:100%;object-fit:contain}
+ .project-grid[data-view="index"] > .project h3{overflow-wrap:anywhere}
+ .archive-grid > .archive-item{min-width:0}
+ .archive-grid > .archive-item img{max-width:100%}
+ .brief-field :is(input,select,textarea){width:100%;min-width:0;box-sizing:border-box;font-size:16px}
+ .brief-actions > button{min-height:48px;white-space:normal;text-align:center}
+ .contact-v2 .contact-links{flex-wrap:wrap}
+ .case-presentation-frame{max-width:100%;min-width:0}
+ .case-presentation-frame img{width:auto;max-width:100%;height:auto}
+ .signature-intro{min-width:0}
+ .site-preloader .signature-intro-title{font-size:clamp(2.55rem,12vw,6rem)}
+ .site-preloader .signature-intro-head>span{max-width:47%;overflow-wrap:anywhere}
+ .carousel-actions button,.carousel-controls button{touch-action:manipulation}
+}
+@media(max-width:390px){
+ .project-grid[data-view="grid"]{grid-template-columns:minmax(0,1fr)}
+ .project-grid[data-view="grid"] > .project:nth-child(n){grid-column:1/-1}
+ .project-grid[data-view="index"] > .project{grid-template-columns:minmax(78px,31%) minmax(0,1fr);gap:10px}
+ .project-grid[data-view="index"] > .project > img{max-height:130px}
+ .site-preloader .signature-intro{padding-inline:24px}
+ .site-preloader .signature-intro-title{font-size:clamp(2.3rem,11.6vw,4rem)}
+ .site-preloader .signature-intro-head>span{font-size:.47rem}
+ .case-presentation-scene{padding-inline:12px}
+}
+@media(hover:none),(pointer:coarse){
+ .creative-cursor{display:none!important}
+ .project-grid > .project,.archive-item{-webkit-tap-highlight-color:rgba(235,62,89,.18)}
+}
+@media(prefers-reduced-motion:reduce){
+ .loader-curved-gallery .loader-curve-card{animation:none!important;transition:none!important}
+}
