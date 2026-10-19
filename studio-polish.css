@@ -232,3 +232,29 @@
   .ticker{min-height:40px;padding-block:10px;font-size:.55rem;letter-spacing:.14em}
   .ticker span{padding-inline:15px}
 }
+
+/* Seamless, two-copy marquee: each identical half meets without a blank interval. */
+.ticker .ticker-track{
+  display:flex;
+  flex:0 0 auto;
+  width:max-content;
+  align-items:center;
+  animation:premium-ticker-flow 55s linear infinite;
+  will-change:transform;
+}
+.ticker .ticker-copy{
+  display:block;
+  flex:0 0 auto;
+  width:max-content;
+  padding:0;
+  white-space:nowrap;
+  animation:none;
+  will-change:auto;
+}
+@keyframes premium-ticker-flow{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+@media (prefers-reduced-motion:reduce){
+  .ticker .ticker-track{animation:none!important;will-change:auto}
+}
