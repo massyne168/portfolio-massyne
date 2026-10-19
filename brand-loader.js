@@ -62,7 +62,7 @@
   const skip=overlay.querySelector(".loader-skip");
   const previousInert=blocked.map(node=>!!node.inert);
   const originalFocus=document.activeElement;
-  const duration=920,fade=340;
+  const duration=4000,fade=340;
   let raf=0,watchdog=0,exitTimer=0,finished=false,lastNumber=-1;
 
   const render=value=>{
