@@ -43,14 +43,51 @@
     const opened = window.open(target, "_blank", "noopener,noreferrer");
     if (!opened) window.location.href = target;
   });
-  document.getElementById("email-brief")?.addEventListener("click", () => {
+  const emailButton = document.getElementById("email-brief");
+  emailButton?.addEventListener("click", async () => {
     const brief = buildBrief();
-    if (!brief) return;
-    const target = "mailto:" + recipient +
-      "?subject=" + encodeURIComponent(brief.subject) +
-      "&body=" + encodeURIComponent(brief.body);
-    note("Opening your email app with the completed brief. Review and press Send there.");
-    window.location.href = target;
+    if (!brief || emailButton.disabled) return;
+    emailButton.disabled = true;
+    emailButton.setAttribute("aria-busy", "true");
+    note("Submitting your project brief securely…");
+    try {
+      const fields = new FormData(form);
+      const read = key => String(fields.get(key) || "").trim();
+      const payload = {
+        _subject: brief.subject,
+        _template: "table",
+        _honey: read("_honey"),
+        _replyto: read("email"),
+        name: read("name"),
+        email: read("email"),
+        project_type: read("type"),
+        estimated_budget: read("budget"),
+        timeline: read("timeline"),
+        reference: read("reference"),
+        message: read("message")
+      };
+      const response = await fetch("https://formsubmit.co/ajax/" + recipient, {
+        method: "POST",
+        headers: {"Content-Type": "application/json", "Accept": "application/json"},
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+      const accepted = response.ok && (result.success === true || result.success === "true");
+      if (!accepted) {
+        const activation = /activat|confirm/i.test(String(result.message || ""));
+        note(activation
+          ? "Email delivery is awaiting one-time inbox activation by MASSYNE. Please use WhatsApp for now."
+          : "Email delivery could not be confirmed. Please try WhatsApp or copy your brief.");
+        return;
+      }
+      note("Your project brief was accepted for email delivery. Thank you!");
+      form.reset();
+    } catch (_) {
+      note("Could not connect to the email service. Please use WhatsApp or copy your brief.");
+    } finally {
+      emailButton.disabled = false;
+      emailButton.removeAttribute("aria-busy");
+    }
   });
   copyButton?.addEventListener("click", async () => {
     const brief = buildBrief();
