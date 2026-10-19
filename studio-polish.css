@@ -293,6 +293,34 @@
   .project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light rect{animation:none;stroke-dasharray:100 0;opacity:.5}
 }
 
+/* Metallic silver / crimson dual-trace lighting on 3D cards. */
+.project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light{
+  opacity:.52;
+  filter:drop-shadow(0 0 3px rgba(201,42,73,.38));
+}
+.project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light rect{
+  stroke:#e5e2e5;
+  stroke-width:2;
+  stroke-dasharray:9 91;
+  filter:drop-shadow(0 0 2px rgba(235,231,237,.6));
+}
+.project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light::after{content:none}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active .carousel-edge-light{
+  opacity:1;
+  filter:drop-shadow(0 0 4px rgba(224,220,228,.68)) drop-shadow(0 0 9px rgba(215,39,72,.45));
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active{
+  box-shadow:0 32px 80px rgba(0,0,0,.66),0 0 0 1px rgba(212,207,215,.26),0 0 24px rgba(175,30,57,.16);
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near:not(.is-carousel-active) .carousel-edge-light{
+  opacity:.64;
+}
+@media(prefers-reduced-motion:reduce){
+  .project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light rect{
+    animation:none;stroke-dasharray:100 0;
+  }
+}
+
 /* Unified card image viewport — 1400 x 1100 (14:11), no cropping. */
 .project-grid[data-view="grid"] > .project img,
 .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n) img{
