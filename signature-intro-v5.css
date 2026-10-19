@@ -33,37 +33,45 @@ html.intro-active,body.intro-active{overflow:hidden!important;scroll-behavior:au
 @media(max-height:520px){.signature-intro{padding-block:22px}.signature-intro-main{padding:5px 0}.signature-intro-overline{margin-bottom:10px}.signature-intro-title{font-size:clamp(2.6rem,11vh,5rem)}.signature-intro-tagline{margin-top:10px}}
 @media(prefers-reduced-motion:reduce){.site-preloader,.signature-intro *{animation:none!important;transition:none!important}.signature-intro-title{clip-path:none!important}.signature-intro-overline,.signature-intro-tagline{opacity:1!important;transform:none!important}.signature-intro-main::before{display:none}}
 
-/* Curated artwork mosaic behind the cinematic title: no live blur, no canvas. */
-.loader-artwall{
- position:absolute;inset:-6% -4%;z-index:0;display:grid;
- grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));
- gap:clamp(5px,.8vw,14px);pointer-events:none;overflow:hidden;
- opacity:.48;transform:scale(1.055);
- animation:loader-artwall-drift 5s linear both;
+/* Cinematic curved film-strip: nine optimized artworks, static shadows, transform-only motion. */
+.site-preloader .loader-curved-gallery{
+ position:absolute;inset:auto -4% 12%;height:clamp(175px,32vh,340px);z-index:1;
+ display:flex;align-items:center;justify-content:center;gap:clamp(8px,1vw,16px);
+ overflow:visible;opacity:1;pointer-events:none;transform:none;animation:none;
+ perspective:1100px;
 }
-.loader-artwall img{
- display:block;width:100%;height:100%;min-width:0;min-height:0;
- object-fit:cover;object-position:center;
- opacity:.8;filter:grayscale(.27) brightness(.65);
+.site-preloader .loader-curved-gallery::after{content:none}
+.loader-curved-gallery .loader-curve-card{
+ flex:0 0 clamp(86px,11.6vw,174px);height:clamp(153px,28vh,300px);
+ min-width:0;overflow:hidden;border-radius:clamp(9px,1.1vw,15px);
+ background:#181318;border:1px solid rgba(241,225,228,.27);
+ box-shadow:0 12px 27px rgba(0,0,0,.45);
+ transform:translate3d(0,calc((4 - max(var(--card-offset), -1 * var(--card-offset))) * -3px),0) rotate(calc(var(--card-offset) * -2.4deg));
+ opacity:0;
+ animation:curved-card-enter .75s cubic-bezier(.2,.77,.24,1) forwards;
+ animation-delay:calc(.3s + var(--card-index) * .08s);
 }
-.loader-artwall img:nth-child(3n){opacity:.65}
-.loader-artwall img:nth-child(5n){opacity:.9}
-.site-preloader .loader-artwall::after{
- content:"";position:absolute;inset:0;
- background:linear-gradient(90deg,rgba(7,7,9,.8),rgba(7,7,9,.68) 45%,rgba(7,7,9,.8)),
- linear-gradient(0deg,#070709 0%,transparent 24%,transparent 74%,#070709 100%);
- pointer-events:none;
-}
+.loader-curved-gallery .loader-curve-card img{width:100%;height:100%;display:block;object-fit:cover;filter:none;opacity:1}
+.loader-curved-gallery .loader-curve-card:nth-child(5){border-color:rgba(240,61,86,.7)}
 .site-preloader .signature-intro{z-index:2}
-.site-preloader .signature-intro-title{
- text-shadow:0 3px 28px rgba(0,0,0,.7);
+.site-preloader .signature-intro-main{justify-content:flex-start;padding-top:clamp(42px,7vh,115px)}
+.site-preloader .signature-intro-title{text-shadow:0 3px 24px #070709}
+.site-preloader .signature-intro-main::before{top:clamp(150px,28vh,270px)}
+@keyframes curved-card-enter{
+ from{opacity:0;transform:translate3d(0,46px,0) rotate(0deg)}
+ to{opacity:1;transform:translate3d(0,calc((4 - max(var(--card-offset), -1 * var(--card-offset))) * -3px),0) rotate(calc(var(--card-offset) * -2.4deg))}
 }
-@keyframes loader-artwall-drift{
- from{transform:scale(1.055) translateY(8px)}
- to{transform:scale(1) translateY(0)}
+@media(max-width:720px){
+ .site-preloader .loader-curved-gallery{left:-62%;right:-62%;bottom:16%;height:clamp(170px,27vh,260px);gap:8px}
+ .loader-curved-gallery .loader-curve-card{flex-basis:clamp(82px,20vw,138px);height:clamp(160px,25vh,255px)}
+ .site-preloader .signature-intro-main{padding-top:clamp(36px,10vh,85px)}
+ .site-preloader .signature-intro-main::before{top:clamp(130px,24vh,210px)}
 }
-@media(max-width:650px){
- .loader-artwall{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(5,minmax(0,1fr));gap:5px;inset:-2% -20%}
- .site-preloader .loader-artwall::after{background:rgba(7,7,9,.74)}
+@media(max-height:560px){
+ .site-preloader .loader-curved-gallery{bottom:14%;height:33vh}
+ .loader-curved-gallery .loader-curve-card{height:29vh}
+ .site-preloader .signature-intro-main{padding-top:12px}
 }
-@media(prefers-reduced-motion:reduce){.loader-artwall{animation:none!important;transform:none}}
+@media(prefers-reduced-motion:reduce){
+ .loader-curved-gallery .loader-curve-card{animation:none!important;opacity:1!important;transform:none!important}
+}
