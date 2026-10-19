@@ -1,98 +1,114 @@
-/* MASSYNE / Signature Fade v5.
-   Calm editorial entrance: no false loading percentage, no video or grain. */
+/* MASSYNE — Red Signal / minimal cinematic entrance.
+   First entry and explicit refresh only (handled by brand-loader.js). */
 .site-preloader{
- position:fixed;inset:0;z-index:9000;width:100%;height:100dvh;min-height:100svh;
- display:block;overflow:hidden;overscroll-behavior:contain;isolation:isolate;
- background:#08080b;color:#f5eff1;opacity:1;visibility:visible;
- transition:opacity .34s cubic-bezier(.2,.75,.2,1),visibility .34s;
+ position:fixed;inset:0;z-index:9000;height:100dvh;min-height:100svh;
+ display:block;overflow:hidden;isolation:isolate;
+ background:#09090c;color:#f4eff0;opacity:1;visibility:visible;
+ transition:opacity .38s cubic-bezier(.2,.75,.2,1),visibility .38s;
 }
 .site-preloader[hidden]{display:none!important}
 .site-preloader.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
-.site-preloader::before,.site-preloader::after{content:none!important}
 html.intro-active,body.intro-active{overflow:hidden!important;scroll-behavior:auto!important}
-.signature-intro{
- --intro-gutter:clamp(22px,5.3vw,86px);
- min-height:100%;height:100%;width:min(100%,1690px);
- padding:clamp(24px,3.5vw,52px) var(--intro-gutter);
- margin:auto;display:flex;flex-direction:column;
+.site-preloader::before{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:radial-gradient(ellipse 50% 40% at 50% 53%,rgba(168,24,48,.12),transparent 75%);
 }
-.signature-intro-head{display:flex;align-items:center;justify-content:space-between;gap:20px;min-width:0}
-.signature-intro-logo{display:block;object-fit:contain!important;flex:0 0 auto;width:clamp(57px,7vw,84px)!important;height:clamp(41px,5.5vw,60px)!important}
-.signature-intro-head>span{font:500 clamp(.51rem,.67vw,.64rem)/1.5 var(--mono);letter-spacing:.125em;color:#9c969c;text-align:right}
+.site-preloader::after{
+ content:"";position:absolute;inset:clamp(16px,3vw,42px);pointer-events:none;
+ border:1px solid rgba(255,255,255,.075);border-radius:2px;
+}
+.signature-intro{
+ position:relative;z-index:1;display:flex;flex-direction:column;
+ width:100%;height:100%;min-height:100%;padding:clamp(35px,5vw,72px) clamp(33px,6vw,98px);
+}
+.signature-intro-head{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.signature-intro-logo{display:block;width:clamp(52px,5.7vw,76px)!important;height:auto!important;max-height:52px;object-fit:contain!important}
+.signature-intro-head>span{
+ color:#777079;font:500 clamp(.5rem,.7vw,.65rem)/1.5 var(--mono);
+ letter-spacing:.16em;text-align:right;
+}
 .signature-intro-main{
- position:relative;width:min(100%,1120px);margin:auto;min-width:0;
- padding:clamp(30px,6vh,95px) 0;flex:1;display:flex;flex-direction:column;
- justify-content:center;align-items:flex-start;
+ position:relative;flex:1;display:flex;flex-direction:column;align-items:center;
+ justify-content:center;min-width:0;padding:30px 0 45px;text-align:center;
+}
+.signature-intro-main::before{
+ content:"";width:1px;height:clamp(32px,7vh,76px);
+ background:linear-gradient(transparent,#ed3c5e);
+ margin-bottom:clamp(24px,4vh,48px);
+ animation:signal-enter .6s both;
 }
 .signature-intro-overline{
- margin:0 0 clamp(16px,2.8vw,37px);color:#ed6078;
- font:500 clamp(.6rem,.84vw,.75rem)/1.6 var(--mono);
- letter-spacing:.16em;animation:signature-overline .4s ease both;
+ margin:0 0 clamp(20px,3.8vh,36px);color:#e87389;
+ font:500 clamp(.54rem,.8vw,.72rem)/1.6 var(--mono);
+ letter-spacing:.24em;text-transform:uppercase;
+ animation:signal-enter .45s .08s both;
 }
-.signature-intro-overline>span{color:#6f646e;margin:0 6px}
-.signature-intro-mask{max-width:100%;overflow:hidden;padding:.08em .06em .11em 0}
+.signature-intro-overline>span{color:#7f3b49;margin:0 8px}
+.signature-intro-mask{max-width:100%;overflow:hidden;padding:.06em .08em .16em}
 .signature-intro-title{
- font:700 clamp(3.5rem,12.1vw,12.7rem)/.84 var(--display);
- color:#f7f1f3;letter-spacing:-.109em;white-space:nowrap;
- margin:0;transform-origin:left bottom;
- animation:signature-name .72s cubic-bezier(.12,.78,.19,1) both;
+ margin:0;white-space:nowrap;color:#f8f3f4;
+ font:700 clamp(3rem,11.4vw,11rem)/.92 var(--display);
+ letter-spacing:-.09em;
+ animation:signal-title .7s cubic-bezier(.16,.82,.2,1) both;
 }
-.signature-intro-title span{color:#e94260}
-.signature-intro-tagline{display:flex;align-items:center;gap:clamp(12px,2.7vw,30px);margin:clamp(18px,3.4vw,40px) 0 0;animation:signature-tag .64s .2s both}
-.signature-intro-tagline em{color:#baabb2;font:400 italic clamp(1.5rem,3vw,3.15rem)/1.12 var(--serif)}
-.signature-intro-dash{width:clamp(27px,5vw,72px);height:1px;background:#e94260;display:block;flex:none}
-.signature-intro-foot{width:100%;max-width:100%;padding-bottom:max(4px,env(safe-area-inset-bottom))}
-.signature-intro-track{width:100%;height:1px;position:relative;background:rgba(255,255,255,.15);overflow:hidden}
+.signature-intro-title span{color:#ed3657}
+.signature-intro-tagline{
+ margin:clamp(16px,3.2vh,28px) 0 0;
+ display:flex;align-items:center;justify-content:center;gap:14px;
+ animation:signal-enter .5s .24s both;
+}
+.signature-intro-tagline em{
+ color:#bfb1b7;font:400 italic clamp(1.15rem,2.6vw,2.35rem)/1.15 var(--serif);
+}
+.signature-intro-dash{width:32px;height:1px;display:block;background:#d73655}
+.signature-intro-foot{width:100%;padding-bottom:max(0px,env(safe-area-inset-bottom))}
+.signature-intro-track{
+ position:relative;width:100%;height:2px;overflow:hidden;
+ background:rgba(255,255,255,.12);
+}
 .signature-intro-track .loader-progress-fill{
- display:block;width:100%;height:100%;background:#e94260;
- transform:scaleX(0);transform-origin:left center;will-change:transform;
+ display:block;width:100%;height:100%;transform:scaleX(0);
+ transform-origin:left center;background:linear-gradient(90deg,#8b1835,#f34b6a,#ffc2ce);
+ will-change:transform;box-shadow:0 0 15px rgba(245,53,91,.7);
 }
-.signature-intro-footline{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:18px}
-.signature-intro-footline .intro-status{color:#989198;font:500 .62rem/1.5 var(--mono);letter-spacing:.12em}
+.signature-intro-footline{
+ margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.signature-intro-footline .intro-status{
+ color:#a79aa0;font:500 .6rem/1.5 var(--mono);letter-spacing:.16em;
+}
 .signature-intro-footline .loader-skip{
- display:inline-flex;align-items:center;gap:12px;justify-content:center;
- border:0;border-bottom:1px solid rgba(231,72,101,.38);
- background:transparent;color:#ded7da;cursor:pointer;
- padding:9px 0;font:500 .61rem/1.35 var(--mono);letter-spacing:.09em;
- transition:border-color .18s,color .18s;
+ display:inline-flex;align-items:center;gap:10px;padding:7px 0;
+ color:#d8ccd1;background:none;border:0;border-bottom:1px solid rgba(223,69,100,.35);
+ cursor:pointer;font:500 .61rem/1.5 var(--mono);letter-spacing:.12em;
 }
-.signature-intro-footline .loader-skip span{color:#e94260;font:500 1.05rem/1 var(--display)}
-.signature-intro-footline .loader-skip:hover,.signature-intro-footline .loader-skip:focus-visible{color:#fff;border-color:#f77891}
-.signature-intro-footline .loader-skip:focus-visible{outline:2px solid #ed637e;outline-offset:5px}
-@keyframes signature-name{
- from{opacity:.35;transform:translate3d(0,38px,0);clip-path:inset(0 0 100% 0)}
- to{opacity:1;transform:translate3d(0,0,0);clip-path:inset(0 0 0 0)}
+.signature-intro-footline .loader-skip span{font-size:1rem;color:#f05473}
+.signature-intro-footline .loader-skip:focus-visible{outline:2px solid #f05473;outline-offset:4px}
+@keyframes signal-title{
+ from{opacity:0;transform:translate3d(0,40%,0);filter:blur(9px)}
+ to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
 }
-@keyframes signature-overline{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes signature-tag{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes signal-enter{
+ from{opacity:0;transform:translateY(12px)}
+ to{opacity:1;transform:translateY(0)}
+}
 @media(max-width:700px){
- .signature-intro{padding:24px 22px 25px;min-height:100svh}
- .signature-intro-head>span{max-width:165px;letter-spacing:.07em}
- .signature-intro-title{font-size:clamp(3.05rem,13.25vw,6.6rem)}
- .signature-intro-main{padding-block:22px}
- .signature-intro-overline{font-size:.55rem;letter-spacing:.105em}
- .signature-intro-tagline em{font-size:clamp(1.45rem,6.2vw,2.4rem)}
- .signature-intro-footline .intro-status,.signature-intro-footline .loader-skip{font-size:.54rem}
+ .signature-intro{padding:38px 34px}
+ .signature-intro-head>span{max-width:155px;letter-spacing:.08em}
+ .signature-intro-title{font-size:clamp(2.8rem,13vw,6.3rem)}
+ .signature-intro-overline{font-size:.5rem;letter-spacing:.13em}
+ .signature-intro-tagline em{font-size:clamp(1.2rem,5.3vw,2rem)}
+ .signature-intro-footline .intro-status,.signature-intro-footline .loader-skip{font-size:.52rem}
 }
-@media(max-width:400px){
- .signature-intro{padding:21px 18px 22px}
- .signature-intro-head>span{font-size:.45rem;max-width:135px}
- .signature-intro-title{font-size:13.3vw}
- .signature-intro-tagline{gap:12px}
- .signature-intro-dash{width:26px}
- .signature-intro-overline{font-size:.49rem}
-}
-@media(max-height:500px){
- .signature-intro{padding-block:12px}
- .signature-intro-main{padding-block:12px}
- .signature-intro-title{font-size:clamp(2.9rem,11vh,5.2rem)}
- .signature-intro-tagline{margin-top:10px}
- .signature-intro-overline{margin-bottom:9px}
- .signature-intro-head img{height:36px!important}
- .signature-intro-footline{margin-top:8px}
+@media(max-height:520px){
+ .signature-intro{padding-block:20px}
+ .signature-intro-main{padding:12px 0}
+ .signature-intro-main::before{height:18px;margin-bottom:12px}
+ .signature-intro-overline{margin-bottom:8px}
+ .signature-intro-title{font-size:clamp(2.5rem,10vh,5rem)}
+ .signature-intro-tagline{margin-top:8px}
 }
 @media(prefers-reduced-motion:reduce){
- .site-preloader,.signature-intro-title,.signature-intro-overline,.signature-intro-tagline,.signature-intro-footline .loader-skip{
- transition:none!important;animation:none!important;transform:none!important;clip-path:none!important;opacity:1!important
- }
+ .site-preloader,.signature-intro *{animation:none!important;transition:none!important}
+ .signature-intro-title{filter:none!important;transform:none!important;opacity:1!important}
 }
