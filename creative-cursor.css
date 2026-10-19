@@ -1,0 +1,7 @@
+/* Lightweight creative cursor. Native cursor retained for controls and dragging. */
+.creative-cursor{position:fixed;left:0;top:0;z-index:8800;pointer-events:none;opacity:0;will-change:transform;transition:opacity .15s;display:flex;align-items:center;justify-content:center}
+.creative-cursor.is-visible{opacity:1}
+.creative-cursor-dot{position:absolute;width:12px;height:12px;margin-left:-6px;margin-top:-6px;border:1px solid #e54b64;border-radius:50%;background:rgba(231,66,95,.35)}
+.creative-cursor-label{position:absolute;left:15px;top:-16px;white-space:nowrap;opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s;padding:11px 13px;border:1px solid rgba(236,229,233,.65);background:#151014;color:#f3e9ed;font:500 10px/1.2 var(--mono,monospace);letter-spacing:.08em}
+.creative-cursor.is-project .creative-cursor-label{opacity:1;transform:translateY(0)}
+@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.creative-cursor{display:none!important}}
