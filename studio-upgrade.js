@@ -37,11 +37,11 @@
     event.preventDefault();
     const brief = buildBrief();
     if (!brief) return;
-    const target = "mailto:" + recipient +
-      "?subject=" + encodeURIComponent(brief.subject) +
-      "&body=" + encodeURIComponent(brief.body);
-    note("Opening your email application. Review the message and press Send there.");
-    window.location.href = target;
+    const target = "https://wa.me/212659377324?text=" +
+      encodeURIComponent(brief.subject + "\n\n" + brief.body);
+    note("Opening WhatsApp with your project details. Review the message and press Send in WhatsApp.");
+    const opened = window.open(target, "_blank", "noopener,noreferrer");
+    if (!opened) window.location.href = target;
   });
   copyButton?.addEventListener("click", async () => {
     const brief = buildBrief();
@@ -50,7 +50,7 @@
     try {
       if (!navigator.clipboard?.writeText) throw new Error("No clipboard API");
       await navigator.clipboard.writeText(text);
-      note("Brief copied. Paste it into an email to " + recipient + ".");
+      note("Brief copied. Paste it into WhatsApp or email.");
     } catch (_) {
       // Manual copy fallback: show the complete composed brief, preselect it for Ctrl+C.
       const output = document.getElementById("brief-output");
@@ -61,7 +61,7 @@
         output.select();
         note("Clipboard permission unavailable. Press Ctrl+C (or Copy on mobile) to copy the selected brief.");
       } else {
-        note("Clipboard unavailable. Use the email button instead.");
+        note("Clipboard unavailable. Use the WhatsApp button instead.");
       }
     }
   });
