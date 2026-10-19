@@ -103,8 +103,9 @@
   <div class="brief-field"><label for="brief-reference">Reference link (optional)</label><input id="brief-reference" name="reference" type="url" placeholder="https://…" maxlength="400"></div>
   <div class="brief-field wide"><label for="brief-message">Tell me about the idea *</label><textarea id="brief-message" name="message" required minlength="10" maxlength="2500" rows="5" placeholder="What are you creating, who is it for, and what style are you looking for?"></textarea></div>
  </div>
+ <div class="brief-honeypot" aria-hidden="true" style="position:absolute;left:-9999px"><label>Leave this empty <input name="_honey" tabindex="-1" autocomplete="off"></label></div>
  <div class="brief-actions"><button class="brief-submit" type="submit">SEND VIA WHATSAPP <span aria-hidden="true">↗</span></button><button class="brief-copy" type="button" id="email-brief">SEND VIA EMAIL <span aria-hidden="true">↗</span></button><button class="brief-copy" type="button" id="copy-brief">COPY BRIEF <span aria-hidden="true">↗</span></button></div>
- <p class="brief-note">Choose WhatsApp or Email after filling out the form. Your message opens ready to review; press Send in the chosen app to deliver it. This website does not store your information.</p>
+ <p class="brief-note">WhatsApp opens a message for you to send. Email submits your brief directly to the inbox through FormSubmit, a third-party email service. First-time email delivery requires inbox activation.</p>
  <p class="brief-feedback" id="brief-feedback" aria-live="polite"></p><textarea class="brief-output" id="brief-output" aria-label="Prepared project brief; select and copy if automatic clipboard access is unavailable" readonly hidden></textarea>
 </form>
 </section></main>
