@@ -332,3 +332,26 @@
   object-position:center;
   background:#121014;
 }
+
+/* Performance pass: do not animate masked/hidden 3D cards or offscreen scenes. */
+.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside .carousel-edge-light,
+.project-grid.is-fx-offscreen .carousel-edge-light,
+.project-grid.is-fx-hidden .carousel-edge-light{
+  display:none;
+}
+.project-grid[data-view="3d"].carousel-ready > .project:not(.is-carousel-active):not(.is-carousel-near) .carousel-edge-light rect{
+  animation-play-state:paused;
+}
+@media(max-width:700px){
+  /* Narrow screens: show less off-centre decoration, keep the featured card readable. */
+  .project-grid[data-view="3d"].carousel-ready > .project:not(.is-carousel-active) .carousel-edge-light{
+    display:none;
+  }
+  .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){
+    transition-duration:520ms,350ms,350ms,350ms;
+  }
+  .case-presentation-scene,.case-artwork-frame{box-shadow:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .project-grid .carousel-edge-light rect{animation:none!important}
+}
