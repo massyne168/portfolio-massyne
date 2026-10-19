@@ -380,3 +380,24 @@
  .project-grid[data-view="index"] > .project > img{max-height:155px}
 }
 @media(max-width:380px){.project-grid[data-view="grid"]{grid-template-columns:1fr}}
+
+/* Match the Grid card's original lightweight conic perimeter effect in 3D.
+   Supersede the old SVG tracer; never stack two animated edge systems. */
+.project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light{display:none!important}
+.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n)::before{
+  display:block;
+  opacity:0;
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near::before{
+  opacity:.88;
+  animation:massyne-edge-orbit 7.8s linear infinite;
+  animation-delay:calc(var(--massyne-fx-order,0) * -.32s);
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active::before{
+  opacity:1;
+  animation-duration:5.7s;
+}
+.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside::before{opacity:0;animation:none}
+@media(prefers-reduced-motion:reduce){
+ .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n)::before{animation:none!important;opacity:0!important}
+}
