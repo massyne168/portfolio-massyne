@@ -291,3 +291,30 @@
   }
   .project-grid > .project::before { opacity:0 !important; }
 }
+
+
+/* Smooth curated 3D: compositor-friendly transform + opacity.
+   Real-time drag remains direct; release settles with gentle easing. */
+.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){
+ filter:none!important;
+ transform:translate3d(calc(-50% + var(--carousel-x,0px)),-50%,var(--carousel-z,0px))
+   rotateY(var(--carousel-rotate,0deg)) scale(var(--carousel-scale,1));
+ transition:
+   transform 620ms cubic-bezier(.17,.76,.22,1),
+   opacity 390ms cubic-bezier(.2,.66,.3,1),
+   visibility 390ms linear;
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near{will-change:transform,opacity}
+.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside{will-change:auto}
+.project-grid[data-view="3d"].carousel-ready.is-dragging > .project:nth-child(n){transition:none!important}
+.project-grid[data-view="3d"].carousel-ready > .project::before,
+.project-grid[data-view="3d"].carousel-ready > .project img{
+ animation:none!important; /* Avoid unnecessary continuous repaints during slide motion. */
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active{border-color:rgba(236,65,91,.48)}
+@media(max-width:550px){
+ .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){transition-duration:500ms,340ms,340ms}
+}
+@media(prefers-reduced-motion:reduce){
+ .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){transition:none!important}
+}

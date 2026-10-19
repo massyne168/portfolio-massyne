@@ -8,7 +8,7 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 
 ### Main pages
 
-- `index.html` — portrait-led Cinematic Hero 2.0, **21 Curated Works**, Gurzil Team, **Services**, **20-project artwork-first editorial Studio Showcase**, six Motion videos and interactive reel, Archive, About/CV, availability and Contact/Project Brief.
+- `index.html` — portrait-led Cinematic Hero 2.0, **21 Curated Works**, Gurzil Team, **Services**, six Motion videos and interactive reel, Archive, About/CV, availability and Contact/Project Brief.
 - `projects/<slug>.html` — **20 unique, static, pre-rendered and indexable project pages**, with artwork, concept, visual direction, authentic crops, 3 design observations, original gallery and previous/next navigation.
 - `project.html?work=<slug>` — a backwards-compatible dynamic template (marked `noindex` to prevent duplicate search results).
 - `project-data.js` — the definitive collection of 20 completed case study entries, each with unique editorial descriptions/visual notes; 19 completed featured projects and Gurzil Team. The two Coming Soon concepts do not have fake case studies.
@@ -17,7 +17,7 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 ### Branding & introduction
 
 - The **compact** upper-left header branding on the home and project pages uses the original white MASSYNE logo from `images/optimized/logo-1016.webp`, with a lighter mobile variant at `images/optimized/logo-480.webp`.
-- `signature-intro-v3.css` and `brand-loader.js` now run the new MASSYNE Signature Opening: expressive typography, editorial red accents, a minimal progress line, Skip Intro and a 1.12-second progress and 0.35-second exit. It runs only on first tab entry or an explicit F5/Refresh; navigation between portfolio projects skips it. Reduced-motion bypass remains. Previous unused loader CSS remains archived but is not used.
+- `signature-intro-v5.css` and `brand-loader.js` run MASSYNE Signature Fade: uncluttered original-logo / MASSYNE typography and one quiet crimson line, 0.92-second opening and 0.34-second fade, without fake 0–100 resource progress. The intro appears on first home entry or explicit F5, but skips project navigation. Reduced-motion bypass remains.
 - **Skip intro** works every time. People using reduced-motion preferences do not see the delayed intro.
 - The loader is hidden without JavaScript rather than trapping visitors on a non-functional splash screen.
 
@@ -44,12 +44,12 @@ Edit `project-data.js` first; the script populates the legacy template and the 2
 
 ## Next-Level portfolio presentation — October 18, 2026
 
-- **Art-object presentation:** `index.html#presentation` contains one generous editorial stage, all 20 completed artworks in an accessible thumbnail rail, and Gallery Frame / Textile Study / Original Artwork modes. The five new cinematic designs are preserved. The 20 case-study pages use two deliberate presentations, not synthetic hoodie illustrations.
+- **Artwork presentation:** Per latest feedback, the additional mockup showroom was removed. Real artwork appears in 21 Curated Works cards and the original art viewer/gallery on each of 20 completed case-study pages.
 - **Creative interactions:** `next-level.css` / `next-level.js` add small (≤5px), reduced-motion-aware pointer reactions on selected CTAs, plus optional IntersectionObserver section reveals; never override the 3D carousel or the entry-only Signature Opening v3.
 - **Professional resume:** `resume.html` is a readable accessible CV plus **Print / Save as PDF**; `assets/MASSYNE-Resume.pdf` is a **5,914-byte 1-page PDF** with real portfolio links and existing contact details. No unknown degrees, employment years or languages are invented. Download links are in the About section.
 - **Availability:** `availability.js` is the one-file status control: `inquiries`, `open`, `limited`, or `closed`. Defaults to neutral **OPEN FOR CREATIVE INQUIRIES**; do not mark the designer as booked or available without confirmation. Status appears in Hero and Contact.
 - **Privacy-aware analytics:** `portfolio-analytics.js` progressively injects Vercel Web Analytics and Speed Insights in Vercel production only, and optionally sends generic project/CV/contact/showreel category events (no email, form text or visitor identifiers). **Dashboard activation remains required** to see metrics. Custom events may require a paid Vercel plan.
-- **Performance changes:** 9 Curated Work cards now use existing responsive WebP sources, all 23 Archive images decode asynchronously with low fetch priority, and the new mockup assets use lazy loading. Original files/media retained. See [PERFORMANCE_AUDIT.md](PERFORMANCE_AUDIT.md) for verified media sizes and remaining manual work.
+- **Performance changes:** 9 Curated Work cards now use existing responsive WebP sources, all 23 Archive images decode asynchronously with low fetch priority, and original project images use lazy loading. Original files/media retained. See [PERFORMANCE_AUDIT.md](PERFORMANCE_AUDIT.md) for verified media sizes and remaining manual work.
 
 ## October 18 — Final Art-Object Presentation
 
@@ -86,16 +86,10 @@ Deployment does not require a build command.
 
 Project copy is an editorial description of the existing artwork; it does not assert unknown client work, production process, project-specific software or fabricated mockups. Additional original process images can be added later to each project's `gallery`.
 
-## Grand Gallery and Opening Frame 04 — October 18
+## October 19 — Requested visual simplification
 
-**The user's most recent visual direction takes priority:** all 20 completed artwork case studies are displayed in one **identical, large museum-style glass frame**, rather than a mixed grid of tiny frames, pseudo-hoodie cards and assorted shapes.
-
-- The homepage `#presentation` exhibition shows a **single enormous 4:5 glass frame** on a gallery wall, with a horizontal rail for choosing any of the **20 original completed artworks**. The original designs remain intact and use `object-fit:contain` in the same-sized mat: no cropping or stretching when the image dimensions vary. A details panel links to each full Case Study.
-- Every `projects/<slug>.html` file (20 total) and legacy `project.html` use the exact same `museum-case` gallery section and CSS. A single large, consistent glass frame replaces the previous side-by-side small print and textile mockups. Original artwork images and galleries are preserved.
-- `grand-gallery.css` implements the uniform 4:5 museum frames, faux glass reflection, consistent large wall stages and compact, readable mobile dimensions without new image downloads. These frames are clearly described as digital mockups, not physical client installations.
-- The old garment and original-art modes are intentionally removed from the homepage showroom after the user requested **only one large gallery painting format**. The original art remains inspectable in the full Case Study artwork viewer and original galleries.
-- `atelier-gallery.js` retains direct user project switching and keyboard navigation without automatically scrolling to the showroom on site load.
-- The new `studio-entry.css` is **Opening Frame 04**: a distinct modern graphic-studio intro featuring MASSYNE's official logo, large cut typography, subtle red lines and responsive 0–100 progress. It replaces the former Signature Index style in the homepage, legacy case template and 20 static case studies.
-- The original `brand-loader.js` logic is preserved: show the intro on **first entry per tab** and explicit F5/Refresh; **do not replay** during normal internal navigation between projects or browser back/forward. Also respects Skip, reduced-motion and 1.12s progress + 0.35s exit.
-- **Preserved:** 21 Curated Works cards (19 completed + 2 upcoming), all five newly uploaded artworks, 20 completed case-study pages including Gurzil Team, 23 Archive works, six original motion clips, red/black theme, portrait, 3D drag carousel, Contact, CV, Services and SEO.
-
+- Removed the entire additional grand-glass-frame mockup exhibition from the homepage, and removed the additional museum-presentation section from all 20 static case studies and the legacy dynamic case-study page. Original artwork, metadata, galleries, 21 curated cards and all other site sections are preserved.
+- Introduced `signature-intro-v5.css` — a completely new, calm typography-first opening with the white MASSYNE name, small logo, crimson punctuation, fine timed accent rule, and a working Skip Intro. No percentage counter or fake resource progress.
+- `brand-loader.js` now guarantees **no loading overlay on ordinary project-page navigation**, including when storage and referrer are unavailable; **F5 or Refresh** intentionally replays it. Reduced-motion visitors skip it.
+- Smoothed 3D carousel transitions by shifting the movement to transform/opacity, turning off expensive continuous image/border animation in 3D, and retaining immediate live pointer dragging with eased settling on release. Grid/Index, swipe, keyboard navigation, Coming Soon and autoplay remain available.
+- Historical mockup/loader files are not linked from pages and may remain in source history for recovery; original artwork is never deleted.
