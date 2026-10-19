@@ -443,7 +443,7 @@ window.MASSYNE_PROJECTS = [
     "slug": "glory",
     "title": "Glory",
     "category": "Cinematic Medieval Poster Design",
-    "image": "images/curated/glory.webp",
+    "image": "images/curated/design%20works80b.png",
     "focus": "Resilience / golden-hour atmosphere",
     "summary": "A cinematic medieval poster capturing the quiet strength of a fallen warrior beneath a blazing sunset, where endurance matters more than triumph.",
     "concept": "Glory explores the moment after conflict: a lone knight in heavy armor sits among ruins, suggesting that strength can live in stillness as well as victory.",
@@ -465,14 +465,14 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "16",
     "gallery": [
-      "images/curated/glory.webp"
+      "images/curated/design%20works80b.png"
     ]
   },
   {
     "slug": "nocturne-red-sun",
     "title": "Nocturne — Red Sun",
     "category": "Gothic Plague Doctor Poster",
-    "image": "images/curated/nocturne-red-sun.webp",
+    "image": "images/curated/design%20works6.png",
     "focus": "Gothic character / red sun",
     "summary": "An arresting gothic character poster featuring a plague-doctor figure against a crimson sun, with distressed antique typography and archival details.",
     "concept": "Nocturne — Red Sun imagines a silent wanderer in a ruined world. The masked figure and circular red backdrop evoke mystery, survival and ritual.",
@@ -494,14 +494,14 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "17",
     "gallery": [
-      "images/curated/nocturne-red-sun.webp"
+      "images/curated/design%20works6.png"
     ]
   },
   {
     "slug": "envy",
     "title": "Envy",
     "category": "Dark Fantasy Editorial Poster",
-    "image": "images/curated/envy.webp",
+    "image": "images/curated/design%20works80.png",
     "focus": "Emotion / sharp red-black hierarchy",
     "summary": "A fierce red-and-black editorial poster exploring envy through veiled eyes, thorned crown imagery and oversized distressed typography.",
     "concept": "Envy turns a difficult emotion into a visual persona: a veiled face, restrictive hands and thorn-like ornament create a haunting symbolic portrait.",
@@ -523,14 +523,14 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "18",
     "gallery": [
-      "images/curated/envy.webp"
+      "images/curated/design%20works80.png"
     ]
   },
   {
     "slug": "nocturne-dark-veil",
     "title": "Nocturne — Dark Veil",
     "category": "Monochrome Gothic Editorial Poster",
-    "image": "images/curated/nocturne-dark-veil.webp",
+    "image": "images/curated/design%20works87.png",
     "focus": "Monochrome / archival symbolism",
     "summary": "A monochrome gothic editorial study bringing intricate typographic systems and archival markings around a shadowed veiled portrait.",
     "concept": "Nocturne — Dark Veil treats darkness as an aesthetic atmosphere. A crown-like headdress and veiled portrait are framed by symbolic diagrams and coded notes.",
@@ -552,14 +552,14 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "19",
     "gallery": [
-      "images/curated/nocturne-dark-veil.webp"
+      "images/curated/design%20works87.png"
     ]
   },
   {
     "slug": "the-last-oath",
     "title": "The Last Oath",
     "category": "Cinematic Fantasy Key Art",
-    "image": "images/curated/the-last-oath.webp",
+    "image": "images/curated/design%20works8.png",
     "focus": "Knight / loyalty / sunset atmosphere",
     "summary": "A grand dark-fantasy key-art poster depicting an armored knight before a burning kingdom, built around sacrifice, loyalty and the weight of a final promise.",
     "concept": "The Last Oath follows a solitary knight who carries duty through the ruins of a fading kingdom, balancing heroic scale with an elegiac mood.",
@@ -581,7 +581,7 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "20",
     "gallery": [
-      "images/curated/the-last-oath.webp"
+      "images/curated/design%20works8.png"
     ]
   }
 ];
