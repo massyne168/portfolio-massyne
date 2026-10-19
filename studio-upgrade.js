@@ -43,6 +43,15 @@
     const opened = window.open(target, "_blank", "noopener,noreferrer");
     if (!opened) window.location.href = target;
   });
+  document.getElementById("email-brief")?.addEventListener("click", () => {
+    const brief = buildBrief();
+    if (!brief) return;
+    const target = "mailto:" + recipient +
+      "?subject=" + encodeURIComponent(brief.subject) +
+      "&body=" + encodeURIComponent(brief.body);
+    note("Opening your email app with the completed brief. Review and press Send there.");
+    window.location.href = target;
+  });
   copyButton?.addEventListener("click", async () => {
     const brief = buildBrief();
     if (!brief) return;
