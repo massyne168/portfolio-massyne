@@ -130,3 +130,19 @@ body.case-study-page{background:#09090c;color:#f1efeb}
  .case-presentation-scene{min-height:350px;padding:28px 20px 23px}
  .case-presentation-frame img{max-height:500px}
 }
+
+/* Mobile QA: keep case-study content inside narrow phones. */
+@media(max-width:768px){
+ .case-study-page{max-width:100%;overflow-x:clip}
+ .case-study-page main,.case-study-page section{max-width:100%;min-width:0}
+ .case-study-page :is(h1,h2,h3,p){overflow-wrap:break-word}
+ .case-study-page :is(img,video){max-width:100%;height:auto}
+ .case-presentation-heading,.case-presentation-scene,.case-presentation-frame{min-width:0;max-width:100%}
+ .case-presentation-frame img{width:auto;height:auto;max-width:100%}
+ .case-gallery img{max-width:100%;height:auto;object-fit:contain}
+}
+@media(max-width:390px){
+ .case-presentation-scene{min-height:290px;padding:24px 12px 20px}
+ .case-presentation-frame{padding:8px}
+ .case-presentation-heading h2{font-size:clamp(2rem,10vw,3.4rem)}
+}
