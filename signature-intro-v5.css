@@ -43,7 +43,7 @@ html.intro-active,body.intro-active{overflow:hidden!important;scroll-behavior:au
  margin:0;color:#f4f1f0;white-space:nowrap;
  font:700 clamp(3.5rem,14.3vw,14rem)/.84 var(--display);
  letter-spacing:-.095em;
- animation:intro-reveal .85s cubic-bezier(.18,.75,.24,1) both;
+ animation:intro-reveal 1.15s cubic-bezier(.18,.75,.24,1) both, intro-float 3.5s 1.15s ease-in-out infinite;
 }
 .signature-intro-title span{color:#e73956}
 .signature-intro-tagline{
@@ -90,3 +90,7 @@ html.intro-active,body.intro-active{overflow:hidden!important;scroll-behavior:au
 @media(prefers-reduced-motion:reduce){
  .site-preloader,.signature-intro *{animation:none!important;transition:none!important}
 }
+
+/* Gentle text drift: transform only, no blur or repaints. */
+@keyframes intro-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media(prefers-reduced-motion:reduce){.signature-intro-title{animation:none!important}}
