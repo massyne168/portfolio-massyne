@@ -583,5 +583,21 @@ window.MASSYNE_PROJECTS = [
     "gallery": [
       "images/curated/design%20works8.png"
     ]
+  },
+  {
+    "slug": "design-works8sw",
+    "title": "Design Works 8SW",
+    "category": "Graphic Artwork",
+    "year": "2026",
+    "image": "images/curated/design%20works8sw.png",
+    "focus": "Composition and visual exploration",
+    "summary": "An original graphic artwork presented as part of MASSYNE's curated visual collection.",
+    "number": "20",
+    "gallery": [
+      "images/curated/design%20works8sw.png"
+    ],
+    "concept": "An independent graphic design exploration centred on the original composition.",
+    "direction": "Presented in its original form, with the visual work kept as the primary focus.",
+    "details": []
   }
 ];
