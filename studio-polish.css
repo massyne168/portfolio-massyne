@@ -258,3 +258,44 @@
 @media (prefers-reduced-motion:reduce){
   .ticker .ticker-track{animation:none!important;will-change:auto}
 }
+
+/* Always-visible orbiting crimson light around the gallery 3D mode button. */
+@property --studio-orbit-angle {
+  syntax:"<angle>";
+  inherits:false;
+  initial-value:0deg;
+}
+.view-switch button[data-view="3d"]{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+  border-radius:5px;
+  border-color:rgba(216,59,85,.32);
+  background:rgba(136,31,52,.08);
+  box-shadow:0 0 12px rgba(235,46,77,.075);
+}
+.view-switch button[data-view="3d"]::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border:2px solid transparent;
+  border-radius:7px;
+  pointer-events:none;
+  background:conic-gradient(from var(--studio-orbit-angle),transparent 0deg,transparent 245deg,rgba(241,72,102,.22) 282deg,#ffb3c0 310deg,#ff385f 331deg,transparent 359deg) border-box;
+  -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  animation:studio-3d-orbit 3.2s linear infinite;
+}
+.view-switch button[data-view="3d"]:is(:hover,[aria-pressed="true"]){
+  border-color:rgba(255,101,128,.65);
+  background:rgba(174,38,64,.17);
+  box-shadow:0 0 18px rgba(235,46,77,.18);
+}
+@keyframes studio-3d-orbit{
+  to{--studio-orbit-angle:360deg}
+}
+@media (prefers-reduced-motion:reduce){
+  .view-switch button[data-view="3d"]::before{animation:none}
+}
