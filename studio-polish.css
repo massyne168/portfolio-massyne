@@ -321,6 +321,31 @@
   }
 }
 
+/* Approved soft silver light: blurred bloom, no hard visible tracing stroke. */
+.project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light{
+  opacity:.82;
+  mix-blend-mode:screen;
+  filter:blur(.35px) drop-shadow(0 0 6px rgba(232,230,236,.78)) drop-shadow(0 0 16px rgba(198,28,58,.18));
+}
+.project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light rect{
+  stroke:rgba(238,236,242,.42);
+  stroke-width:1.35;
+  stroke-linecap:round;
+  stroke-dasharray:7 93;
+  filter:blur(.4px) drop-shadow(0 0 5px rgba(244,242,247,.9)) drop-shadow(0 0 12px rgba(210,34,64,.16));
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near:not(.is-carousel-active) .carousel-edge-light{
+  opacity:.72;
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active .carousel-edge-light{
+  opacity:1;
+  filter:blur(.45px) drop-shadow(0 0 8px rgba(245,243,248,.95)) drop-shadow(0 0 18px rgba(214,36,67,.22));
+}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active .carousel-edge-light rect{
+  stroke:rgba(245,243,247,.52);
+  stroke-width:1.5;
+}
+
 /* Unified card image viewport — 1400 x 1100 (14:11), no cropping. */
 .project-grid[data-view="grid"] > .project img,
 .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n) img{
