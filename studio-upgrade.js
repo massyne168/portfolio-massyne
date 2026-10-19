@@ -71,9 +71,8 @@
   const reel = document.getElementById("showreel-player");
   const open = document.getElementById("showreel-play");
   if (!reel || !open) return;
-  const clips = Array.from(document.querySelectorAll(".motion-grid video"))
-    .map(video => video.getAttribute("src"))
-    .filter(Boolean);
+  // Keep the clips independently of the removed six-player motion grid.
+  const clips = Array.from({length:6}, (_, i) => `images/optimized/motion${i + 1}.mp4`);
   const indicators = Array.from(document.querySelectorAll("[data-reel-index]"));
   const prev = document.getElementById("reel-prev");
   const next = document.getElementById("reel-next");
@@ -109,13 +108,13 @@
       status("PLAYING / STUDY " + String(active + 1).padStart(2,"0") + " OF " + clips.length);
       refresh();
     } catch (_) {
-      status("Playback blocked. Press PLAY again, or open the original motion clips below.");
+      status("Playback could not start. Please press PLAY again.");
       refresh();
     }
   };
   const choose = (index, autoplay) => {
     if (!clips.length) {
-      status("No video clips available. View the motion studies below.");
+      status("Motion clips are unavailable.");
       return;
     }
     switching = true;
@@ -172,7 +171,7 @@
   reel.addEventListener("play",refresh);
   reel.addEventListener("error", () => {
     if (initialized && !completed) {
-      status("A clip could not load. Use NEXT, or watch the originals below.");
+      status("This clip could not load. Try NEXT.");
       reel.pause();
     }
   });
