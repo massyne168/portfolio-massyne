@@ -20,6 +20,29 @@
 
   const count = cards.length;
 
+  // Real SVG perimeter tracer: independent from masked pseudo-elements and 3D transforms.
+  // The path follows every card's rounded rectangular outline.
+  const svgNS = "http://www.w3.org/2000/svg";
+  cards.forEach((card, index) => {
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("class", "carousel-edge-light");
+    svg.setAttribute("viewBox", "0 0 100 100");
+    svg.setAttribute("preserveAspectRatio", "none");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    const rect = document.createElementNS(svgNS, "rect");
+    rect.setAttribute("x", "0.5");
+    rect.setAttribute("y", "0.5");
+    rect.setAttribute("width", "99");
+    rect.setAttribute("height", "99");
+    rect.setAttribute("rx", "2.4");
+    rect.setAttribute("ry", "2.4");
+    rect.setAttribute("pathLength", "100");
+    svg.appendChild(rect);
+    svg.style.setProperty("--edge-delay", (-index * .47) + "s");
+    card.appendChild(svg);
+  });
+
   // Offset the orbit phase so neighbouring borders never flash in sync.
   cards.forEach((card, index) => {
     card.style.setProperty("--massyne-fx-order", String(index));
