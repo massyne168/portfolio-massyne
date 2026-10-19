@@ -90,7 +90,6 @@
       card.style.setProperty("--carousel-scale", scale.toFixed(4));
       card.style.setProperty("--carousel-opacity", opacity.toFixed(3));
       card.style.setProperty("--carousel-layer", String(100 - Math.round(amount * 12)));
-      card.style.setProperty("--carousel-brightness", Math.max(0.67, 1 - amount * 0.105).toFixed(3));
 
       card.classList.toggle("is-carousel-active", center);
       card.classList.toggle("is-carousel-near", !outside && amount < 1.65);
