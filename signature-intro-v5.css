@@ -87,3 +87,47 @@ html.intro-active,body.intro-active{overflow:hidden!important;scroll-behavior:au
   gap:4px;
  }
 }
+
+/* Organic editorial collage: genuine masonry rhythm rather than uniform rows. */
+.site-preloader .loader-curved-gallery{
+ display:block;
+ columns:8;
+ column-gap:clamp(7px,1vw,16px);
+ padding:clamp(8px,1.1vw,18px);
+ transform:rotate(-2deg) scale(1.07);
+ transform-origin:center;
+}
+.loader-curved-gallery .loader-curve-card{
+ display:inline-block;
+ width:100%;height:clamp(88px,15.5vh,182px);
+ margin:0 0 clamp(9px,1.2vh,17px);
+ vertical-align:top;
+ break-inside:avoid;
+ border-radius:5px;
+ animation:organic-card-in .78s cubic-bezier(.22,.78,.24,1) both;
+ animation-delay:calc(.08s + var(--card-index) * .029s);
+}
+.loader-curved-gallery .loader-curve-card:nth-child(3n){height:clamp(118px,21vh,238px)}
+.loader-curved-gallery .loader-curve-card:nth-child(5n){height:clamp(76px,12vh,145px)}
+.loader-curved-gallery .loader-curve-card:nth-child(2n){margin-top:12px;translate:0 0}
+.loader-curved-gallery .loader-curve-card:nth-child(7n){margin-top:23px;translate:0 0}
+.loader-curved-gallery .loader-curve-card:nth-child(4n){rotate:-3deg}
+.loader-curved-gallery .loader-curve-card:nth-child(4n+1){rotate:3deg}
+.loader-curved-gallery .loader-curve-card:nth-child(6n){rotate:2deg}
+@keyframes organic-card-in{
+ from{opacity:0;transform:translateY(35px) scale(.96)}
+ to{opacity:.83;transform:translateY(0) scale(1)}
+}
+@media(max-width:720px){
+ .site-preloader .loader-curved-gallery{
+  columns:5;column-gap:6px;padding:6px;
+  transform:rotate(-2deg) scale(1.12);
+ }
+ .loader-curved-gallery .loader-curve-card{height:clamp(66px,10vh,120px);margin-bottom:7px}
+ .loader-curved-gallery .loader-curve-card:nth-child(3n){height:clamp(88px,14vh,150px)}
+ .loader-curved-gallery .loader-curve-card:nth-child(5n){height:clamp(53px,8vh,90px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .site-preloader .loader-curved-gallery{transform:none}
+ .loader-curved-gallery .loader-curve-card{animation:none!important;opacity:.55!important}
+}
