@@ -292,3 +292,14 @@
 @media (prefers-reduced-motion:reduce){
   .project-grid[data-view="3d"].carousel-ready > .project .carousel-edge-light rect{animation:none;stroke-dasharray:100 0;opacity:.5}
 }
+
+/* Last five editorial posters: consistent uncropped vertical presentation. */
+.project-grid[data-view="grid"] > .project:nth-child(n+17):nth-child(-n+21) img,
+.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n+17):nth-child(-n+21) img{
+  aspect-ratio:3/4;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  object-position:center;
+  background:#121014;
+}
