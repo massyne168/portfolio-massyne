@@ -606,11 +606,24 @@ window.MASSYNE_PROJECTS = [
     "category": "Graphic Artwork",
     "year": "2026",
     "image": "images/curated/designs%20works.png",
-    "focus": "Visual design exploration",
-    "summary": "Designs Works — an original artwork from the MASSYNE curated portfolio.",
-    "concept": "An original independent visual design study.",
-    "direction": "The artwork is shown in its original composition.",
-    "details": [],
+    "focus": "Experimental composition / graphic storytelling",
+    "summary": "An independent editorial artwork exploring the relationship between imagery, composition, and visual expression in MASSYNE's curated collection.",
+    "concept": "Developed as a standalone graphic piece, Designs Works treats the artwork itself as the message. The approach focuses on creating a distinct visual identity within a single frame, without depending on a wider campaign or brand system.",
+    "direction": "A composition-led presentation that gives the original artwork room to speak. Its visual rhythm, image treatment, and hierarchy are presented as designed, rather than reformatted into a generic template.",
+    "details": [
+      {
+        "title": "Creative premise",
+        "description": "An original visual study developed around one cohesive artwork rather than a multi-asset identity system."
+      },
+      {
+        "title": "Composition",
+        "description": "Attention to the relationships between image, space, and visual hierarchy gives the work its editorial character."
+      },
+      {
+        "title": "Portfolio presentation",
+        "description": "The artwork is preserved in its original format and paired with a restrained gallery presentation."
+      }
+    ],
     "number": "21",
     "gallery": [
       "images/curated/designs%20works.png"
@@ -622,11 +635,24 @@ window.MASSYNE_PROJECTS = [
     "category": "Graphic Artwork",
     "year": "2026",
     "image": "images/curated/designfd%20works2.png",
-    "focus": "Visual design exploration",
-    "summary": "Designfd Works 2 — an original artwork from the MASSYNE curated portfolio.",
-    "concept": "An original independent visual design study.",
-    "direction": "The artwork is shown in its original composition.",
-    "details": [],
+    "focus": "Art direction / independent visual study",
+    "summary": "An original design exploration from MASSYNE's curated series, presented as a focused piece of visual art direction and personal creative practice.",
+    "concept": "Designfd Works 2 continues an open-ended investigation into graphic expression. The project takes the form of a finished standalone composition, emphasizing experimentation and creative authorship over prescribed commercial requirements.",
+    "direction": "The original design remains the focal point. Supporting case-study typography, spacing, and imagery are intentionally understated so the artwork can establish its own mood and visual narrative.",
+    "details": [
+      {
+        "title": "Independent direction",
+        "description": "A self-directed work produced to explore visual ideas outside a predefined client brief."
+      },
+      {
+        "title": "Visual hierarchy",
+        "description": "The presentation considers how a single composition can hold attention and communicate a creative point of view."
+      },
+      {
+        "title": "Original artwork",
+        "description": "The case study shows the uploaded piece directly, without substituting stock images or fabricated process material."
+      }
+    ],
     "number": "22",
     "gallery": [
       "images/curated/designfd%20works2.png"
