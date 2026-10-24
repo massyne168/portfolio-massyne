@@ -401,3 +401,18 @@
 @media(prefers-reduced-motion:reduce){
  .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n)::before{animation:none!important;opacity:0!important}
 }
+
+/* Two reserved Curated Works slots: ready for upcoming artwork uploads. */
+.project-grid > .project.project-upcoming{isolation:isolate}
+.project-grid > .project.project-upcoming .project-placeholder-art{
+ position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ width:100%;aspect-ratio:14/11;min-height:170px;max-height:100%;overflow:hidden;
+ background:radial-gradient(ellipse at 60% 30%,rgba(190,54,77,.16),transparent 55%),linear-gradient(145deg,#211b21,#100f13 70%);
+ border:1px solid rgba(255,255,255,.11);border-radius:inherit;color:#ddd4d7
+}
+.project-grid > .project.project-upcoming .placeholder-cross{position:absolute;top:14px;right:17px;font:400 20px/1 var(--mono,monospace);color:#e94b66}
+.project-grid > .project.project-upcoming .placeholder-large{font:600 clamp(3rem,8vw,7rem)/.9 var(--display,sans-serif);letter-spacing:-.08em;color:rgba(255,255,255,.21)}
+.project-grid > .project.project-upcoming .placeholder-meta{margin-top:14px;font:500 clamp(.42rem,.6vw,.58rem)/1.5 var(--mono,monospace);letter-spacing:.13em;color:#d4a5af;text-align:center}
+.project-grid[data-view="index"] > .project.project-upcoming .project-placeholder-art{width:100%;height:auto;min-height:94px;max-height:160px}
+.project-grid[data-view="index"] > .project.project-upcoming .placeholder-large{font-size:clamp(2rem,5vw,4rem)}
+@media(max-width:600px){.project-grid > .project.project-upcoming .project-placeholder-art{min-height:125px}.project-grid > .project.project-upcoming .placeholder-meta{font-size:.42rem;padding:0 8px}}
