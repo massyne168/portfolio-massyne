@@ -599,5 +599,37 @@ window.MASSYNE_PROJECTS = [
     "concept": "An independent graphic design exploration centred on the original composition.",
     "direction": "Presented in its original form, with the visual work kept as the primary focus.",
     "details": []
+  },
+  {
+    "slug": "designs-works",
+    "title": "Designs Works",
+    "category": "Graphic Artwork",
+    "year": "2026",
+    "image": "images/curated/designs%20works.png",
+    "focus": "Visual design exploration",
+    "summary": "Designs Works — an original artwork from the MASSYNE curated portfolio.",
+    "concept": "An original independent visual design study.",
+    "direction": "The artwork is shown in its original composition.",
+    "details": [],
+    "number": "21",
+    "gallery": [
+      "images/curated/designs%20works.png"
+    ]
+  },
+  {
+    "slug": "designfd-works2",
+    "title": "Designfd Works 2",
+    "category": "Graphic Artwork",
+    "year": "2026",
+    "image": "images/curated/designfd%20works2.png",
+    "focus": "Visual design exploration",
+    "summary": "Designfd Works 2 — an original artwork from the MASSYNE curated portfolio.",
+    "concept": "An original independent visual design study.",
+    "direction": "The artwork is shown in its original composition.",
+    "details": [],
+    "number": "22",
+    "gallery": [
+      "images/curated/designfd%20works2.png"
+    ]
   }
 ];
