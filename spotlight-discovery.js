@@ -53,6 +53,6 @@
   search?.addEventListener("keydown",event=>{if(event.key==="Escape"&&search.value){search.value="";update();}});
   reset?.addEventListener("click",()=>{clear();search?.focus();});
   // Restore all cards synchronously when user requests the original 3D carousel.
-  threeD?.addEventListener("click",clear);
+  threeD?.addEventListener("click",clear,true);
   update();
 })();
