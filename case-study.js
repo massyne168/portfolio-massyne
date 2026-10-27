@@ -171,6 +171,104 @@
       gal.append(figure);
     });
   }
+
+  // Related projects: source-grounded recommendations from the existing portfolio dataset.
+  // No external request, stock imagery, invented client credits or fake case studies.
+  const relatedBefore=document.querySelector(".case-next");
+  const commonWords=new Set(["poster","visual","study","design","artwork","graphic","creative","original","independent","the","and","art","with","composition","direction"]);
+  const tokens=value=>new Set(String(value||"").toLowerCase().split(/[^a-z0-9]+/).filter(word=>word.length>=4&&!commonWords.has(word)));
+  const intersection=(one,two)=>{
+    let hits=0;
+    for(const word of one)if(two.has(word))hits++;
+    return hits;
+  };
+  if(relatedBefore && collection.length>1 && !document.querySelector(".case-related")){
+    const sourceCategory=tokens(project.category);
+    const sourceFocus=tokens(project.focus);
+    const scored=collection.filter(item=>item.slug!==project.slug&&item.image&&item.title).map((item,position)=>{
+      const cat=tokens(item.category),focus=tokens(item.focus);
+      let score=0;
+      if(item.category===project.category)score+=10;
+      score+=intersection(sourceCategory,cat)*4;
+      score+=intersection(sourceFocus,focus)*3;
+      score+=intersection(sourceCategory,focus)*2;
+      score+=intersection(sourceFocus,cat)*2;
+      return {item,score,position};
+    });
+    scored.sort((a,b)=>b.score-a.score||a.position-b.position);
+    const related=scored.slice(0,3).map(entry=>entry.item);
+    if(related.length){
+      const thumbs={
+        "ghost-protocol":"images/optimized/work1-480.webp",
+        "the-cursed-crown":"images/optimized/work3-480.webp",
+        "ashes-of-innocence":"images/optimized/work2-480.webp",
+        "the-queen":"images/optimized/work4-480.webp",
+        "the-final-fall":"images/optimized/card8-480.webp",
+        "legends":"images/optimized/card10-480.webp",
+        "nyctophile":"images/optimized/card11-480.webp",
+        "warriors-break":"images/optimized/card12-480.webp",
+        "veiled-sorrow-surreal":"images/optimized/card9-480.webp",
+        "glory":"images/curated/glory-420.webp",
+        "envy":"images/curated/envy-420.webp",
+        "the-last-oath":"images/curated/the-last-oath-420.webp",
+        "nocturne-red-sun":"images/curated/nocturne-red-sun-420.webp",
+        "nocturne-dark-veil":"images/curated/nocturne-dark-veil-420.webp"
+      };
+      const section=document.createElement("section");
+      section.className="case-related";
+      section.setAttribute("aria-labelledby","case-related-title");
+      const heading=document.createElement("div");
+      heading.className="case-related-head";
+      const kicker=document.createElement("p");
+      kicker.className="eyebrow";
+      kicker.textContent="MORE TO EXPLORE / MASSYNE";
+      const title=document.createElement("h2");
+      title.id="case-related-title";
+      title.textContent="Explore related projects.";
+      const intro=document.createElement("p");
+      intro.textContent="More original artwork connected by mood, direction or visual language.";
+      heading.append(kicker,title,intro);
+      const gallery=document.createElement("div");
+      gallery.className="case-related-grid";
+      related.forEach((item,i)=>{
+        const link=document.createElement("a");
+        link.href=projectHref(item);
+        link.className="case-related-card";
+        link.setAttribute("aria-label","Explore "+item.title+" case study");
+        const media=document.createElement("span");
+        media.className="case-related-art";
+        const image=document.createElement("img");
+        image.src=thumbs[item.slug]||item.image;
+        image.alt=item.title+" — original artwork by MASSYNE";
+        image.loading="lazy";
+        image.decoding="async";
+        image.setAttribute("fetchpriority","low");
+        media.append(image);
+        const line=document.createElement("span");
+        line.className="case-related-info";
+        const copy=document.createElement("span");
+        const num=document.createElement("small");
+        num.textContent=String(i+1).padStart(2,"0")+" / "+item.category;
+        const name=document.createElement("strong");
+        name.textContent=item.title;
+        const arrow=document.createElement("span");
+        arrow.className="case-related-arrow";
+        arrow.textContent="↗";
+        arrow.setAttribute("aria-hidden","true");
+        copy.append(num,name);
+        line.append(copy,arrow);
+        link.append(media,line);
+        link.addEventListener("click",event=>{
+          if(event.button!==0||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;
+          try{window.sessionStorage.setItem("massyne:skip-intro-once","yes");}catch(_){}
+        });
+        gallery.append(link);
+      });
+      section.append(heading,gallery);
+      relatedBefore.before(section);
+    }
+  }
+
   set("case-prev-title", previous.title);
   set("case-next-title", next.title);
   find("case-prev-link")?.setAttribute("href", projectHref(previous));
@@ -199,7 +297,6 @@
     if (event.target === dialog) dialog.close();
   });
 })();
-
 
 /* Premium reading navigation + cinematic multi-work artwork viewer.
    Progressive enhancement only; static HTML and existing case-study content remain intact. */

@@ -150,6 +150,27 @@ body.case-study-page{background:#09090c;color:#f1efeb}
 @media(prefers-reduced-motion:no-preference){html.project-is-leaving main{opacity:.15;transform:translateY(7px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}}
 
 
+/* Related work: three editorial recommendations derived from existing project metadata. */
+.case-related{padding:clamp(62px,8vw,120px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.case-related-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.55fr);gap:12px 32px;align-items:end;margin-bottom:clamp(24px,4vw,48px)}
+.case-related-head .eyebrow{grid-column:1/-1;margin:0;color:#ee637c}
+.case-related-head h2{font:600 clamp(2.5rem,5.4vw,6.1rem)/.98 var(--display);letter-spacing:-.07em;margin:0}
+.case-related-head>p:last-child{margin:0;max-width:380px;color:#b3a9b0;font:.9rem/1.8 var(--body)}
+.case-related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,25px)}
+.case-related-card{min-width:0;display:flex;flex-direction:column;position:relative;overflow:hidden;background:#141216;border:1px solid #ffffff25;color:var(--paper);transition:border-color .25s,transform .25s,box-shadow .25s}
+.case-related-card:hover,.case-related-card:focus-visible{transform:translateY(-5px);border-color:#c65c73;box-shadow:0 20px 45px #0005}
+.case-related-card:focus-visible{outline:2px solid #ef6c83;outline-offset:4px}
+.case-related-art{display:flex;align-items:center;justify-content:center;padding:clamp(16px,2.7vw,35px);height:clamp(220px,27vw,350px);overflow:hidden;background:radial-gradient(ellipse 75% 55% at 50% 40%,#32222a,#111115)}
+.case-related-art img{display:block;width:100%;height:100%;object-fit:contain;transition:transform .35s}
+.case-related-card:hover .case-related-art img{transform:scale(1.04)}
+.case-related-info{display:flex;align-items:end;justify-content:space-between;gap:14px;padding:clamp(17px,2vw,28px);min-height:116px}
+.case-related-info small{display:block;color:#bcb0b7;font:500 .56rem/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.case-related-info strong{font:600 clamp(1.26rem,2.1vw,2.25rem)/1.05 var(--display);letter-spacing:-.05em;overflow-wrap:anywhere}
+.case-related-arrow{color:#ed657e;align-self:center;font-size:1.45rem}
+@media(max-width:860px){.case-related-head{display:block}.case-related-head h2{margin:12px 0 18px}.case-related-grid{gap:12px}.case-related-info{padding:17px}.case-related-art{height:220px}}
+@media(max-width:640px){.case-related-grid{grid-template-columns:1fr}.case-related-art{height:290px}.case-related-info{min-height:100px}.case-related-head h2{font-size:clamp(2.4rem,9vw,4.6rem)}}
+@media(prefers-reduced-motion:reduce){.case-related-card,.case-related-art img{transition:none!important}.case-related-card:hover,.case-related-card:focus-visible,.case-related-card:hover .case-related-art img{transform:none}}
+
 /* Premium case-study chapters and creative DNA */
 .case-chapters{display:flex;justify-content:space-between;align-items:center;gap:20px;margin:0 0 clamp(30px,4vw,60px);padding:16px 0;border-top:1px solid #453138;border-bottom:1px solid #453138}
 .case-chapter-caption{max-width:280px;flex:0 0 25%;margin:0;font:500 .61rem/1.65 var(--mono,monospace);letter-spacing:.07em;color:#a69aa2;text-transform:uppercase}
