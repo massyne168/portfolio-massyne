@@ -11,7 +11,7 @@
           link.target === "_blank" || link.hasAttribute("download") || leaving) return;
       const url = new URL(link.href, window.location.href);
       if (url.origin !== location.origin || url.pathname === location.pathname) return;
-      const project = /^\\/projects\\/[^/]+\\.html$/.test(url.pathname);
+      const project = /^\/projects\/[^/]+\.html$/.test(url.pathname);
       if (!project && !(url.pathname === "/" && url.hash === "#work")) return;
       event.preventDefault();
       leaving = true;
