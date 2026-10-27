@@ -38,3 +38,6 @@
 @media(max-width:960px){.spotlight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.spotlight-card:first-child{grid-column:span 2}.spotlight-head>p{max-width:230px}}
 @media(max-width:640px){.spotlight-section{padding:65px 16px}.spotlight-head{display:block}.spotlight-head h2{font-size:clamp(3.05rem,12vw,5.7rem)}.spotlight-head>p{max-width:500px;margin-top:19px}.spotlight-grid{grid-template-columns:1fr}.spotlight-card,.spotlight-card:first-child{grid-column:auto;min-height:415px}.spotlight-art img{max-height:290px}.spotlight-card-foot strong{font-size:1.8rem}.discover-tools{display:block}.discover-categories{margin-bottom:13px}.discover-categories button{padding:8px 10px;font-size:.59rem}.discover-search{min-width:0}.discover-footer{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.spotlight-card,.spotlight-art img,.discover-categories button,.discover-reset{transition:none!important}.spotlight-card:hover,.spotlight-card:focus-visible,.spotlight-card:hover .spotlight-art img{transform:none}}
+
+.curated-stage:has(.discover-empty:not([hidden])){min-height:160px}
+.discover-empty{position:relative;z-index:3;margin:18px auto 25px;max-width:700px}
