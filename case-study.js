@@ -230,7 +230,7 @@
     landmarks.forEach(({element,num,label}) => {
       element.id = element.id || "chapter-" + num;
       const link = document.createElement("a");
-      link.href = "#" + element.id;
+      link.href = location.pathname + location.search + "#" + element.id;
       link.className = "case-chapter-link";
       const n = document.createElement("span");
       n.textContent = num;
