@@ -104,3 +104,10 @@ Project copy is an editorial description of the existing artwork; it does not as
 - `brand-loader.js` now guarantees **no loading overlay on ordinary project-page navigation**, including when storage and referrer are unavailable; **F5 or Refresh** intentionally replays it. Reduced-motion visitors skip it.
 - Smoothed 3D carousel transitions by shifting the movement to transform/opacity, turning off expensive continuous image/border animation in 3D, and retaining immediate live pointer dragging with eased settling on release. Grid/Index, swipe, keyboard navigation, Coming Soon and autoplay remain available.
 - Historical mockup/loader files are not linked from pages and may remain in source history for recovery; original artwork is never deleted.
+
+
+## Adding mockup projects
+
+The Curated Works **Mockups** filter groups original T-shirt, hoodie and other mockup projects. Until original mockups are added, it displays an empty state; existing artwork is not reclassified or replaced.
+
+For each new completed mockup, add its original image to `images/`, create its project page and matching `project-data.js` entry using the existing project structure, and add a `.project` card to `index.html` with `data-case-study="<slug>"` and `data-discover-categories="mockups"`. Multiple categories may be separated by spaces, e.g. `data-discover-categories="mockups identity"`. Include T-shirt / Hoodie / Mockup in the card title or category caption so visitors can search by garment type. Update the gallery totals and search placeholder when adding cards. No hardcoded filter catalog edit is needed for tagged cards.
