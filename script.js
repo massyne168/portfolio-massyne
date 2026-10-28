@@ -27,8 +27,16 @@
     anchor.addEventListener("click", closeMenu)
   );
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeMenu();
+    if (event.key === "Escape" && nav?.classList.contains("is-open")) {
+      closeMenu();
+      menu?.focus();
+    }
   });
+  // The navigation is a disclosure, not a modal: allow Tab to leave naturally.
+  header?.addEventListener("focusout", event => {
+    if (!header.contains(event.relatedTarget)) closeMenu();
+  });
+  window.matchMedia("(min-width: 851px)").addEventListener?.("change", closeMenu);
   document.addEventListener("click", event => {
     if (header && !header.contains(event.target)) closeMenu();
   });
@@ -189,7 +197,7 @@
   // Curated Works view switching is provided by curated-3d.js.
 
   // Opt-in section reveals: hidden state is added only when observation is supported.
-  const targets = [...document.querySelectorAll(".section-head, .identity-top, .about > div, .contact > h2")];
+  const targets = [...document.querySelectorAll(".section-head, .identity-top, .about > div, .contact > h2, .spotlight-head, .spotlight-card")];
   let revealObserver;
   const resetReveals = () => {
     revealObserver?.disconnect();

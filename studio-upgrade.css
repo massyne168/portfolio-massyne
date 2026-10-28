@@ -22,12 +22,13 @@
 .case-insight h3{font:500 clamp(1.18rem,2vw,1.67rem)/1.15 var(--display);letter-spacing:-.04em;margin:0 0 12px}
 .case-insight p{color:#b4acb0;font:.88rem/1.8 var(--body);margin:0}
 .case-visuals{border-bottom:1px solid rgba(255,255,255,.1)}
-.case-artwork-frame img{view-transition-name:project-hero}
-@view-transition{navigation:auto}
-::view-transition-old(project-hero){animation:studio-project-out .3s ease both}
-::view-transition-new(project-hero){animation:studio-project-in .48s cubic-bezier(.18,.75,.2,1) both}
-@keyframes studio-project-out{to{opacity:.64;transform:scale(.985)}}
-@keyframes studio-project-in{from{opacity:.65;transform:scale(1.035)}to{opacity:1;transform:scale(1)}}
+/* Scripted project exits and CSS entry reveals share one motion system.
+   Native cross-document snapshots can abort when motion preferences change. */
+@view-transition{navigation:none}
+@media(prefers-reduced-motion:no-preference){
+ .case-artwork-frame{animation:premium-project-enter .65s cubic-bezier(.22,.61,.36,1) both}
+}
+@keyframes premium-project-enter{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
 
 /* SERVICES — focused offerings, not oversized generic cards */
 .studio-services{position:relative;isolation:isolate;padding:clamp(84px,11vw,155px) clamp(20px,4.3vw,72px);border-top:1px solid var(--line);background:#0b0b0f}

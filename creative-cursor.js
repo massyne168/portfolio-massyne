@@ -16,8 +16,8 @@
    x=event.clientX;y=event.clientY;
    if(!raf)raf=requestAnimationFrame(paint);
    cursor.classList.toggle("is-visible",!document.documentElement.classList.contains("intro-active"));
-   const card=event.target.closest?.(".project.image-open, .archive-item.image-open");
-   const dragging=Boolean(event.buttons||document.querySelector(".project-grid.is-dragging"));
+   const card=event.target.closest?.(".project.image-open, .archive-item.image-open, .spotlight-card, .case-related-card");
+   const dragging=Boolean(event.buttons||card?.closest(".project-grid.is-dragging"));
    cursor.classList.toggle("is-project",Boolean(card&&!dragging));
  },{passive:true});
  document.addEventListener("pointerdown",()=>cursor.classList.remove("is-project"),{passive:true});

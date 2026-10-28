@@ -11,6 +11,7 @@
   const count=document.getElementById("discover-count");
   const empty=document.getElementById("discover-empty");
   const reset=document.getElementById("discover-reset");
+  const context=document.getElementById("discover-context");
   const threeD=section.querySelector('.view-switch [data-view="3d"]');
   const gridButton=section.querySelector('.view-switch [data-view="grid"]');
   const catalog={
@@ -28,7 +29,7 @@
     if(active!=="all"&&!categories[active]?.has(slug)&&!tags.includes(active))return false;
     const query=clean(search?.value);
     if(!query)return true;
-    const description=clean([slug,card.querySelector("h3")?.textContent,card.querySelector("div span")?.textContent].join(" "));
+    const description=clean([slug.replace(/-/g," "),tags.join(" "),card.querySelector("h3")?.textContent,card.querySelector("div span")?.textContent].join(" "));
     return query.split(/\s+/).every(word=>description.includes(word));
   };
   const update=()=>{
@@ -44,6 +45,11 @@
       if(show)visible++;
     });
     buttons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.discoverCategory===active)));
+    if(context){
+      context.hidden=active!=="mockups";
+      context.textContent="Mockups / Apparel & objects — a dedicated space for apparel, packaging and brand applications. Explore the original Suspended Tribal T-Shirt study below.";
+    }
+    grid.dataset.discovery=active;
     if(count)count.textContent=(filtered?(visible+" of "+cards.length):String(cards.length))+" original works";
     if(empty){
       empty.hidden=visible!==0;
@@ -55,6 +61,15 @@
   };
   const clear=()=>{active="all";if(search)search.value="";update();};
   buttons.forEach(button=>button.addEventListener("click",()=>{active=button.dataset.discoverCategory;update();}));
+  // Arrow keys move through the filter group without changing the standard Tab order.
+  toolbar.addEventListener("keydown",event=>{
+    const index=buttons.indexOf(event.target);
+    if(index<0||!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;
+    event.preventDefault();
+    const next=event.key==="Home"?0:event.key==="End"?buttons.length-1:(index+(event.key==="ArrowRight"?1:-1)+buttons.length)%buttons.length;
+    buttons[next].focus();
+    buttons[next].click();
+  });
   search?.addEventListener("input",update);
   search?.addEventListener("keydown",event=>{if(event.key==="Escape"&&search.value){search.value="";update();}});
   reset?.addEventListener("click",()=>{clear();search?.focus();});
