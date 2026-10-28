@@ -657,5 +657,34 @@ window.MASSYNE_PROJECTS = [
     "gallery": [
       "images/curated/designfd%20works2.png"
     ]
-  }
+  },
+{
+  "slug": "suspended-tribal-tshirt",
+  "title": "Suspended Tribal T-Shirt",
+  "category": "T-Shirt Mockup",
+  "year": "2026",
+  "image": "Tshirt%20mockup.png",
+  "focus": "Apparel mockup / tribal logo / monochrome atmosphere",
+  "summary": "A white T-shirt with a dark tribal MASSYNE chest logo, suspended by chains in a dramatic industrial setting.",
+  "concept": "An apparel mockup presenting the MASSYNE tribal mark on a white T-shirt. The suspended composition makes the garment and chest graphic the centre of the image.",
+  "direction": "Monochrome lighting, metal chains and a dark industrial backdrop contrast with the white fabric and its folds.",
+  "details": [
+    {
+      "title": "Chest graphic",
+      "description": "A dark tribal logo sits at the centre of the white T-shirt."
+    },
+    {
+      "title": "Suspended silhouette",
+      "description": "Metal chains extend from the garment into the surrounding scene."
+    },
+    {
+      "title": "Fabric and light",
+      "description": "Directional light reveals the folds and texture against a dark background."
+    }
+  ],
+  "number": "23",
+  "gallery": [
+    "Tshirt%20mockup.png"
+  ]
+}
 ];
