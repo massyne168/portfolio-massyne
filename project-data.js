@@ -687,4 +687,121 @@ window.MASSYNE_PROJECTS = [
     "Tshirt%20mockup.png"
   ]
 }
+,
+{
+  "slug": "velocity-streetwear",
+  "title": "Velocity — Streetwear Mockup",
+  "category": "T-Shirt Mockup",
+  "year": "2026",
+  "image": "images/mockups/velocity-streetwear-full.webp",
+  "focus": "Motorsport / apparel / street photography",
+  "summary": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car.",
+  "concept": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car. The composition presents the design in an everyday apparel context.",
+  "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
+  "details": [
+    {
+      "title": "Graphic application",
+      "description": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car."
+    },
+    {
+      "title": "Context and composition",
+      "description": "The garment and surrounding environment create a distinct presentation for the printed design."
+    },
+    {
+      "title": "Fabric and detail",
+      "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
+    }
+  ],
+  "number": "24",
+  "gallery": [
+    "images/mockups/velocity-streetwear-full.webp"
+  ]
+},
+{
+  "slug": "veiled-sorrow-mountain",
+  "title": "Veiled Sorrow — Mountain Mockup",
+  "category": "T-Shirt Mockup",
+  "year": "2026",
+  "image": "images/mockups/veiled-sorrow-mountain-full.webp",
+  "focus": "Apparel / outdoor presentation / cinematic artwork",
+  "summary": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape.",
+  "concept": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape. The composition presents the design in an everyday apparel context.",
+  "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
+  "details": [
+    {
+      "title": "Graphic application",
+      "description": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape."
+    },
+    {
+      "title": "Context and composition",
+      "description": "The garment and surrounding environment create a distinct presentation for the printed design."
+    },
+    {
+      "title": "Fabric and detail",
+      "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
+    }
+  ],
+  "number": "25",
+  "gallery": [
+    "images/mockups/veiled-sorrow-mountain-full.webp"
+  ]
+},
+{
+  "slug": "gothic-store-streetwear",
+  "title": "Gothic — Streetwear Mockup",
+  "category": "T-Shirt Mockup",
+  "year": "2026",
+  "image": "images/mockups/gothic-store-streetwear-full.webp",
+  "focus": "Apparel / gothic typography / lifestyle presentation",
+  "summary": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting.",
+  "concept": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting. The composition presents the design in an everyday apparel context.",
+  "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
+  "details": [
+    {
+      "title": "Graphic application",
+      "description": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting."
+    },
+    {
+      "title": "Context and composition",
+      "description": "The garment and surrounding environment create a distinct presentation for the printed design."
+    },
+    {
+      "title": "Fabric and detail",
+      "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
+    }
+  ],
+  "number": "26",
+  "gallery": [
+    "images/mockups/gothic-store-streetwear-full.webp"
+  ]
+},
+{
+  "slug": "nocturne-flatlay",
+  "title": "Nocturne — Flat Lay Mockup",
+  "category": "T-Shirt Mockup",
+  "year": "2026",
+  "image": "images/mockups/nocturne-flatlay-full.webp",
+  "focus": "Apparel / distressed graphics / flat lay",
+  "summary": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay.",
+  "concept": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay. The composition presents the design in an everyday apparel context.",
+  "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
+  "details": [
+    {
+      "title": "Graphic application",
+      "description": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay."
+    },
+    {
+      "title": "Context and composition",
+      "description": "The garment and surrounding environment create a distinct presentation for the printed design."
+    },
+    {
+      "title": "Fabric and detail",
+      "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
+    }
+  ],
+  "number": "27",
+  "gallery": [
+    "images/mockups/nocturne-flatlay-full.webp"
+  ]
+}
 ];

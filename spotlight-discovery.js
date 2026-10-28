@@ -45,7 +45,7 @@
     buttons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.discoverCategory===active)));
     if(context){
       context.hidden=active!=="mockups";
-      context.textContent="Mockups / Apparel & objects — a dedicated space for apparel, packaging and brand applications. Explore the original Suspended Tribal T-Shirt study below.";
+      context.textContent="Mockups / Apparel in context — explore graphic T-shirts through streetwear scenes, outdoor displays and studio presentations.";
     }
     grid.dataset.discovery=active;
     if(count)count.textContent=(filtered?(visible+" of "+cards.length):String(cards.length))+" original works";
