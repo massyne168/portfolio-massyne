@@ -235,3 +235,30 @@
   }
   refresh();
 })();
+/* Gurzil / The Drop 001. Two views of the supplied front-and-back artwork. */
+(() => {
+ "use strict";
+ const art=document.getElementById("gurzil-drop-art");
+ if(!art)return;
+ const buttons=[...document.querySelectorAll("[data-drop-view]")];
+ const label=document.getElementById("gurzil-drop-view");
+ const detail=document.getElementById("gurzil-drop-detail");
+ const views={front:{label:"01 / FRONT",text:"Front / The crowned Gurzil symbol, sleeve graphics and a restrained black-on-black identity."},back:{label:"02 / BACK",text:"Back / Veiled Sorrow artwork, oversized typography and symbolic details bring the visual identity into streetwear."}};
+ const choose=side=>{
+  if(!views[side])return;
+  art.dataset.side=side;
+  buttons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.dropView===side)));
+  label.textContent=views[side].label;
+  detail.textContent=views[side].text;
+ };
+ buttons.forEach((button,index)=>{
+  button.addEventListener("click",()=>choose(button.dataset.dropView));
+  button.addEventListener("keydown",event=>{
+   if(!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;
+   event.preventDefault();
+   const next=event.key==="Home"?0:event.key==="End"?buttons.length-1:1-index;
+   buttons[next].focus();
+   choose(buttons[next].dataset.dropView);
+  });
+ });
+})();
