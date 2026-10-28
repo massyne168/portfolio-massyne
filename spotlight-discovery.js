@@ -13,7 +13,6 @@
   const reset=document.getElementById("discover-reset");
   const context=document.getElementById("discover-context");
   const threeD=section.querySelector('.view-switch [data-view="3d"]');
-  const gridButton=section.querySelector('.view-switch [data-view="grid"]');
   const catalog={
     posters:"veiled-sorrow ghost-protocol power-speaks velocity ashes-of-innocence glory envy nocturne-dark-veil nocturne-red-sun",
     identity:"silver-throne mssn-chrome",
@@ -34,8 +33,6 @@
   };
   const update=()=>{
     const filtered=active!=="all"||Boolean(clean(search?.value));
-    // 3D always handles the COMPLETE collection. Switch to grid before applying a filter.
-    if(filtered&&grid.dataset.view==="3d")gridButton?.click();
     let visible=0;
     cards.forEach(card=>{
       const show=!filtered||matches(card);
@@ -44,6 +41,7 @@
       else if(grid.dataset.view!=="3d"&&card.classList.contains("image-open"))card.tabIndex=0;
       if(show)visible++;
     });
+    grid.dispatchEvent(new CustomEvent("discoverychange"));
     buttons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.discoverCategory===active)));
     if(context){
       context.hidden=active!=="mockups";

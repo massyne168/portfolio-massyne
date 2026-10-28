@@ -7,7 +7,7 @@
   const stage = document.querySelector(".curated-stage");
   const controls = document.querySelector(".carousel-controls");
   const buttons = [...document.querySelectorAll(".view-switch [data-view]")];
-  const cards = grid ? [...grid.querySelectorAll(":scope > .project")] : [];
+  let cards = grid ? [...grid.querySelectorAll(":scope > .project")] : [];
   const prev = document.querySelector(".carousel-prev");
   const next = document.querySelector(".carousel-next");
   const togglePlayback = document.querySelector(".carousel-autoplay");
@@ -16,9 +16,10 @@
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const dialog = document.querySelector(".lightbox");
 
-  if (!grid || !stage || !controls || !cards.length || buttons.length < 2) return;
+  if (!grid || !stage || !controls || !cards.length || buttons.length < 1) return;
 
-  const count = cards.length;
+  const allCards = cards;
+  let count = cards.length;
 
   // Real SVG perimeter tracer: independent from masked pseudo-elements and 3D transforms.
   // The path follows every card's rounded rectangular outline.
@@ -89,13 +90,19 @@
 
   const measureStep = () => {
     if (mode !== "3d") return;
-    const width = cards[0].offsetWidth;
+    const width = cards[0]?.offsetWidth || 0;
     if (width > 0) slideStep = width * (window.innerWidth < 560 ? 0.74 : 0.91);
   };
 
   const render = () => {
     renderFrame = 0;
     if (mode !== "3d") return;
+    controls.hidden = count === 0;
+    if (!count) {
+      if (positionLabel) positionLabel.textContent = "00 / 00";
+      if (currentName) currentName.textContent = "No matching projects";
+      return;
+    }
 
     cards.forEach((card, index) => {
       const distance = nearest(index, active) + dragOffset;
@@ -142,13 +149,14 @@
 
   const changeSlide = (index, isManual = true) => {
     if (isManual) userAction();
+    if (!count) return;
     active = mod(index);
     dragOffset = 0;
     requestRender();
   };
 
   const canPlay = () =>
-    mode === "3d" &&
+    mode === "3d" && count > 1 &&
     visible &&
     !motion.matches &&
     !userPaused &&
@@ -354,7 +362,7 @@
   motion.addEventListener?.("change", () => {
     if (motion.matches) {
       userPaused = false;
-      if (mode === "3d") setView("grid");
+      requestRender();
     }
     updateToggle();
     updatePlayback();
@@ -364,6 +372,18 @@
     updatePlayback();
   });
 
-  // Reduced-motion viewers start in the static grid but can explicitly choose 3D.
-  setView(motion.matches ? "grid" : "3d");
+  grid.addEventListener("discoverychange", () => {
+    cards = allCards.filter(card => !card.hidden);
+    count = cards.length;
+    active = 0;
+    drag = null;
+    dragOffset = 0;
+    grid.classList.remove("is-dragging");
+    measureStep();
+    render();
+    updatePlayback();
+  });
+
+  // Keep the requested 3D layout; reduced motion disables autoplay and transitions.
+  setView("3d");
 })();
