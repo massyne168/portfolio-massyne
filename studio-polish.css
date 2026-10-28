@@ -10,10 +10,10 @@
 }
 .site-header.brand-header .brand-logo{
   order:0;display:flex;align-items:center;justify-content:center;
-  flex:0 0 clamp(70px,6.4vw,88px)!important;
-  width:clamp(70px,6.4vw,88px)!important;
-  min-width:0;max-width:88px!important;
-  height:53px!important;max-height:53px!important;
+  flex:0 0 clamp(108px,9vw,128px)!important;
+  width:clamp(108px,9vw,128px)!important;
+  min-width:0;max-width:128px!important;
+  height:64px!important;max-height:64px!important;
   margin:0!important;padding:0!important;overflow:hidden;
 }
 .site-header.brand-header .brand-logo picture{
@@ -26,12 +26,12 @@
 .site-header.brand-header .site-nav{order:1;margin-left:auto!important;margin-right:0!important}
 .site-header.brand-header .menu{order:2}
 @media(max-width:850px){
-  .site-header.brand-header .brand-logo{flex-basis:74px!important;width:74px!important;max-width:74px!important;height:48px!important}
+  .site-header.brand-header .brand-logo{flex-basis:100px!important;width:100px!important;max-width:100px!important;height:56px!important;max-height:56px!important}
   .site-header.brand-header .menu{margin-left:auto!important;margin-right:0!important}
   .site-header.brand-header .site-nav{margin:0!important}
 }
 @media(max-width:370px){
-  .site-header.brand-header .brand-logo{flex-basis:68px!important;width:68px!important;max-width:68px!important;height:45px!important}
+  .site-header.brand-header .brand-logo{flex-basis:90px!important;width:90px!important;max-width:90px!important;height:50px!important;max-height:50px!important}
 }
 
 /* Artwork-first showcase — a single cohesive stage, not twenty repetitive fake product cards */
