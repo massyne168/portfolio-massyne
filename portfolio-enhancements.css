@@ -371,3 +371,30 @@
 @media(prefers-reduced-motion:reduce){
  .contact-v2-button,.contact-v2 .email,.contact-v2 .contact-links a{transition:none!important;transform:none!important}
 }
+
+/* Creative toolkit / compact icon cards and editorial actions. */
+body .about-v2-content .tool-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;margin:0;padding:0}
+body .tool-stack .tool-item{display:flex;align-items:center;gap:13px;min-width:0;padding:14px;border:1px solid #ffffff15;border-radius:15px;background:linear-gradient(135deg,#ffffff06,#ffffff01)}
+.tool-item .tool-icon{flex:0 0 44px;display:block}
+.tool-item>div{min-width:0}
+.tool-item strong{display:block;color:#f0e9ed;font:600 .84rem/1.4 var(--body)}
+.tool-item small{display:block;color:#aca0a9;font:400 .66rem/1.5 var(--body);margin-top:3px}
+body .about-v2-content .about-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px;align-items:stretch}
+body .about-actions>a{display:flex;align-items:center;justify-content:center;gap:12px;margin:0;padding:17px 18px;min-width:0;min-height:56px;border-radius:14px;font:500 .62rem/1.5 var(--mono);letter-spacing:.04em}
+body .about-actions .about-resume{background:linear-gradient(130deg,#bd2944,#8c2037);border-color:#da5672;color:#fff}
+.about-actions a>svg{flex-shrink:0}
+.about-actions a>i{font:400 1.3rem var(--body);font-style:normal}
+body .about-actions .about-download{background:#ffffff04;border-color:#60404d;color:#e5d5dd}
+body .about-actions .about-collaborate{grid-column:1/-1;justify-content:space-between;text-align:left;padding:23px 24px;margin-top:4px;border-color:#5c3445;background:radial-gradient(ellipse at 100% 100%,#77233d33,transparent 70%),#141016}
+.about-collaborate small{display:block;font:500 .55rem/1.5 var(--mono);letter-spacing:.1em;color:#d77b94;margin-bottom:9px}
+.about-collaborate strong{display:block;font:500 clamp(1.3rem,2vw,1.9rem)/1.2 var(--display);letter-spacing:-.03em;color:#f2e9ed}
+body .about-collaborate>i{display:grid;place-items:center;width:40px;height:40px;flex:0 0 40px;border:1px solid #8c5066;border-radius:50%;color:#f3c4d2}
+@media(max-width:420px){
+ body .tool-stack .tool-item{padding:12px 10px;gap:9px}
+ .tool-item .tool-icon{width:35px;height:35px;flex-basis:35px}
+ .tool-item strong{font-size:.72rem}
+ .tool-item small{font-size:.59rem}
+ body .about-actions>a{padding:15px 10px;gap:8px;font-size:.56rem}
+ body .about-actions .about-collaborate{padding:20px}
+}
+@media(max-width:340px){body .about-v2-content .tool-stack{grid-template-columns:1fr}}
