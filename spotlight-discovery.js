@@ -24,7 +24,8 @@
   let active="all";
   const matches=card=>{
     const slug=card.dataset.caseStudy||"";
-    if(active!=="all"&&!categories[active]?.has(slug))return false;
+    const tags=clean(card.dataset.discoverCategories).split(/\s+/);
+    if(active!=="all"&&!categories[active]?.has(slug)&&!tags.includes(active))return false;
     const query=clean(search?.value);
     if(!query)return true;
     const description=clean([slug,card.querySelector("h3")?.textContent,card.querySelector("div span")?.textContent].join(" "));
@@ -44,7 +45,12 @@
     });
     buttons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.discoverCategory===active)));
     if(count)count.textContent=(filtered?(visible+" of "+cards.length):String(cards.length))+" original works";
-    if(empty)empty.hidden=visible!==0;
+    if(empty){
+      empty.hidden=visible!==0;
+      empty.textContent=active==="mockups"&&!clean(search?.value)
+        ? "T-shirts, hoodies and more — new mockup projects will appear here as they are added."
+        : "No works match your search. Try another name or clear the filters.";
+    }
     if(reset)reset.hidden=!filtered;
   };
   const clear=()=>{active="all";if(search)search.value="";update();};
