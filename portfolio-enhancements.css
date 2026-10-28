@@ -398,3 +398,36 @@ body .about-collaborate>i{display:grid;place-items:center;width:40px;height:40px
  body .about-actions .about-collaborate{padding:20px}
 }
 @media(max-width:340px){body .about-v2-content .tool-stack{grid-template-columns:1fr}}
+
+/* Project brief / framed editorial panel; existing form content and behavior stay intact. */
+body .project-brief{position:relative;display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.6fr);column-gap:clamp(26px,4vw,60px);row-gap:0;padding:clamp(25px,4.3vw,60px);border:1px solid #754052;border-radius:28px;background:radial-gradient(ellipse at 0 0,#73203a29,transparent 55%),linear-gradient(145deg,#191219,#100e13 65%);box-shadow:inset 0 1px 0 #ffffff12,0 25px 80px #0003;isolation:isolate}
+body .project-brief::before{content:"";position:absolute;top:-1px;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,#e27b97,transparent);pointer-events:none}
+body .project-brief .project-brief-head{grid-column:1/-1;margin-bottom:36px;padding-bottom:22px;border-bottom:1px solid #ffffff16;flex-wrap:wrap}
+body .project-brief-head>span{display:flex;align-items:center;gap:10px}
+body .project-brief-head>span::before{content:"";width:6px;height:6px;border-radius:50%;background:#f16b8a;box-shadow:0 0 0 5px #f16b8a12}
+body .project-brief-head>small{padding:7px 11px;border:1px solid #ffffff1c;border-radius:30px;color:#c8b6c0;background:#ffffff03}
+body .project-brief>h3{grid-column:1;grid-row:2/span 5;align-self:stretch;margin:0;padding:5px 22px 25px 0;border-right:1px solid #ffffff16;font-size:clamp(2.5rem,4vw,4.6rem);line-height:1.02;letter-spacing:-.065em}
+body .project-brief>h3 em{display:inline-block;margin-top:9px;color:#f16b8a}
+body .project-brief>:is(.brief-grid,.brief-actions,.brief-note,.brief-feedback,.brief-output){grid-column:2;min-width:0}
+body .project-brief .brief-grid{gap:23px 18px}
+body .project-brief .brief-field{gap:9px}
+body .project-brief .brief-field label{color:#ccbbc5;font-size:.6rem;letter-spacing:.07em}
+body .project-brief .brief-field :is(input,select,textarea){min-height:49px;border:1px solid #ffffff23;border-radius:11px;background:#09080d66;box-shadow:inset 0 2px 5px #0002;padding:14px;color:#f1e9ed;transition:border-color .2s,background-color .2s,box-shadow .2s}
+body .project-brief .brief-field textarea{min-height:150px;line-height:1.7}
+body .project-brief .brief-field :is(input,select,textarea):focus-visible{background-color:#1e121c;border-color:#e37493;outline:2px solid #e3749370;outline-offset:3px;box-shadow:0 0 0 5px #e3749309}
+body .project-brief .brief-actions{margin-top:24px;gap:10px}
+body .project-brief .brief-actions>button{min-height:48px;border-radius:30px;padding:14px 18px;gap:14px;font-size:.59rem}
+body .project-brief .brief-submit{background:linear-gradient(130deg,#c33150,#92223d);border-color:#e46786;box-shadow:inset 0 1px 0 #ffffff20}
+body .project-brief .brief-copy{border-color:#75505f;background:#ffffff03}
+body .project-brief .brief-note{max-width:100%;margin-top:18px;font-size:.72rem;line-height:1.8;color:#b3a2ac}
+body .project-brief .brief-feedback{margin-bottom:0}
+@media(max-width:760px){
+ body .project-brief{grid-template-columns:minmax(0,1fr);padding:27px 22px;border-radius:22px}
+ body .project-brief .project-brief-head{margin-bottom:25px;gap:15px}
+ body .project-brief>h3{grid-column:1;grid-row:auto;border-right:0;padding:0 0 28px;font-size:clamp(2.8rem,10vw,4rem)}
+ body .project-brief>:is(.brief-grid,.brief-actions,.brief-note,.brief-feedback,.brief-output){grid-column:1}
+ body .project-brief .brief-grid{grid-template-columns:1fr;gap:20px}
+ body .project-brief .brief-actions{flex-direction:column;align-items:stretch}
+ body .project-brief .brief-actions>button{width:100%;justify-content:space-between;padding-inline:20px}
+}
+@media(prefers-reduced-motion:reduce){body .project-brief .brief-field :is(input,select,textarea){transition:none}}
