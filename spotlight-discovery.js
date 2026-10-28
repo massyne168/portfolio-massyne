@@ -58,7 +58,23 @@
     if(reset)reset.hidden=!filtered;
   };
   const clear=()=>{active="all";if(search)search.value="";update();};
-  buttons.forEach(button=>button.addEventListener("click",()=>{active=button.dataset.discoverCategory;update();}));
+  const showResults=()=>{
+    // Wait for the category intro and empty state to settle before scrolling.
+    requestAnimationFrame(()=>{
+      const destination=empty&&!empty.hidden?empty:grid.closest(".curated-stage");
+      if(!destination)return;
+      const header=document.querySelector(".site-header");
+      const offset=(header?.getBoundingClientRect().height||0)+16;
+      const top=destination.getBoundingClientRect().top+window.scrollY-offset;
+      window.scrollTo({top:Math.max(0,top),behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});
+    });
+  };
+  buttons.forEach(button=>button.addEventListener("click",event=>{
+    active=button.dataset.discoverCategory;
+    update();
+    // Keep arrow-key browsing anchored to the filter buttons.
+    if(event.detail>0)showResults();
+  }));
   // Arrow keys move through the filter group without changing the standard Tab order.
   toolbar.addEventListener("keydown",event=>{
     const index=buttons.indexOf(event.target);
