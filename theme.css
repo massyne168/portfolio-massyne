@@ -379,3 +379,18 @@ html[data-theme="dark"] :is(.case-viewer-detail){color:rgb(248,250,237);border:1
 html[data-theme="dark"] :is(.case-viewer-detail:hover){background:rgb(140,38,53);background-color:rgb(140,38,53);}
 html[data-theme="dark"] :is(.case-gallery-open){color:rgb(140,38,53);border:1px solid rgb(140,38,53);border-color:rgb(140,38,53);border-top:1px solid rgb(140,38,53);border-bottom:1px solid rgb(140,38,53);border-left:1px solid rgb(140,38,53);border-right:1px solid rgb(140,38,53);}
 html[data-theme="dark"] :is(.case-immersive button:focus-visible, .case-immersive a:focus-visible, .case-gallery-open:focus-visible){outline:rgb(140,38,53) solid 2px;outline-color:rgb(140,38,53);}
+
+/* Typography trial: restore clear light/dark hierarchy with restrained oxblood accents. */
+:root{--display:"Sora",Arial,sans-serif;--serif:"DM Serif Display",Georgia,serif}
+html body .hero-v2-title{letter-spacing:-.075em;line-height:.96}
+html body .hero-v2-title span:nth-child(1){font-size:1.12em;line-height:.9;letter-spacing:-.085em;margin-bottom:clamp(22px,3vw,37px)}
+html body .hero-v2-title span:nth-child(2){font-size:.49em;letter-spacing:-.055em;line-height:1.2}
+html body .hero-v2-title em{font-size:.87em;line-height:1.1;letter-spacing:-.055em}
+html body :is(.section-head h2,.spotlight-head h2,.identity-top h2,.studio-services-header h2,.contact-v2 h2,.case-intro h1){letter-spacing:-.06em}
+html[data-theme=dark] body :is(h1,h2,h3,h4,h1 span,h2 span,h3 span,h4 span,.hero-v2-title span,.email,.tool-item strong,.case-related-info strong){color:#F8FAED}
+html[data-theme=dark] body :is(h1 em,h2 em,h3 em,h4 em,.hero-v2-title em){color:#8c2635}
+html[data-theme=dark] body :is(p,label,.case-story-copy p,.case-insight p,.hero-v2-description,.about-v2-text,.brief-note,.gurzil-lead p,.studio-services-header>p,.service-item p){color:#d4d1c5}
+html[data-theme=dark] body :is(.eyebrow,.hero-kicker,.index,.case-step,.carousel-kicker,.discover-footer,.project-count-label,.contact-v2-heading>span,.project-brief-head span,.about-v2-mini,.case-category,.spotlight-card-head,.spotlight-card-head span){color:#c8bdad}
+html[data-theme=dark] body :is(.hero-button-quiet,.case-gallery-open,.case-expand,.case-contact-link,.brief-copy,.resume-cta>a,.gurzil-lead a,.carousel-actions button,.view-switch button,.filters button,.discover-categories button,.discover-reset,.contact-links a){color:#F8FAED}
+html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type){color:#F8FAED}
+html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type) :is(span,strong,i){color:inherit}
