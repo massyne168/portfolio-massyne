@@ -43,3 +43,10 @@ body #archive .archive-fan-stage>.archive-item.fan-front img{filter:brightness(1
 /* Give the enlarged selected artwork comfortable space. */
 body #archive .archive-grid.archive-fan-stage{height:700px}
 @media(max-width:650px){body #archive .archive-grid.archive-fan-stage{height:510px}}
+
+/* Closer presentation uses native-resolution files, without scaling the selected plane. */
+body #archive .archive-grid.archive-fan-stage{height:clamp(620px,76svh,780px)}
+body #archive .archive-fan-stage>.archive-item{top:46%}
+body #archive .archive-fan-stage>.archive-item img{width:100%;height:clamp(320px,56svh,580px);aspect-ratio:auto;object-fit:contain}
+body #archive .archive-fan-stage>.archive-item.fan-front img{filter:none;transform:none}
+@media(max-width:650px){body #archive .archive-grid.archive-fan-stage{height:clamp(480px,65svh,610px)}body #archive .archive-fan-stage>.archive-item img{height:clamp(250px,44svh,360px)}}
