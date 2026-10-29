@@ -71,3 +71,14 @@ html[data-theme=dark] .brand-logo img,html[data-theme=dark] .resume-topbar>img{f
 html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type,.hero-portrait-stamp,.theme-control button[aria-pressed=true]){background:#8c2635;border-color:#8c2635;color:#F8FAED}
 html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type,.hero-portrait-stamp) :is(span,strong,em,i){color:inherit}
 html[data-theme=dark] body .site-nav a[aria-current=location]{text-decoration-color:#8c2635}
+
+/* Sombre uses the same Satin Linen as Clair instead of pure white. */
+html[data-theme=dark] body{color:#F8FAED}
+html[data-theme=dark] body :is(p,label,small,figcaption,.hero-v2-description,.hero-kicker,.hero-meta,.hero-v2-bottom,.hero-v2-scroll,.availability-block p,.availability-strip a,.site-nav a,.site-nav a[aria-current=location],.menu,.project-count-label,.carousel-context,.carousel-kicker,.carousel-hint,.carousel-current-name,.discover-footer,.spotlight-card-head,.spotlight-card-foot small,.spotlight-bottom,.studio-services-foot,.about-v2-text,.about-v2-stats span,.tool-item strong,.tool-item small,.contact-links a,.contact-v2-heading>span,.case-summary,.case-story-copy p,.case-insight p,.case-facts dt,.case-facts dd,.case-artwork-meta,.case-breadcrumb,.case-related-info span,.resume-return,.resume-section li,.brief-note,.brief-feedback){color:#F8FAED}
+html[data-theme=dark] body :is(.hero-meta span,.hero-v2-bottom span,.hero-v2-scroll span,.hero-v2-portrait figcaption span,.spotlight-card-head span,.identity-gallery figcaption span,.theme-control button,.resume-topbar,.resume-section p,.resume-section small){color:#F8FAED}
+html[data-theme=dark] body :is(.hero-button-quiet,.contact-links a,.case-expand,.case-contact-link,.case-gallery-open,.case-viewer-control,.discover-categories button,.discover-reset,.filters button,.view-switch button,.carousel-actions button,.showreel-controls button,.brief-copy,.about-actions .about-download,.gurzil-lead a,.resume-actions a,.resume-actions button,.case-fullscreen-close,.lightbox button){color:#F8FAED}
+html[data-theme=dark] body :is(.discover-search input,.brief-field input,.brief-field select,.brief-field textarea,.brief-output){color:#F8FAED}
+html[data-theme=dark] body .project-brief .brief-field :is(input,select,textarea){color:#F8FAED}
+html[data-theme=dark] body :is(input,textarea)::placeholder{color:#F8FAED;opacity:.65}
+html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.hero-portrait-stamp,.theme-control button[aria-pressed=true]) :is(span,strong,em,i){color:#F8FAED}
+html[data-theme=dark] body footer :is(a,span){color:#F8FAED}
