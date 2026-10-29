@@ -21,7 +21,7 @@
   raf=0;
   const camera=clamp(position+offset);
   const narrow=grid.clientWidth<650;
-  grid.style.setProperty('--fan-card-width',narrow?'min(48vw,185px)':'clamp(210px,22vw,280px)');
+  grid.style.setProperty('--fan-card-width',narrow?'min(57vw,220px)':'clamp(260px,27vw,340px)');
   cards.forEach((card,i)=>{
    let distance=i-camera;
    if(distance>pairs/2)distance-=pairs;
@@ -31,7 +31,7 @@
    card.style.setProperty('--fan-y',(front?-18:amount*(narrow?8:12))+'px');
    card.style.setProperty('--fan-z',(front?45:-amount*35)+'px');
    card.style.setProperty('--fan-angle',distance*(narrow?14:12)+'deg');
-   card.style.setProperty('--fan-scale',front?'1.04':'.96');
+   card.style.setProperty('--fan-scale',front?'1.08':'.96');
    card.style.setProperty('--fan-opacity',outside?'0':String(front?1:Math.max(.2,.5-amount*.075)));
    card.style.zIndex=String(100-Math.round(amount*20));
    card.classList.toggle('fan-outside',outside);card.classList.toggle('fan-front',front);

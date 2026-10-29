@@ -39,3 +39,7 @@ body #archive .archive-fan-stage>.archive-item img{transition:filter 1.05s ease}
 body #archive .archive-fan-stage>.archive-item:not(.fan-front) img{filter:brightness(.72)}
 body #archive .archive-fan-stage>.archive-item.fan-front img{filter:brightness(1)}
 @media(prefers-reduced-motion:reduce){body #archive .archive-fan-stage>.archive-item img{transition:none}}
+
+/* Give the enlarged selected artwork comfortable space. */
+body #archive .archive-grid.archive-fan-stage{height:700px}
+@media(max-width:650px){body #archive .archive-grid.archive-fan-stage{height:510px}}
