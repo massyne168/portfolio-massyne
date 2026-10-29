@@ -1,0 +1,22 @@
+/* Archive / Artwork Fan. Flat content planes prevent 3D painting artifacts. */
+.archive-fan{--fan-bg:#100e13;--fan-line:#f8faed28;position:relative;isolation:isolate;overflow:hidden;margin-top:28px;border:1px solid var(--fan-line);border-radius:24px;background:radial-gradient(ellipse at 50% 75%,#8c263526,transparent 65%),var(--fan-bg)}
+html[data-theme=light] .archive-fan{--fan-bg:#eef0e3;--fan-line:#8c263533}
+.archive-fan::before{content:'';position:absolute;bottom:9%;left:20%;width:60%;height:12%;border-radius:50%;background:radial-gradient(ellipse,#0003,transparent 72%);filter:blur(12px);pointer-events:none}
+body #archive .archive-grid.archive-fan-stage{display:block;columns:auto;position:relative;width:100%;height:630px;margin:0;perspective:1200px;perspective-origin:50% 50%;touch-action:pan-y;user-select:none;cursor:grab;isolation:isolate}
+body #archive .archive-fan-stage>.archive-item{position:absolute;left:50%;top:44%;width:var(--fan-card-width,260px);height:auto;margin:0;padding:10px;border:1px solid var(--fan-line);border-radius:13px;background:var(--fan-bg);box-shadow:0 15px 35px #0004;transform-origin:50% 110%;transform:translate(-50%,-50%) translate3d(var(--fan-x),var(--fan-y),var(--fan-z)) rotateZ(var(--fan-angle)) scale(var(--fan-scale));opacity:var(--fan-opacity,0);transition:transform .65s cubic-bezier(.22,.61,.36,1),opacity .4s;transform-style:flat;backface-visibility:visible;content-visibility:visible;contain-intrinsic-size:none}
+body #archive .archive-fan-stage>.archive-item.fan-front{border-color:var(--red);box-shadow:0 24px 50px #0005;cursor:zoom-in}
+body #archive .archive-fan-stage>.archive-item img{position:relative;width:100%;height:auto;aspect-ratio:3/4;object-fit:contain;border-radius:6px;background:var(--fan-bg)}
+body #archive .archive-fan-stage>.archive-item figcaption{position:relative;padding:14px 5px 6px;color:var(--paper);font-size:.57rem;line-height:1.5}
+body #archive .archive-fan-stage>.archive-item.fan-outside{visibility:hidden;pointer-events:none}
+body #archive .archive-fan-stage>.archive-item[hidden],body #archive .archive-fan-stage>.archive-item.is-hidden{display:none!important}
+body #archive .archive-fan-stage.is-fan-dragging{cursor:grabbing}
+body #archive .archive-fan-stage.is-fan-dragging>.archive-item{transition:none}
+.fan-controls{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 12px 0}
+.fan-controls>div{text-align:center;display:flex;flex-direction:column;gap:9px;color:var(--paper)}
+.fan-kicker{font:500 .57rem/1.5 var(--mono);letter-spacing:.15em;color:var(--red-bright)}
+.fan-count{font:500 .82rem/1.5 var(--display)}
+.fan-hint{font:400 .52rem/1.5 var(--mono);letter-spacing:.07em;color:var(--muted)}
+body .fan-controls>button{display:grid;place-items:center;min-width:48px;min-height:48px;border:1px solid var(--ui-stroke);border-radius:50%;background:transparent;color:var(--paper);font-size:1.3rem;cursor:pointer}
+body .fan-controls>button:disabled{opacity:.3;cursor:default}
+@media(max-width:650px){body #archive .archive-grid.archive-fan-stage{height:450px;perspective:900px}body #archive .archive-fan-stage>.archive-item{padding:7px}body #archive .archive-fan-stage>.archive-item figcaption{font-size:.49rem;padding:10px 3px 4px}.archive-fan{border-radius:17px}.fan-controls{padding:19px 0 0;gap:10px}.fan-hint{font-size:.43rem}.fan-controls>div{gap:6px}}
+@media(prefers-reduced-motion:reduce){body #archive .archive-fan-stage>.archive-item{transition:none}}
