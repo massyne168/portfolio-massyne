@@ -103,6 +103,8 @@
   filterButtons.forEach(button =>
     button.setAttribute("aria-pressed", String(button.classList.contains("active")))
   );
+  // Open the Archive in its selected category, never a mixed All collection.
+  filterButtons.find(button => button.classList.contains("active"))?.click();
 
 
   // Completed featured works use real crawlable <a> links to static project pages.
