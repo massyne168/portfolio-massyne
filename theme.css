@@ -399,5 +399,5 @@ html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-su
 body .site-header .brand-logo-light{display:none!important}
 html[data-theme=light] body .site-header .brand-logo-dark{display:none!important}
 html[data-theme=light] body .site-header .brand-logo-light{display:block!important;filter:none!important;width:100%!important;height:100%!important;object-fit:contain;object-position:center}
-html[data-theme=light] body .site-header.brand-header .brand-logo{order:4;margin-left:auto!important}
-html[data-theme=light] body .site-header.brand-header .site-nav{margin-left:0!important}
+html[data-theme=light] body .site-header.brand-header .brand-logo{order:0;margin-left:0!important}
+html[data-theme=light] body .site-header.brand-header .site-nav{margin-left:auto!important}
