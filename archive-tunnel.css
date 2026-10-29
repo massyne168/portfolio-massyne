@@ -1,0 +1,26 @@
+/* Archive Design Tunnel: same artwork, perspective exhibition, native image viewer. */
+.archive-tunnel{--tunnel-bg:#100e13;--tunnel-line:#f8faed28;position:relative;isolation:isolate;overflow:hidden;margin-top:28px;border:1px solid var(--tunnel-line);border-radius:24px;background:radial-gradient(ellipse at 50% 40%,#8c26351b,transparent 65%),var(--tunnel-bg)}
+html[data-theme=light] .archive-tunnel{--tunnel-bg:#eef0e3;--tunnel-line:#8c263533}
+.archive-tunnel::before{content:'';position:absolute;z-index:0;inset:15% 4% 0;border:1px solid var(--tunnel-line);background:linear-gradient(38deg,transparent 49.7%,var(--tunnel-line) 50%,transparent 50.3%),linear-gradient(-38deg,transparent 49.7%,var(--tunnel-line) 50%,transparent 50.3%);pointer-events:none;opacity:.6}
+.archive-tunnel::after{content:'';position:absolute;z-index:0;left:calc(50% - 48px);top:35%;width:96px;height:150px;border:1px solid var(--tunnel-line);background:linear-gradient(150deg,#8c263520,transparent);box-shadow:0 0 90px #8c263511;pointer-events:none}
+body #archive .archive-grid.archive-tunnel-stage{display:block;columns:auto;position:relative;width:100%;height:650px;margin:0;perspective:900px;perspective-origin:50% 43%;touch-action:pan-y;user-select:none;cursor:grab;isolation:isolate}
+body #archive .archive-tunnel-stage>.archive-item{position:absolute;left:50%;top:43%;width:var(--tunnel-card-width,clamp(170px,23vw,280px));transform-style:flat;backface-visibility:visible;height:auto;margin:0;padding:9px;border:1px solid var(--tunnel-line);border-radius:12px;background:var(--tunnel-bg);box-shadow:0 18px 35px #0004;transform:translate(-50%,-50%) translate3d(var(--tunnel-x),0,var(--tunnel-z)) rotateY(var(--tunnel-angle));opacity:var(--tunnel-opacity,0);transition:transform .65s cubic-bezier(.22,.61,.36,1),opacity .45s;will-change:auto}
+body #archive .archive-tunnel-stage>.archive-item img{width:100%;height:auto;aspect-ratio:3/4;object-fit:contain;border-radius:5px;background:var(--tunnel-bg)}
+body #archive .archive-tunnel-stage>.archive-item figcaption{padding:12px 5px 5px;color:var(--paper);font-size:.55rem;line-height:1.5}
+body #archive .archive-tunnel-stage>.archive-item.tunnel-outside{visibility:hidden;pointer-events:none}
+body #archive .archive-tunnel-stage>.archive-item[hidden],body #archive .archive-tunnel-stage>.archive-item.is-hidden{display:none!important}
+body #archive .archive-tunnel-stage.is-tunnel-dragging{cursor:grabbing}
+body #archive .archive-tunnel-stage.is-tunnel-dragging>.archive-item{transition:none}
+.tunnel-controls{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 12px 0}
+.tunnel-controls>div{text-align:center;display:flex;flex-direction:column;gap:9px;color:var(--paper)}
+.tunnel-kicker{font:500 .57rem/1.5 var(--mono);letter-spacing:.15em;color:var(--red-bright)}
+.tunnel-count{font:500 .82rem/1.5 var(--display)}
+.tunnel-hint{font:400 .52rem/1.5 var(--mono);letter-spacing:.07em;color:var(--muted)}
+body .tunnel-controls>button{display:grid;place-items:center;min-width:48px;min-height:48px;border:1px solid var(--ui-stroke);border-radius:50%;background:transparent;color:var(--paper);font-size:1.3rem;cursor:pointer}
+body .tunnel-controls>button:disabled{opacity:.3;cursor:default}
+@media(max-width:650px){body #archive .archive-grid.archive-tunnel-stage{height:475px;perspective:600px}body #archive .archive-tunnel-stage>.archive-item{width:var(--tunnel-card-width,150px);padding:6px}body #archive .archive-tunnel-stage>.archive-item figcaption{font-size:.46rem;padding:9px 2px 3px}.archive-tunnel{border-radius:17px}.tunnel-controls{padding:19px 0 0;gap:10px}.tunnel-hint{font-size:.43rem}.tunnel-controls>div{gap:6px}.archive-tunnel::after{top:30%;width:60px;height:110px;left:calc(50% - 30px)}}
+@media(prefers-reduced-motion:reduce){body #archive .archive-tunnel-stage>.archive-item{transition:none}}
+
+body #archive .archive-tunnel-stage>.archive-item img,body #archive .archive-tunnel-stage>.archive-item figcaption{position:relative;z-index:1}
+/* Transformed panels must paint their contents; grid-only offscreen culling is unsuitable here. */
+body #archive .archive-tunnel-stage>.archive-item{content-visibility:visible;contain-intrinsic-size:none}

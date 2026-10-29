@@ -98,6 +98,7 @@
       item.classList.toggle("is-hidden", !visible);
       item.toggleAttribute("hidden", !visible);
     });
+    document.querySelector("#archive .archive-grid")?.dispatchEvent(new CustomEvent("archivefilterchange"));
   }));
   filterButtons.forEach(button =>
     button.setAttribute("aria-pressed", String(button.classList.contains("active")))
@@ -163,7 +164,7 @@
   imageOpeners.forEach(item => {
     const open = () => {
       const gallery = item.closest(".project-grid, .identity-gallery, .self-brand, .archive-grid") || item.parentElement;
-      previewItems = Array.from(gallery?.querySelectorAll(".image-open") || [item]);
+      previewItems = Array.from(gallery?.querySelectorAll(".image-open") || [item]).filter(figure=>!figure.hidden&&!figure.classList.contains("is-hidden"));
       previewTrigger = item;
       showPreview(Math.max(0, previewItems.indexOf(item)));
     };
