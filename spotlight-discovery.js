@@ -12,7 +12,9 @@
   const empty=document.getElementById("discover-empty");
   const reset=document.getElementById("discover-reset");
   const context=document.getElementById("discover-context");
-  const threeD=section.querySelector('.view-switch [data-view="3d"]');
+  const stage=grid.closest(".curated-stage");
+  const heading=section.querySelector(".project-count-label");
+  const isMockup=card=>clean(card.dataset.discoverCategories).split(/\s+/).includes("mockups");
   const catalog={
     posters:"veiled-sorrow ghost-protocol power-speaks velocity ashes-of-innocence glory envy nocturne-dark-veil nocturne-red-sun",
     identity:"silver-throne mssn-chrome",
@@ -25,6 +27,8 @@
   const matches=card=>{
     const slug=card.dataset.caseStudy||"";
     const tags=clean(card.dataset.discoverCategories).split(/\s+/);
+    // Mockups belong exclusively to their own collection, including during search.
+    if(tags.includes("mockups")!==(active==="mockups"))return false;
     if(active!=="all"&&!categories[active]?.has(slug)&&!tags.includes(active))return false;
     const query=clean(search?.value);
     if(!query)return true;
@@ -33,9 +37,14 @@
   };
   const update=()=>{
     const filtered=active!=="all"||Boolean(clean(search?.value));
+    const mockups=active==="mockups";
+    const total=cards.filter(card=>isMockup(card)===mockups).length;
+    const collection=mockups?"mockups":"artwork";
+    grid.dataset.discovery=active;
+    if(stage)stage.dataset.collection=collection;
     let visible=0;
     cards.forEach(card=>{
-      const show=!filtered||matches(card);
+      const show=matches(card);
       card.hidden=!show;
       if(!show)card.tabIndex=-1;
       else if(grid.dataset.view!=="3d"&&card.classList.contains("image-open"))card.tabIndex=0;
@@ -45,10 +54,12 @@
     buttons.forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.discoverCategory===active)));
     if(context){
       context.hidden=active!=="mockups";
-      context.textContent="Mockups / Apparel in context — explore graphic T-shirts through streetwear scenes, outdoor displays and studio presentations.";
+      context.textContent="MOCKUP STUDIO / Apparel in the real world — a dedicated 3D collection of streetwear scenes, outdoor displays and studio presentations.";
     }
-    grid.dataset.discovery=active;
-    if(count)count.textContent=(filtered?(visible+" of "+cards.length):String(cards.length))+" original works";
+    if(heading)heading.textContent=(mockups?"MOCKUP STUDIO":"CURATED ARTWORK")+" — "+String(total).padStart(2,"0")+" WORKS";
+    if(search){search.placeholder="Search "+total+" "+collection+"…";search.setAttribute("aria-label","Search "+collection+" by name");}
+    grid.setAttribute("aria-label",(mockups?"Mockup Studio":"Curated artwork")+" 3D carousel. Use arrow keys or drag to browse.");
+    if(count)count.textContent=(visible!==total?(visible+" of "+total):String(total))+" "+collection;
     if(empty){
       empty.hidden=visible!==0;
       empty.textContent=active==="mockups"&&!clean(search?.value)
@@ -87,7 +98,5 @@
   search?.addEventListener("input",update);
   search?.addEventListener("keydown",event=>{if(event.key==="Escape"&&search.value){search.value="";update();}});
   reset?.addEventListener("click",()=>{clear();search?.focus();});
-  // Restore all cards synchronously when user requests the original 3D carousel.
-  threeD?.addEventListener("click",clear,true);
   update();
 })();

@@ -41,3 +41,15 @@
 
 .curated-stage:has(.discover-empty:not([hidden])){min-height:160px}
 .discover-empty{position:relative;z-index:3;margin:18px auto 25px;max-width:700px}
+
+/* The Mockup Studio is a separate, opt-in 3D collection. */
+body .curated-stage[data-collection=mockups]{background:#100e13;border-block:1px solid #6e3b504d}
+body .curated-stage[data-collection=mockups]::before{background:radial-gradient(ellipse at center,#b0698c2b,transparent 72%)}
+body .curated-stage[data-collection=mockups]::after{background:linear-gradient(90deg,#100e13,transparent 12%,transparent 88%,#100e13)}
+body .curated-stage[data-collection=mockups] .project-grid[data-view="3d"]{--carousel-card-width:clamp(260px,32vw,440px);height:clamp(500px,55vw,720px);perspective:1800px}
+body .curated-stage[data-collection=mockups] .project-grid>.project:nth-child(n){padding:11px;border-radius:23px;border-color:#aa70875c;background:linear-gradient(145deg,#29222b,#111016);box-shadow:0 25px 65px #0009,inset 0 1px 0 #ffffff12}
+body .curated-stage[data-collection=mockups] .project-grid>.project>img{border-radius:14px;object-fit:contain}
+body .curated-stage[data-collection=mockups] .project-grid>.project>div{padding:17px 10px 10px}
+body .discover-categories button[data-discover-category=mockups]{margin-left:8px;border-color:#b46d855c}
+body .discover-categories button[data-discover-category=mockups][aria-pressed=true]{background:#623447;border-color:#eea0ba}
+@media(max-width:600px){body .curated-stage[data-collection=mockups] .project-grid[data-view="3d"]{--carousel-card-width:clamp(248px,76vw,330px);height:580px}}
