@@ -33,3 +33,9 @@ body #archive .archive-fan-stage>.archive-item:not(.fan-front) figcaption{visibi
 
 /* Uniform transparent 4:5 slots keep mixed artwork proportions intact. */
 body #archive .archive-fan-stage>.archive-item img{height:auto;aspect-ratio:4/5;object-fit:contain;object-position:center;background:transparent}
+
+/* Spotlight the selected artwork while the rest recede into the fan. */
+body #archive .archive-fan-stage>.archive-item img{transition:filter 1.05s ease}
+body #archive .archive-fan-stage>.archive-item:not(.fan-front) img{filter:brightness(.72)}
+body #archive .archive-fan-stage>.archive-item.fan-front img{filter:brightness(1)}
+@media(prefers-reduced-motion:reduce){body #archive .archive-fan-stage>.archive-item img{transition:none}}

@@ -32,7 +32,7 @@
    card.style.setProperty('--fan-z',(front?45:-amount*35)+'px');
    card.style.setProperty('--fan-angle',distance*(narrow?14:12)+'deg');
    card.style.setProperty('--fan-scale',front?'1.04':'.96');
-   card.style.setProperty('--fan-opacity',outside?'0':String(Math.max(.45,1-amount*.12)));
+   card.style.setProperty('--fan-opacity',outside?'0':String(front?1:Math.max(.2,.5-amount*.075)));
    card.style.zIndex=String(100-Math.round(amount*20));
    card.classList.toggle('fan-outside',outside);card.classList.toggle('fan-front',front);
    card.inert=outside;card.tabIndex=front?0:-1;
