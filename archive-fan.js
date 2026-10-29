@@ -1,4 +1,4 @@
-/* Archive Artwork Fan. User-controlled motion and original full-image viewer. */
+/* Archive Artwork Fan. 500ms autoplay with pause and original image viewer. */
 (() => {
  'use strict';
  const grid=document.querySelector('#archive .archive-grid');
@@ -83,5 +83,31 @@
   go(position+Math.sign(horizontal?event.deltaX:event.deltaY));
  },{passive:false});
  grid.addEventListener('archivefilterchange',refresh);window.addEventListener('resize',schedule,{passive:true});motion.addEventListener('change',()=>{offset=0;schedule()});
- refresh();
+ const playback=document.createElement('button');
+ playback.type='button';playback.className='fan-playback';
+ controls.querySelector('div').append(playback);
+ let paused=false,hovering=false,visible=false,timer=null;
+ const syncPlayback=()=>{
+  playback.textContent=paused?'PLAY / 0.5s':'PAUSE / 0.5s';
+  playback.setAttribute('aria-label',paused?'Resume automatic archive playback':'Pause automatic archive playback');
+  playback.setAttribute('aria-pressed',String(paused));
+  playback.hidden=motion.matches;
+  count.setAttribute('aria-live',paused?'polite':'off');
+ };
+ const tick=()=>{
+  if(paused||hovering||drag||motion.matches||document.hidden||!visible||cards.length<2||document.querySelector('.lightbox')?.open||grid.contains(document.activeElement))return;
+  go(position+1);
+ };
+ const updateTimer=()=>{
+  if(timer){clearInterval(timer);timer=null;}
+  if(visible&&!document.hidden&&!motion.matches&&!paused)timer=setInterval(tick,500);
+ };
+ playback.addEventListener('click',()=>{paused=!paused;syncPlayback();updateTimer()});
+ wrap.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse')hovering=true});
+ wrap.addEventListener('pointerleave',()=>{hovering=false});
+ document.addEventListener('visibilitychange',updateTimer);
+ motion.addEventListener('change',()=>{syncPlayback();updateTimer()});
+ if('IntersectionObserver' in window){new IntersectionObserver(entries=>{visible=entries.some(entry=>entry.isIntersecting);updateTimer()},{threshold:.25}).observe(wrap)}
+ else{visible=true;updateTimer()}
+ refresh();syncPlayback();
 })();

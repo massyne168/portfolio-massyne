@@ -20,3 +20,13 @@ body .fan-controls>button{display:grid;place-items:center;min-width:48px;min-hei
 body .fan-controls>button:disabled{opacity:.3;cursor:default}
 @media(max-width:650px){body #archive .archive-grid.archive-fan-stage{height:450px;perspective:900px}body #archive .archive-fan-stage>.archive-item{padding:7px}body #archive .archive-fan-stage>.archive-item figcaption{font-size:.49rem;padding:10px 3px 4px}.archive-fan{border-radius:17px}.fan-controls{padding:19px 0 0;gap:10px}.fan-hint{font-size:.43rem}.fan-controls>div{gap:6px}}
 @media(prefers-reduced-motion:reduce){body #archive .archive-fan-stage>.archive-item{transition:none}}
+
+/* Frameless, transparent fan: artwork floats directly over the page. */
+body #archive .archive-fan{border:0;border-radius:0;background:none;box-shadow:none}
+body #archive .archive-fan::before{display:none}
+body #archive .archive-fan-stage>.archive-item,body #archive .archive-fan-stage>.archive-item.fan-front{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;transition:transform .4s cubic-bezier(.22,.61,.36,1),opacity .3s}
+body #archive .archive-fan-stage>.archive-item img{background:transparent;border-radius:0}
+body .fan-controls .fan-playback{align-self:center;min-height:40px;padding:9px 17px;border:1px solid var(--ui-stroke);border-radius:24px;background:transparent;color:var(--paper);font:500 .55rem/1.5 var(--mono);letter-spacing:.06em;cursor:pointer}
+body .fan-controls .fan-playback[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){body #archive .archive-fan-stage>.archive-item{transition:none}}
+body #archive .archive-fan-stage>.archive-item:not(.fan-front) figcaption{visibility:hidden}
