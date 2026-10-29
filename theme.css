@@ -394,3 +394,10 @@ html[data-theme=dark] body :is(.eyebrow,.hero-kicker,.index,.case-step,.carousel
 html[data-theme=dark] body :is(.hero-button-quiet,.case-gallery-open,.case-expand,.case-contact-link,.brief-copy,.resume-cta>a,.gurzil-lead a,.carousel-actions button,.view-switch button,.filters button,.discover-categories button,.discover-reset,.contact-links a){color:#F8FAED}
 html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type){color:#F8FAED}
 html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type) :is(span,strong,i){color:inherit}
+
+/* Use the supplied outline logo only in Clair, at the same header dimensions. */
+body .site-header .brand-logo-light{display:none!important}
+html[data-theme=light] body .site-header .brand-logo-dark{display:none!important}
+html[data-theme=light] body .site-header .brand-logo-light{display:block!important;filter:none!important;width:100%!important;height:100%!important;object-fit:contain;object-position:center}
+html[data-theme=light] body .site-header.brand-header .brand-logo{order:4;margin-left:auto!important}
+html[data-theme=light] body .site-header.brand-header .site-nav{margin-left:0!important}
