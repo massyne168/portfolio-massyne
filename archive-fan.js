@@ -1,4 +1,4 @@
-/* Archive Artwork Fan. 500ms autoplay with pause and original image viewer. */
+/* Archive Artwork Fan. 2-second autoplay with pause and original image viewer. */
 (() => {
  'use strict';
  const grid=document.querySelector('#archive .archive-grid');
@@ -88,7 +88,7 @@
  controls.querySelector('div').append(playback);
  let paused=false,hovering=false,visible=false,timer=null;
  const syncPlayback=()=>{
-  playback.textContent=paused?'PLAY / 0.5s':'PAUSE / 0.5s';
+  playback.textContent=paused?'PLAY / 2s':'PAUSE / 2s';
   playback.setAttribute('aria-label',paused?'Resume automatic archive playback':'Pause automatic archive playback');
   playback.setAttribute('aria-pressed',String(paused));
   playback.hidden=motion.matches;
@@ -100,7 +100,7 @@
  };
  const updateTimer=()=>{
   if(timer){clearInterval(timer);timer=null;}
-  if(visible&&!document.hidden&&!motion.matches&&!paused)timer=setInterval(tick,500);
+  if(visible&&!document.hidden&&!motion.matches&&!paused)timer=setInterval(tick,2000);
  };
  playback.addEventListener('click',()=>{paused=!paused;syncPlayback();updateTimer()});
  wrap.addEventListener('pointerenter',event=>{if(event.pointerType==='mouse')hovering=true});
