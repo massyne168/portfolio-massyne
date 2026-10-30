@@ -26,3 +26,5 @@ html[data-theme=dark] .red-study :is(.showcase,.grid-panel,.concept-card,.concep
 html[data-theme=dark] .red-study main :is(figure.showcase,figure.grid-panel) figcaption,
 html[data-theme=dark] .red-study .concept-cover small{color:#c4b7bb!important}
 html[data-theme=dark] .red-study .alignment-grid{background-image:linear-gradient(#f8faed26 1px,transparent 1px),linear-gradient(90deg,#f8faed26 1px,transparent 1px);border-color:#f8faed44}
+.red-study :is(.showcase,.grid-panel,.concept-card,.concept-cover) .emblem{filter:grayscale(1) contrast(100);mix-blend-mode:multiply}
+html[data-theme=dark] .red-study :is(.showcase,.grid-panel,.concept-card,.concept-cover) .emblem{filter:grayscale(1) contrast(100) invert(1);mix-blend-mode:screen}

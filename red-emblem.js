@@ -4,8 +4,8 @@
   const syncArtwork=()=>{
     const dark=document.documentElement.dataset.theme==='dark';
     themedArtwork.forEach(image=>{
-      image.src=dark?'images/red-emblem/Gurzilaf.png':'images/red-emblem/Gurzilafdw.png';
-      image.alt='Supplied red emblem on a '+(dark?'dark':'white')+' background';
+      image.src='images/red-emblem/Gurzilafdw.png';
+      image.alt=(dark?'White':'Black')+' emblem on a '+(dark?'dark':'white')+' background';
     });
   };
   syncArtwork();
