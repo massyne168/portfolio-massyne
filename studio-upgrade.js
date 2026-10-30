@@ -132,6 +132,18 @@
   if (!reel || !open) return;
   // Keep the clips independently of the original motion grid.
   const clips = [...Array.from({length:6}, (_, i) => `images/optimized/motion${i + 1}.mp4`), 'images/motion/exotic-roleplay.mp4', 'images/motion/counter-assault-team.mp4'];
+  // Site-wide statistic: count each curated/archive entry and each identity
+  // project once; gallery detail images and repeated Spotlight cards are excluded.
+  const portfolioTotal = document.querySelector('[data-portfolio-total]');
+  const motionTotal = document.querySelector('[data-motion-total]');
+  if (portfolioTotal) {
+    const curated = new Set([...document.querySelectorAll('.project-grid [data-case-study]')].map(card => card.dataset.caseStudy));
+    const archive = new Set([...document.querySelectorAll('.archive-grid .archive-item img')].map(img => img.getAttribute('src')));
+    const identity = document.querySelector('#identity .gurzil') ? 1 : 0;
+    const signature = document.querySelector('#process .comparison') ? 1 : 0;
+    portfolioTotal.textContent = String(curated.size + archive.size + identity + signature + clips.length);
+  }
+  if (motionTotal) motionTotal.textContent = String(clips.length).padStart(2, '0');
   const indicators = Array.from(document.querySelectorAll("[data-reel-index]"));
   const prev = document.getElementById("reel-prev");
   const next = document.getElementById("reel-next");
