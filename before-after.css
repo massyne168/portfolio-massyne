@@ -1,0 +1,15 @@
+.process-comparison .section-head{max-width:850px}
+.comparison{position:relative;aspect-ratio:16/9;isolation:isolate;overflow:hidden;border:1px solid #8c26354d;border-radius:20px;background:#101014}
+.comparison-art{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 45%,#27212b,#101014 75%)}
+.comparison-art img{display:block;width:88%;height:83%;object-fit:contain;pointer-events:none;user-select:none}
+.comparison-after{clip-path:inset(0 0 0 calc(100% - var(--reveal)))}
+.comparison-label{position:absolute;top:24px;z-index:2;color:#f8faed;font:500 clamp(.45rem,.8vw,.65rem)/1.5 var(--mono);letter-spacing:.12em;background:#101014d9;padding:9px 12px;border-radius:30px;pointer-events:none}
+.label-before{left:24px}.label-after{right:24px}
+.comparison-divider{position:absolute;top:0;bottom:0;left:calc(100% - var(--reveal));width:1px;background:#f8faed99;pointer-events:none;z-index:3}
+.comparison-divider span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:48px;height:48px;border:1px solid #f8faed80;border-radius:50%;background:#8c2635;color:#f8faed;font-size:24px;box-shadow:0 3px 20px #0006}
+.comparison-range{position:absolute;inset:0;z-index:4;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y;direction:rtl}
+.comparison:has(.comparison-range:focus-visible){outline:3px solid #8c2635;outline-offset:5px}
+.comparison-hint{display:flex;justify-content:center;gap:16px;margin:18px 0 0;font:500 .6rem/1.8 var(--mono);letter-spacing:.1em;color:var(--muted);text-align:center}
+.comparison-hint span{color:#8c2635}
+@media(max-width:600px){.comparison{aspect-ratio:1/1;border-radius:12px}.comparison-label{top:12px;padding:6px 8px;letter-spacing:.03em}.label-before{left:10px}.label-after{right:10px}.comparison-hint{font-size:.46rem;gap:9px}.comparison-divider span{width:42px;height:42px}}
+.process-comparison .section-head{display:block;max-width:none}.process-comparison .section-head h2{font-size:clamp(2.7rem,6vw,6rem);max-width:none}.process-comparison .section-head .intro{max-width:560px;margin-top:22px}
