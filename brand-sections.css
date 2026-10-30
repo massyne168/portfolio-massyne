@@ -15,3 +15,5 @@ html body #process p{color:#f8faedd9!important}
 html body #process #signature-play{background:transparent!important;color:#f8faed!important;border-color:#f8faed70!important}
 html body #process .comparison-frame{border-color:#f8faed40!important}
 html body #process button:focus-visible{outline-color:#f8faed}
+/* Full-width backgrounds; align the inner content with the portfolio grid. */
+html body :is(#process.process-comparison,#services.studio-services){width:100%;max-width:none;margin-inline:0;padding-inline:max(clamp(20px,4.3vw,72px),calc((100% - 1416px)/2))!important;border-radius:0}
