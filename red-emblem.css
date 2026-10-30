@@ -22,4 +22,4 @@ html[data-theme=dark] .red-study .applications>figure{background:#272127}
 html[data-theme=dark] .red-study .applications>.cover-scene{background:#332a31}
 html[data-theme=dark] .red-study .applications figcaption{color:var(--study-muted)!important}
 .red-study .supplied-dark{background:#171717;margin-top:24px}
-.red-study main .supplied-dark figcaption{color:#F8FAED!important}
+.red-study main figure.showcase.supplied-dark figcaption{color:#F8FAED!important}
