@@ -112,13 +112,13 @@
     }
   });
 
-  // SHOWREEL — stitched at play time from the site's existing six MP4s, up to 5s each.
+  // SHOWREEL — stitched at play time from the site's original MP4s, up to 5s each.
   // User-initiated; no heavy third-party video libraries, no fabricated video file.
   const reel = document.getElementById("showreel-player");
   const open = document.getElementById("showreel-play");
   if (!reel || !open) return;
-  // Keep the clips independently of the removed six-player motion grid.
-  const clips = Array.from({length:6}, (_, i) => `images/optimized/motion${i + 1}.mp4`);
+  // Keep the clips independently of the original motion grid.
+  const clips = [...Array.from({length:6}, (_, i) => `images/optimized/motion${i + 1}.mp4`), 'images/motion/exotic-roleplay.mp4'];
   const indicators = Array.from(document.querySelectorAll("[data-reel-index]"));
   const prev = document.getElementById("reel-prev");
   const next = document.getElementById("reel-next");
@@ -182,7 +182,7 @@
     completed = true;
     open.hidden = false;
     open.querySelector("strong").textContent = "REPLAY THE SHOWREEL";
-    status("FINISHED / SIX ORIGINAL MOTION STUDIES");
+    status("FINISHED / " + clips.length + " ORIGINAL MOTION STUDIES");
     refresh();
   };
   const advance = () => {
