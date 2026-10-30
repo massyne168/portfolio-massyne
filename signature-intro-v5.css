@@ -6,14 +6,14 @@ html.intro-active,body.intro-active{overflow:hidden!important;scroll-behavior:au
 .site-preloader::before{content:"";position:absolute;inset:clamp(18px,3vw,44px);border:1px solid rgba(255,255,255,.08);pointer-events:none}
 .signature-intro{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;padding:clamp(36px,5vw,76px) clamp(32px,6vw,96px)}
 .signature-intro-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.signature-intro-logo{width:clamp(40px,4.6vw,64px)!important;height:auto!important;max-height:44px;object-fit:contain!important}
+.signature-intro-logo{width:clamp(180px,22vw,320px)!important;height:auto!important;max-height:none;object-fit:contain!important;margin:0 0 clamp(18px,3vh,32px);animation:cinematic-caption 1s .3s both}
 .signature-intro-head>span{color:#93888b;font:500 clamp(.5rem,.75vw,.67rem)/1.6 var(--mono);letter-spacing:.12em;text-align:right}
 .signature-intro-main{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:0;padding:24px 0 40px}
 .signature-intro-overline{font:500 clamp(.53rem,.75vw,.69rem)/1.6 var(--mono);letter-spacing:.22em;color:#bbb0b3;margin:0 0 clamp(27px,6vh,60px);opacity:0;animation:cinematic-caption .85s 1.9s both}
 .signature-intro-overline span{color:#ed3c58;padding-inline:8px}
 .signature-intro-main::before{content:"";position:absolute;left:50%;top:50%;width:min(78vw,1010px);height:2px;background:#eb3855;transform:translate(-50%,-50%) scaleX(0);transform-origin:center;animation:cinematic-line 2.5s ease-in-out both;pointer-events:none}
 .signature-intro-mask{display:block;max-width:100%;overflow:hidden;padding:.12em .07em .16em}
-.signature-intro-title{margin:0;white-space:nowrap;font:700 clamp(3.2rem,13.5vw,13rem)/.92 var(--display);letter-spacing:-.09em;color:#f7f3f2;clip-path:inset(0 50% 0 50%);opacity:1;animation:cinematic-word 1.45s 1.05s cubic-bezier(.19,.77,.23,1) forwards}
+.signature-intro-title{margin:0;white-space:nowrap;font:700 clamp(2.8rem,7.5vw,7rem)/1.1 var(--display);letter-spacing:-.07em;color:#f7f3f2;clip-path:inset(0 50% 0 50%);opacity:1;animation:cinematic-word 1.45s 1.05s cubic-bezier(.19,.77,.23,1) forwards}
 .signature-intro-title span{color:#ed3b58}
 .signature-intro-tagline{display:flex;align-items:center;gap:13px;justify-content:center;margin:clamp(20px,4vh,36px) 0 0;opacity:0;transform:translateY(12px);animation:cinematic-caption .8s 3.05s both}
 .signature-intro-tagline em{font:400 italic clamp(1.1rem,2.5vw,2.3rem)/1.2 var(--serif);color:#cfc5c8}
@@ -131,3 +131,13 @@ html.intro-active,body.intro-active{overflow:hidden!important;scroll-behavior:au
  .site-preloader .loader-curved-gallery{transform:none}
  .loader-curved-gallery .loader-curve-card{animation:none!important;opacity:.55!important}
 }
+/* Centered brand lockup on the opening screen. */
+.signature-intro-head{justify-content:flex-end}
+.site-preloader .signature-intro-main::before{display:none}
+.site-preloader .signature-intro-mask{overflow:visible}
+.site-preloader .signature-intro-copyright{display:inline-block;vertical-align:top;margin:.12em 0 0 .4em;font:400 .22em/1 var(--display);letter-spacing:0;color:inherit}
+.site-preloader .signature-intro-tagline{font:500 clamp(.5rem,.8vw,.7rem)/1.8 var(--mono);letter-spacing:.15em;color:#f8faed;margin-top:clamp(14px,2vh,24px);gap:10px;flex-wrap:wrap;animation-delay:2s}
+.signature-intro-tagline>span{color:#8c2635}
+@media(max-width:700px){.site-preloader .signature-intro-title{font-size:clamp(2.5rem,11vw,4.8rem)}.site-preloader .signature-intro-logo{width:clamp(170px,45vw,240px)!important}.site-preloader .signature-intro-tagline{max-width:280px;letter-spacing:.09em}}
+@media(max-height:520px){.site-preloader .signature-intro-logo{width:130px!important;margin-bottom:10px}.site-preloader .signature-intro-title{font-size:clamp(2rem,8vh,3rem)}}
+.site-preloader .signature-intro-title,.site-preloader .signature-intro-tagline{color:#f8faed!important}
