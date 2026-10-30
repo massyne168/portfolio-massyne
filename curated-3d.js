@@ -162,7 +162,7 @@
     !userPaused &&
     !hovering &&
     !document.hidden &&
-    !dialog?.open &&
+    !dialog?.open && !document.querySelector('.director-dialog[open]') &&
     performance.now() - lastInteraction > 7000 &&
     !grid.contains(document.activeElement) &&
     !controls.contains(document.activeElement);
