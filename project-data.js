@@ -803,22 +803,5 @@ window.MASSYNE_PROJECTS = [
   "gallery": [
     "images/mockups/nocturne-flatlay-full.webp"
   ]
-},
-{
-  "slug": "red-emblem",
-  "title": "Red Emblem — Identity Study",
-  "category": "Visual Identity Study",
-  "year": "2026",
-  "number": "28",
-  "image": "images/red-emblem/Gurzilafdw.png",
-  "focus": "Logo / proposed visual system",
-  "summary": "A provisional identity study around the supplied red emblem, with a proposed palette, typography and concept applications.",
-  "gallery": [
-    "images/red-emblem/Gurzilafdw.png",
-    "images/red-emblem/Gurzilaf.png"
-  ],
-  "concept": "A presentation of the supplied emblem without changing its silhouette.",
-  "direction": "A restrained editorial system. The name and supporting design choices are provisional.",
-  "details": []
 }
 ];
