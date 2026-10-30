@@ -20,3 +20,5 @@
 .process-comparison .comparison{background:transparent;border:0;border-radius:0}
 .process-comparison .comparison-art{background:transparent}
 html[data-theme="light"] .process-comparison .comparison-before img{filter:brightness(0)}
+/* Clip both transparent originals so neither bleeds through the other half. */
+.comparison-before{clip-path:inset(0 var(--reveal) 0 0)}
