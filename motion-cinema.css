@@ -1,0 +1,19 @@
+/* Full-width cinema with a compact control desk underneath. */
+html body #motion.section{width:100%;max-width:none;padding-inline:0}
+#motion>.section-head{width:calc(100% - 10vw);max-width:1416px;margin-inline:auto}
+html body #motion .studio-showreel:not(:fullscreen){display:flex;flex-direction:column;border:0;background:transparent!important;min-height:0;margin-bottom:0}
+#motion .studio-showreel:not(:fullscreen) .showreel-screen{width:100%;aspect-ratio:2.1;min-height:0;max-height:76vh;border-block:1px solid var(--line);background:#060608}
+#motion .studio-showreel:not(:fullscreen) .showreel-screen video{object-fit:contain}
+#motion .studio-showreel:not(:fullscreen) .showreel-side{width:100%;max-width:1560px;margin-inline:auto;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:55px;padding:30px max(clamp(20px,4.3vw,72px),calc((100% - 1416px)/2));background:transparent!important}
+#motion .showreel-side h3{font-size:clamp(24px,2.8vw,40px);line-height:1.15;letter-spacing:-.055em;margin:10px 0}
+#motion .showreel-side h3 br{display:none}
+#motion .showreel-side p{font-size:12px;line-height:1.7;max-width:480px;margin:10px 0}
+#motion .showreel-side .eyebrow{font-size:9px;letter-spacing:.12em}
+#motion .showreel-controls{gap:8px}
+#motion .showreel-controls button{min-height:42px;border-radius:25px;padding:10px 16px}
+#motion .showreel-progress{margin-bottom:12px;gap:6px}
+#motion .showreel-progress button{height:14px;border-radius:2px;opacity:.7}
+#motion .showreel-progress button[aria-current=step]{opacity:1}
+#motion .showreel-state{font-size:9px!important;letter-spacing:.08em;margin-top:12px!important}
+#motion .motion-fullscreen{top:20px;right:5vw;border-radius:30px;padding:12px 17px}
+@media(max-width:700px){#motion .studio-showreel:not(:fullscreen) .showreel-screen{aspect-ratio:16/10;max-height:none}#motion .studio-showreel:not(:fullscreen) .showreel-side{grid-template-columns:1fr;gap:20px;padding:25px 5vw}#motion .showreel-side h3{font-size:28px}#motion .showreel-controls button{padding:10px 13px}#motion .motion-fullscreen{top:12px;right:4vw;padding:9px 12px}}
