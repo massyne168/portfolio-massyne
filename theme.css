@@ -402,13 +402,16 @@ html[data-theme=light] body .site-header .brand-logo-light{display:block!importa
 html[data-theme=light] body .site-header.brand-header .brand-logo{order:0;margin-left:0!important}
 html[data-theme=light] body .site-header.brand-header .site-nav{margin-left:auto!important}
 /* About portrait: transparent, frameless double exposure. */
-html[data-theme] .about-v2-image{background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;isolation:isolate}
-html[data-theme] .about-v2-image::after{display:none}
-.about-v2-image picture{isolation:isolate}
-.about-v2-image picture .about-portrait-echo{position:absolute;inset:0;pointer-events:none;opacity:0;mix-blend-mode:screen;animation:about-exposure-right 5s ease-in-out infinite;animation-play-state:paused;filter:none}
-.about-v2-image picture .echo-2{animation-name:about-exposure-left;filter:sepia(.65) saturate(1.4)}
-.about-v2-image.echo-visible picture .about-portrait-echo{animation-play-state:running}
+html[data-theme] :is(.about-v2-image,.hero-v2-portrait){background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;isolation:isolate}
+html[data-theme] :is(.about-v2-image,.hero-v2-portrait)::after{display:none}
+:is(.about-v2-image,.hero-v2-portrait) picture{isolation:isolate}
+:is(.about-v2-image,.hero-v2-portrait) picture .about-portrait-echo{position:absolute;inset:0;pointer-events:none;opacity:0;mix-blend-mode:screen;animation:about-exposure-right 5s ease-in-out infinite;animation-play-state:paused;filter:none}
+:is(.about-v2-image,.hero-v2-portrait) picture .echo-2{animation-name:about-exposure-left;filter:sepia(.65) saturate(1.4)}
+:is(.about-v2-image,.hero-v2-portrait).echo-visible picture .about-portrait-echo{animation-play-state:running}
 @keyframes about-exposure-right{0%,15%,100%{opacity:0;transform:translateX(0)}35%,55%{opacity:.27;transform:translateX(24px) rotate(1deg)}80%{opacity:0;transform:translateX(0)}}
 @keyframes about-exposure-left{0%,15%,100%{opacity:0;transform:translateX(0)}35%,55%{opacity:.15;transform:translateX(-19px) rotate(-1deg)}80%{opacity:0;transform:translateX(0)}}
-html[data-theme="light"] .about-v2-image .about-portrait-echo{mix-blend-mode:multiply}
-@media(prefers-reduced-motion:reduce){.about-v2-image picture .about-portrait-echo{display:none;animation:none!important}}
+html[data-theme="light"] :is(.about-v2-image,.hero-v2-portrait) .about-portrait-echo{mix-blend-mode:multiply}
+@media(prefers-reduced-motion:reduce){:is(.about-v2-image,.hero-v2-portrait) picture .about-portrait-echo{display:none;animation:none!important}}
+
+.hero-v2-portrait .hero-portrait-halo{display:none}
+html[data-theme] .hero-v2-portrait{box-shadow:none!important}
