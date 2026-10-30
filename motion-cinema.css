@@ -17,3 +17,5 @@ html body #motion .studio-showreel:not(:fullscreen){display:flex;flex-direction:
 #motion .showreel-state{font-size:9px!important;letter-spacing:.08em;margin-top:12px!important}
 #motion .motion-fullscreen{top:20px;right:5vw;border-radius:30px;padding:12px 17px}
 @media(max-width:700px){#motion .studio-showreel:not(:fullscreen) .showreel-screen{aspect-ratio:16/10;max-height:none}#motion .studio-showreel:not(:fullscreen) .showreel-side{grid-template-columns:1fr;gap:20px;padding:25px 5vw}#motion .showreel-side h3{font-size:28px}#motion .showreel-controls button{padding:10px 13px}#motion .motion-fullscreen{top:12px;right:4vw;padding:9px 12px}}
+
+#motion .showreel-progress{grid-template-columns:repeat(8,minmax(0,1fr))}#motion .showreel-side h3 em{margin-left:.18em}
