@@ -16,3 +16,7 @@
 /* Compact comparison while retaining a comfortable touch target. */
 .process-comparison .comparison{width:min(100%,980px);margin-inline:auto}
 .process-comparison .section-head h2{font-size:clamp(2.5rem,5vw,4.8rem)}
+/* Frameless comparison on the page background. */
+.process-comparison .comparison{background:transparent;border:0;border-radius:0}
+.process-comparison .comparison-art{background:transparent}
+html[data-theme="light"] .process-comparison .comparison-before img{filter:brightness(0)}
