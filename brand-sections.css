@@ -1,0 +1,17 @@
+/* Approved reversed-color chapters. */
+html body #services.studio-services{background:#8c2635!important;border-color:#f8faed4d!important;color:#f8faed!important}
+html body #services :is(h2,h3,p,a,span,em,.eyebrow,.service-index){color:#f8faed!important}
+html body #services :is(.studio-services-header>p,.service-item>p){color:#f8faedd9!important}
+html body #services .services-list{background:#f8faed40!important;border-color:#f8faed40!important;box-shadow:none!important}
+html body #services .service-item{background:#8c2635!important;border-color:#f8faed40!important;box-shadow:none!important}
+html body #services .service-item:hover{background:#7d202e!important}
+html body #services .service-item>a{background:transparent!important;border-color:#f8faed70!important}
+html body #services .studio-services-foot{background:transparent!important;border-color:#f8faed40!important}
+html body #services a:focus-visible{outline:2px solid #f8faed;outline-offset:5px}
+/* Second reversed section: signature comparison. */
+html body #process.process-comparison{background:#8c2635!important;color:#f8faed!important;padding:70px 5vw;border-color:#f8faed40!important}
+html body #process :is(h2,p,em,.eyebrow,.comparison-caption,.comparison-caption span,.comparison-controls,.comparison-controls span){color:#f8faed!important}
+html body #process p{color:#f8faedd9!important}
+html body #process #signature-play{background:transparent!important;color:#f8faed!important;border-color:#f8faed70!important}
+html body #process .comparison-frame{border-color:#f8faed40!important}
+html body #process button:focus-visible{outline-color:#f8faed}
