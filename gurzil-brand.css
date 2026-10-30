@@ -9,7 +9,7 @@ html[data-theme=light] .gurzil-brand{--gb-text:#8c2635;--gb-muted:#80565a;--gb-l
 .gb-products{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;overflow:visible!important;border-radius:0!important}
 .gb-products .gb-product{display:flex;flex-direction:column;border:0;background:transparent;border-radius:0}
 html[data-theme=light] .gb-products .gb-product{background:transparent}
-.gb-products .gb-product>img{width:100%;height:auto;aspect-ratio:1;object-fit:contain;padding:22px;box-sizing:border-box;filter:none}
+.gb-products .gb-product>img{width:82%;height:auto;aspect-ratio:1;object-fit:contain;padding:22px;box-sizing:border-box;filter:none;align-self:center}
 .gb-products .gb-product figcaption{position:static;margin-top:auto;display:flex;flex-direction:column;gap:6px;padding:18px 22px 22px;border-top:0;background:transparent;color:var(--gb-text)!important;font-size:10px}
 .gb-products .gb-product figcaption>span:last-child{color:var(--gb-muted);font-size:8px;letter-spacing:.1em}
 @media(max-width:1000px){.gb-products{gap:12px}.gb-products .gb-product>img{padding:14px}.gb-products .gb-product figcaption{padding:14px;font-size:9px}}
