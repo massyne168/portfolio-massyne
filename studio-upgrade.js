@@ -112,6 +112,18 @@
     }
   });
 
+  // Run the portrait exposures only while the About portrait is visible.
+  const portrait = document.querySelector(".about-v2-image");
+  if (portrait && "IntersectionObserver" in window) {
+    const syncPortrait = () => portrait.classList.toggle("echo-visible", portrait.dataset.inView === "true" && !document.hidden);
+    const portraitObserver = new IntersectionObserver(entries => {
+      portrait.dataset.inView = String(entries[0].isIntersecting);
+      syncPortrait();
+    }, {threshold: .15});
+    portraitObserver.observe(portrait);
+    document.addEventListener("visibilitychange", syncPortrait);
+  }
+
   // SHOWREEL — stitched at play time from the site's original MP4s, up to 5s each.
   // User-initiated; no heavy third-party video libraries, no fabricated video file.
   const reel = document.getElementById("showreel-player");
