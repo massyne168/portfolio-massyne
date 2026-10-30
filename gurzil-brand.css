@@ -42,3 +42,17 @@ html[data-theme=light] .gb-products .gb-product{background:transparent}
 .gb-discover:focus-visible,.gb-back:focus-visible{outline:2px solid #e10505;outline-offset:5px}
 .gb-detail main{max-width:1520px;margin:auto;padding:120px 5vw 0}.gb-detail .gurzil-brand{padding:35px 0 60px}.gb-back{display:inline-block;padding:12px 0;color:var(--paper);font:11px 'IBM Plex Mono',monospace}html[data-theme=light] .gb-back{color:#8c2635}
 @media(max-width:700px){.gb-teaser{gap:25px;grid-template-columns:1fr}.gb-teaser-logo{aspect-ratio:2.2;max-height:200px}.gb-teaser-logo img{width:95px}.gb-detail main{padding:100px 5vw 0}}
+/* A compact doorway into the brand: original assets, no image card. */
+.gb-teaser{grid-template-columns:1fr 1.1fr;gap:5vw;position:relative;padding-top:70px;padding-bottom:70px}
+.gb-teaser-logo{position:relative;isolation:isolate;background:transparent;padding:0;border-radius:0;aspect-ratio:1.25;max-height:360px;overflow:hidden}
+.gb-teaser-logo::before{content:"";position:absolute;inset:8% 0 0 12%;z-index:-1;background:radial-gradient(ellipse,#e1050529,transparent 65%);pointer-events:none}
+.gb-teaser-logo .gb-teaser-hoodie{position:absolute;left:-12%;bottom:-14%;width:80%;max-width:none;opacity:.7;transform:rotate(-8deg);filter:brightness(.7);mask-image:linear-gradient(90deg,#000 45%,transparent 95%)}
+.gb-teaser-logo .gb-teaser-emblem{position:relative;left:17%;width:52%;max-width:250px;filter:drop-shadow(0 0 25px #e105051c);transition:transform .5s ease}
+.gb-teaser-copy h2{font-size:clamp(30px,4.5vw,66px);letter-spacing:-.055em}
+.gb-teaser-copy>p:not(.eyebrow){font-size:16px;letter-spacing:.04em}
+.gb-teaser::after{content:"";position:absolute;bottom:22px;left:46%;width:8%;height:1px;background:linear-gradient(90deg,transparent,#e10505,transparent)}
+html[data-theme=light] .gb-teaser-logo::before{background:radial-gradient(ellipse,#a427391c,transparent 65%)}
+html[data-theme=light] .gb-teaser-logo .gb-teaser-emblem{filter:brightness(0);opacity:.92}
+html[data-theme=light] .gb-teaser-logo .gb-teaser-hoodie{opacity:.8;filter:none}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.gb-teaser-logo:hover .gb-teaser-emblem{transform:translateY(-7px) rotate(-2deg)}}
+@media(max-width:700px){.gb-teaser{grid-template-columns:1fr;gap:20px;padding-top:45px;padding-bottom:60px}.gb-teaser-logo{width:min(100%,420px);height:240px;aspect-ratio:auto;max-height:none;margin:auto}.gb-teaser-logo .gb-teaser-emblem{width:42%;max-width:180px}.gb-teaser-logo .gb-teaser-hoodie{width:67%;left:0;bottom:-30%}.gb-teaser-copy{text-align:center}.gb-teaser-copy h2{font-size:clamp(32px,8vw,48px)}.gb-teaser-copy>p:not(.eyebrow){font-size:13px}.gb-discover{margin-top:14px}.gb-teaser::after{left:42%;width:16%}}
