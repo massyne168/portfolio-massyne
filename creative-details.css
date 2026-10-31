@@ -1,0 +1,12 @@
+/* Pointer effects use transforms only; headings keep their semantic text. */
+.fx-magnetic{transition:translate .38s cubic-bezier(.2,.7,.25,1)}
+.magnetic-button{transition:transform .38s cubic-bezier(.2,.7,.25,1)}
+body .fx-link{background-image:linear-gradient(currentColor,currentColor);background-repeat:no-repeat;background-size:0% 1px;background-position:var(--fx-link-origin,left) bottom;transition:background-size .3s ease}
+body .fx-link:hover,body .fx-link:focus-visible{background-size:100% 1px}
+html body #services .service-item>a.fx-link,html body .contact-links a.fx-link{background-image:linear-gradient(currentColor,currentColor)!important;background-repeat:no-repeat!important;background-position:var(--fx-link-origin,left) bottom!important;background-size:0% 1px!important}
+html body #services .service-item>a.fx-link:hover,html body #services .service-item>a.fx-link:focus-visible,html body .contact-links a.fx-link:hover,html body .contact-links a.fx-link:focus-visible{background-size:100% 1px!important}
+.fx-heading-line{display:block;overflow:clip;padding-bottom:.15em;margin-bottom:-.15em}
+body .fx-heading-inner{display:block;color:inherit!important}
+@media(prefers-reduced-motion:no-preference){.fx-heading .fx-heading-inner{opacity:0;translate:0 100%;transition:translate .7s cubic-bezier(.22,1,.36,1),opacity .55s ease;transition-delay:calc(var(--fx-line-index,0)*100ms)}.fx-heading-visible .fx-heading-inner{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:reduce){.fx-magnetic,.magnetic-button,body .fx-link{transition:none!important}.fx-heading .fx-heading-inner{opacity:1;translate:none;transition:none}}
+@media(hover:none),(pointer:coarse){.fx-magnetic{translate:none!important}body .fx-link{transition:none}}
