@@ -1,0 +1,17 @@
+/* 06 — scroll depth in the existing Gurzil composition. */
+@media(prefers-reduced-motion:no-preference){#identity .gb-teaser-hoodie{translate:0 calc(var(--scene-shift,0)*-1px)}#identity .gb-teaser-emblem{translate:0 calc(var(--scene-shift,0)*.55px)}#identity .gb-teaser-logo::before{translate:0 calc(var(--scene-shift,0)*.3px)}}
+/* 07 — only the editorial cards tilt; the 3D carousel keeps its own transforms. */
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.spotlight-card.selected-tilt{transform:perspective(1000px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));transition:transform .3s ease-out}.spotlight-card.selected-tilt:focus-visible{transform:none}}
+/* 13 — fixed-size type window avoids shifting nearby content. */
+.discipline-cycle{display:inline-block!important;height:1.5em;width:20ch;overflow:hidden;vertical-align:bottom;line-height:1.5!important}
+.hero-v2-bottom .discipline-strip{display:block!important;height:auto!important;translate:0 calc(var(--discipline-index,0)*-1.5em);transition:translate .6s cubic-bezier(.2,.7,.3,1)}
+.hero-v2-bottom .discipline-strip>span{display:block!important;height:1.5em;line-height:1.5!important;white-space:nowrap}
+/* 18 — dark sections blend into the approved red; light mode retains contrast. */
+html[data-theme=dark] body #process.process-comparison,html[data-theme=dark] body #services.studio-services{background:color-mix(in srgb,#09090c calc((1 - var(--chapter-progress,1))*100%),#8c2635)!important}
+html body #services .service-item,html body #services .services-list{background:transparent!important}
+/* 20 — the final strip is revealed from below, with no extra images. */
+.footer-reveal-shell.footer-reveal-ready{height:var(--footer-height,180px);position:relative;clip-path:inset(0)}
+.footer-reveal-shell.footer-reveal-ready>footer{position:fixed;inset:auto 0 0;width:100%;min-height:180px;margin:0;display:flex;align-items:center;justify-content:space-between;gap:25px;padding:45px max(clamp(20px,4.3vw,72px),calc((100% - 1416px)/2));background:#8c2635!important;border-top:1px solid #f8faed40}
+html body .footer-reveal-shell footer,html body .footer-reveal-shell footer :is(a,span){color:#f8faed!important}
+@media(max-width:600px){.footer-reveal-shell.footer-reveal-ready>footer{flex-wrap:wrap;gap:18px;padding:30px 5vw}.footer-reveal-shell footer .wordmark{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.hero-v2-bottom .discipline-strip{transition:none}.spotlight-card.selected-tilt{transform:none!important}.footer-reveal-shell.footer-reveal-ready{height:auto;clip-path:none}.footer-reveal-shell.footer-reveal-ready>footer{position:static}}
