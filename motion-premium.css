@@ -1,0 +1,31 @@
+/* Refined portfolio motion: short, composited and fully optional. */
+html{scroll-behavior:smooth;scroll-padding-top:5rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+@media(prefers-reduced-motion:no-preference){
+  [data-motion-reveal]{opacity:0;translate:0 22px;transition:opacity .65s ease,translate .75s cubic-bezier(.22,1,.36,1);transition-delay:var(--motion-delay,0ms)}
+  [data-motion-reveal].motion-visible{opacity:1;translate:0 0}
+  [data-motion-image]{clip-path:inset(0 0 0 0);transition:clip-path .85s cubic-bezier(.22,1,.36,1)}
+  [data-motion-image] img{transition:transform .9s cubic-bezier(.22,1,.36,1)}
+  [data-motion-image]:hover img,[data-motion-image]:focus-within img{transform:scale(1.035)}
+  .project-grid .project{transition:transform .5s cubic-bezier(.22,1,.36,1),border-color .35s,box-shadow .45s}
+  .project-grid .project:is(:hover,:focus-within){transform:translateY(-4px);box-shadow:0 18px 45px #0002}
+  main>section{scroll-margin-top:4rem}
+  :is(button,a,[role=button],input[type=submit]){transition:color .25s ease,background-color .25s ease,border-color .25s ease,box-shadow .3s ease,transform .3s cubic-bezier(.22,1,.36,1)}
+  :is(button,a,[role=button],input[type=submit]):active{transform:scale(.985)}
+  :is(button,a,[role=button],input[type=submit]):focus-visible{outline-offset:4px}
+  .hero-v2-actions a span,.contact-v2-button span,.brief-actions button span{display:inline-block;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+  .hero-v2-actions a:hover span,.contact-v2-button:hover span,.brief-actions button:hover span{transform:translate(3px,-2px)}
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  [data-motion-magnetic]{will-change:transform;transition:transform .35s cubic-bezier(.2,.7,.25,1)}
+}
+@media(hover:none),(pointer:coarse){
+  .project-grid .project:is(:hover,:focus-within){transform:none;box-shadow:none}
+  [data-motion-image]:hover img{transform:none}
+}
+@media(max-width:700px){[data-motion-reveal]{translate:0 14px;transition-duration:.5s,.58s}}
+@media(prefers-reduced-motion:reduce){
+  [data-motion-reveal]{opacity:1;translate:none;transition:none}
+  [data-motion-image], [data-motion-image] img,.project-grid .project,:is(button,a,[role=button],input[type=submit]){transition:none!important;transform:none!important;clip-path:none}
+}
