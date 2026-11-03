@@ -139,13 +139,3 @@ html[data-theme="light"] body #services a:focus-visible{outline:2px solid #8c263
 html[data-theme="light"] body :is(#work h2 em,#process h2 em,#motion h2 em,#creative-lab h2 em,#archive h2 em,#services h2 em,#about h2 em,#contact>h2 em){color:#8c2635!important}
 html[data-theme="dark"] body :is(#work h2 em,#process h2 em,#motion h2 em,#creative-lab h2 em,#archive h2 em,#services h2 em,#about h2 em,#contact>h2 em){color:#ff7185!important}
 #identity h2{letter-spacing:.025em}
-
-/* Archive title depth treatment: restrained extrusion in both themes. */
-html[data-theme="light"] body #archive .section-head h2{text-shadow:0 1px 0 #ffffff,0 2px 0 #ded8d1,0 4px 0 #cfc6bf,0 10px 18px #481d2618}
-html[data-theme="light"] body #archive .section-head h2 em{text-shadow:0 1px 0 #fff9f8,0 2px 0 #d9bec1,0 4px 0 #bb999e;color:#8c2635!important}
-html[data-theme="dark"] body #archive .section-head h2{text-shadow:0 1px 0 #2a272a,0 2px 0 #171519,0 4px 0 #08080b,0 11px 20px #0009}
-html[data-theme="dark"] body #archive .section-head h2 em{text-shadow:0 1px 0 #a33749,0 3px 0 #6f1f2d,0 6px 0 #2a1118;color:#ff7185!important}
-@media(prefers-reduced-motion:no-preference){
- .flow-enabled #archive .section-head h2{transform:perspective(900px) rotateX(8deg) translateY(7px);transform-origin:50% 100%;transition:transform 1s cubic-bezier(.18,.72,.2,1)}
- .flow-enabled #archive.is-visible .section-head h2{transform:perspective(900px) rotateX(0deg) translateY(0) translateZ(12px)}
-}
