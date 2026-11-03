@@ -465,3 +465,6 @@ body :is(button,.hero-button-primary,.hero-button-quiet,.contact-v2-button,.cont
 
 /* Slightly reduced overall viewing scale for the full portfolio. */
 body{zoom:.93}
+
+/* Keep full-screen overlays aligned to the viewport under the page scale. */
+body :is(dialog,.site-preloader,.takeover-panel){zoom:1.07527}
