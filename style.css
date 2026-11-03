@@ -462,3 +462,6 @@ body :is(button,.hero-button-primary,.hero-button-quiet,.contact-v2-button,.cont
  body :is(button,a,.spotlight-card,.spotlight-art img,.case-related-card){transition:none!important}
  body :is(.hero-button-primary,.hero-button-quiet,.contact-v2-button,.case-expand,.case-contact-link,.resume-cta>a):hover{transform:none}
 }
+
+/* Slightly reduced overall viewing scale for the full portfolio. */
+body{zoom:.93}
