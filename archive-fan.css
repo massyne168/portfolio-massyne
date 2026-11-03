@@ -50,3 +50,10 @@ body #archive .archive-fan-stage>.archive-item{top:46%}
 body #archive .archive-fan-stage>.archive-item img{width:100%;height:clamp(320px,56svh,580px);aspect-ratio:auto;object-fit:contain}
 body #archive .archive-fan-stage>.archive-item.fan-front img{filter:none;transform:none}
 @media(max-width:650px){body #archive .archive-grid.archive-fan-stage{height:clamp(480px,65svh,610px)}body #archive .archive-fan-stage>.archive-item img{height:clamp(250px,44svh,360px)}}
+
+/* Option G: focused three-card stage with inward-facing 3D side planes. */
+body #archive .archive-grid.archive-fan-stage{perspective:1500px;perspective-origin:50% 48%}
+body #archive .archive-fan-stage>.archive-item{transform:translate(-50%,-50%) translate3d(var(--fan-x),var(--fan-y),var(--fan-z)) rotateY(var(--fan-tilt,0deg)) rotateZ(var(--fan-angle)) scale(var(--fan-scale));transform-origin:50% 50%}
+body #archive .archive-fan-stage>.archive-item.fan-front img{filter:drop-shadow(0 22px 22px #0004)}
+@media(max-width:650px){body #archive .archive-grid.archive-fan-stage{perspective:1100px}}
+@media(prefers-reduced-motion:reduce){body #archive .archive-fan-stage>.archive-item{transform:translate(-50%,-50%) translate3d(var(--fan-x),var(--fan-y),0) rotateZ(var(--fan-angle)) scale(var(--fan-scale))}}
