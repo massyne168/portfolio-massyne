@@ -222,7 +222,11 @@
   open.addEventListener("click",start);
   toggle?.addEventListener("click", () => {
     if (!initialized || completed) {start();return;}
-    if (reel.paused) void play(); else reel.pause();
+    if (reel.paused) void play();
+    else {
+      reel.pause();
+      status("PAUSED / STUDY " + String(active + 1).padStart(2,"0") + " OF " + clips.length);
+    }
     refresh();
   });
   prev?.addEventListener("click", () => choose(active - 1,true));
