@@ -42,7 +42,7 @@
    if(!outside)card.querySelector('img')?.setAttribute('loading','eager');
   });
   prev.disabled=cards.length<2;next.disabled=cards.length<2;
-  count.textContent=cards.length?\`\${String(position+1).padStart(2,'0')} / \${String(cards.length).padStart(2,'0')} WORKS\`:'NO WORKS';
+  count.textContent=cards.length?`${String(position+1).padStart(2,'0')} / ${String(cards.length).padStart(2,'0')} WORKS`:'NO WORKS';
   grid.dataset.fanPosition=String(position);
  };
  const schedule=()=>{if(!raf)raf=requestAnimationFrame(render)};
