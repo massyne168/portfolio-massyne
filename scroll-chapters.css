@@ -131,3 +131,11 @@ html[data-theme="dark"] .section-flow-label span:first-child{border-color:#ee344
 html[data-theme="light"] body #work h2 em{color:#a42739!important}
 html[data-theme="light"] body #services .service-item:hover,html[data-theme="light"] body #services .service-item:focus-within{background:#f3dfdf!important}
 html[data-theme="light"] body #services a:focus-visible{outline:2px solid #8c2635!important;outline-offset:4px}
+
+/* Clear type system: Outfit headings, Manrope body copy, mono section markers. */
+:root{--chapter-display:"Outfit",sans-serif}
+#work .section-head h2,#process h2,#identity h2,#motion h2,#creative-lab h2,#archive h2,#services h2,#about h2,#contact>h2{font-family:var(--chapter-display)!important;font-weight:600;letter-spacing:-.045em;line-height:.98;text-wrap:balance}
+#work .section-head h2 em,#process h2 em,#motion h2 em,#creative-lab h2 em,#archive h2 em,#services h2 em,#about h2 em,#contact>h2 em{font-family:var(--chapter-display)!important;font-style:normal!important;font-weight:500;letter-spacing:-.045em}
+html[data-theme="light"] body :is(#work h2 em,#process h2 em,#motion h2 em,#creative-lab h2 em,#archive h2 em,#services h2 em,#about h2 em,#contact>h2 em){color:#8c2635!important}
+html[data-theme="dark"] body :is(#work h2 em,#process h2 em,#motion h2 em,#creative-lab h2 em,#archive h2 em,#services h2 em,#about h2 em,#contact>h2 em){color:#ff7185!important}
+#identity h2{letter-spacing:.025em}
