@@ -127,3 +127,7 @@ html[data-theme="dark"] .section-flow-label span:first-child{border-color:#ee344
 .section-flow[data-flow-target="about"] .section-flow-label::before{content:"08"}
 .section-flow[data-flow-target="contact"] .section-flow-label::before{content:"09"}
 @media(max-width:700px){.section-flow-label span:first-child{font-size:9px;letter-spacing:.08em}.section-flow-label::before{min-width:29px}}
+
+html[data-theme="light"] body #work h2 em{color:#a42739!important}
+html[data-theme="light"] body #services .service-item:hover,html[data-theme="light"] body #services .service-item:focus-within{background:#f3dfdf!important}
+html[data-theme="light"] body #services a:focus-visible{outline:2px solid #8c2635!important;outline-offset:4px}
