@@ -21,8 +21,8 @@
   raf=0;
   const camera=clamp(position+offset);
   const narrow=grid.clientWidth<650;
-  grid.style.setProperty('--fan-card-width',narrow?'min(49vw,190px)':'clamp(280px,27vw,360px)');
-  const gap=narrow?grid.clientWidth*.29:Math.min(grid.clientWidth*.22,320);
+  grid.style.setProperty('--fan-card-width',narrow?'min(44vw,170px)':'clamp(240px,23vw,310px)');
+  const gap=narrow?grid.clientWidth*.29:Math.min(grid.clientWidth*.20,270);
   cards.forEach((card,i)=>{
    let distance=i-camera;
    if(distance>pairs/2)distance-=pairs;
