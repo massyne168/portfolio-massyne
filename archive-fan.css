@@ -57,9 +57,3 @@ body #archive .archive-fan-stage>.archive-item{transform:translate(-50%,-50%) tr
 body #archive .archive-fan-stage>.archive-item.fan-front img{filter:drop-shadow(0 22px 22px #0004)}
 @media(max-width:650px){body #archive .archive-grid.archive-fan-stage{perspective:1100px}}
 @media(prefers-reduced-motion:reduce){body #archive .archive-fan-stage>.archive-item{transform:translate(-50%,-50%) translate3d(var(--fan-x),var(--fan-y),0) rotateZ(var(--fan-angle)) scale(var(--fan-scale))}}
-
-
-/* Pull the archive stage back slightly for a calmer, smaller presentation. */
-body #archive .archive-grid.archive-fan-stage{height:clamp(540px,68svh,680px)}
-body #archive .archive-fan-stage>.archive-item img{height:clamp(280px,48svh,500px)}
-@media(max-width:650px){body #archive .archive-grid.archive-fan-stage{height:clamp(420px,56svh,500px)}body #archive .archive-fan-stage>.archive-item img{height:clamp(225px,39svh,310px)}}
