@@ -4,6 +4,9 @@
    Keep this lightweight, accessible, interruptible and reduced-motion safe. */
 (() => {
   "use strict";
+  // Temporarily disabled; set true when the user asks to restore the intro.
+  const INTRO_ENABLED = false;
+  if (!INTRO_ENABLED) return;
   const overlay=document.querySelector(".site-preloader");
   if(!overlay)return;
   const html=document.documentElement,body=document.body;
