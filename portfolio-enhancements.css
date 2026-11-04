@@ -453,18 +453,24 @@ body .identity-gallery figcaption{display:flex;justify-content:space-between;ali
 @media(max-width:600px){body .gurzil{grid-template-columns:minmax(0,1fr);padding:26px;gap:24px;border-radius:20px}body .gurzil-mark{width:126px;height:126px;padding:19px;aspect-ratio:1;justify-self:start}body .gurzil-lead h3{font-size:clamp(2.6rem,10vw,3.8rem);margin:15px 0}body .gurzil-lead p{font-size:.86rem}body .identity-gallery{grid-template-columns:minmax(0,1fr);gap:19px}body .identity-gallery figure:first-child{grid-column:auto}body .identity-gallery figcaption{padding:16px 18px;font-size:.6rem}}
 @media(prefers-reduced-motion:reduce){body .identity-gallery figure{transition:none}}
 
-/* Keep the footer as a compact fixed bar; leave the contact section in flow. */
-body:has(.footer-reveal-shell footer){padding-bottom:60px}
-.footer-reveal-shell footer{
-  position:fixed;
-  inset-inline:0;
-  bottom:0;
-  z-index:100;
-  box-sizing:border-box;
-  height:56px;
-  min-height:56px;
-  padding:0 clamp(20px,4.3vw,72px);
+/* Override the older tall reveal so the fixed footer stays compact. */
+html body .footer-reveal-shell.footer-reveal-ready{
+  --footer-height:56px!important;
+  height:56px!important;
 }
-@media(max-width:640px){
-  .footer-reveal-shell footer{height:50px;min-height:50px;padding-inline:20px;gap:8px;flex-wrap:nowrap;font-size:.52rem}
+html body .footer-reveal-shell.footer-reveal-ready>footer{
+  position:fixed!important;
+  inset:auto 0 0!important;
+  z-index:100!important;
+  width:100%!important;
+  height:56px!important;
+  min-height:56px!important;
+  margin:0!important;
+  padding:0 clamp(20px,4.3vw,72px)!important;
+  gap:14px!important;
+  flex-wrap:nowrap!important;
+}
+@media(max-width:600px){
+  html body .footer-reveal-shell.footer-reveal-ready{--footer-height:50px!important;height:50px!important}
+  html body .footer-reveal-shell.footer-reveal-ready>footer{height:50px!important;min-height:50px!important;padding-inline:14px!important;gap:8px!important;font-size:.52rem}
 }
