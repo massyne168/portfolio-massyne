@@ -453,17 +453,18 @@ body .identity-gallery figcaption{display:flex;justify-content:space-between;ali
 @media(max-width:600px){body .gurzil{grid-template-columns:minmax(0,1fr);padding:26px;gap:24px;border-radius:20px}body .gurzil-mark{width:126px;height:126px;padding:19px;aspect-ratio:1;justify-self:start}body .gurzil-lead h3{font-size:clamp(2.6rem,10vw,3.8rem);margin:15px 0}body .gurzil-lead p{font-size:.86rem}body .identity-gallery{grid-template-columns:minmax(0,1fr);gap:19px}body .identity-gallery figure:first-child{grid-column:auto}body .identity-gallery figcaption{padding:16px 18px;font-size:.6rem}}
 @media(prefers-reduced-motion:reduce){body .identity-gallery figure{transition:none}}
 
-/* Pin the final contact panel as its own scroll stage. */
-main:has(#contact.contact-v2){padding-bottom:100dvh}
-#contact.contact-v2{
-  position:sticky;
-  top:0;
-  z-index:5;
-  height:100dvh;
-  max-height:100dvh;
-  overflow-y:auto;
-  overscroll-behavior-y:auto;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:thin;
-  scrollbar-color:var(--red) transparent;
+/* Keep the footer as a compact fixed bar; leave the contact section in flow. */
+body:has(.footer-reveal-shell footer){padding-bottom:60px}
+.footer-reveal-shell footer{
+  position:fixed;
+  inset-inline:0;
+  bottom:0;
+  z-index:100;
+  box-sizing:border-box;
+  height:56px;
+  min-height:56px;
+  padding:0 clamp(20px,4.3vw,72px);
+}
+@media(max-width:640px){
+  .footer-reveal-shell footer{height:50px;min-height:50px;padding-inline:20px;gap:8px;flex-wrap:nowrap;font-size:.52rem}
 }
