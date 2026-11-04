@@ -457,8 +457,6 @@ body .identity-gallery figcaption{display:flex;justify-content:space-between;ali
 html body .footer-reveal-shell.footer-reveal-ready{
   --footer-height:56px!important;
   height:56px!important;
-  clip-path:none!important;
-  overflow:visible!important;
 }
 html body .footer-reveal-shell.footer-reveal-ready>footer{
   position:fixed!important;
