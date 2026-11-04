@@ -1,0 +1,354 @@
+/* Option 05 — Brutalist: square frames, clear section breaks, restrained MASSYNE red. */
+:root{
+  --brutal-red:#8c2635;
+  --brutal-red-soft:#b64153;
+  --brutal-line:#282123;
+  --brutal-paper:#f8faed;
+  --brutal-paper-alt:#ece9df;
+  --brutal-ink:#1c181a;
+  --brutal-muted:#62585a;
+  --brutal-dark:#171519;
+  --brutal-dark-alt:#24181e;
+  --brutal-light:#f8faed;
+}
+html[data-theme="dark"]{
+  --brutal-red:#e35b70;
+  --brutal-red-soft:#f0808c;
+  --brutal-line:#f8faed55;
+  --brutal-paper:#111014;
+  --brutal-paper-alt:#19171b;
+  --brutal-ink:#f8faed;
+  --brutal-muted:#c5babe;
+  --brutal-dark:#0b0a0d;
+  --brutal-dark-alt:#21171c;
+  --brutal-light:#f8faed;
+}
+
+/* Keep the existing scroll reveal, but give every section its own crisp frame. */
+html[data-theme] body :is(#work,#process,#identity,#motion,#creative-lab,#archive,#services,#about,#contact){
+  position:relative;
+  width:min(calc(100% - clamp(28px,6vw,96px)),1510px);
+  max-width:1510px;
+  margin:clamp(18px,2.1vw,30px) auto;
+  padding:clamp(28px,4.2vw,64px) clamp(22px,4.3vw,68px)!important;
+  border:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  isolation:isolate;
+}
+html[data-theme] body :is(#work,#creative-lab,#services){background:var(--brutal-paper)!important;color:var(--brutal-ink)!important;border-color:var(--brutal-line)!important}
+html[data-theme] body :is(#process,#archive){background:var(--brutal-paper-alt)!important;color:var(--brutal-ink)!important;border-color:var(--brutal-line)!important}
+html[data-theme] body :is(#identity,#contact){background:var(--brutal-dark-alt)!important;color:var(--brutal-light)!important;border-color:var(--brutal-line)!important}
+html[data-theme] body :is(#motion,#about){background:var(--brutal-dark)!important;color:var(--brutal-light)!important;border-color:var(--brutal-line)!important}
+html[data-theme] body :is(#work,#process,#identity,#motion,#creative-lab,#archive,#services,#about,#contact)::before{display:none!important}
+html[data-theme] body :is(#work,#process,#identity,#motion,#creative-lab,#archive,#services,#about,#contact) :is(h2,h3){font-family:"Outfit","Arial",sans-serif!important;font-weight:800!important;letter-spacing:-.075em!important;line-height:.9!important;text-wrap:balance}
+html[data-theme] body :is(#work,#process,#identity,#motion,#creative-lab,#archive,#services,#about,#contact) :is(.eyebrow,.m-kicker,.service-index,.comparison-hint){
+  font-family:"IBM Plex Mono",monospace!important;
+  font-size:.68rem!important;
+  font-weight:500!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase;
+}
+html[data-theme] body :is(#work,#process,#identity,#motion,#creative-lab,#archive,#services,#about,#contact) .eyebrow{
+  display:inline-flex;
+  align-items:center;
+  min-height:26px;
+  padding:3px 0 3px 10px!important;
+  border-left:4px solid var(--brutal-red)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--brutal-red)!important;
+}
+html[data-theme] body :is(#work,#process,#creative-lab,#archive,#services) :is(.intro,.studio-services-header>p,.service-item>p){color:var(--brutal-muted)!important}
+html[data-theme] body :is(#identity,#motion,#about,#contact) :is(.intro,.gb-teaser-copy>p,.showreel-side>div>p,.about-v2-text,.contact-v2-bottom>p){color:#d4c8c7!important}
+
+/* Selected work — strong two-column heading above the 3D gallery. */
+html[data-theme] body #work .section-head:not(.split),
+html[data-theme] body #process .section-head:not(.split){
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(230px,.8fr);
+  grid-template-rows:auto auto;
+  align-items:end;
+  column-gap:clamp(22px,4vw,60px);
+  row-gap:12px;
+  margin-bottom:clamp(24px,3vw,40px);
+}
+html[data-theme] body :is(#work,#process) .section-head:not(.split)>.eyebrow{grid-column:1;grid-row:1}
+html[data-theme] body :is(#work,#process) .section-head:not(.split)>h2{
+  grid-column:1;grid-row:2;
+  margin:0;
+  font-size:clamp(2.8rem,6.8vw,6.5rem)!important;
+  text-transform:uppercase;
+}
+html[data-theme] body :is(#work,#process) .section-head:not(.split)>.intro{
+  grid-column:2;grid-row:1/span 2;
+  align-self:end;
+  max-width:430px;
+  margin:0 0 5px;
+  font-size:clamp(.92rem,1.2vw,1.05rem);
+  line-height:1.75;
+}
+html[data-theme] body :is(#work,#process) h2 em,
+html[data-theme] body :is(#motion,#creative-lab,#archive,#services,#about,#contact) h2 em{
+  color:var(--brutal-red)!important;
+  font-style:normal!important;
+}
+html[data-theme] body #work .gallery-toolbar,
+html[data-theme] body #work .discover-tools{
+  border:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #work :is(.premium-button,.view-switch button,.discover-categories button,.discover-reset){
+  border:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #work .curated-stage{
+  border-top:2px solid var(--brutal-line);
+  border-bottom:2px solid var(--brutal-line);
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+/* Process and brand identity — each gets a separate worktable-like surface. */
+html[data-theme] body #process .comparison{
+  border:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #process :is(h2,p,.comparison-caption,.comparison-caption span,.comparison-controls,.comparison-controls span){
+  color:var(--brutal-ink)!important;
+}
+html[data-theme] body #process .eyebrow,
+html[data-theme] body #process h2 em{color:var(--brutal-red)!important}
+html[data-theme] body #process .comparison-hint{color:var(--brutal-muted)!important}
+html[data-theme] body #process .signature-play{border:2px solid var(--brutal-line)!important;border-radius:0!important;box-shadow:none!important}
+html[data-theme] body #identity{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);align-items:center;gap:clamp(24px,4vw,64px)}
+html[data-theme] body #identity .gb-teaser-logo{
+  min-height:clamp(260px,34vw,440px);
+  border:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #identity .gb-teaser-copy h2{
+  margin:20px 0 12px;
+  font-size:clamp(2.9rem,6vw,6rem)!important;
+  color:var(--brutal-light)!important;
+}
+html[data-theme] body #identity .gb-teaser-copy h2 span{color:var(--brutal-red)!important}
+html[data-theme] body #identity .gb-discover{border-radius:0!important;box-shadow:none!important}
+
+/* Motion and the interactive Lab — clear two-column modules with square frames. */
+html[data-theme] body #motion .section-head.split,
+html[data-theme] body #services .studio-services-header{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(250px,.9fr);
+  align-items:end;
+  gap:clamp(22px,4vw,55px);
+  margin-bottom:clamp(28px,4vw,48px);
+}
+html[data-theme] body #motion .section-head h2,
+html[data-theme] body #services .studio-services-header h2{
+  font-size:clamp(3rem,6.5vw,6.8rem)!important;
+  text-transform:uppercase;
+}
+html[data-theme] body #motion .studio-showreel{grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:18px}
+html[data-theme] body #motion .showreel-screen{
+  min-height:clamp(280px,39vw,500px);
+  border:2px solid #f8faed55!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #motion .showreel-side{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:22px;
+  padding:clamp(20px,3vw,34px);
+  border:2px solid #f8faed55;
+  border-radius:0!important;
+  background:transparent!important;
+}
+html[data-theme] body #motion .showreel-progress button,
+html[data-theme] body #motion .showreel-side button{border-radius:0!important;box-shadow:none!important}
+html[data-theme] body #creative-lab{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:stretch;
+  gap:clamp(24px,4vw,58px);
+}
+html[data-theme] body #creative-lab .lab-entry-art{
+  min-height:clamp(280px,34vw,430px);
+  border:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #creative-lab .lab-entry-copy{align-self:center;max-width:600px}
+html[data-theme] body #creative-lab .lab-entry-copy h2{
+  font-size:clamp(3rem,6vw,6.2rem)!important;
+  text-transform:uppercase;
+  color:var(--brutal-ink)!important;
+}
+html[data-theme] body #creative-lab .lab-entry-copy h2 span{color:var(--brutal-red)!important}
+html[data-theme] body #creative-lab .lab-entry-link{border-radius:0!important;box-shadow:none!important}
+
+/* Archive — retain its 3D artwork fan, remove soft card framing around it. */
+html[data-theme] body #archive .section-head.split{align-items:end;gap:25px;margin-bottom:clamp(24px,3vw,38px)}
+html[data-theme] body #archive .section-head h2{font-size:clamp(2.8rem,6.4vw,6.2rem)!important;text-transform:uppercase}
+html[data-theme] body #archive .filters{display:flex;flex-wrap:wrap;gap:7px}
+html[data-theme] body #archive .filters button{
+  min-height:42px;
+  padding:10px 13px;
+  border:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--brutal-ink)!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #archive .filters button.active{background:var(--brutal-red)!important;border-color:var(--brutal-red)!important;color:#fff!important}
+html[data-theme] body #archive .archive-fan{border:2px solid var(--brutal-line)!important;border-radius:0!important;box-shadow:none!important}
+html[data-theme] body #archive .archive-item{border:2px solid var(--brutal-line)!important;border-radius:0!important;box-shadow:none!important}
+html[data-theme] body #archive .archive-item figcaption{color:var(--brutal-ink)!important}
+html[data-theme] body #archive .archive-item figcaption span{color:var(--brutal-red)!important}
+
+/* Services as a tidy numbered list, not a row of rounded cards. */
+html[data-theme] body #services{padding-inline:clamp(22px,4vw,62px)!important}
+html[data-theme] body #services :is(h2,h3,p,a,span,em,.eyebrow,.service-index){color:var(--brutal-ink)!important}
+html[data-theme] body #services :is(.eyebrow,.service-index){color:var(--brutal-red)!important}
+html[data-theme] body #services .studio-services-header>p,
+html[data-theme] body #services .service-item>p{color:var(--brutal-muted)!important}
+html[data-theme] body #services .services-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  border-top:2px solid var(--brutal-line)!important;
+  border-left:2px solid var(--brutal-line)!important;
+  background:transparent!important;
+  border-radius:0!important;
+}
+html[data-theme] body #services .service-item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-content:start;
+  gap:12px 18px;
+  min-width:0;
+  padding:clamp(20px,2.6vw,34px);
+  border:0!important;
+  border-right:2px solid var(--brutal-line)!important;
+  border-bottom:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #services .service-item:nth-child(2n){border-right:0!important}
+html[data-theme] body #services .service-item .service-index{grid-column:1/-1;border-radius:0!important}
+html[data-theme] body #services .service-item h3{font-size:clamp(1.65rem,2.5vw,2.7rem)!important}
+html[data-theme] body #services .service-item>a{
+  grid-column:1/-1;
+  align-self:end;
+  width:max-content;
+  max-width:100%;
+  border:2px solid var(--brutal-line)!important;
+  border-radius:0!important;
+  padding:10px 12px;
+  color:var(--brutal-ink)!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #services .service-item>a:hover,
+html[data-theme] body #services .service-item>a:focus-visible{background:var(--brutal-red)!important;color:#fff!important}
+html[data-theme] body #services .studio-services-foot{border-top:2px solid var(--brutal-line);padding-top:18px}
+html[data-theme] body #services .studio-services-foot a{color:var(--brutal-red)!important}
+
+/* About and Contact — dark closing chapters, square tools and a short red accent. */
+html[data-theme] body #about{display:grid;grid-template-columns:minmax(250px,.75fr) minmax(0,1.25fr);align-items:center;gap:clamp(24px,4vw,58px)}
+html[data-theme] body #about>.eyebrow{grid-column:1/-1;margin:0}
+html[data-theme] body #about .about-v2-grid{display:contents}
+html[data-theme] body #about .about-v2-image{
+  min-height:clamp(320px,40vw,560px);
+  border:2px solid #f8faed55!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #about .about-v2-content h2{font-size:clamp(3rem,6.2vw,6.7rem)!important;color:var(--brutal-light)!important}
+html[data-theme] body #about .about-v2-mini{color:var(--brutal-red-soft)!important}
+html[data-theme] body #about .about-v2-content .tool-stack{gap:8px}
+html[data-theme] body #about .tool-stack .tool-item{border:2px solid #f8faed55!important;border-radius:0!important;background:transparent!important}
+html[data-theme] body #about .about-actions>a{border:2px solid #f8faed55!important;border-radius:0!important;box-shadow:none!important}
+html[data-theme] body #about .about-actions .about-resume{background:var(--brutal-red)!important;border-color:var(--brutal-red)!important}
+html[data-theme] body #about .about-actions .about-collaborate{background:transparent!important}
+html[data-theme] body #contact .contact-v2-heading{border-bottom:2px solid #f8faed55!important}
+html[data-theme] body #contact h2{
+  max-width:100%;
+  margin:clamp(30px,4vw,58px) 0;
+  font-size:clamp(3rem,8vw,8.5rem)!important;
+  text-transform:uppercase;
+  color:var(--brutal-light)!important;
+}
+html[data-theme] body #contact .contact-v2-heading .eyebrow{color:var(--brutal-red-soft)!important}
+html[data-theme] body #contact .contact-v2-bottom{border-top:2px solid #f8faed55!important;border-bottom:2px solid #f8faed55!important;padding-block:24px}
+html[data-theme] body #contact .contact-v2-button,
+html[data-theme] body #contact .brief-actions>button{border:2px solid var(--brutal-red)!important;border-radius:0!important;box-shadow:none!important}
+html[data-theme] body #contact .email{color:var(--brutal-light)!important}
+html[data-theme] body #contact .contact-links{border-block:2px solid #f8faed55}
+html[data-theme] body #contact .contact-links a{color:var(--brutal-light)!important}
+html[data-theme] body #contact .project-brief{
+  border:2px solid #f8faed55!important;
+  border-radius:0!important;
+  background:var(--brutal-dark)!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #contact .project-brief::before{display:none}
+html[data-theme] body #contact .project-brief>h3{border-right:2px solid #f8faed55!important;border-radius:0!important}
+html[data-theme] body #contact .brief-field :is(input,select,textarea){
+  border:2px solid #f8faed55!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+html[data-theme] body #contact .brief-actions>button{min-height:48px}
+html[data-theme] body :is(#work,#process,#identity,#motion,#creative-lab,#archive,#services,#about,#contact) :is(a,button):focus-visible{
+  outline:3px solid var(--brutal-red)!important;
+  outline-offset:3px!important;
+  border-radius:0!important;
+}
+
+/* Chapter markers act as small square signposts between sections. */
+.section-flow{
+  width:min(calc(100% - clamp(28px,6vw,96px)),1510px)!important;
+  max-width:1510px!important;
+  margin:0 auto!important;
+  padding:4px 0 0!important;
+}
+.section-flow-line{height:2px!important;background:var(--brutal-red)!important;box-shadow:none!important;animation:none!important}
+.section-flow-label{padding-top:9px!important;gap:9px!important}
+.section-flow-label::before{height:26px!important;min-width:34px!important;border:2px solid var(--brutal-line)!important;border-radius:0!important;background:transparent!important;color:var(--brutal-red)!important}
+.section-flow-label span:first-child{min-height:26px!important;padding:4px 8px!important;border:0!important;border-left:3px solid var(--brutal-red)!important;border-radius:0!important;background:transparent!important;color:var(--brutal-ink)!important;font-weight:600!important}
+html[data-theme="dark"] .section-flow-label span:first-child{color:var(--brutal-light)!important}
+.section-flow-label span:last-child{width:26px;height:26px;border:2px solid var(--brutal-line);border-radius:0!important;color:var(--brutal-red);background:transparent!important}
+@media(max-width:760px){
+  html[data-theme] body :is(#work,#process,#identity,#motion,#creative-lab,#archive,#services,#about,#contact){
+    width:calc(100% - 28px);
+    margin-block:14px;
+    padding:25px 20px!important;
+  }
+  html[data-theme] body :is(#work,#process) .section-head:not(.split){grid-template-columns:1fr;grid-template-rows:auto}
+  html[data-theme] body :is(#work,#process) .section-head:not(.split)>.intro{grid-column:1;grid-row:auto;margin-top:10px}
+  html[data-theme] body #identity,
+  html[data-theme] body #creative-lab,
+  html[data-theme] body #about,
+  html[data-theme] body #motion .studio-showreel,
+  html[data-theme] body #motion .section-head.split,
+  html[data-theme] body #services .studio-services-header{grid-template-columns:1fr}
+  html[data-theme] body #identity .gb-teaser-logo{min-height:260px}
+  html[data-theme] body #services .services-list{grid-template-columns:1fr}
+  html[data-theme] body #services .service-item{border-right:0!important}
+  html[data-theme] body #about .about-v2-image{min-height:360px}
+  html[data-theme] body #contact .project-brief>h3{border-right:0!important;border-bottom:2px solid #f8faed55!important;padding-bottom:20px;margin-bottom:20px}
+  .section-flow{width:calc(100% - 28px)!important}
+  .section-flow-label{font-size:11px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme] body :is(#work,#process,#identity,#motion,#creative-lab,#archive,#services,#about,#contact) :is(a,button){transition:none!important}
+}
+
+
