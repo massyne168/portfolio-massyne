@@ -4,7 +4,7 @@
   z-index: 120;
   left: max(1px, env(safe-area-inset-left));
   top: 50%;
-  width: 50px;
+  width: 58px;
   transform: translateY(-50%);
   visibility: hidden;
   opacity: 0;
@@ -22,7 +22,7 @@ body.section-view-ready .site-header .menu {
 }
 .section-rail-menu {
   box-sizing: border-box;
-  width: 50px;
+  width: 58px;
   max-height: calc(100dvh - 24px);
   overflow: visible;
   display: flex;
@@ -46,9 +46,9 @@ body.section-view-ready .site-header .menu {
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -71,9 +71,9 @@ body.section-view-ready .site-header .menu {
   position: relative;
   z-index: 2;
   display: block;
-  flex: 0 0 19px;
-  width: 19px;
-  height: 19px;
+  flex: 0 0 21px;
+  width: 21px;
+  height: 21px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.65;
@@ -121,7 +121,7 @@ body.section-view-ready .site-header .menu {
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   align-self: flex-start;
-  width: 142px;
+  width: 160px;
   justify-content: flex-start;
   padding: 0 11px 0 8px;
   transform: translateX(2px);
@@ -144,26 +144,6 @@ body.section-view-ready .site-header .menu {
     linear-gradient(135deg, rgba(255,255,255,.98), rgba(168,219,255,.76) 22%, rgba(236,207,255,.68) 47%, rgba(255,225,174,.7) 70%, rgba(255,255,255,.92)) border-box;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(58,8,21,.1), 0 0 9px color-mix(in srgb, var(--red) 14%, transparent);
 }
-.section-rail-button:hover::before,
-.section-rail-button:focus-visible::before {
-  content: "";
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.98) 0 18%, rgba(197,229,255,.72) 42%, rgba(255,255,255,.06) 78%);
-  box-shadow: 0 0 4px rgba(255,255,255,.32), 0 0 8px color-mix(in srgb, var(--red-bright, var(--red)) 22%, transparent);
-  pointer-events: none;
-  opacity: .64;
-  offset-path: inset(-2px round 999px);
-  offset-distance: 0%;
-  offset-rotate: 0deg;
-  animation: sectionLightOrbit 4.8s linear infinite;
-}
-@keyframes sectionLightOrbit { to { offset-distance: 100%; } }
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   transform: translateX(2px);
@@ -190,8 +170,8 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   to { opacity: 0; transform: translateY(-14px); filter: blur(3px); }
 }
 @media (max-height: 480px) and (min-width: 851px) {
-  .section-rail-menu { gap: 3px; padding: 5px; }
-  .section-rail-button { width: 30px; height: 30px; flex-basis: 30px; }
+  .section-rail-menu { gap: 2px; padding: 4px; }
+  .section-rail-button { width: 34px; height: 34px; flex-basis: 34px; }
 }
 @media (max-width: 850px) {
   .section-rail {
@@ -215,15 +195,15 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   .section-rail-button {
     width: 100%;
     min-width: 0;
-    height: 44px;
-    min-height: 44px;
-    flex: 0 0 44px;
+    height: 50px;
+    min-height: 50px;
+    flex: 0 0 50px;
     flex-direction: column;
     gap: 2px;
     padding: 3px 2px;
     border-radius: 12px;
   }
-  .section-rail-button svg { width: 17px; height: 17px; flex-basis: 17px; }
+  .section-rail-button svg { width: 18px; height: 18px; flex-basis: 18px; }
   .section-rail-button:hover,
   .section-rail-button:focus-visible {
     align-self: stretch;
@@ -258,12 +238,12 @@ body.section-view-ready .footer-reveal-shell[hidden] {
     margin: 0;
     transform: none;
   }
-  body.section-view-ready #top { padding-bottom: calc(106px + env(safe-area-inset-bottom)); }
+  body.section-view-ready #top { padding-bottom: calc(118px + env(safe-area-inset-bottom)); }
   .section-panel-entering { animation-duration: .4s; }
 }
 @media (max-width: 360px) {
   .section-rail-menu { gap: 3px; padding: 6px; }
-  .section-rail-button { height: 42px; min-height: 42px; flex-basis: 42px; }
+  .section-rail-button { height: 48px; min-height: 48px; flex-basis: 48px; }
   .section-rail-label { font-size: 6.5px; }
 }
 @media (prefers-reduced-motion: reduce) {
