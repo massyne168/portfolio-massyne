@@ -2,7 +2,7 @@
 .section-rail {
   position: fixed;
   z-index: 120;
-  left: max(16px, env(safe-area-inset-left));
+  left: max(4px, env(safe-area-inset-left));
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -36,9 +36,9 @@ body.section-view-ready .site-header .menu {
 }
 .section-rail-toggle {
   position: relative;
-  width: 52px;
-  height: 52px;
-  flex: 0 0 52px;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
