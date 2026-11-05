@@ -4,7 +4,7 @@
   z-index: 120;
   left: max(1px, env(safe-area-inset-left));
   top: 50%;
-  width: 48px;
+  width: 50px;
   transform: translateY(-50%);
   visibility: hidden;
   opacity: 0;
@@ -22,14 +22,14 @@ body.section-view-ready .site-header .menu {
 }
 .section-rail-menu {
   box-sizing: border-box;
-  width: 48px;
+  width: 50px;
   max-height: calc(100dvh - 24px);
   overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
-  padding: 7px 4px;
+  padding: 7px 3px;
   border: 1px solid transparent;
   border-radius: 999px;
   color: var(--paper);
@@ -46,9 +46,9 @@ body.section-view-ready .site-header .menu {
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  width: 38px;
-  height: 38px;
-  flex: 0 0 38px;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -71,9 +71,9 @@ body.section-view-ready .site-header .menu {
   position: relative;
   z-index: 2;
   display: block;
-  flex: 0 0 17px;
-  width: 17px;
-  height: 17px;
+  flex: 0 0 19px;
+  width: 19px;
+  height: 19px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.65;
@@ -121,7 +121,7 @@ body.section-view-ready .site-header .menu {
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   align-self: flex-start;
-  width: 136px;
+  width: 142px;
   justify-content: flex-start;
   padding: 0 11px 0 8px;
   transform: translateX(2px);
@@ -148,21 +148,22 @@ body.section-view-ready .site-header .menu {
 .section-rail-button:focus-visible::before {
   content: "";
   position: absolute;
-  z-index: 1;
-  inset: -2px;
-  padding: 2px;
-  border-radius: inherit;
-  background: conic-gradient(from 0deg, transparent 0deg 322deg, rgba(175,222,255,.45) 329deg, rgba(255,255,255,.88) 336deg, rgba(255,226,176,.8) 340deg, var(--red-bright, var(--red)) 344deg, transparent 350deg 360deg);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  filter: drop-shadow(0 0 2px color-mix(in srgb, var(--red-bright, var(--red)) 30%, transparent));
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.98) 0 18%, rgba(197,229,255,.72) 42%, rgba(255,255,255,.06) 78%);
+  box-shadow: 0 0 4px rgba(255,255,255,.32), 0 0 8px color-mix(in srgb, var(--red-bright, var(--red)) 22%, transparent);
   pointer-events: none;
-  opacity: .78;
-  animation: sectionLightOrbit 3.6s linear infinite;
+  opacity: .64;
+  offset-path: inset(-2px round 999px);
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  animation: sectionLightOrbit 4.8s linear infinite;
 }
-@keyframes sectionLightOrbit { to { transform: rotate(360deg); } }
+@keyframes sectionLightOrbit { to { offset-distance: 100%; } }
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   transform: translateX(2px);
@@ -190,7 +191,7 @@ body.section-view-ready .footer-reveal-shell[hidden] {
 }
 @media (max-height: 480px) and (min-width: 851px) {
   .section-rail-menu { gap: 3px; padding: 5px; }
-  .section-rail-button { width: 28px; height: 28px; flex-basis: 28px; }
+  .section-rail-button { width: 30px; height: 30px; flex-basis: 30px; }
 }
 @media (max-width: 850px) {
   .section-rail {
@@ -222,7 +223,7 @@ body.section-view-ready .footer-reveal-shell[hidden] {
     padding: 3px 2px;
     border-radius: 12px;
   }
-  .section-rail-button svg { width: 16px; height: 16px; flex-basis: 16px; }
+  .section-rail-button svg { width: 17px; height: 17px; flex-basis: 17px; }
   .section-rail-button:hover,
   .section-rail-button:focus-visible {
     align-self: stretch;
@@ -269,7 +270,6 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   .section-rail,
   .section-rail-button,
   .section-rail-label { transition: none !important; }
-  .section-rail-button[aria-current="page"]::before,
   .section-rail-button:hover::before,
   .section-rail-button:focus-visible::before { animation: none !important; }
   .section-panel-entering,
