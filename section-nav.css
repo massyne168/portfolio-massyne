@@ -23,9 +23,8 @@ body.section-view-ready .site-header .menu {
 .section-rail-menu {
   box-sizing: border-box;
   width: 44px;
-  max-height: min(640px, calc(100dvh - 24px));
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  max-height: calc(100dvh - 24px);
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -165,6 +164,10 @@ body.section-view-ready .footer-reveal-shell[hidden] {
 @keyframes sectionPanelLeave {
   from { opacity: 1; transform: translateY(0); filter: blur(0); }
   to { opacity: 0; transform: translateY(-14px); filter: blur(3px); }
+}
+@media (max-height: 480px) and (min-width: 851px) {
+  .section-rail-menu { gap: 3px; padding: 5px; }
+  .section-rail-button { width: 28px; height: 28px; flex-basis: 28px; }
 }
 @media (max-width: 850px) {
   .section-rail {
