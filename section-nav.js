@@ -25,6 +25,8 @@
   const buttons = [...menu.querySelectorAll("[data-section-target]")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const footer = document.querySelector(".footer-reveal-shell");
+  const contactPanel = byKey.get("contact");
+  if (footer && contactPanel && !contactPanel.element.contains(footer)) contactPanel.element.append(footer);
   const setInert = (element, value) => {
     if ("inert" in element) element.inert = value;
   };
@@ -100,7 +102,7 @@
       if (anchorTarget) {
         requestAnimationFrame(() => anchorTarget.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "start" }));
       } else if (options.scroll !== false) {
-        window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
+        panel.element.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
       }
       return;
     }
@@ -127,6 +129,7 @@
       }, reducedMotion.matches ? 0 : 260);
     }
 
+    panel.element.scrollTop = 0;
     panel.element.hidden = false;
     panel.element.classList.remove("section-panel-leaving");
     panel.element.setAttribute("aria-hidden", "false");
@@ -147,7 +150,7 @@
 
     if (options.scroll !== false) {
       requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
+        panel.element.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
         if (anchorTarget) {
           window.setTimeout(() => anchorTarget.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "start" }), reducedMotion.matches ? 0 : 240);
         }
@@ -189,7 +192,9 @@
   document.body.dataset.activePanel = active.key;
   updateButtons(active);
   updateHeaderLinks(active);
+  document.documentElement.classList.add("section-view-ready");
   document.body.classList.add("section-view-ready");
+  window.scrollTo({ top: 0, behavior: "auto" });
 
   if (initial.target && initial.target !== active.element) {
     requestAnimationFrame(() => initial.target.scrollIntoView({ block: "start" }));
