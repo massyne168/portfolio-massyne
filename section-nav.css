@@ -2,9 +2,9 @@
 .section-rail {
   position: fixed;
   z-index: 120;
-  left: max(1px, env(safe-area-inset-left));
+  left: max(0px, env(safe-area-inset-left));
   top: 50%;
-  width: 58px;
+  width: 50px;
   transform: translateY(-50%);
   visibility: hidden;
   opacity: 0;
@@ -22,7 +22,7 @@ body.section-view-ready .site-header .menu {
 }
 .section-rail-menu {
   box-sizing: border-box;
-  width: 58px;
+  width: 50px;
   max-height: calc(100dvh - 24px);
   overflow: visible;
   display: flex;
