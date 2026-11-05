@@ -255,3 +255,67 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   .section-panel-entering,
   .section-panel-leaving { animation: none !important; }
 }
+
+/* Keep section navigation inside a viewport-sized frame. Long sections stay fully reachable in their own panel. */
+html.section-view-ready {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body.section-view-ready {
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior: none;
+}
+body.section-view-ready .site-header {
+  flex: 0 0 76px;
+}
+body.section-view-ready #top {
+  position: relative;
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+body.section-view-ready #top > [data-panel-section] {
+  position: absolute;
+  inset: 0;
+  width: min(100%, 1560px);
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 24px;
+}
+body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 850px) {
+  body.section-view-ready .site-header {
+    flex-basis: 66px;
+  }
+  body.section-view-ready #top > [data-panel-section] {
+    width: 100%;
+    padding-bottom: calc(128px + env(safe-area-inset-bottom));
+    scroll-padding-bottom: calc(128px + env(safe-area-inset-bottom));
+  }
+}
+@supports not (height: 100dvh) {
+  body.section-view-ready { height: 100vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.section-view-ready #top > [data-panel-section] {
+    scroll-behavior: auto;
+  }
+}
