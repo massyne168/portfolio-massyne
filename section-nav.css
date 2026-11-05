@@ -344,3 +344,39 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
     scroll-padding-bottom: 24px;
   }
 }
+
+/* Text-only Evolution wordmark in the existing brand slot. */
+.evolution-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  flex: 0 0 auto;
+  color: var(--paper);
+  text-decoration: none;
+  font: 700 clamp(1rem, 1.12vw, 1.2rem)/1 var(--display);
+  letter-spacing: -.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.evolution-wordmark span {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+}
+.evolution-wordmark .evolution-wordmark-accent {
+  color: var(--red-bright);
+}
+.evolution-wordmark .evolution-wordmark-rest {
+  color: var(--paper);
+}
+.evolution-wordmark:hover {
+  transform: translateY(-1px);
+}
+.evolution-wordmark:focus-visible {
+  outline: 2px solid var(--ui-focus, var(--red-bright));
+  outline-offset: 5px;
+  border-radius: 3px;
+}
+@media (max-width: 550px) {
+  .evolution-wordmark { font-size: 1rem; }
+}
