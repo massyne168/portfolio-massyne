@@ -30,13 +30,15 @@ body.section-view-ready .site-header .menu {
   align-items: center;
   gap: 5px;
   padding: 7px 4px;
-  border: 1px solid color-mix(in srgb, var(--paper) 24%, transparent);
+  border: 1px solid transparent;
   border-radius: 999px;
   color: var(--paper);
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
-  box-shadow: 0 14px 36px rgba(8,7,7,.16), inset 0 1px 0 rgba(255,255,255,.28);
-  -webkit-backdrop-filter: blur(22px) saturate(175%);
-  backdrop-filter: blur(22px) saturate(175%);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--surface) 86%, white 5%), color-mix(in srgb, var(--surface) 78%, var(--ink) 10%)) padding-box,
+    linear-gradient(130deg, rgba(255,255,255,.88), rgba(174,218,255,.56) 24%, rgba(238,211,255,.48) 48%, rgba(255,225,177,.52) 72%, rgba(255,255,255,.78)) border-box;
+  box-shadow: 0 14px 34px rgba(8,7,7,.14), inset 0 1px 0 rgba(255,255,255,.34);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
   scrollbar-width: none;
 }
 .section-rail-menu::-webkit-scrollbar { display: none; }
@@ -53,13 +55,15 @@ body.section-view-ready .site-header .menu {
   gap: 0;
   overflow: visible;
   padding: 0;
-  border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+  border: 1px solid transparent;
   border-radius: 999px;
   color: var(--paper);
-  background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 83%, white 6%), color-mix(in srgb, var(--ink) 48%, transparent));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 4px 12px rgba(8,7,7,.1);
-  -webkit-backdrop-filter: blur(16px) saturate(165%);
-  backdrop-filter: blur(16px) saturate(165%);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--surface) 79%, white 12%), color-mix(in srgb, var(--surface) 66%, var(--ink) 13%)) padding-box,
+    linear-gradient(135deg, rgba(255,255,255,.92), rgba(164,217,255,.66) 23%, rgba(237,206,255,.6) 47%, rgba(255,225,174,.64) 70%, rgba(255,255,255,.86)) border-box;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.44), inset 0 -1px 0 rgba(19,16,25,.08), 0 4px 12px rgba(8,7,7,.12);
+  -webkit-backdrop-filter: blur(18px) saturate(185%);
+  backdrop-filter: blur(18px) saturate(185%);
   cursor: pointer;
   transition: width .36s cubic-bezier(.2,.8,.2,1), transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease, padding .34s cubic-bezier(.2,.8,.2,1);
 }
@@ -75,6 +79,22 @@ body.section-view-ready .site-header .menu {
   stroke-width: 1.65;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+.section-rail-button::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 2px;
+  border-radius: inherit;
+  background: linear-gradient(125deg, rgba(255,255,255,.44), transparent 35%, rgba(255,255,255,.05) 64%, rgba(169,220,255,.2));
+  opacity: .5;
+  pointer-events: none;
+  transition: opacity .24s ease, filter .24s ease;
+}
+.section-rail-button:hover::after,
+.section-rail-button:focus-visible::after {
+  opacity: .88;
+  filter: brightness(1.08);
 }
 .section-rail-label {
   position: relative;
@@ -118,9 +138,11 @@ body.section-view-ready .site-header .menu {
 }
 .section-rail-button[aria-current="page"] {
   color: #fff;
-  border-color: color-mix(in srgb, var(--red-bright, var(--red)) 75%, white 25%);
-  background: radial-gradient(circle at 31% 22%, color-mix(in srgb, var(--red-bright, var(--red)) 72%, white), var(--red) 65%, color-mix(in srgb, var(--red) 72%, var(--ink)));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.36), 0 0 9px color-mix(in srgb, var(--red) 16%, transparent);
+  border-color: transparent;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--red-bright, var(--red)) 80%, white 20%), color-mix(in srgb, var(--red) 91%, var(--ink) 9%)) padding-box,
+    linear-gradient(135deg, rgba(255,255,255,.98), rgba(168,219,255,.76) 22%, rgba(236,207,255,.68) 47%, rgba(255,225,174,.7) 70%, rgba(255,255,255,.92)) border-box;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(58,8,21,.1), 0 0 9px color-mix(in srgb, var(--red) 14%, transparent);
 }
 .section-rail-button:hover::before,
 .section-rail-button:focus-visible::before {
@@ -130,7 +152,7 @@ body.section-view-ready .site-header .menu {
   inset: -2px;
   padding: 2px;
   border-radius: inherit;
-  background: conic-gradient(from 0deg, transparent 0deg 322deg, rgba(255,255,255,.2) 329deg, rgba(255,255,255,.88) 337deg, var(--red-bright, var(--red)) 342deg, transparent 348deg 360deg);
+  background: conic-gradient(from 0deg, transparent 0deg 322deg, rgba(175,222,255,.45) 329deg, rgba(255,255,255,.88) 336deg, rgba(255,226,176,.8) 340deg, var(--red-bright, var(--red)) 344deg, transparent 350deg 360deg);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -144,7 +166,8 @@ body.section-view-ready .site-header .menu {
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   transform: translateX(2px);
-  border-color: color-mix(in srgb, var(--red-bright, var(--red)) 60%, var(--paper));
+  border-color: transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.56), inset 0 -1px 0 rgba(19,16,25,.06), 0 6px 16px rgba(8,7,7,.14);
 }
 .section-rail-button:focus-visible {
   outline: 2px solid var(--ui-focus, var(--red-bright, var(--red)));
