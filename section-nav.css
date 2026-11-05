@@ -46,9 +46,9 @@ body.section-view-ready .site-header .menu {
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -71,9 +71,9 @@ body.section-view-ready .site-header .menu {
   position: relative;
   z-index: 2;
   display: block;
-  flex: 0 0 21px;
-  width: 21px;
-  height: 21px;
+  flex: 0 0 19px;
+  width: 19px;
+  height: 19px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.65;
@@ -121,7 +121,7 @@ body.section-view-ready .site-header .menu {
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   align-self: flex-start;
-  width: 160px;
+  width: 152px;
   justify-content: flex-start;
   padding: 0 11px 0 8px;
   transform: translateX(2px);
@@ -195,15 +195,15 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   .section-rail-button {
     width: 100%;
     min-width: 0;
-    height: 50px;
-    min-height: 50px;
-    flex: 0 0 50px;
+    height: 46px;
+    min-height: 46px;
+    flex: 0 0 46px;
     flex-direction: column;
     gap: 2px;
     padding: 3px 2px;
     border-radius: 12px;
   }
-  .section-rail-button svg { width: 18px; height: 18px; flex-basis: 18px; }
+  .section-rail-button svg { width: 17px; height: 17px; flex-basis: 17px; }
   .section-rail-button:hover,
   .section-rail-button:focus-visible {
     align-self: stretch;
@@ -243,7 +243,7 @@ body.section-view-ready .footer-reveal-shell[hidden] {
 }
 @media (max-width: 360px) {
   .section-rail-menu { gap: 3px; padding: 6px; }
-  .section-rail-button { height: 48px; min-height: 48px; flex-basis: 48px; }
+  .section-rail-button { height: 44px; min-height: 44px; flex-basis: 44px; }
   .section-rail-label { font-size: 6.5px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -337,7 +337,7 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
     inset: auto !important;
   }
   body.section-view-ready #top {
-    margin-bottom: calc(128px + max(8px, env(safe-area-inset-bottom)));
+    margin-bottom: calc(120px + max(8px, env(safe-area-inset-bottom)));
   }
   body.section-view-ready #top > [data-panel-section] {
     padding-bottom: 24px;
