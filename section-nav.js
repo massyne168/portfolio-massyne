@@ -2,10 +2,8 @@
   "use strict";
 
   const main = document.querySelector("#top");
-  const rail = document.querySelector("#section-rail");
   const menu = document.querySelector("#section-rail-menu");
-  const toggle = document.querySelector("#section-rail-toggle");
-  if (!main || !rail || !menu || !toggle) return;
+  if (!main || !menu) return;
 
   const specs = [
     { key: "home", id: "home-panel", hash: "#top" },
@@ -25,7 +23,6 @@
   const byKey = new Map(panels.map(panel => [panel.key, panel]));
   const byId = new Map(panels.map(panel => [panel.id, panel]));
   const buttons = [...menu.querySelectorAll("[data-section-target]")];
-  const mobile = window.matchMedia("(max-width: 850px)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const footer = document.querySelector(".footer-reveal-shell");
   const setInert = (element, value) => {
@@ -82,22 +79,6 @@
     });
   }
 
-  function closeSectionMenu(returnFocus) {
-    rail.classList.remove("is-open");
-    menu.hidden = true;
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Open section menu — current: " + (active?.key || "home"));
-    if (returnFocus) toggle.focus();
-  }
-
-  function syncMenuForViewport() {
-    rail.classList.remove("is-open");
-    menu.hidden = true;
-    toggle.hidden = false;
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Open section menu — current: " + active.key);
-  }
-
   function refreshSectionWidgets(panel) {
     requestAnimationFrame(() => {
       if (panel.key === "work") {
@@ -113,7 +94,6 @@
     if (!panel) return;
     const anchorTarget = options.target && options.target !== panel.element ? options.target : null;
     if (panel === active) {
-      if (rail.classList.contains("is-open")) closeSectionMenu(Boolean(options.focus));
       if (options.updateHistory && options.hash && window.location.hash !== options.hash) {
         window.history.pushState({ section: panel.key }, "", options.hash);
       }
@@ -163,8 +143,6 @@
       if (window.location.hash !== nextHash) window.history.pushState({ section: panel.key }, "", nextHash);
     }
 
-    const menuSelection = rail.classList.contains("is-open");
-    if (menuSelection) closeSectionMenu(false);
     if (options.focus && panel.element.focus) panel.element.focus({ preventScroll: true });
 
     if (options.scroll !== false) {
@@ -193,45 +171,21 @@
     });
   });
 
-  toggle.addEventListener("click", () => {
-    const opening = menu.hidden;
-    menu.hidden = !opening;
-    rail.classList.toggle("is-open", opening);
-    toggle.setAttribute("aria-expanded", String(opening));
-    toggle.setAttribute("aria-label", opening ? "Close section menu" : "Open section menu — current: " + active.key);
-    if (opening) buttons[0]?.focus();
-  });
-
   document.addEventListener("click", event => {
     const link = event.target.closest?.("a[href^='#']");
-    if (link) {
-      const resolved = resolveHash(link.getAttribute("href"));
-      if (resolved) {
-        event.preventDefault();
-        activate(resolved.panel, { updateHistory: true, hash: link.getAttribute("href"), target: resolved.target, focus: true });
-        closeSectionMenu(false);
-        return;
-      }
-    }
-    if (rail.classList.contains("is-open") && !rail.contains(event.target)) {
-      closeSectionMenu(false);
-    }
+    if (!link) return;
+    const resolved = resolveHash(link.getAttribute("href"));
+    if (!resolved) return;
+    event.preventDefault();
+    activate(resolved.panel, { updateHistory: true, hash: link.getAttribute("href"), target: resolved.target, focus: true });
   });
 
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && rail.classList.contains("is-open")) {
-      closeSectionMenu(true);
-    }
-  });
   const restoreFromLocation = () => {
     const resolved = resolveHash(window.location.hash) || { panel: byKey.get("home"), target: null };
     activate(resolved.panel, { scroll: true, target: resolved.target, focus: false });
   };
   window.addEventListener("popstate", restoreFromLocation);
   window.addEventListener("hashchange", restoreFromLocation);
-  mobile.addEventListener?.("change", syncMenuForViewport);
-  syncMenuForViewport();
-
   document.body.dataset.activePanel = active.key;
   updateButtons(active);
   updateHeaderLinks(active);
