@@ -82,23 +82,20 @@
     });
   }
 
-  function closeMobileMenu(returnFocus) {
+  function closeSectionMenu(returnFocus) {
     rail.classList.remove("is-open");
-    menu.hidden = mobile.matches;
+    menu.hidden = true;
     toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Open section menu");
+    toggle.setAttribute("aria-label", "Open section menu — current: " + (active?.key || "home"));
     if (returnFocus) toggle.focus();
   }
 
   function syncMenuForViewport() {
     rail.classList.remove("is-open");
-    if (mobile.matches) {
-      menu.hidden = true;
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", "Open section menu");
-    } else {
-      menu.hidden = false;
-    }
+    menu.hidden = true;
+    toggle.hidden = false;
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open section menu — current: " + active.key);
   }
 
   function refreshSectionWidgets(panel) {
@@ -116,7 +113,7 @@
     if (!panel) return;
     const anchorTarget = options.target && options.target !== panel.element ? options.target : null;
     if (panel === active) {
-      if (mobile.matches && rail.classList.contains("is-open")) closeMobileMenu(Boolean(options.focus));
+      if (rail.classList.contains("is-open")) closeSectionMenu(Boolean(options.focus));
       if (options.updateHistory && options.hash && window.location.hash !== options.hash) {
         window.history.pushState({ section: panel.key }, "", options.hash);
       }
@@ -166,8 +163,8 @@
       if (window.location.hash !== nextHash) window.history.pushState({ section: panel.key }, "", nextHash);
     }
 
-    const mobileSelection = mobile.matches && rail.classList.contains("is-open");
-    if (mobileSelection) closeMobileMenu(false);
+    const menuSelection = rail.classList.contains("is-open");
+    if (menuSelection) closeSectionMenu(false);
     if (options.focus && panel.element.focus) panel.element.focus({ preventScroll: true });
 
     if (options.scroll !== false) {
@@ -192,7 +189,7 @@
   buttons.forEach(button => {
     button.addEventListener("click", () => {
       const panel = byKey.get(button.dataset.sectionTarget);
-      activate(panel, { updateHistory: true, focus: mobile.matches });
+      activate(panel, { updateHistory: true, focus: true });
     });
   });
 
@@ -201,7 +198,7 @@
     menu.hidden = !opening;
     rail.classList.toggle("is-open", opening);
     toggle.setAttribute("aria-expanded", String(opening));
-    toggle.setAttribute("aria-label", opening ? "Close section menu" : "Open section menu");
+    toggle.setAttribute("aria-label", opening ? "Close section menu" : "Open section menu — current: " + active.key);
     if (opening) buttons[0]?.focus();
   });
 
@@ -212,18 +209,18 @@
       if (resolved) {
         event.preventDefault();
         activate(resolved.panel, { updateHistory: true, hash: link.getAttribute("href"), target: resolved.target, focus: true });
-        closeMobileMenu(false);
+        closeSectionMenu(false);
         return;
       }
     }
-    if (mobile.matches && rail.classList.contains("is-open") && !rail.contains(event.target)) {
-      closeMobileMenu(false);
+    if (rail.classList.contains("is-open") && !rail.contains(event.target)) {
+      closeSectionMenu(false);
     }
   });
 
   document.addEventListener("keydown", event => {
     if (event.key === "Escape" && rail.classList.contains("is-open")) {
-      closeMobileMenu(true);
+      closeSectionMenu(true);
     }
   });
   const restoreFromLocation = () => {
