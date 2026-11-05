@@ -320,3 +320,20 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
     scroll-behavior: auto;
   }
 }
+
+/* Keep the touch dock in normal flow inside its fixed mobile anchor. */
+@media (max-width: 850px) {
+  body.section-view-ready #section-rail {
+    position: fixed;
+    top: auto;
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    left: max(8px, env(safe-area-inset-left));
+    width: min(400px, calc(100vw - 16px - env(safe-area-inset-left) - env(safe-area-inset-right)));
+    height: auto;
+  }
+  body.section-view-ready #section-rail-menu {
+    position: static !important;
+    inset: auto !important;
+  }
+}
