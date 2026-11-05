@@ -336,4 +336,11 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
     position: static !important;
     inset: auto !important;
   }
+  body.section-view-ready #top {
+    margin-bottom: calc(128px + max(8px, env(safe-area-inset-bottom)));
+  }
+  body.section-view-ready #top > [data-panel-section] {
+    padding-bottom: 24px;
+    scroll-padding-bottom: 24px;
+  }
 }
