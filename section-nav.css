@@ -51,21 +51,24 @@ body.section-view-ready .site-header .menu {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0;
+  overflow: visible;
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
-  border-radius: 50%;
+  border-radius: 999px;
   color: var(--paper);
   background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 83%, white 6%), color-mix(in srgb, var(--ink) 48%, transparent));
   box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 4px 12px rgba(8,7,7,.1);
   -webkit-backdrop-filter: blur(16px) saturate(165%);
   backdrop-filter: blur(16px) saturate(165%);
   cursor: pointer;
-  transition: transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease;
+  transition: width .34s cubic-bezier(.2,.8,.2,1), transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease, padding .34s cubic-bezier(.2,.8,.2,1);
 }
 .section-rail-button svg {
   position: relative;
   z-index: 2;
   display: block;
+  flex: 0 0 15px;
   width: 15px;
   height: 15px;
   fill: none;
@@ -75,35 +78,43 @@ body.section-view-ready .site-header .menu {
   stroke-linejoin: round;
 }
 .section-rail-label {
-  position: absolute;
-  z-index: 4;
-  left: calc(100% + 9px);
-  top: 50%;
-  max-width: min(180px, calc(100vw - 72px));
+  position: relative;
+  z-index: 2;
+  display: block;
+  max-width: 0;
   overflow: hidden;
-  padding: 7px 10px;
-  border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
-  border-radius: 999px;
-  color: var(--paper);
-  background: color-mix(in srgb, var(--surface) 84%, transparent);
-  box-shadow: 0 8px 24px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.2);
-  -webkit-backdrop-filter: blur(17px) saturate(165%);
-  backdrop-filter: blur(17px) saturate(165%);
+  margin-left: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
   font: 600 9px/1 var(--mono, monospace);
-  letter-spacing: .09em;
-  text-overflow: ellipsis;
+  letter-spacing: .075em;
+  text-overflow: clip;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transform: translate(-4px, -50%);
-  transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+  transform: translateX(-5px);
+  transition: max-width .34s cubic-bezier(.2,.8,.2,1), margin-left .34s cubic-bezier(.2,.8,.2,1), opacity .18s ease, visibility .18s ease, transform .24s cubic-bezier(.2,.8,.2,1);
   pointer-events: none;
+}
+.section-rail-button:hover,
+.section-rail-button:focus-visible {
+  width: 126px;
+  justify-content: flex-start;
+  padding: 0 11px 0 8px;
+  transform: translateX(2px);
+  z-index: 6;
+  border-radius: 999px;
 }
 .section-rail-button:hover .section-rail-label,
 .section-rail-button:focus-visible .section-rail-label {
+  max-width: 86px;
+  margin-left: 8px;
   opacity: 1;
   visibility: visible;
-  transform: translate(0, -50%);
+  transform: translateX(0);
 }
 .section-rail-button[aria-current="page"] {
   color: #fff;
@@ -184,10 +195,18 @@ body.section-view-ready .footer-reveal-shell[hidden] {
     padding: 3px 2px;
     border-radius: 12px;
   }
-  .section-rail-button svg { width: 16px; height: 16px; }
+  .section-rail-button svg { width: 16px; height: 16px; flex-basis: 16px; }
+  .section-rail-button:hover,
+  .section-rail-button:focus-visible {
+    width: 100%;
+    transform: none;
+    z-index: auto;
+  }
   .section-rail-label {
     position: static;
+    display: block;
     max-width: 100%;
+    margin: 0;
     padding: 0;
     border: 0;
     border-radius: 0;
@@ -205,7 +224,11 @@ body.section-view-ready .footer-reveal-shell[hidden] {
     backdrop-filter: none;
   }
   .section-rail-button:hover .section-rail-label,
-  .section-rail-button:focus-visible .section-rail-label { transform: none; }
+  .section-rail-button:focus-visible .section-rail-label {
+    max-width: 100%;
+    margin: 0;
+    transform: none;
+  }
   body.section-view-ready #top { padding-bottom: calc(106px + env(safe-area-inset-bottom)); }
   .section-panel-entering { animation-duration: .4s; }
 }
