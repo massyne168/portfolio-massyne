@@ -263,6 +263,7 @@ html.section-view-ready {
   overscroll-behavior: none;
 }
 body.section-view-ready {
+  zoom: 1;
   height: 100dvh;
   min-height: 0;
   overflow: hidden;
