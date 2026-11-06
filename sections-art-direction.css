@@ -1433,3 +1433,11 @@ html[data-theme="light"] #identity .gb-teaser-logo .gb-teaser-emblem { filter: d
   #identity .gb-discover { margin-top:12px; }
   #identity .gb-teaser-logo { height:clamp(250px, 66vw, 310px); }
 }
+
+/* HEADLINE CLEARANCE — avoid cropping Sora glyphs inside the reveal mask. */
+#identity .gb-teaser-copy h2 { line-height:1.15; }
+@media (max-width: 540px) {
+  #identity .gb-teaser-copy h2 { line-height:1.15; margin:14px 0 8px; }
+  #identity .gb-teaser-logo { height:clamp(230px, 61vw, 285px); }
+  #identity .gb-teaser-spec { min-height:48px; padding-top:6px; padding-bottom:6px; }
+}
