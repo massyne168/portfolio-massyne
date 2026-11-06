@@ -1010,3 +1010,39 @@ body.section-view-ready #top > #archive .fan-controls .fan-count {
     transition: none !important;
   }
 }
+
+
+/* Keep the archive showcase within short desktop viewports. */
+@media (max-height: 760px) and (min-width: 701px) {
+  body.section-view-ready #top > #archive {
+    padding-top: 14px;
+    padding-bottom: 8px;
+  }
+  #archive .section-head.split {
+    gap: 10px 24px;
+    margin-bottom: 8px;
+  }
+  #archive .section-head h2 {
+    font-size: clamp(2.6rem, 7.4vh, 4rem);
+    line-height: .82;
+  }
+  #archive .filters button {
+    min-height: 36px;
+    padding-block: 7px;
+  }
+  body.section-view-ready #top > #archive .archive-grid.archive-fan-stage {
+    height: clamp(230px, 34vh, 260px);
+  }
+  body.section-view-ready #top > #archive .archive-fan-stage > .archive-item img {
+    height: clamp(178px, 27vh, 200px);
+  }
+  body.section-view-ready #top > #archive .fan-controls {
+    gap: 12px;
+    margin-top: 7px;
+    padding-top: 8px;
+  }
+  body.section-view-ready #top > #archive .fan-controls > button {
+    min-width: 38px;
+    min-height: 38px;
+  }
+}
