@@ -474,3 +474,88 @@ html body .footer-reveal-shell.footer-reveal-ready>footer{
   html body .footer-reveal-shell.footer-reveal-ready{--footer-height:50px!important;height:50px!important}
   html body .footer-reveal-shell.footer-reveal-ready>footer{height:50px!important;min-height:50px!important;padding-inline:14px!important;gap:8px!important;font-size:.52rem}
 }
+
+
+/* HOME HERO FIX — keep the metadata row clear of the oversized title. */
+@media (min-width: 1051px) {
+  #home-panel.hero.hero-v2 {
+    row-gap: clamp(18px, 1.45vw, 28px);
+  }
+  #home-panel .hero-v2-content {
+    align-self: start;
+    padding-block: clamp(8px, 1.3vh, 12px);
+  }
+  #home-panel .hero-v2-title {
+    font-size: clamp(3.8rem, 6.5vw, 7.8rem);
+    line-height: .86;
+  }
+  #home-panel .hero-v2-title span:nth-child(1) {
+    font-size: 1.18em;
+    line-height: .8;
+    margin-bottom: clamp(18px, 1.55vw, 30px);
+  }
+  #home-panel .hero-v2-description {
+    max-width: min(600px, 100%);
+    margin-top: clamp(18px, 2vw, 28px);
+    line-height: 1.62;
+  }
+  #home-panel .hero-v2-actions {
+    margin-top: clamp(18px, 2vw, 28px);
+  }
+  #home-panel .availability-block {
+    margin: 12px 0;
+    padding: 9px 0;
+  }
+  #home-panel .hero-v2-bottom {
+    margin-top: clamp(18px, 2.4vh, 26px);
+    padding-top: 12px;
+  }
+}
+@media (min-width: 1051px) and (max-height: 800px) {
+  #home-panel.hero.hero-v2 {
+    min-height: 100%;
+    padding-top: 14px;
+    padding-bottom: 10px;
+    row-gap: 12px;
+  }
+  #home-panel .hero-v2-content {
+    padding-block: 0;
+  }
+  #home-panel .hero-v2-title {
+    font-size: clamp(3.1rem, 5.6vw, 5.1rem);
+    line-height: .86;
+  }
+  #home-panel .hero-v2-title span:nth-child(1) {
+    font-size: 1.08em;
+    line-height: .82;
+    margin-bottom: 10px;
+  }
+  #home-panel .hero-v2-title span:nth-child(2) {
+    font-size: .49em;
+  }
+  #home-panel .hero-v2-description {
+    max-width: min(520px, 100%);
+    margin-top: 12px;
+    font-size: .88rem;
+    line-height: 1.48;
+  }
+  #home-panel .hero-v2-actions {
+    margin-top: 12px;
+  }
+  #home-panel .hero-button-primary,
+  #home-panel .hero-button-quiet {
+    min-height: 46px;
+    padding-block: 11px;
+  }
+  #home-panel .availability-block {
+    margin: 6px 0;
+    padding: 6px 0;
+  }
+  #home-panel .hero-v2-bottom {
+    margin-top: 10px;
+    padding-top: 9px;
+  }
+  #home-panel .hero-v2-portrait {
+    min-height: clamp(360px, 58vh, 420px);
+  }
+}
