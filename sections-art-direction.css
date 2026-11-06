@@ -1046,3 +1046,14 @@ body.section-view-ready #top > #archive .fan-controls .fan-count {
     min-height: 38px;
   }
 }
+
+
+/* Keep the phone archive stage and its controls within the section viewport. */
+@media (max-width: 700px) and (min-height: 701px) {
+  body.section-view-ready #top > #archive .archive-grid.archive-fan-stage {
+    height: clamp(300px, 36.5svh, 350px);
+  }
+  body.section-view-ready #top > #archive .archive-fan-stage > .archive-item img {
+    height: clamp(210px, 28svh, 270px);
+  }
+}
