@@ -823,3 +823,190 @@ body.section-view-ready #top > :is(#work, #process, #identity, #motion, #creativ
   #about .tool-stack { grid-template-columns: 1fr; }
   #contact .contact-links a { flex: 1 1 42%; }
 }
+
+
+/* ARCHIVE / gallery floor: bring the artwork forward and make the fan feel curated. */
+body.section-view-ready #top > #archive {
+  padding: clamp(28px, 3.5vw, 46px) clamp(20px, 4.3vw, 72px) 24px;
+  background:
+    radial-gradient(ellipse at 73% 38%, color-mix(in srgb, var(--red) 11%, transparent), transparent 38%),
+    linear-gradient(145deg, color-mix(in srgb, var(--surface) 38%, var(--ink)), var(--ink) 78%);
+}
+#archive .section-head.split {
+  grid-template-columns: minmax(0, 1.2fr) minmax(310px, .8fr);
+  align-items: end;
+  gap: 16px clamp(24px, 5vw, 72px);
+  margin-bottom: clamp(14px, 2vh, 22px);
+}
+#archive .section-head h2 {
+  margin: 10px 0 0;
+  font-size: clamp(3.2rem, 5.6vw, 6rem);
+  line-height: .84;
+  letter-spacing: -.09em;
+}
+#archive .filters {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+#archive .filters button {
+  min-height: 42px;
+  padding-inline: 16px;
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+  backdrop-filter: blur(14px) saturate(145%);
+}
+#archive .filters button:hover,
+#archive .filters button:focus-visible {
+  border-color: color-mix(in srgb, var(--red-bright) 70%, var(--line));
+  color: var(--paper);
+}
+body.section-view-ready #top > #archive .archive-fan {
+  margin-top: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--paper) 12%, var(--line));
+  border-radius: 19px;
+  background:
+    radial-gradient(ellipse at 50% 52%, color-mix(in srgb, var(--red) 12%, transparent), transparent 54%),
+    linear-gradient(140deg, color-mix(in srgb, var(--surface) 70%, transparent), var(--surface));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--paper) 10%, transparent),
+    0 18px 48px color-mix(in srgb, var(--ink) 24%, transparent);
+}
+body.section-view-ready #top > #archive .archive-fan::before {
+  display: block;
+  inset: 0;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  opacity: .22;
+  filter: none;
+  background:
+    linear-gradient(90deg, transparent calc(25% - .5px), var(--line) 25%, transparent calc(25% + .5px),
+      transparent calc(50% - .5px), var(--line) 50%, transparent calc(50% + .5px),
+      transparent calc(75% - .5px), var(--line) 75%, transparent calc(75% + .5px)),
+    radial-gradient(ellipse at 50% 52%, color-mix(in srgb, var(--red-bright) 18%, transparent), transparent 68%);
+}
+body.section-view-ready #top > #archive .archive-grid.archive-fan-stage {
+  height: clamp(380px, 48svh, 500px);
+  perspective: 1350px;
+  perspective-origin: 50% 48%;
+}
+body.section-view-ready #top > #archive .archive-fan-stage > .archive-item,
+body.section-view-ready #top > #archive .archive-fan-stage > .archive-item.fan-front {
+  width: clamp(320px, 34vw, 460px);
+  padding: 9px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--paper) 18%, var(--line));
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--surface) 93%, var(--paper));
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--ink) 27%, transparent);
+}
+body.section-view-ready #top > #archive .archive-fan-stage > .archive-item.fan-front {
+  border-color: color-mix(in srgb, var(--red-bright) 58%, var(--line));
+  box-shadow: 0 26px 58px color-mix(in srgb, var(--ink) 38%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--red-bright) 18%, transparent);
+}
+body.section-view-ready #top > #archive .archive-fan-stage > .archive-item img {
+  display: block;
+  width: 100%;
+  height: clamp(280px, 39svh, 410px);
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 7px;
+  background: transparent;
+}
+body.section-view-ready #top > #archive .archive-fan-stage > .archive-item figcaption {
+  padding: 11px 6px 4px;
+  font-size: .62rem;
+}
+body.section-view-ready #top > #archive .fan-controls {
+  gap: 18px;
+  margin-top: 12px;
+  padding: 14px 4px 0;
+  border-top: 1px solid var(--line);
+}
+body.section-view-ready #top > #archive .fan-controls > button {
+  min-width: 46px;
+  min-height: 46px;
+  border-color: color-mix(in srgb, var(--paper) 22%, var(--line));
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--surface) 75%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--paper) 12%, transparent);
+  transition: transform .22s ease, border-color .22s ease, background .22s ease;
+}
+body.section-view-ready #top > #archive .fan-controls > button:not(:disabled):hover {
+  transform: translateY(-2px);
+  border-color: var(--red-bright);
+  background: color-mix(in srgb, var(--red) 18%, var(--surface));
+}
+body.section-view-ready #top > #archive .fan-controls .fan-count {
+  font: 600 .9rem/1.4 var(--mono);
+  letter-spacing: .04em;
+}
+@media (max-width: 700px) {
+  body.section-view-ready #top > #archive {
+    padding: 24px 16px 22px;
+  }
+  #archive .section-head.split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+    margin-bottom: 14px;
+  }
+  #archive .section-head h2 {
+    font-size: clamp(3rem, 12.5vw, 4.4rem);
+    line-height: .88;
+  }
+  #archive .filters {
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 0;
+  }
+  #archive .filters button {
+    min-height: 42px;
+    padding: 9px 12px;
+    font-size: .55rem;
+  }
+  body.section-view-ready #top > #archive .archive-grid.archive-fan-stage {
+    height: clamp(320px, 44svh, 420px);
+    perspective: 1050px;
+  }
+  body.section-view-ready #top > #archive .archive-fan-stage > .archive-item,
+  body.section-view-ready #top > #archive .archive-fan-stage > .archive-item.fan-front {
+    width: clamp(230px, 72vw, 330px);
+    padding: 7px;
+    border-radius: 11px;
+  }
+  body.section-view-ready #top > #archive .archive-fan-stage > .archive-item img {
+    height: clamp(235px, 34svh, 330px);
+    border-radius: 6px;
+  }
+  body.section-view-ready #top > #archive .archive-fan-stage > .archive-item figcaption {
+    padding: 8px 4px 3px;
+    font-size: .52rem;
+  }
+  body.section-view-ready #top > #archive .fan-controls {
+    gap: 9px;
+    margin-top: 10px;
+    padding: 12px 0 0;
+  }
+  body.section-view-ready #top > #archive .fan-controls > button {
+    min-width: 42px;
+    min-height: 42px;
+  }
+  body.section-view-ready #top > #archive .fan-hint {
+    max-width: 210px;
+    text-align: center;
+    line-height: 1.55;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.section-view-ready #top > #archive .archive-fan-stage > .archive-item,
+  body.section-view-ready #top > #archive .archive-fan-stage > .archive-item img,
+  body.section-view-ready #top > #archive .fan-controls > button {
+    transition: none !important;
+  }
+}
