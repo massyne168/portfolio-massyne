@@ -1590,7 +1590,7 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
   grid-template-rows: auto minmax(0, 1fr) auto;
   align-content: stretch;
   gap: 0 clamp(28px, 4vw, 64px);
-  padding: clamp(18px, 2vw, 30px) clamp(40px, 5vw, 78px) clamp(16px, 1.8vw, 26px);
+  padding: 12px clamp(40px, 5vw, 78px) 14px;
   overflow: hidden;
   isolation: isolate;
   background:
@@ -1627,7 +1627,7 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
 #home-panel .hero-kicker { margin: 0 0 12px; font-size: .55rem; }
 #home-panel .hero-v2-title {
   max-width: 100%;
-  font-size: clamp(3.6rem, 5.2vw, 6.15rem);
+  font-size: clamp(3.3rem, 3.8vw, 4.4rem);
   line-height: .86;
 }
 #home-panel .hero-v2-title span:nth-child(1) {
@@ -1646,7 +1646,7 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
 #home-panel .hero-button-primary,
 #home-panel .hero-button-quiet { min-height: 44px; padding-block: 10px; }
 #home-panel .availability-block { margin: 10px 0 0; padding: 8px 0; }
-#home-panel .availability-block > p,
+#home-panel .availability-block,
 #home-panel .hero-v2-bottom,
 #home-panel .hero-v2-scroll { display: none; }
 #home-panel .hero-v2-portrait {
@@ -1681,8 +1681,8 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
   letter-spacing: .13em;
 }
 #home-panel #about .about-v2-mini { margin: 4px 0 7px; font-size: .5rem; line-height: 1.4; }
-#home-panel #about .about-v2-content { max-width: none; }
-#home-panel #about .about-v2-content h2 {
+#home-panel #about.about-v2-content { max-width: none; }
+#home-panel #about.about-v2-content h2 {
   margin: 0 0 7px;
   font-size: clamp(1.55rem, 2.15vw, 2.2rem);
   line-height: .98;
@@ -1787,7 +1787,7 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
     max-width: none;
     padding-top: 10px !important;
   }
-  #home-panel #about .about-v2-content h2 { font-size: 1.7rem; }
+  #home-panel #about.about-v2-content h2 { font-size: 1.7rem; }
   #home-panel #about .about-v2-lead { font-size: .88rem !important; }
   #home-panel #about .about-v2-text { font-size: .67rem; }
   #home-panel #about .about-v2-stats { margin: 8px 0 7px; padding: 7px 0; }
@@ -1820,7 +1820,7 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
   #home-panel .hero-v2-portrait figcaption { gap: 8px; padding: 7px; font-size: .4rem; }
   #home-panel #about .home-profile-eyebrow { font-size: .45rem; }
   #home-panel #about .about-v2-mini { font-size: .44rem; }
-  #home-panel #about .about-v2-content h2 { font-size: 1.45rem; }
+  #home-panel #about.about-v2-content h2 { font-size: 1.45rem; }
   #home-panel #about .about-v2-lead { margin-bottom: 5px; font-size: .77rem !important; }
   #home-panel #about .about-v2-text { font-size: .61rem; line-height: 1.4; }
   #home-panel #about .about-v2-stats { gap: 5px; }
@@ -1851,7 +1851,7 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
   #home-panel .hero-v2-actions { margin-top: 11px; }
   #home-panel .availability-block { margin-top: 6px; padding-block: 6px; }
   #home-panel #about.home-profile-details { padding-top: 8px !important; }
-  #home-panel #about .about-v2-content h2 { margin-bottom: 4px; font-size: 1.5rem; }
+  #home-panel #about.about-v2-content h2 { margin-bottom: 4px; font-size: 1.5rem; }
   #home-panel #about .about-v2-text { font-size: .64rem; line-height: 1.35; }
   #home-panel #about .about-v2-stats { margin: 7px 0 5px; padding: 6px 0; }
   #home-panel #about .about-v2-tools-label { margin: 5px 0 4px; }
