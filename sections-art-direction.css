@@ -2095,3 +2095,12 @@ body.section-view-ready #top > #creative-lab {
 @media (prefers-reduced-motion:reduce) {
   #creative-lab .lab-entry-art, #creative-lab .lab-art-canvas, #creative-lab .lab-entry-link span { transition: none; }
 }
+
+/* Keep the poster centered in the full studio workspace. */
+#creative-lab .lab-entry-art { grid-template-columns: minmax(0,1fr); }
+#creative-lab .lab-art-canvas::before { top: 8%; right: -4%; width: 35%; }
+#creative-lab .lab-art-canvas::after { top: 13%; right: 14%; width: 27%; }
+#creative-lab .lab-art-orb { top: 10%; right: 18%; width: 40px; }
+@media (max-width:700px) {
+  #creative-lab .lab-art-orb { width: 32px; }
+}
