@@ -145,6 +145,7 @@ body.section-view-ready .site-header .menu {
   border-color: var(--red-bright, var(--red));
   background: color-mix(in srgb, var(--red) 16%, var(--surface));
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 10%, transparent), 0 0 14px color-mix(in srgb, var(--red) 17%, transparent);
+  animation: sectionRailActiveBreathe 2.8s ease-in-out infinite;
 }
 .section-rail-button[aria-current="page"]::before {
   content: "";
@@ -190,6 +191,10 @@ body.section-view-ready .footer-reveal-shell[hidden] {
 @keyframes sectionPanelLeave {
   from { opacity: 1; transform: translateY(0); filter: blur(0); }
   to { opacity: 0; transform: translateY(-14px); filter: blur(3px); }
+}
+@keyframes sectionRailActiveBreathe {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.025; }
 }
 @media (max-height: 480px) and (min-width: 851px) {
   .section-rail-menu { gap: 2px; padding: 4px; }
@@ -295,6 +300,7 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   .section-rail,
   .section-rail-button,
   .section-rail-label { transition: none !important; }
+  .section-rail-button[aria-current="page"] { animation: none !important; }
   .section-rail-button:hover::before,
   .section-rail-button:focus-visible::before { animation: none !important; }
   .section-panel-entering,
