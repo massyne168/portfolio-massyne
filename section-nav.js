@@ -5,10 +5,11 @@
   const menu = document.querySelector("#section-rail-menu");
   if (!main || !menu) return;
 
-  // Home now owns the designer profile as part of one continuous introduction.
+  // Combine the introduction and profile into one balanced Home composition.
   const heroPanel = main.querySelector("#home-panel");
   const aboutPanel = main.querySelector("#about");
-  if (heroPanel?.parentElement === main && aboutPanel?.parentElement === main) {
+  const profileContent = aboutPanel?.querySelector(".about-v2-content");
+  if (heroPanel?.parentElement === main && aboutPanel?.parentElement === main && profileContent) {
     const aboutFlow = aboutPanel.previousElementSibling?.matches('.section-flow[data-flow-target="about"]')
       ? aboutPanel.previousElementSibling
       : null;
@@ -17,15 +18,23 @@
     homePanel.className = "home-panel-shell";
     homePanel.setAttribute("role", "region");
     homePanel.setAttribute("aria-label", "Home and designer profile");
+
+    const aboutEyebrow = aboutPanel.querySelector(":scope > .eyebrow");
+    if (aboutEyebrow) {
+      aboutEyebrow.textContent = "HOME / THE DESIGNER";
+      aboutEyebrow.classList.add("home-profile-eyebrow");
+      profileContent.prepend(aboutEyebrow);
+    }
+    profileContent.id = "about";
+    profileContent.classList.add("home-profile-details");
+    profileContent.setAttribute("role", "group");
+    profileContent.setAttribute("aria-label", "About MASSYNE");
+
     heroPanel.removeAttribute("id");
     heroPanel.before(homePanel);
-    homePanel.append(heroPanel);
-    if (aboutFlow) homePanel.append(aboutFlow);
-    homePanel.append(aboutPanel);
-    const aboutEyebrow = aboutPanel.querySelector(":scope > .eyebrow");
-    if (aboutEyebrow) aboutEyebrow.textContent = "HOME / THE DESIGNER";
-    const flowLabel = aboutFlow?.querySelector(".section-flow-label span:first-child");
-    if (flowLabel) flowLabel.textContent = "HOME / ABOUT";
+    homePanel.append(heroPanel, profileContent);
+    aboutFlow?.remove();
+    aboutPanel.remove();
   }
 
   const labDescription = main.querySelector("#creative-lab .lab-entry-copy > p:not(.eyebrow)");
@@ -97,7 +106,7 @@
     if (!hash || hash === "#") return null;
     let id = hash.slice(1);
     try { id = decodeURIComponent(id); } catch (_) {}
-    if (id === "top") return { panel: byKey.get("home"), target: null };
+    if (id === "top" || id === "about") return { panel: byKey.get("home"), target: null };
     if (byId.has(id)) return { panel: byId.get(id), target: byId.get(id).element };
     const target = document.getElementById(id);
     if (!target) return null;
