@@ -519,3 +519,140 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
   .section-rail-button svg { width: 30px; height: 30px; flex-basis: 30px; padding: 7px; }
   .section-rail-menu::before { top: 33px; box-shadow: 0 58px 0 color-mix(in srgb, var(--red-bright, var(--red)) 42%, transparent); }
 }
+
+
+/* Orbit Halo for the masthead socials and the full section rail. */
+@property --massyne-orbit-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes massyneOrbitHalo {
+  to { --massyne-orbit-angle: 360deg; }
+}
+body .site-header.brand-header .header-socials a {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+body .site-header.brand-header .header-socials a::before {
+  --massyne-orbit-angle: 0deg;
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  padding: 1.4px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--massyne-orbit-angle),
+    transparent 0 62%,
+    rgba(255,255,255,.98) 70%,
+    #ee7187 77%,
+    transparent 88%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,.62)) drop-shadow(0 0 8px rgba(216,65,92,.42));
+  animation: massyneOrbitHalo 4.6s linear infinite;
+  pointer-events: none;
+}
+body .site-header.brand-header .header-socials svg,
+body .site-header.brand-header .header-socials .header-social-be {
+  position: relative;
+  z-index: 2;
+}
+@media (min-width:851px) {
+  body .section-rail-button {
+    --massyne-orbit-angle: 0deg;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--surface) 88%, white 4%), color-mix(in srgb, var(--surface) 82%, var(--ink) 8%)) padding-box,
+      conic-gradient(
+        from var(--massyne-orbit-angle),
+        transparent 0 62%,
+        rgba(255,255,255,.98) 70%,
+        var(--red-bright, #ee7187) 77%,
+        transparent 88%
+      ) border-box,
+      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+    animation: massyneOrbitHalo 4.6s linear infinite;
+  }
+  body .section-rail-button[aria-current="page"] {
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--red) 25%, var(--surface)), color-mix(in srgb, var(--red) 13%, var(--ink))) padding-box,
+      conic-gradient(
+        from var(--massyne-orbit-angle),
+        transparent 0 62%,
+        rgba(255,255,255,.98) 70%,
+        var(--red-bright, #ee7187) 77%,
+        transparent 88%
+      ) border-box,
+      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+    animation: sectionRailActiveBreathe 2.8s ease-in-out infinite, massyneOrbitHalo 4.6s linear infinite;
+  }
+  body .section-rail-button:hover,
+  body .section-rail-button:focus-visible {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--surface) 88%, white 4%), color-mix(in srgb, var(--surface) 82%, var(--ink) 8%)) padding-box,
+      conic-gradient(
+        from var(--massyne-orbit-angle),
+        transparent 0 62%,
+        rgba(255,255,255,.98) 70%,
+        var(--red-bright, #ee7187) 77%,
+        transparent 88%
+      ) border-box,
+      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+  }
+  body .section-rail-button[aria-current="page"]:hover,
+  body .section-rail-button[aria-current="page"]:focus-visible {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(145deg, color-mix(in srgb, var(--red) 25%, var(--surface)), color-mix(in srgb, var(--red) 13%, var(--ink))) padding-box,
+      conic-gradient(
+        from var(--massyne-orbit-angle),
+        transparent 0 62%,
+        rgba(255,255,255,.98) 70%,
+        var(--red-bright, #ee7187) 77%,
+        transparent 88%
+      ) border-box,
+      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+  }
+}
+@media (max-width:850px) {
+  body .section-rail-button svg {
+    --massyne-orbit-angle: 0deg;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(color-mix(in srgb, var(--surface) 90%, transparent), color-mix(in srgb, var(--surface) 90%, transparent)) padding-box,
+      conic-gradient(
+        from var(--massyne-orbit-angle),
+        transparent 0 62%,
+        rgba(255,255,255,.98) 70%,
+        var(--red-bright, #ee7187) 77%,
+        transparent 88%
+      ) border-box,
+      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+    animation: massyneOrbitHalo 4.6s linear infinite;
+  }
+  body .section-rail-button[aria-current="page"] svg {
+    background:
+      linear-gradient(color-mix(in srgb, var(--red) 18%, var(--surface)), color-mix(in srgb, var(--red) 18%, var(--surface))) padding-box,
+      conic-gradient(
+        from var(--massyne-orbit-angle),
+        transparent 0 62%,
+        rgba(255,255,255,.98) 70%,
+        var(--red-bright, #ee7187) 77%,
+        transparent 88%
+      ) border-box,
+      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body .site-header.brand-header .header-socials a::before,
+  body .section-rail-button,
+  body .section-rail-button svg {
+    animation: none !important;
+  }
+}
