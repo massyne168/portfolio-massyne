@@ -227,3 +227,19 @@ html[data-theme=light] .canvas-stage{background:linear-gradient(145deg,rgba(0,0,
 .visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 @media(max-width:800px){.tool-rail{scrollbar-width:none}.tool-rail::-webkit-scrollbar{display:none}.layer-row{min-height:42px}}
 @media(max-width:520px){.tool-button{flex-basis:46px}.layer-item{gap:6px;padding:6px}.layer-item-icon{width:22px;height:22px}.layer-item-title{font-size:9px}.layer-visibility{flex-basis:27px;width:27px;height:27px}}
+
+@media(max-width:800px){
+  html,body{overflow-x:hidden}
+  .workspace{grid-template-rows:54px auto auto}
+  .canvas-desk{grid-template-rows:42px auto;min-height:0}
+  .canvas-workarea{display:block;min-height:0;overflow-x:auto;overflow-y:hidden;padding:10px}
+  .preview{height:auto;min-height:0;grid-template-rows:auto auto auto;padding:9px}
+  .canvas-stage{min-height:0;overflow:visible;padding:8px}
+  #poster-canvas{width:min(100%,440px,calc(72svh * .8));transform-origin:center center}
+}
+@media(max-width:520px){
+  .workspace{grid-template-rows:50px auto auto}
+  .canvas-workarea{min-height:0;padding:7px}
+  .canvas-stage{padding:6px}
+  #poster-canvas{width:min(100%,440px,calc(72svh * .8))}
+}
