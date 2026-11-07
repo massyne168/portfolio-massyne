@@ -7,7 +7,25 @@
  function text(value,x,y,size,color,weight='700',align='left',outline=false){const editable=value===(input.value.trim()||'MASSYNE').toLocaleUpperCase();ctx.save();if(editable){color=state.titleColor;weight=state.titleWeight;size*=state.textScale/100;x+=state.textX;y+=state.textY;}ctx.font=`${weight} ${size}px "${state.font}",sans-serif`;ctx.textAlign=align;ctx.fillStyle=color;ctx.strokeStyle=color;ctx.lineWidth=2;if(editable){const width=ctx.measureText(value).width;textBoxes.push({x,y,width,height:size,align,angle:state.textAngle});ctx.translate(x,y);ctx.rotate(state.textAngle*Math.PI/180);x=0;y=0;}if(outline)ctx.strokeText(value,x,y);else ctx.fillText(value,x,y);ctx.restore();}
  function draw(){queued=false;textBoxes=[];const p=palettes[state.palette];canvas.dataset.paletteForeground=p.fg;canvas.dataset.paletteAccent=p.accent;const raw=input.value.trim()||'MASSYNE';const title=raw.toLocaleUpperCase();ctx.clearRect(0,0,1080,1350);ctx.fillStyle=p.bg;ctx.fillRect(0,0,1080,1350);ctx.save();ctx.strokeStyle=p.fg;ctx.globalAlpha=.4;ctx.lineWidth=1;ctx.strokeRect(46,46,988,1258);ctx.restore();ctx.font='18px "IBM Plex Mono",monospace';ctx.fillStyle=p.fg;ctx.textAlign='left';ctx.fillText('MASSYNE LAB / TYPE EXPERIMENT',78,100);ctx.textAlign='right';ctx.fillText('001',1002,100);let size=210;ctx.font=`700 ${size}px "${state.font}",sans-serif`;while(ctx.measureText(title).width>920&&size>28){size-=2;ctx.font=`700 ${size}px "${state.font}",sans-serif`;}
  if(state.layout==='signal'){
-  ctx.fillStyle=p.accent;ctx.fillRect(78,172,924,18);text(title,78,465,size,p.fg);text(title,78,465+size*1.1,size,p.fg,'700','left',true);ctx.save();ctx.globalAlpha=.25;text(title,78,465+size*2.2,size,p.fg,'700','left',true);ctx.restore();ctx.fillStyle=p.accent;ctx.beginPath();ctx.arc(870,1060,105,0,Math.PI*2);ctx.fill();ctx.fillStyle=p.fg;ctx.fillRect(78,930,20,215);ctx.fillRect(118,990,20,155);ctx.fillRect(158,1050,20,95);
+  // Signature composition: typographic hierarchy, a drawn crown seal and a precise service index.
+  ctx.save();ctx.fillStyle=p.accent;ctx.fillRect(78,174,70,7);
+  ctx.font='500 16px "IBM Plex Mono",monospace';ctx.textAlign='left';ctx.fillStyle=p.fg;ctx.fillText('INDEPENDENT VISUAL PRACTICE',78,215);
+  ctx.textAlign='right';ctx.fillText('MOROCCO / WORLDWIDE',1002,215);
+  ctx.strokeStyle=p.fg;ctx.globalAlpha=.18;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(78,238);ctx.lineTo(1002,238);ctx.stroke();ctx.restore();
+
+  const cx=850,cy=355;ctx.save();ctx.strokeStyle=p.accent;ctx.globalAlpha=.56;ctx.lineWidth=2;
+  for(const r of [112,92]){ctx.beginPath();ctx.arc(cx,cy,r,-.88,4.34);ctx.stroke();}
+  ctx.globalAlpha=.24;ctx.strokeStyle=p.fg;ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,72,0,Math.PI*2);ctx.stroke();
+  ctx.globalAlpha=1;ctx.fillStyle=p.accent;ctx.beginPath();ctx.moveTo(cx-48,cy+22);ctx.lineTo(cx-64,cy-23);ctx.lineTo(cx-28,cy+1);ctx.lineTo(cx,cy-47);ctx.lineTo(cx+28,cy+1);ctx.lineTo(cx+64,cy-23);ctx.lineTo(cx+48,cy+22);ctx.closePath();ctx.fill();ctx.fillRect(cx-50,cy+29,100,9);ctx.fillRect(cx-39,cy+43,78,6);
+  ctx.fillStyle=p.fg;ctx.font='500 12px "IBM Plex Mono",monospace';ctx.textAlign='center';ctx.fillText('M / 01',cx,cy+83);ctx.restore();
+
+  text(title,78,650,size,p.fg,state.titleWeight);
+  ctx.save();ctx.fillStyle=p.accent;ctx.fillRect(78,704,7,66);ctx.textAlign='left';ctx.fillStyle=p.fg;ctx.font='700 37px Sora,sans-serif';ctx.fillText('GRAPHIC DESIGN',104,744);ctx.fillStyle=p.accent;ctx.font='italic 400 38px "DM Serif Display",serif';ctx.fillText('/ MOTION',430,744);ctx.restore();
+
+  ctx.save();ctx.strokeStyle=p.fg;ctx.globalAlpha=.26;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(78,850);ctx.lineTo(1002,850);ctx.stroke();
+  const columns=[{x:78,n:'01',title:'IDENTITY',copy:'Distinctive visual worlds'},{x:392,n:'02',title:'MOTION',copy:'Ideas with movement'},{x:706,n:'03',title:'ART DIRECTION',copy:'Concept-led imagery'}];
+  for(const item of columns){ctx.textAlign='left';ctx.fillStyle=p.accent;ctx.font='500 13px "IBM Plex Mono",monospace';ctx.fillText(item.n+' /',item.x,895);ctx.fillStyle=p.fg;ctx.font='700 18px Sora,sans-serif';ctx.fillText(item.title,item.x+45,895);ctx.globalAlpha=.62;ctx.font='400 15px Manrope,sans-serif';ctx.fillText(item.copy,item.x,932);ctx.globalAlpha=1;}
+  ctx.fillStyle=p.accent;ctx.fillRect(78,980,924,2);ctx.fillStyle=p.fg;ctx.font='500 12px "IBM Plex Mono",monospace';ctx.textAlign='left';ctx.fillText('FORM / COLOR / EXPRESSION',78,1012);ctx.textAlign='right';ctx.fillText('VISUAL STUDY — 2026',1002,1012);ctx.restore();
  }else if(state.layout==='orbit'){
   ctx.save();ctx.translate(540,665);ctx.rotate(-.42);for(let i=0;i<5;i++){ctx.strokeStyle=i===2?p.accent:p.fg;ctx.globalAlpha=i===2?1:.28;ctx.lineWidth=i===2?16:2;ctx.beginPath();ctx.ellipse(0,0,395,150+i*42,0,0,Math.PI*2);ctx.stroke();}ctx.restore();ctx.fillStyle=p.bg;ctx.fillRect(62,555,956,size+75);text(title,540,615+size*.65,size,p.fg,'700','center');text('FORM / COLOR / EXPRESSION',540,1060,25,p.fg,'400','center');
  }else if(state.layout==='free'){
