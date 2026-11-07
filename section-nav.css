@@ -95,31 +95,36 @@ body.section-view-ready .site-header .menu {
   filter: brightness(1.08);
 }
 .section-rail-label {
-  position: relative;
+  position: absolute;
   z-index: 2;
   display: block;
-  max-width: 0;
+  top: 50%;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100% - 38px);
   overflow: hidden;
-  margin-left: 0;
+  margin: 0;
   padding: 0;
   border: 0;
   color: inherit;
   background: transparent;
   box-shadow: none;
-  font: 600 9px/1 var(--mono, monospace);
-  letter-spacing: .075em;
+  font: 600 10px/1.1 var(--display, "Space Grotesk", sans-serif);
+  letter-spacing: .015em;
+  text-align: center;
   text-overflow: clip;
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(-5px);
-  transition: max-width .34s cubic-bezier(.2,.8,.2,1), margin-left .34s cubic-bezier(.2,.8,.2,1), opacity .18s ease, visibility .18s ease, transform .24s cubic-bezier(.2,.8,.2,1);
+  clip-path: inset(0 100% 0 0);
+  transform: translate(-50%, calc(-50% + 5px));
+  transition: clip-path .42s cubic-bezier(.22,1,.36,1), opacity .22s ease, transform .38s cubic-bezier(.22,1,.36,1), visibility 0s linear .42s;
   pointer-events: none;
 }
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   align-self: flex-start;
-  width: 152px;
+  width: 164px;
   justify-content: flex-start;
   padding: 0 11px 0 8px;
   transform: translateX(2px);
@@ -128,11 +133,12 @@ body.section-view-ready .site-header .menu {
 }
 .section-rail-button:hover .section-rail-label,
 .section-rail-button:focus-visible .section-rail-label {
-  max-width: 86px;
-  margin-left: 8px;
+  max-width: calc(100% - 38px);
   opacity: 1;
   visibility: visible;
-  transform: translateX(0);
+  clip-path: inset(0);
+  transform: translate(-50%, -50%);
+  transition-delay: 0s;
 }
 .section-rail-button[aria-current="page"] {
   color: var(--red-bright, var(--red));
@@ -250,6 +256,7 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   .section-rail-label {
     position: static;
     display: block;
+    width: auto;
     max-width: 100%;
     margin: 0;
     padding: 0;
@@ -258,13 +265,15 @@ body.section-view-ready .footer-reveal-shell[hidden] {
     color: inherit;
     background: transparent;
     box-shadow: none;
-    font: 600 7px/1 var(--mono, monospace);
-    letter-spacing: .045em;
+    font: 600 7.5px/1.05 var(--display, "Space Grotesk", sans-serif);
+    letter-spacing: .01em;
     text-align: center;
     text-transform: uppercase;
     opacity: 1;
     visibility: visible;
     transform: none;
+    clip-path: none;
+    transition: none;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
