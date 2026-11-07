@@ -3,7 +3,7 @@
  const canvas=document.getElementById('poster-canvas'),ctx=canvas.getContext('2d'),items=[];let selected=null,nextId=1,drag=null;
  const clone=()=>items.map(item=>({...item})),render=()=>canvas.dispatchEvent(new Event('poster:render'));
  const publish=()=>canvas.dispatchEvent(new CustomEvent('poster:textlayerschange',{detail:{layers:clone(),selectedId:selected}}));
- function add(){const item={id:nextId++,text:'Your idea',font:'Sora',weight:'700',color:'#f8faed',align:'center',size:96,angle:0,x:50,y:55,visible:true};items.push(item);selected=item.id;publish();render();canvas.dispatchEvent(new CustomEvent('poster:layerselect',{detail:{type:'text',id:selected}}));}
+ function add(){const item={id:nextId++,text:'Your idea',font:'Sora',weight:'700',color:canvas.dataset.paletteForeground||'#171719',align:'center',size:96,angle:0,x:50,y:55,visible:true};items.push(item);selected=item.id;publish();render();canvas.dispatchEvent(new CustomEvent('poster:layerselect',{detail:{type:'text',id:selected}}));}
  canvas.addEventListener('poster:text-add',add);
  canvas.addEventListener('poster:text-update',e=>{const item=items.find(x=>x.id===e.detail.id);if(item){Object.assign(item,e.detail.updates);publish();render();}});
  canvas.addEventListener('poster:text-delete',e=>{const i=items.findIndex(x=>x.id===e.detail.id);if(i<0)return;items.splice(i,1);selected=items.length?items[items.length-1].id:null;publish();render();canvas.dispatchEvent(new CustomEvent('poster:layerselect',{detail:selected===null?{type:'main'}:{type:'text',id:selected}}));});

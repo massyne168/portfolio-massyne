@@ -1,11 +1,11 @@
 (() => {
  const canvas=document.getElementById('poster-canvas'),ctx=canvas.getContext('2d');
  const input=document.getElementById('poster-name'),status=document.getElementById('lab-status');
- const state={palette:'crimson',font:'Sora',layout:'signal',textX:0,textY:0,textScale:100,textAngle:0,titleColor:'#f8faed',titleWeight:'700'};
- const palettes={crimson:{bg:'#a42739',fg:'#f8faed',accent:'#171217'},paper:{bg:'#f1efe5',fg:'#171719',accent:'#a42739'},mono:{bg:'#171719',fg:'#f8faed',accent:'#a42739'}};
+ const state={palette:'paper',font:'Sora',layout:'signal',textX:0,textY:0,textScale:100,textAngle:0,titleColor:'#171719',titleWeight:'700'};
+ const palettes={crimson:{bg:'#a42739',fg:'#f8faed',accent:'#171217'},paper:{bg:'#ffffff',fg:'#171719',accent:'#a42739'},mono:{bg:'#171719',fg:'#f8faed',accent:'#a42739'}};
  let queued=false;let textBoxes=[];
  function text(value,x,y,size,color,weight='700',align='left',outline=false){const editable=value===(input.value.trim()||'MASSYNE').toLocaleUpperCase();ctx.save();if(editable){color=state.titleColor;weight=state.titleWeight;size*=state.textScale/100;x+=state.textX;y+=state.textY;}ctx.font=`${weight} ${size}px "${state.font}",sans-serif`;ctx.textAlign=align;ctx.fillStyle=color;ctx.strokeStyle=color;ctx.lineWidth=2;if(editable){const width=ctx.measureText(value).width;textBoxes.push({x,y,width,height:size,align,angle:state.textAngle});ctx.translate(x,y);ctx.rotate(state.textAngle*Math.PI/180);x=0;y=0;}if(outline)ctx.strokeText(value,x,y);else ctx.fillText(value,x,y);ctx.restore();}
- function draw(){queued=false;textBoxes=[];const p=palettes[state.palette];const raw=input.value.trim()||'MASSYNE';const title=raw.toLocaleUpperCase();ctx.clearRect(0,0,1080,1350);ctx.fillStyle=p.bg;ctx.fillRect(0,0,1080,1350);ctx.save();ctx.strokeStyle=p.fg;ctx.globalAlpha=.4;ctx.lineWidth=1;ctx.strokeRect(46,46,988,1258);ctx.restore();ctx.font='18px "IBM Plex Mono",monospace';ctx.fillStyle=p.fg;ctx.textAlign='left';ctx.fillText('MASSYNE LAB / TYPE EXPERIMENT',78,100);ctx.textAlign='right';ctx.fillText('001',1002,100);let size=210;ctx.font=`700 ${size}px "${state.font}",sans-serif`;while(ctx.measureText(title).width>920&&size>28){size-=2;ctx.font=`700 ${size}px "${state.font}",sans-serif`;}
+ function draw(){queued=false;textBoxes=[];const p=palettes[state.palette];canvas.dataset.paletteForeground=p.fg;canvas.dataset.paletteAccent=p.accent;const raw=input.value.trim()||'MASSYNE';const title=raw.toLocaleUpperCase();ctx.clearRect(0,0,1080,1350);ctx.fillStyle=p.bg;ctx.fillRect(0,0,1080,1350);ctx.save();ctx.strokeStyle=p.fg;ctx.globalAlpha=.4;ctx.lineWidth=1;ctx.strokeRect(46,46,988,1258);ctx.restore();ctx.font='18px "IBM Plex Mono",monospace';ctx.fillStyle=p.fg;ctx.textAlign='left';ctx.fillText('MASSYNE LAB / TYPE EXPERIMENT',78,100);ctx.textAlign='right';ctx.fillText('001',1002,100);let size=210;ctx.font=`700 ${size}px "${state.font}",sans-serif`;while(ctx.measureText(title).width>920&&size>28){size-=2;ctx.font=`700 ${size}px "${state.font}",sans-serif`;}
  if(state.layout==='signal'){
   ctx.fillStyle=p.accent;ctx.fillRect(78,172,924,18);text(title,78,465,size,p.fg);text(title,78,465+size*1.1,size,p.fg,'700','left',true);ctx.save();ctx.globalAlpha=.25;text(title,78,465+size*2.2,size,p.fg,'700','left',true);ctx.restore();ctx.fillStyle=p.accent;ctx.beginPath();ctx.arc(870,1060,105,0,Math.PI*2);ctx.fill();ctx.fillStyle=p.fg;ctx.fillRect(78,930,20,215);ctx.fillRect(118,990,20,155);ctx.fillRect(158,1050,20,95);
  }else if(state.layout==='orbit'){
@@ -27,7 +27,7 @@
  const titleColor=document.getElementById('title-color'),titleWeight=document.getElementById('title-weight');
  titleColor.addEventListener('input',()=>{state.titleColor=titleColor.value;render();});titleWeight.addEventListener('change',()=>{state.titleWeight=titleWeight.value;render();});
  document.querySelectorAll('button[data-theme]').forEach(button=>button.addEventListener('click',()=>{document.documentElement.dataset.theme=button.dataset.theme;try{localStorage.setItem('massyne:theme',button.dataset.theme)}catch{}document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));}));
- document.getElementById('reset-poster').addEventListener('click',()=>{input.value='MASSYNE';Object.assign(state,{palette:'crimson',font:'Sora',layout:'signal',textX:0,textY:0,textScale:100,textAngle:0,titleColor:'#f8faed',titleWeight:'700'});titleColor.value=state.titleColor;titleWeight.value=state.titleWeight;for(const key of ['palette','font','layout'])document.querySelectorAll('[data-'+key+']').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset[key]===state[key])));status.textContent='Reset to the original composition.';render();});
+ document.getElementById('reset-poster').addEventListener('click',()=>{input.value='MASSYNE';Object.assign(state,{palette:'paper',font:'Sora',layout:'signal',textX:0,textY:0,textScale:100,textAngle:0,titleColor:'#171719',titleWeight:'700'});titleColor.value=state.titleColor;titleWeight.value=state.titleWeight;for(const key of ['palette','font','layout'])document.querySelectorAll('[data-'+key+']').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset[key]===state[key])));status.textContent='Reset to the original composition.';render();});
  document.getElementById('download-poster').addEventListener('click',async()=>{const button=document.getElementById('download-poster');button.disabled=true;try{await document.fonts.ready;draw();const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('Export unavailable');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='massyne-lab-'+(input.value.trim().replace(/[^a-z0-9]+/gi,'-').slice(0,30)||'poster')+'.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Your 1080 × 1350 poster is ready.';}catch{status.textContent='Export could not finish. Please try again.';}finally{button.disabled=false;}});
 
  // Add an open-ended pen and eraser to the existing typographic poster maker.
@@ -44,11 +44,11 @@
  const inkCanvas=document.createElement('canvas');
  inkCanvas.width=canvas.width;inkCanvas.height=canvas.height;
  const inkCtx=inkCanvas.getContext('2d');
- const drawColor=document.getElementById('draw-color');
+ const drawColor=document.getElementById('draw-color');drawColor.value=palettes[state.palette].fg;
  const drawSize=document.getElementById('draw-size');
  const drawSizeValue=document.getElementById('draw-size-value');
  const drawBackground=document.createElement('input');
- drawBackground.id='draw-background';drawBackground.type='color';drawBackground.value='#a42739';drawBackground.setAttribute('aria-label','Free canvas background color');
+ drawBackground.id='draw-background';drawBackground.type='color';drawBackground.value='#ffffff';drawBackground.setAttribute('aria-label','Free canvas background color');
  const backgroundLabel=document.createElement('label');backgroundLabel.htmlFor='draw-background';backgroundLabel.append('Free canvas color',drawBackground);
  drawFieldset.querySelector('.draw-fields').append(backgroundLabel);
  const drawToolButtons=[...drawFieldset.querySelectorAll('[data-draw-tool]')];
@@ -66,7 +66,7 @@
  canvas.addEventListener('pointermove',event=>{if(!activeStroke||event.pointerId!==activePointer)return;event.preventDefault();event.stopImmediatePropagation();activeStroke.points.push(canvasPoint(event));render();},{capture:true});
  for(const type of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(type,event=>{if(!activeStroke||event.pointerId!==activePointer)return;event.preventDefault();event.stopImmediatePropagation();activePointer=null;activeStroke=null;render();status.textContent='Stroke added. Use Undo or keep creating.';},{capture:true});
  document.getElementById('clear-drawing').addEventListener('click',()=>{if(!strokes.length)return;strokes.length=0;render();status.textContent='Freehand marks cleared. Use Undo to bring them back.';});
- document.getElementById('reset-poster').addEventListener('click',()=>{strokes.length=0;activeStroke=null;activePointer=null;drawBackground.value='#a42739';setDrawTool('select',false);});
+ document.getElementById('reset-poster').addEventListener('click',()=>{strokes.length=0;activeStroke=null;activePointer=null;drawBackground.value='#ffffff';setDrawTool('select',false);});
  setDrawTool('select',false);
  document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===document.documentElement.dataset.theme)));
  draw();Promise.all(['Sora','Manrope','DM Serif Display','Bebas Neue','Anton','Space Grotesk','Oswald','Playfair Display','Montserrat','Orbitron','IBM Plex Mono'].map(font=>document.fonts.load(`700 32px "${font}"`).catch(()=>{}))).then(render);
