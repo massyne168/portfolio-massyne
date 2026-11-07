@@ -637,6 +637,7 @@ body .site-header.brand-header .header-socials .header-social-be {
     animation: massyneOrbitHalo 4.6s linear infinite;
   }
   body .section-rail-button[aria-current="page"] svg {
+    animation: sectionRailActiveBreathe 2.8s ease-in-out infinite, massyneOrbitHalo 4.6s linear infinite;
     background:
       linear-gradient(color-mix(in srgb, var(--red) 18%, var(--surface)), color-mix(in srgb, var(--red) 18%, var(--surface))) padding-box,
       conic-gradient(
