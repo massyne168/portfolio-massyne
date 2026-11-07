@@ -1862,3 +1862,236 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
 @media (prefers-reduced-motion: reduce) {
   #home-panel > .hero.hero-v2 { scroll-behavior: auto; }
 }
+
+
+/* MASSYNE Lab — a small, art-directed studio preview */
+body.section-view-ready #top > #creative-lab {
+  grid-template-columns: minmax(0, .96fr) minmax(0, 1.04fr);
+}
+#creative-lab .lab-entry-art {
+  display: grid;
+  grid-template-rows: 40px minmax(0, 1fr) 42px;
+  width: min(100%, 540px);
+  aspect-ratio: 1.12;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 15px;
+  background: #18181c;
+  box-shadow: 0 30px 80px rgba(0,0,0,.34), 0 1px 0 rgba(255,255,255,.06) inset;
+  transform: none;
+  transition: transform .45s cubic-bezier(.2,.75,.25,1), border-color .35s ease, box-shadow .35s ease;
+}
+#creative-lab .lab-entry-art::after { content: none; }
+#creative-lab .lab-art-top,
+#creative-lab .lab-art-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-inline: 15px;
+  color: #a9a7a4 !important;
+  background: #202024;
+  font: 500 8px/1 'IBM Plex Mono', monospace;
+  letter-spacing: .08em;
+}
+#creative-lab .lab-art-top { border-bottom: 1px solid rgba(255,255,255,.08); }
+#creative-lab .lab-art-window-mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #a42739;
+  color: #fff !important;
+  font: 700 11px/1 Sora, sans-serif;
+  letter-spacing: -.08em;
+}
+#creative-lab .lab-art-doc { margin-right: auto; }
+#creative-lab .lab-art-dim { color: #77767a !important; }
+#creative-lab .lab-art-workspace {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 14px;
+  min-height: 0;
+  padding: 16px;
+  background:
+    radial-gradient(ellipse at 78% 16%, rgba(164,39,57,.12), transparent 38%),
+    linear-gradient(145deg, #1d1d21, #17171a);
+}
+#creative-lab .lab-art-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px;
+  background: rgba(255,255,255,.025);
+}
+#creative-lab .lab-art-tools span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: #bcb9b4 !important;
+  font: 500 12px/1 Sora, sans-serif;
+}
+#creative-lab .lab-art-tools .is-active {
+  border-color: rgba(238,100,123,.3);
+  background: rgba(164,39,57,.25);
+  color: #ff8494 !important;
+}
+#creative-lab .lab-art-canvas {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: min(100%, 286px);
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  justify-self: center;
+  overflow: hidden;
+  padding: clamp(16px, 2.2vw, 25px);
+  color: #181817 !important;
+  background:
+    linear-gradient(0deg, rgba(33,30,26,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33,30,26,.035) 1px, transparent 1px),
+    #eeeae0;
+  background-size: 22px 22px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.2);
+  transition: transform .45s cubic-bezier(.2,.75,.25,1), box-shadow .45s ease;
+}
+#creative-lab .lab-art-canvas::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 13%;
+  right: -7%;
+  width: 43%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #ee647b 0, #c23a4e 48%, #8c2635 78%);
+  box-shadow: 0 12px 35px rgba(164,39,57,.2);
+}
+#creative-lab .lab-art-canvas::after {
+  content: "";
+  position: absolute;
+  top: 18%;
+  right: 14%;
+  width: 33%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255,255,255,.58);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px rgba(255,255,255,.07), 0 0 0 18px rgba(24,24,23,.035);
+  pointer-events: none;
+}
+#creative-lab .lab-art-canvas > * { position: relative; z-index: 1; }
+#creative-lab .lab-art-kicker,
+#creative-lab .lab-art-canvas small {
+  color: #4e4a45 !important;
+  font: 500 7px/1.4 'IBM Plex Mono', monospace;
+  letter-spacing: .1em;
+}
+#creative-lab .lab-art-canvas strong {
+  align-self: flex-start;
+  color: #171716 !important;
+  font: 700 clamp(2.8rem, 5.4vw, 4rem)/.78 Sora, sans-serif;
+  letter-spacing: -.085em;
+}
+#creative-lab .lab-art-canvas strong em {
+  color: #a42739 !important;
+  font: italic 400 1.02em/.8 'DM Serif Display', serif;
+  letter-spacing: -.07em;
+}
+#creative-lab .lab-art-dot { color: #a42739 !important; }
+#creative-lab .lab-art-canvas small b { color: #a42739 !important; font-weight: 500; }
+#creative-lab .lab-art-orb {
+  position: absolute !important;
+  z-index: 0 !important;
+  top: 15%;
+  right: 19%;
+  width: 46px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255,255,255,.56);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, #f1b5a3 0 8%, #dd6470 28%, #a42739 70%, #64222c 100%);
+  box-shadow: 0 8px 18px rgba(91,25,36,.2), inset -7px -8px 14px rgba(45,16,22,.2);
+}
+#creative-lab .lab-art-footer { border-top: 1px solid rgba(255,255,255,.08); }
+#creative-lab .lab-art-palette { display: flex; align-items: center; gap: 5px; }
+#creative-lab .lab-art-palette i {
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #eeeae0;
+}
+#creative-lab .lab-art-palette i:nth-child(2) { background: #a42739; }
+#creative-lab .lab-art-palette i:nth-child(3) { background: #db6572; }
+#creative-lab .lab-art-palette i:nth-child(4) { background: #29282a; }
+#creative-lab .lab-art-palette span { margin-left: 5px; color: #8e8b89 !important; }
+#creative-lab .lab-art-status { display: flex; align-items: center; gap: 6px; color: #aaa7a4 !important; }
+#creative-lab .lab-art-status i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #8cbb91;
+  box-shadow: 0 0 8px rgba(140,187,145,.45);
+}
+#creative-lab .lab-entry-copy { max-width: 650px; }
+#creative-lab .lab-entry-link {
+  gap: 42px;
+  padding-inline: 21px;
+}
+#creative-lab .lab-entry-link span { transition: transform .25s ease; }
+#creative-lab .lab-entry-link:hover span { transform: translate(2px,-2px); }
+@media (hover:hover) and (min-width:701px) {
+  #creative-lab:hover .lab-entry-art {
+    transform: translateY(-4px);
+    border-color: rgba(238,100,123,.4);
+    box-shadow: 0 38px 92px rgba(0,0,0,.38), 0 1px 0 rgba(255,255,255,.08) inset;
+  }
+  #creative-lab:hover .lab-art-canvas { transform: translateY(-2px); }
+}
+@media (max-width:900px) {
+  #creative-lab .lab-entry-art { width: min(100%, 500px); }
+}
+@media (max-width:700px) {
+  body.section-view-ready #top > #creative-lab {
+    grid-template-columns: minmax(0,1fr);
+    gap: 27px;
+    padding: 30px clamp(18px,5vw,26px);
+  }
+  #creative-lab .lab-entry-art {
+    width: min(100%, 520px);
+    margin-inline: auto;
+    aspect-ratio: 1.04;
+    grid-template-rows: 36px minmax(0,1fr) 38px;
+    border-radius: 12px;
+  }
+  #creative-lab .lab-art-workspace { grid-template-columns: 38px minmax(0,1fr); gap: 9px; padding: 10px; }
+  #creative-lab .lab-art-tools { gap: 5px; padding-block: 6px; }
+  #creative-lab .lab-art-tools span { width: 25px; height: 25px; font-size: 11px; }
+  #creative-lab .lab-art-canvas { width: min(78%, 240px); padding: 14px; }
+  #creative-lab .lab-art-canvas strong { font-size: clamp(2rem, 9vw, 3rem); }
+  #creative-lab .lab-art-orb { width: 34px; }
+  #creative-lab .lab-art-top, #creative-lab .lab-art-footer { padding-inline: 10px; font-size: 7px; }
+  #creative-lab .lab-art-window-mark { width: 20px; height: 20px; flex-basis: 20px; }
+  #creative-lab .lab-art-palette { gap: 4px; }
+  #creative-lab .lab-art-palette i { width: 7px; height: 7px; }
+  #creative-lab .lab-art-palette span { display: none; }
+  #creative-lab .lab-art-status { font-size: 6px; }
+  #creative-lab .lab-entry-copy { text-align: center; margin-inline: auto; }
+  #creative-lab .lab-entry-copy > p:not(.eyebrow) { margin-inline: auto; }
+}
+@media (prefers-reduced-motion:reduce) {
+  #creative-lab .lab-entry-art, #creative-lab .lab-art-canvas, #creative-lab .lab-entry-link span { transition: none; }
+}
