@@ -243,3 +243,9 @@ html[data-theme=light] .canvas-stage{background:linear-gradient(145deg,rgba(0,0,
   .canvas-stage{padding:6px}
   #poster-canvas{width:min(100%,440px,calc(72svh * .8))}
 }
+
+@media(max-width:800px){
+  .workspace .canvas-desk .canvas-workarea{display:block!important;min-height:0!important;height:auto!important;overflow:visible!important}
+  .workspace .canvas-desk .canvas-workarea .preview{display:grid!important;height:auto!important;min-height:0!important;grid-template-rows:auto auto auto!important}
+  .workspace .canvas-desk .canvas-workarea .canvas-stage{display:grid!important;height:auto!important;min-height:fit-content!important;max-height:none!important;overflow:visible!important}
+}
