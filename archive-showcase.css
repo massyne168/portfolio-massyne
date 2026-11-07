@@ -1,0 +1,97 @@
+/* A quiet editorial grid keeps every archive piece visible at once. */
+#archive .archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(12px, 1.4vw, 20px);
+  margin-top: clamp(24px, 3vw, 42px);
+  columns: auto;
+}
+
+#archive .archive-item {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  break-inside: auto;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--paper) 15%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--ink));
+  cursor: zoom-in;
+  transition: border-color .28s ease, transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease;
+}
+
+#archive .archive-item:hover,
+#archive .archive-item:focus-visible {
+  border-color: color-mix(in srgb, var(--red-bright) 70%, transparent);
+  box-shadow: 0 14px 32px rgba(0,0,0,.18);
+  transform: translateY(-3px);
+}
+
+#archive .archive-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  padding: 10px;
+  object-fit: contain;
+  background: color-mix(in srgb, var(--ink) 88%, var(--surface));
+  transition: transform .45s cubic-bezier(.2,.8,.2,1);
+}
+
+#archive .archive-item:hover img,
+#archive .archive-item:focus-visible img {
+  transform: scale(1.025);
+}
+
+#archive .archive-item figcaption {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  border-top: 1px solid color-mix(in srgb, var(--paper) 10%, transparent);
+  color: var(--paper);
+  font: 500 .72rem/1.35 var(--body);
+  letter-spacing: .005em;
+  text-transform: none;
+}
+
+#archive .archive-item figcaption span {
+  flex: 0 0 auto;
+  color: var(--red-bright);
+  font: 500 1rem/1 var(--display);
+  transition: transform .25s ease;
+}
+
+#archive .archive-item:hover figcaption span,
+#archive .archive-item:focus-visible figcaption span {
+  transform: translate(2px, -2px);
+}
+
+#archive .archive-item.is-hidden,
+#archive .archive-item[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 1000px) {
+  #archive .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+  #archive .archive-grid { gap: 10px; margin-top: 22px; }
+  #archive .archive-item { border-radius: 11px; }
+  #archive .archive-item img { padding: 7px; aspect-ratio: 1 / 1; }
+  #archive .archive-item figcaption { min-height: 44px; padding: 10px; font-size: .7rem; }
+}
+
+@media (max-width: 350px) {
+  #archive .archive-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #archive .archive-item,
+  #archive .archive-item img,
+  #archive .archive-item figcaption span { transition: none; }
+}
