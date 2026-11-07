@@ -21,6 +21,7 @@ body.section-view-ready .site-header .menu {
   display: none !important;
 }
 .section-rail-menu {
+  position: relative;
   box-sizing: border-box;
   width: 50px;
   max-height: calc(100dvh - 24px);
@@ -30,15 +31,13 @@ body.section-view-ready .site-header .menu {
   align-items: center;
   gap: 5px;
   padding: 7px 3px;
-  border: 1px solid transparent;
-  border-radius: 999px;
+  border: 0;
+  border-radius: 0;
   color: var(--paper);
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--surface) 86%, white 5%), color-mix(in srgb, var(--surface) 78%, var(--ink) 10%)) padding-box,
-    linear-gradient(130deg, rgba(255,255,255,.88), rgba(174,218,255,.56) 24%, rgba(238,211,255,.48) 48%, rgba(255,225,177,.52) 72%, rgba(255,255,255,.78)) border-box;
-  box-shadow: 0 14px 34px rgba(8,7,7,.14), inset 0 1px 0 rgba(255,255,255,.34);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  backdrop-filter: blur(24px) saturate(180%);
+  background: linear-gradient(var(--red-bright, var(--red)) 0 0) center / 1px 92% no-repeat;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   scrollbar-width: none;
 }
 .section-rail-menu::-webkit-scrollbar { display: none; }
@@ -55,15 +54,14 @@ body.section-view-ready .site-header .menu {
   gap: 0;
   overflow: visible;
   padding: 0;
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
   border-radius: 999px;
   color: var(--paper);
   background:
-    linear-gradient(145deg, color-mix(in srgb, var(--surface) 79%, white 12%), color-mix(in srgb, var(--surface) 66%, var(--ink) 13%)) padding-box,
-    linear-gradient(135deg, rgba(255,255,255,.92), rgba(164,217,255,.66) 23%, rgba(237,206,255,.6) 47%, rgba(255,225,174,.64) 70%, rgba(255,255,255,.86)) border-box;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.44), inset 0 -1px 0 rgba(19,16,25,.08), 0 4px 12px rgba(8,7,7,.12);
-  -webkit-backdrop-filter: blur(18px) saturate(185%);
-  backdrop-filter: blur(18px) saturate(185%);
+    linear-gradient(145deg, color-mix(in srgb, var(--surface) 88%, white 4%), color-mix(in srgb, var(--surface) 82%, var(--ink) 8%));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 3px 10px rgba(8,7,7,.1);
+  -webkit-backdrop-filter: blur(16px) saturate(155%);
+  backdrop-filter: blur(16px) saturate(155%);
   cursor: pointer;
   transition: width .36s cubic-bezier(.2,.8,.2,1), transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease, padding .34s cubic-bezier(.2,.8,.2,1);
 }
@@ -137,18 +135,36 @@ body.section-view-ready .site-header .menu {
   transform: translateX(0);
 }
 .section-rail-button[aria-current="page"] {
-  color: #fff;
-  border-color: transparent;
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--red-bright, var(--red)) 80%, white 20%), color-mix(in srgb, var(--red) 91%, var(--ink) 9%)) padding-box,
-    linear-gradient(135deg, rgba(255,255,255,.98), rgba(168,219,255,.76) 22%, rgba(236,207,255,.68) 47%, rgba(255,225,174,.7) 70%, rgba(255,255,255,.92)) border-box;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), inset 0 -2px 0 rgba(58,8,21,.1), 0 0 9px color-mix(in srgb, var(--red) 14%, transparent);
+  color: var(--red-bright, var(--red));
+  border-color: var(--red-bright, var(--red));
+  background: color-mix(in srgb, var(--red) 16%, var(--surface));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 10%, transparent), 0 0 14px color-mix(in srgb, var(--red) 17%, transparent);
+}
+.section-rail-button[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: -7px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--red-bright, var(--red));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--red-bright, var(--red)) 48%, transparent);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   transform: translateX(2px);
-  border-color: transparent;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.56), inset 0 -1px 0 rgba(19,16,25,.06), 0 6px 16px rgba(8,7,7,.14);
+}
+.section-rail-button[aria-current="page"]:hover,
+.section-rail-button[aria-current="page"]:focus-visible {
+  border-color: var(--red-bright, var(--red));
+  color: var(--red-bright, var(--red));
+  background: color-mix(in srgb, var(--red) 18%, var(--surface));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 10%, transparent), 0 0 14px color-mix(in srgb, var(--red) 17%, transparent), 0 6px 16px rgba(8,7,7,.12);
 }
 .section-rail-button:focus-visible {
   outline: 2px solid var(--ui-focus, var(--red-bright, var(--red)));
@@ -191,6 +207,13 @@ body.section-view-ready .footer-reveal-shell[hidden] {
     gap: 4px;
     padding: 7px;
     border-radius: 19px;
+    background:
+      linear-gradient(to right, var(--red-bright, var(--red)) 0 0) 50% 30px / 92% 1px no-repeat,
+      linear-gradient(to right, var(--red-bright, var(--red)) 0 0) 50% calc(100% - 30px) / 92% 1px no-repeat,
+      linear-gradient(145deg, color-mix(in srgb, var(--surface) 88%, white 4%), color-mix(in srgb, var(--surface) 82%, var(--ink) 8%));
+    box-shadow: 0 12px 28px rgba(8,7,7,.14), inset 0 1px 0 rgba(255,255,255,.2);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
   }
   .section-rail-button {
     width: 100%;
@@ -201,7 +224,7 @@ body.section-view-ready .footer-reveal-shell[hidden] {
     flex-direction: column;
     gap: 2px;
     padding: 3px 2px;
-    border-radius: 12px;
+    border-radius: 50%;
   }
   .section-rail-button svg { width: 17px; height: 17px; flex-basis: 17px; }
   .section-rail-button:hover,
@@ -210,6 +233,19 @@ body.section-view-ready .footer-reveal-shell[hidden] {
     width: 100%;
     transform: none;
     z-index: auto;
+  }
+  .section-rail-button[aria-current="page"]::before {
+    top: -3px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+  .section-rail-button:hover,
+  .section-rail-button:focus-visible {
+    border-color: color-mix(in srgb, var(--paper) 22%, transparent);
+  }
+  .section-rail-button[aria-current="page"]:hover,
+  .section-rail-button[aria-current="page"]:focus-visible {
+    border-color: var(--red-bright, var(--red));
   }
   .section-rail-label {
     position: static;
