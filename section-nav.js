@@ -33,6 +33,41 @@
     labDescription.textContent = "Draw freely on a blank canvas, or build a poster with type, color and shapes. Save your design as a high-resolution PNG.";
   }
 
+  const contactSection = main.querySelector("#contact");
+  const projectBrief = contactSection?.querySelector("#project-brief");
+  if (contactSection && projectBrief) {
+    const briefDialog = document.createElement("dialog");
+    briefDialog.id = "project-brief-dialog";
+    briefDialog.className = "brief-dialog";
+    briefDialog.setAttribute("aria-labelledby", "brief-dialog-title");
+    const dialogHeader = document.createElement("div");
+    dialogHeader.className = "brief-dialog-header";
+    dialogHeader.innerHTML = '<span id="brief-dialog-title">PROJECT BRIEF / 001</span><button type="button" class="brief-dialog-close" aria-label="Close project brief">CLOSE ×</button>';
+    briefDialog.append(dialogHeader, projectBrief);
+    contactSection.append(briefDialog);
+
+    const briefButton = document.createElement("a");
+    briefButton.className = "contact-v2-button contact-brief-open";
+    briefButton.href = "#project-brief";
+    briefButton.setAttribute("aria-haspopup", "dialog");
+    briefButton.setAttribute("aria-controls", "project-brief-dialog");
+    briefButton.innerHTML = 'WRITE A PROJECT BRIEF <span aria-hidden="true">↗</span>';
+    const actions = contactSection.querySelector(".contact-v2-bottom");
+    actions?.append(briefButton);
+
+    const openBrief = event => {
+      event?.preventDefault();
+      if (!briefDialog.open) briefDialog.showModal();
+      briefDialog.querySelector(".brief-dialog-close")?.focus({ preventScroll: true });
+    };
+    contactSection.querySelectorAll('a[href="#project-brief"]').forEach(link => link.addEventListener("click", openBrief));
+    briefDialog.querySelector(".brief-dialog-close")?.addEventListener("click", () => briefDialog.close());
+    briefDialog.addEventListener("click", event => {
+      if (event.target === briefDialog) briefDialog.close();
+    });
+    if (window.location.hash === "#project-brief") requestAnimationFrame(() => briefDialog.showModal());
+  }
+
   const specs = [
     { key: "home", id: "home-panel", hash: "#top" },
     { key: "work", id: "work", hash: "#work" },
@@ -202,6 +237,7 @@
   });
 
   document.addEventListener("click", event => {
+    if (event.defaultPrevented) return;
     const link = event.target.closest?.("a[href^='#']");
     if (!link) return;
     const resolved = resolveHash(link.getAttribute("href"));
