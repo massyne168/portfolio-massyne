@@ -44,6 +44,77 @@ html[data-theme] .director-dialog{background:#09090c!important;color:#f8faed!imp
 html[data-theme] .director-dialog figcaption{color:#f8faed!important;text-transform:none}
 html[data-theme] .director-dialog button,html[data-theme] .director-dialog a{color:#f8faed!important}
 
+/* Art Director Mode: a calm artwork stage and a fixed, easy-to-read control bar. */
+.director-dialog {
+  box-sizing: border-box;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  padding: clamp(16px, 2.4vw, 34px);
+}
+.director-dialog[open] { gap: clamp(12px, 2vh, 22px); }
+.director-dialog header {
+  min-height: 46px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f8faed1a;
+}
+.director-dialog figure {
+  width: min(100%, 1480px);
+  margin-inline: auto;
+  padding: clamp(12px, 2vw, 28px);
+  border: 1px solid #f8faed18;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at 50% 45%, #21151a 0%, #101014 70%);
+}
+.director-dialog img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  margin-inline: auto;
+  object-fit: contain;
+}
+.director-dialog figcaption { max-width: 900px; margin-inline: auto; }
+.director-dialog nav {
+  display: grid;
+  grid-template-columns: 48px auto minmax(170px, 1fr) 48px;
+  align-items: center;
+  width: min(100%, 680px);
+  margin-inline: auto;
+  gap: 12px;
+  letter-spacing: .04em;
+}
+.director-dialog .director-prev { grid-column: 1; }
+.director-dialog .director-count { grid-column: 2; min-width: 76px; text-align: center; font-variant-numeric: tabular-nums; }
+.director-dialog .director-project { grid-column: 3; justify-self: stretch; text-align: center; }
+.director-dialog .director-next { grid-column: 4; }
+.director-dialog .director-close,
+.director-dialog .director-prev,
+.director-dialog .director-next {
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+}
+.director-dialog button:hover,
+.director-dialog a:hover { border-color: #f8faed85; background: #f8faed0b; }
+@media(max-width:700px) {
+  .director-dialog { padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)); }
+  .director-dialog header { font-size: .56rem; }
+  .director-dialog figure { padding: 10px; border-radius: 12px; gap: 10px; }
+  .director-dialog figcaption { font-size: clamp(.9rem, 4vw, 1.2rem); }
+  .director-dialog nav {
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    width: min(100%, 440px);
+    gap: 8px;
+  }
+  .director-dialog .director-prev { grid-column: 1; grid-row: 1; }
+  .director-dialog .director-count { grid-column: 2; grid-row: 1; }
+  .director-dialog .director-next { grid-column: 3; grid-row: 1; }
+  .director-dialog .director-project { grid-column: 1 / -1; grid-row: 2; justify-self: stretch; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .director-dialog button,
+  .director-dialog a { transition: none!important; }
+}
+
 /* 2026-10-30: Mobile hero first-screen portrait and compact CTA arrows. */
 @media (max-width: 550px) {
   .hero.hero-v2 {

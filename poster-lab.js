@@ -25,6 +25,46 @@
  document.querySelectorAll('button[data-theme]').forEach(button=>button.addEventListener('click',()=>{document.documentElement.dataset.theme=button.dataset.theme;try{localStorage.setItem('massyne:theme',button.dataset.theme)}catch{}document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));}));
  document.getElementById('reset-poster').addEventListener('click',()=>{input.value='MASSYNE';Object.assign(state,{palette:'crimson',font:'Sora',layout:'signal',textX:0,textY:0,textScale:100,textAngle:0});for(const key of ['palette','font','layout'])document.querySelectorAll('[data-'+key+']').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset[key]===state[key])));status.textContent='Reset to the original composition.';render();});
  document.getElementById('download-poster').addEventListener('click',async()=>{const button=document.getElementById('download-poster');button.disabled=true;try{await document.fonts.ready;draw();const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('Export unavailable');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='massyne-lab-'+(input.value.trim().replace(/[^a-z0-9]+/gi,'-').slice(0,30)||'poster')+'.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Your 1080 × 1350 poster is ready.';}catch{status.textContent='Export could not finish. Please try again.';}finally{button.disabled=false;}});
+
+ // Add an open-ended pen and eraser to the existing typographic poster maker.
+ const layoutGroup=document.querySelector('[data-layout="editorial"]')?.parentElement;
+ const freeLayoutButton=document.createElement('button');
+ freeLayoutButton.type='button';freeLayoutButton.dataset.layout='free';freeLayoutButton.setAttribute('aria-pressed','false');freeLayoutButton.textContent='Free canvas';
+ layoutGroup?.append(freeLayoutButton);
+ freeLayoutButton.addEventListener('click',()=>{state.layout='free';document.querySelectorAll('[data-layout]').forEach(button=>button.setAttribute('aria-pressed',String(button===freeLayoutButton)));status.textContent='Free canvas ready — choose Pen and create your own artwork.';render();});
+ const shapeFieldset=document.querySelector('.y2k-shapes');
+ const drawFieldset=document.createElement('fieldset');
+ drawFieldset.className='freehand-controls';
+ drawFieldset.innerHTML='<legend>06 / FREEHAND STUDIO</legend><div class="options" role="group" aria-label="Canvas tool"><button type="button" data-draw-tool="select" aria-pressed="true">Select</button><button type="button" data-draw-tool="draw" aria-pressed="false">Pen</button><button type="button" data-draw-tool="erase" aria-pressed="false">Eraser</button></div><div class="shape-fields draw-fields"><label for="draw-color">Ink color<input id="draw-color" type="color" value="#f8faed"></label><label for="draw-size">Brush size <output id="draw-size-value" for="draw-size">16 px</output><input id="draw-size" type="range" min="4" max="80" value="16"></label></div><div class="options"><button type="button" id="clear-drawing">Clear drawing</button></div><p class="hint">Choose Pen, then draw freely on the canvas with touch, mouse, or a stylus. Undo works for your strokes.</p>';
+ shapeFieldset?.after(drawFieldset);
+ const strokes=[];
+ const inkCanvas=document.createElement('canvas');
+ inkCanvas.width=canvas.width;inkCanvas.height=canvas.height;
+ const inkCtx=inkCanvas.getContext('2d');
+ const drawColor=document.getElementById('draw-color');
+ const drawSize=document.getElementById('draw-size');
+ const drawSizeValue=document.getElementById('draw-size-value');
+ const drawBackground=document.createElement('input');
+ drawBackground.id='draw-background';drawBackground.type='color';drawBackground.value='#a42739';drawBackground.setAttribute('aria-label','Free canvas background color');
+ const backgroundLabel=document.createElement('label');backgroundLabel.htmlFor='draw-background';backgroundLabel.append('Free canvas color',drawBackground);
+ drawFieldset.querySelector('.draw-fields').append(backgroundLabel);
+ const drawToolButtons=[...drawFieldset.querySelectorAll('[data-draw-tool]')];
+ let drawTool='select',activeStroke=null,activePointer=null;
+ function setDrawTool(tool,announce=true){drawTool=tool;canvas.dataset.tool=tool;drawToolButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.drawTool===tool)));if(announce)status.textContent=tool==='select'?(state.layout==='free'?'Select mode: drag your shapes.':'Select mode: drag your text and shapes.'):tool==='draw'?'Pen ready — draw directly on the poster.':'Eraser ready — erase your freehand marks.';}
+ drawToolButtons.forEach(button=>button.addEventListener('click',()=>setDrawTool(button.dataset.drawTool)));
+ drawSize.addEventListener('input',()=>{drawSizeValue.value=drawSize.value+' px';drawSizeValue.textContent=drawSize.value+' px';});
+ drawBackground.addEventListener('input',()=>{if(state.layout==='free')render();});
+ function drawFreehand(){if(state.layout==='free'){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle=drawBackground.value;ctx.fillRect(0,0,canvas.width,canvas.height);textBoxes=[];canvas.dataset.textBoxes='[]';}inkCtx.clearRect(0,0,inkCanvas.width,inkCanvas.height);for(const stroke of strokes){if(!stroke.points.length)continue;inkCtx.save();inkCtx.globalCompositeOperation=stroke.erase?'destination-out':'source-over';inkCtx.strokeStyle=stroke.color;inkCtx.fillStyle=stroke.color;inkCtx.lineWidth=stroke.size;inkCtx.lineCap='round';inkCtx.lineJoin='round';if(stroke.points.length===1){inkCtx.beginPath();inkCtx.arc(stroke.points[0].x,stroke.points[0].y,stroke.size/2,0,Math.PI*2);inkCtx.fill();}else{inkCtx.beginPath();inkCtx.moveTo(stroke.points[0].x,stroke.points[0].y);for(let i=1;i<stroke.points.length;i++)inkCtx.lineTo(stroke.points[i].x,stroke.points[i].y);inkCtx.stroke();}inkCtx.restore();}ctx.drawImage(inkCanvas,0,0);}
+ canvas.addEventListener('poster:draw',drawFreehand);
+ canvas.addEventListener('poster:snapshot',event=>{event.detail.drawings=strokes.map(stroke=>({...stroke,points:stroke.points.map(point=>({...point}))}));});
+ canvas.addEventListener('poster:restore',event=>{const saved=Array.isArray(event.detail.drawings)?event.detail.drawings:[];strokes.splice(0,strokes.length,...saved.map(stroke=>({...stroke,points:stroke.points.map(point=>({...point}))})));activeStroke=null;activePointer=null;render();});
+ function canvasPoint(event){const rect=canvas.getBoundingClientRect();return{x:Math.max(0,Math.min(1080,(event.clientX-rect.left)/rect.width*1080)),y:Math.max(0,Math.min(1350,(event.clientY-rect.top)/rect.height*1350))};}
+ canvas.addEventListener('pointerdown',event=>{if(drawTool==='select'||(event.button!==0&&event.pointerType==='mouse'))return;event.preventDefault();event.stopImmediatePropagation();const point=canvasPoint(event);activeStroke={color:drawColor.value,size:Number(drawSize.value),erase:drawTool==='erase',points:[point]};strokes.push(activeStroke);activePointer=event.pointerId;canvas.setPointerCapture(event.pointerId);render();},{capture:true});
+ canvas.addEventListener('pointermove',event=>{if(!activeStroke||event.pointerId!==activePointer)return;event.preventDefault();event.stopImmediatePropagation();activeStroke.points.push(canvasPoint(event));render();},{capture:true});
+ for(const type of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(type,event=>{if(!activeStroke||event.pointerId!==activePointer)return;event.preventDefault();event.stopImmediatePropagation();activePointer=null;activeStroke=null;render();status.textContent='Stroke added. Use Undo or keep creating.';},{capture:true});
+ document.getElementById('clear-drawing').addEventListener('click',()=>{if(!strokes.length)return;strokes.length=0;render();status.textContent='Freehand marks cleared. Use Undo to bring them back.';});
+ document.getElementById('reset-poster').addEventListener('click',()=>{strokes.length=0;activeStroke=null;activePointer=null;drawBackground.value='#a42739';setDrawTool('select',false);});
+ setDrawTool('select',false);
  document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===document.documentElement.dataset.theme)));
  draw();Promise.all(['Sora','Manrope','DM Serif Display','Bebas Neue','Anton','Space Grotesk','Oswald','Playfair Display','Montserrat','Orbitron','IBM Plex Mono'].map(font=>document.fonts.load(`700 32px "${font}"`).catch(()=>{}))).then(render);
 })();

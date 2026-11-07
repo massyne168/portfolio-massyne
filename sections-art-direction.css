@@ -1,13 +1,13 @@
 /* MASSYNE 2.0 — editorial art direction for the sections after the intro.
    Content, links, project data, filters, forms and playback controls remain intact. */
 
-body.section-view-ready #top > :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #about, #contact) {
+body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #about, #contact) {
   box-sizing: border-box;
   color: var(--paper);
   scrollbar-gutter: stable;
 }
 
-body.section-view-ready #top > :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #about, #contact) .eyebrow {
+body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #about, #contact) .eyebrow {
   color: var(--red-bright);
 }
 
@@ -541,7 +541,7 @@ body.section-view-ready #top > #services {
 #services .studio-services-foot a { color: var(--red-bright); }
 
 /* 08 — ABOUT / portrait, statement and craft */
-body.section-view-ready #top > #about {
+body.section-view-ready #top #about {
   padding: clamp(28px, 4vw, 54px) clamp(20px, 4.3vw, 72px) 40px;
   border-top: 1px solid var(--line);
   background:
@@ -697,7 +697,7 @@ body.section-view-ready #top > #contact {
 #contact .brief-note { color: var(--muted); }
 
 /* Shared detail states and keyboard focus */
-body.section-view-ready #top > :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #about, #contact) :is(a, button, input, select, textarea):focus-visible {
+body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #about, #contact) :is(a, button, input, select, textarea):focus-visible {
   outline: 2px solid var(--ui-focus, var(--red-bright));
   outline-offset: 3px;
 }
@@ -749,7 +749,7 @@ body.section-view-ready #top > :is(#work, #process, #identity, #motion, #creativ
   #contact > h2 { font-size: clamp(2.8rem, 8vw, 4.6rem); }
 }
 @media (max-width: 600px) {
-  body.section-view-ready #top > :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #about, #contact) {
+  body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #about, #contact) {
     padding: 26px 18px 28px;
   }
   #work .section-head {
@@ -822,6 +822,14 @@ body.section-view-ready #top > :is(#work, #process, #identity, #motion, #creativ
   #work .project-grid[data-view="grid"] { grid-template-columns: 1fr; }
   #about .tool-stack { grid-template-columns: 1fr; }
   #contact .contact-links a { flex: 1 1 42%; }
+}
+
+/* About is part of Home now; use its existing hero portrait once. */
+body.section-view-ready #top #about .about-v2-image { display: none; }
+body.section-view-ready #top #about .about-v2-grid {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 900px;
+  margin-inline: auto;
 }
 
 

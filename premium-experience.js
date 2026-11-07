@@ -6,9 +6,12 @@
   if (open) {
     const dialog = document.createElement('dialog');
     dialog.className = 'director-dialog';
-    dialog.setAttribute('aria-label', 'Art Director Mode');
-    dialog.innerHTML = '<header><span>ART DIRECTOR MODE</span><button type="button" class="director-close">EXIT ×</button></header><figure><img alt=""><figcaption></figcaption></figure><nav aria-label="Artwork navigation"><button type="button" class="director-prev" aria-label="Previous artwork">←</button><span class="director-count" role="status" aria-live="polite"></span><a class="director-project">EXPLORE PROJECT ↗</a><button type="button" class="director-next" aria-label="Next artwork">→</button></nav>';
+    dialog.id = 'art-director-dialog';
+    dialog.setAttribute('aria-labelledby', 'director-title');
+    dialog.innerHTML = '<header><span id="director-title">ART DIRECTOR MODE</span><button type="button" class="director-close" aria-label="Close Art Director Mode">EXIT ×</button></header><figure><img alt=""><figcaption></figcaption></figure><nav aria-label="Artwork navigation"><button type="button" class="director-prev" aria-label="Previous artwork">←</button><span class="director-count" role="status" aria-live="polite"></span><a class="director-project">EXPLORE PROJECT ↗</a><button type="button" class="director-next" aria-label="Next artwork">→</button></nav>';
     document.body.append(dialog);
+    open.setAttribute('aria-haspopup', 'dialog');
+    open.setAttribute('aria-controls', dialog.id);
     const image = dialog.querySelector('img'), caption = dialog.querySelector('figcaption');
     let cards = [], index = 0;
     const show = value => {
@@ -35,6 +38,9 @@
     dialog.querySelector('.director-close').onclick = () => dialog.close();
     dialog.querySelector('.director-prev').onclick = () => show(index - 1);
     dialog.querySelector('.director-next').onclick = () => show(index + 1);
+    dialog.addEventListener('click', event => {
+      if (event.target === dialog) dialog.close();
+    });
     dialog.addEventListener('keydown', event => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         event.preventDefault(); show(index + (event.key === 'ArrowRight' ? 1 : -1));

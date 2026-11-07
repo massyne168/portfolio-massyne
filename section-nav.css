@@ -431,3 +431,91 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
 @media (max-width: 550px) {
   .evolution-wordmark { font-size: 1.1rem; }
 }
+
+/* Round Glass mobile dock: clear circular icon wells, quiet labels, and a fine rail. */
+@media (max-width: 850px) {
+  .section-rail-menu {
+    position: relative;
+    gap: 8px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .section-rail-menu::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 35px;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: color-mix(in srgb, var(--red-bright, var(--red)) 42%, transparent);
+    box-shadow: 0 64px 0 color-mix(in srgb, var(--red-bright, var(--red)) 42%, transparent);
+    pointer-events: none;
+  }
+  .section-rail-button,
+  .section-rail-button:hover,
+  .section-rail-button:focus-visible,
+  .section-rail-button[aria-current="page"],
+  .section-rail-button[aria-current="page"]:hover,
+  .section-rail-button[aria-current="page"]:focus-visible {
+    z-index: 1;
+    width: 100%;
+    height: 56px;
+    min-height: 56px;
+    flex-basis: 56px;
+    gap: 5px;
+    padding: 3px 2px;
+    border: 0;
+    border-radius: 9px;
+    color: var(--paper);
+    background: transparent;
+    box-shadow: none;
+    animation: none;
+    transform: none;
+  }
+  .section-rail-button::after { display: none; }
+  .section-rail-button svg {
+    box-sizing: border-box;
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+    padding: 8px;
+    border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+    border-radius: 50%;
+    color: var(--paper);
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 3px 9px rgba(0,0,0,.16);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    backdrop-filter: blur(12px) saturate(150%);
+    transition: color .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .section-rail-button[aria-current="page"] svg {
+    color: var(--red-bright, var(--red));
+    border-color: var(--red-bright, var(--red));
+    background: color-mix(in srgb, var(--red) 23%, var(--surface));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 13%, transparent), 0 0 13px color-mix(in srgb, var(--red-bright, var(--red)) 30%, transparent), inset 0 1px 0 rgba(255,255,255,.28);
+    animation: sectionRailActiveBreathe 2.8s ease-in-out infinite;
+  }
+  .section-rail-button[aria-current="page"]::before {
+    top: 6px;
+    right: calc(50% - 18px);
+    transform: none;
+  }
+  .section-rail-label { font-size: 7.5px; }
+  body.section-view-ready #top { margin-bottom: calc(152px + max(8px, env(safe-area-inset-bottom))); }
+}
+@media (max-width: 360px) {
+  .section-rail-menu { gap: 6px; }
+  .section-rail-button,
+  .section-rail-button:hover,
+  .section-rail-button:focus-visible,
+  .section-rail-button[aria-current="page"],
+  .section-rail-button[aria-current="page"]:hover,
+  .section-rail-button[aria-current="page"]:focus-visible { height: 52px; min-height: 52px; flex-basis: 52px; }
+  .section-rail-button svg { width: 30px; height: 30px; flex-basis: 30px; padding: 7px; }
+  .section-rail-menu::before { top: 33px; box-shadow: 0 58px 0 color-mix(in srgb, var(--red-bright, var(--red)) 42%, transparent); }
+}

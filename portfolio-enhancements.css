@@ -478,7 +478,7 @@ html body .footer-reveal-shell.footer-reveal-ready>footer{
 
 /* HOME HERO FIX — keep the metadata row clear of the oversized title. */
 @media (min-width: 1051px) {
-  #home-panel.hero.hero-v2 {
+  #home-panel > .hero.hero-v2 {
     row-gap: clamp(18px, 1.45vw, 28px);
   }
   #home-panel .hero-v2-content {
@@ -512,7 +512,7 @@ html body .footer-reveal-shell.footer-reveal-ready>footer{
   }
 }
 @media (min-width: 1051px) and (max-height: 800px) {
-  #home-panel.hero.hero-v2 {
+  #home-panel > .hero.hero-v2 {
     min-height: 100%;
     padding-top: 14px;
     padding-bottom: 10px;

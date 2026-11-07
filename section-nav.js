@@ -5,6 +5,34 @@
   const menu = document.querySelector("#section-rail-menu");
   if (!main || !menu) return;
 
+  // Home now owns the designer profile as part of one continuous introduction.
+  const heroPanel = main.querySelector("#home-panel");
+  const aboutPanel = main.querySelector("#about");
+  if (heroPanel?.parentElement === main && aboutPanel?.parentElement === main) {
+    const aboutFlow = aboutPanel.previousElementSibling?.matches('.section-flow[data-flow-target="about"]')
+      ? aboutPanel.previousElementSibling
+      : null;
+    const homePanel = document.createElement("div");
+    homePanel.id = "home-panel";
+    homePanel.className = "home-panel-shell";
+    homePanel.setAttribute("role", "region");
+    homePanel.setAttribute("aria-label", "Home and designer profile");
+    heroPanel.removeAttribute("id");
+    heroPanel.before(homePanel);
+    homePanel.append(heroPanel);
+    if (aboutFlow) homePanel.append(aboutFlow);
+    homePanel.append(aboutPanel);
+    const aboutEyebrow = aboutPanel.querySelector(":scope > .eyebrow");
+    if (aboutEyebrow) aboutEyebrow.textContent = "HOME / THE DESIGNER";
+    const flowLabel = aboutFlow?.querySelector(".section-flow-label span:first-child");
+    if (flowLabel) flowLabel.textContent = "HOME / ABOUT";
+  }
+
+  const labDescription = main.querySelector("#creative-lab .lab-entry-copy > p:not(.eyebrow)");
+  if (labDescription) {
+    labDescription.textContent = "Draw freely on a blank canvas, or build a poster with type, color and shapes. Save your design as a high-resolution PNG.";
+  }
+
   const specs = [
     { key: "home", id: "home-panel", hash: "#top" },
     { key: "work", id: "work", hash: "#work" },
@@ -14,7 +42,6 @@
     { key: "creative-lab", id: "creative-lab", hash: "#creative-lab" },
     { key: "archive", id: "archive", hash: "#archive" },
     { key: "services", id: "services", hash: "#services" },
-    { key: "about", id: "about", hash: "#about" },
     { key: "contact", id: "contact", hash: "#contact" }
   ];
   const panels = specs.map(spec => ({ ...spec, element: document.getElementById(spec.id) }));
