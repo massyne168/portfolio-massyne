@@ -2104,3 +2104,82 @@ body.section-view-ready #top > #creative-lab {
 @media (max-width:700px) {
   #creative-lab .lab-art-orb { width: 32px; }
 }
+
+
+/* Compact social links beside the theme switch in the masthead. */
+body .site-header.brand-header .header-socials {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 7px;
+  order: 2;
+  margin-left: auto;
+}
+body .site-header.brand-header .header-socials a {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  border: 1px solid rgba(248,250,237,.18);
+  border-radius: 50%;
+  background: linear-gradient(155deg, rgba(255,255,255,.09), rgba(255,255,255,.025));
+  color: var(--paper, #f8faed);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 4px 12px rgba(0,0,0,.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease;
+}
+body .site-header.brand-header .header-socials svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body .site-header.brand-header .header-socials svg .header-social-dot { fill: currentColor; stroke: none; }
+body .site-header.brand-header .header-socials .header-social-be {
+  color: inherit;
+  font: 700 15px/1 Sora, sans-serif;
+  letter-spacing: -.08em;
+}
+body .site-header.brand-header .header-socials a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(238,100,123,.7);
+  background: linear-gradient(145deg, #b23c4f, #842536);
+  color: #fff !important;
+}
+body .site-header.brand-header .header-socials a:focus-visible {
+  outline: 2px solid var(--ui-focus, #ee647b);
+  outline-offset: 3px;
+}
+body .site-header.brand-header .header-socials + .theme-control { margin-left: 8px; }
+html[data-theme="light"] body .site-header.brand-header .header-socials a {
+  border-color: rgba(140,38,53,.22);
+  background: linear-gradient(155deg, rgba(255,255,255,.96), rgba(248,250,237,.62));
+  color: #8c2635;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 4px 12px rgba(74,23,33,.08);
+}
+html[data-theme="light"] body .site-header.brand-header .header-socials a:hover {
+  background: linear-gradient(145deg, #b23c4f, #842536);
+  color: #fff !important;
+}
+@media (max-width:700px) {
+  body .site-header.brand-header .header-socials { gap: 4px; }
+  body .site-header.brand-header .header-socials a { width: 31px; height: 31px; }
+  body .site-header.brand-header .header-socials svg { width: 14px; height: 14px; }
+  body .site-header.brand-header .header-socials .header-social-be { font-size: 13px; }
+  body .site-header.brand-header .header-socials + .theme-control { margin-left: 5px; }
+}
+@media (max-width:380px) {
+  body .site-header.brand-header .header-socials { gap: 3px; }
+  body .site-header.brand-header .header-socials a { width: 28px; height: 28px; }
+  body .site-header.brand-header .header-socials svg { width: 13px; height: 13px; }
+  body .site-header.brand-header .header-socials .header-social-be { font-size: 12px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  body .site-header.brand-header .header-socials a { transition: none; }
+}
