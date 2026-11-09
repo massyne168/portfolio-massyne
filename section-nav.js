@@ -131,7 +131,7 @@
       setInert(panel.element, !selected);
     });
     [...main.children].forEach(child => {
-      child.hidden = !mobileFlow && !panels.some(panel => panel.element === child);
+      child.hidden = !panels.some(panel => panel.element === child);
     });
     if (footer) footer.hidden = mobileFlow ? false : active.key !== "contact";
     document.body.classList.toggle("mobile-scroll-flow", mobileFlow);
