@@ -8,12 +8,11 @@
   const label = document.getElementById('motion-case-label');
   const closeButton = document.getElementById('motion-case-close');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
 
   if (!section || !dialog || !player || !title || !label || !closeButton) return;
 
   const cards = [...section.querySelectorAll('[data-motion-case]')];
-  let activePreview = null;
+  let motionIsVisible = false;
 
   const stopPreview = card => {
     const preview = card?.querySelector('.motion-project-preview');
@@ -22,39 +21,83 @@
     preview.removeAttribute('src');
     preview.load();
     card.classList.remove('is-previewing');
-    if (activePreview === card) activePreview = null;
   };
 
   const stopAllPreviews = () => cards.forEach(stopPreview);
 
+  const canPlayPreviews = () => motionIsVisible
+    && !document.hidden
+    && !dialog.open
+    && !reducedMotion.matches
+    && !navigator.connection?.saveData;
+
   const startPreview = card => {
-    if (reducedMotion.matches || !finePointer.matches || !card) return;
-    if (activePreview && activePreview !== card) stopPreview(activePreview);
+    if (!canPlayPreviews() || !card) return;
     const preview = card.querySelector('.motion-project-preview');
-    if (!preview || preview.hasAttribute('src')) return;
-    preview.src = card.dataset.motionSource;
-    preview.load();
-    activePreview = card;
+    const source = card.dataset.motionSource;
+    if (!preview || !source) return;
+
+    if (preview.getAttribute('src') !== source) {
+      preview.src = source;
+      preview.loop = true;
+      preview.muted = true;
+      preview.playsInline = true;
+      preview.load();
+    }
+    if (!preview.paused) return;
+
     const playing = preview.play();
     if (playing && typeof playing.then === 'function') {
-      playing.then(() => card.classList.add('is-previewing')).catch(() => {
-        card.classList.remove('is-previewing');
-      });
+      playing.then(() => {
+        if (canPlayPreviews() && !preview.paused) card.classList.add('is-previewing');
+        else stopPreview(card);
+      }).catch(() => stopPreview(card));
+    } else {
+      card.classList.add('is-previewing');
     }
   };
 
+  const refreshVisiblePreviews = () => {
+    if (!canPlayPreviews()) return;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const visible = rect.bottom > 0 && rect.top < viewportHeight
+        && rect.right > 0 && rect.left < viewportWidth;
+      if (visible) startPreview(card);
+    });
+  };
+
+  const cardObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && canPlayPreviews()) startPreview(entry.target);
+        else if (!entry.isIntersecting) stopPreview(entry.target);
+      });
+    }, { rootMargin: '0px', threshold: 0.01 })
+    : null;
+
+  const sectionObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(entries => {
+      const entry = entries[entries.length - 1];
+      if (!entry) return;
+      motionIsVisible = entry.isIntersecting;
+      if (motionIsVisible) refreshVisiblePreviews();
+      else stopAllPreviews();
+    }, { threshold: 0.01 })
+    : null;
+
+  if (cardObserver && sectionObserver) {
+    cards.forEach(card => cardObserver.observe(card));
+    sectionObserver.observe(section);
+  }
+
   const closeCase = () => {
-    player.pause();
-    player.removeAttribute('src');
-    player.load();
-    dialog.close();
+    if (dialog.open) dialog.close();
   };
 
   cards.forEach(card => {
-    card.addEventListener('pointerenter', () => startPreview(card));
-    card.addEventListener('pointerleave', () => stopPreview(card));
-    card.addEventListener('focus', () => startPreview(card));
-    card.addEventListener('blur', () => stopPreview(card));
     card.addEventListener('click', () => {
       stopAllPreviews();
       const projectName = card.dataset.projectName || 'Motion study';
@@ -77,14 +120,19 @@
     player.pause();
     player.removeAttribute('src');
     player.load();
+    refreshVisiblePreviews();
   });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       stopAllPreviews();
       player.pause();
+    } else {
+      refreshVisiblePreviews();
     }
   });
   reducedMotion.addEventListener?.('change', event => {
     if (event.matches) stopAllPreviews();
+    else refreshVisiblePreviews();
   });
+  window.addEventListener('pageshow', refreshVisiblePreviews);
 })();
