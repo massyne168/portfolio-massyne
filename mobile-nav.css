@@ -129,6 +129,18 @@
     min-height: 40px;
   }
 
+  body.mobile-bottom-nav-active .site-header .menu {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  body.mobile-bottom-nav-active :is(.site-header .brand-logo, .resume-return, .topbar .brand) {
+    box-sizing: border-box;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
   body.mobile-bottom-nav-active :is(.hero-button-primary, .hero-button-quiet, .contact-v2-button, .case-expand, .case-gallery-open, .case-contact-link, .case-chapter-link, .case-breadcrumb a, .resume-cta > a, .resume-actions > a, .resume-print) {
     box-sizing: border-box;
     min-height: 44px;
@@ -139,6 +151,12 @@
 
   body.mobile-bottom-nav-active :is(.hero-button-primary, .hero-button-quiet, .contact-v2-button, .case-expand, .case-gallery-open, .case-contact-link, .case-chapter-link, .case-breadcrumb a, .resume-cta > a, .resume-actions > a, .resume-print):focus-visible {
     outline-offset: 3px;
+  }
+
+  body.mobile-bottom-nav-active .topbar :is(.history-controls button, .export-button) {
+    box-sizing: border-box;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   body.mobile-bottom-nav-active .editor-main :is(.history-controls button, .zoom-controls button, .export-button, .tool-button, .inspector-tabs button, .options button, .font-options button, .layer-order-controls button, .danger-button, .small-add, .reset, .layer-visibility) {
@@ -165,6 +183,20 @@
 }
 
 @media (max-width: 360px) {
+  body.mobile-bottom-nav-active .topbar {
+    padding-inline: 10px;
+    column-gap: 6px;
+  }
+
+  body.mobile-bottom-nav-active .topbar .top-actions {
+    gap: 3px;
+  }
+
+  body.mobile-bottom-nav-active .topbar .export-button {
+    padding-inline: 6px;
+    font-size: 8px;
+  }
+
   .mobile-bottom-nav {
     width: calc(100vw - 16px - env(safe-area-inset-left) - env(safe-area-inset-right));
     gap: 2px;
