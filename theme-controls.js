@@ -39,7 +39,7 @@
     let current=sections[0].id;
     for(const item of sections){
      const rect=item.element.getBoundingClientRect();
-     if(rect.top<=marker&&rect.bottom>0)current=item.id;
+     if(rect.top<=marker)current=item.id;
     }
     links.forEach(link=>{
      if(link.dataset.mobileTarget===current)link.setAttribute("aria-current","location");
@@ -65,7 +65,7 @@
  control.className="theme-control";
  control.setAttribute("role","group");
  control.setAttribute("aria-label","Color theme");
- control.innerHTML='<button type="button" data-theme-choice="light"><span aria-hidden="true">☀</span> Clair</button><button type="button" data-theme-choice="dark"><span aria-hidden="true">☾</span> Sombre</button>';
+ control.innerHTML='<button type="button" data-theme-choice="light" aria-label="Use light theme"><span aria-hidden="true">☀</span> Clair</button><button type="button" data-theme-choice="dark" aria-label="Use dark theme"><span aria-hidden="true">☾</span> Sombre</button>';
  const header=document.querySelector(".site-header");
  if(header)header.insertBefore(control,header.querySelector(".menu"));
  else {control.classList.add("theme-control--standalone");(document.querySelector(".resume-topbar")||document.body).appendChild(control);}
@@ -87,3 +87,4 @@
  });
  sync(root.dataset.theme==="dark"?"dark":"light");
 })();
+
