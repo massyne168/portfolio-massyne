@@ -4,6 +4,7 @@
   const main = document.querySelector("#top");
   const menu = document.querySelector("#section-rail-menu");
   if (!main || !menu) return;
+  const mobileFlowQuery = window.matchMedia("(max-width: 850px)");
 
   // Combine the introduction and profile into one balanced Home composition.
   const heroPanel = main.querySelector("#home-panel");
@@ -106,7 +107,8 @@
     if (!hash || hash === "#") return null;
     let id = hash.slice(1);
     try { id = decodeURIComponent(id); } catch (_) {}
-    if (id === "top" || id === "about") return { panel: byKey.get("home"), target: null };
+    if (id === "top") return { panel: byKey.get("home"), target: null };
+    if (id === "about") return { panel: byKey.get("home"), target: mobileFlowQuery.matches ? document.getElementById("about") : null };
     if (byId.has(id)) return { panel: byId.get(id), target: byId.get(id).element };
     const target = document.getElementById(id);
     if (!target) return null;
@@ -118,18 +120,34 @@
   let active = initial.panel;
   let transitionSequence = 0;
 
-  panels.forEach(panel => {
-    panel.element.dataset.panelSection = panel.key;
-    panel.element.tabIndex = -1;
-    const selected = panel === active;
-    panel.element.hidden = !selected;
-    panel.element.setAttribute("aria-hidden", String(!selected));
-    setInert(panel.element, !selected);
+  const applyPanelVisibility = () => {
+    const mobileFlow = mobileFlowQuery.matches;
+    panels.forEach(panel => {
+      panel.element.dataset.panelSection = panel.key;
+      panel.element.tabIndex = -1;
+      const selected = mobileFlow || panel === active;
+      panel.element.hidden = !selected;
+      panel.element.setAttribute("aria-hidden", String(!selected));
+      setInert(panel.element, !selected);
+    });
+    [...main.children].forEach(child => {
+      child.hidden = !mobileFlow && !panels.some(panel => panel.element === child);
+    });
+    if (footer) footer.hidden = mobileFlow ? false : active.key !== "contact";
+    document.body.classList.toggle("mobile-scroll-flow", mobileFlow);
+  };
+  applyPanelVisibility();
+  mobileFlowQuery.addEventListener("change", () => {
+    applyPanelVisibility();
+    if (!mobileFlowQuery.matches) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+      return;
+    }
+    const resolved = resolveHash(window.location.hash);
+    const target = resolved?.target || (resolved?.panel && resolved.panel !== byKey.get("home") ? resolved.panel.element : null);
+    if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start", behavior: "auto" }));
+    else window.scrollTo({ top: 0, behavior: "auto" });
   });
-  [...main.children].forEach(child => {
-    if (!panels.some(panel => panel.element === child)) child.hidden = true;
-  });
-  if (footer) footer.hidden = active.key !== "contact";
 
   function updateButtons(panel) {
     buttons.forEach(button => {
@@ -151,6 +169,23 @@
       else link.removeAttribute("aria-current");
     });
   }
+
+  function syncMobileActivePanel() {
+    if (!mobileFlowQuery.matches) return;
+    const threshold = Math.min(window.innerHeight * .35, 260);
+    let next = panels[0];
+    panels.forEach(panel => {
+      if (panel.element.getBoundingClientRect().top <= threshold) next = panel;
+    });
+    if (!next || next === active) return;
+    active = next;
+    document.body.dataset.activePanel = active.key;
+    updateButtons(active);
+    updateHeaderLinks(active);
+    if (footer) footer.hidden = false;
+  }
+
+  window.addEventListener("scroll", syncMobileActivePanel, { passive: true });
 
   function refreshSectionWidgets(panel) {
     requestAnimationFrame(() => {
@@ -246,7 +281,7 @@
   });
 
   document.addEventListener("click", event => {
-    if (event.defaultPrevented) return;
+    if (event.defaultPrevented || mobileFlowQuery.matches) return;
     const link = event.target.closest?.("a[href^='#']");
     if (!link) return;
     const resolved = resolveHash(link.getAttribute("href"));
@@ -256,6 +291,7 @@
   });
 
   const restoreFromLocation = () => {
+    if (mobileFlowQuery.matches) return;
     const resolved = resolveHash(window.location.hash) || { panel: byKey.get("home"), target: null };
     activate(resolved.panel, { scroll: true, target: resolved.target, focus: false });
   };
@@ -268,7 +304,10 @@
   document.body.classList.add("section-view-ready");
   window.scrollTo({ top: 0, behavior: "auto" });
 
-  if (initial.target && initial.target !== active.element) {
+  if (mobileFlowQuery.matches) {
+    const initialTarget = initial.target || (initial.panel !== byKey.get("home") ? initial.panel.element : null);
+    if (initialTarget) requestAnimationFrame(() => initialTarget.scrollIntoView({ block: "start", behavior: "auto" }));
+  } else if (initial.target && initial.target !== active.element) {
     requestAnimationFrame(() => initial.target.scrollIntoView({ block: "start" }));
   }
   if (active.key === "work" || active.key === "archive") refreshSectionWidgets(active);
