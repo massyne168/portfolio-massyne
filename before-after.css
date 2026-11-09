@@ -22,3 +22,15 @@
 html[data-theme="light"] .process-comparison .comparison-before img{filter:brightness(0)}
 /* Clip both transparent originals so neither bleeds through the other half. */
 .comparison-before{clip-path:inset(0 var(--reveal) 0 0)}
+
+/* One gentle, one-time entrance for the identity comparison. */
+@media(prefers-reduced-motion:no-preference){
+ .process-comparison.process-motion-ready [data-process-reveal]{opacity:0;translate:0 12px;transition:opacity .65s ease,translate .65s cubic-bezier(.2,.7,.3,1)}
+ .process-comparison.process-motion-ready [data-process-reveal].is-visible{opacity:1;translate:0 0}
+ .process-comparison.process-motion-ready .comparison[data-process-reveal]{transition-delay:.08s}
+ .process-comparison.process-motion-ready .signature-play[data-process-reveal]{transition-delay:.14s}
+ .process-comparison.process-motion-ready .comparison-hint[data-process-reveal]{transition-delay:.18s}
+}
+@media(prefers-reduced-motion:reduce){
+ .process-comparison [data-process-reveal]{opacity:1!important;translate:none!important;transition:none!important}
+}

@@ -73,7 +73,7 @@
   if (signature && comparison) {
     let frame = 0, playing = false;
     const range = comparison.querySelector('input');
-    const stop = () => { cancelAnimationFrame(frame); playing = false; signature.setAttribute('aria-pressed','false'); signature.textContent='PLAY SIGNATURE REVEAL ↗'; comparison.classList.remove('signature-revealing'); };
+    const stop = () => { cancelAnimationFrame(frame); playing = false; signature.setAttribute('aria-pressed','false'); signature.textContent='PLAY IDENTITY REVEAL ↗'; comparison.classList.remove('signature-revealing'); };
     signature.onclick = () => {
       if (playing) { stop(); return; }
       playing = true; signature.setAttribute('aria-pressed','true'); signature.textContent='STOP REVEAL Ⅱ';
