@@ -2215,3 +2215,17 @@ html[data-theme="light"] body .site-header.brand-header .header-socials a:hover 
     conic-gradient(from 210deg, #8f3448, #f18a9e, #992b3c, #4b262d, #f5d5da, #8f3448) border-box;
   color: #fff !important;
 }
+
+/* Use the desktop canvas for Home instead of keeping the composition in a narrow center column. */
+@media (min-width: 851px) {
+  body.section-view-ready #top > #home-panel.home-panel-shell {
+    width: 100%;
+    max-width: none;
+    padding-inline: clamp(48px, 5vw, 96px);
+  }
+
+  body.section-view-ready #top > #home-panel .hero-v2-content,
+  body.section-view-ready #top > #home-panel #about.home-profile-details {
+    max-width: 920px;
+  }
+}
