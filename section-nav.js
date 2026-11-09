@@ -95,6 +95,7 @@
   const byKey = new Map(panels.map(panel => [panel.key, panel]));
   const byId = new Map(panels.map(panel => [panel.id, panel]));
   const buttons = [...menu.querySelectorAll("[data-section-target]")];
+  const railButtons = [...menu.querySelectorAll(".section-rail-button")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const footer = document.querySelector(".footer-reveal-shell");
   const contactPanel = byKey.get("contact");
@@ -303,6 +304,44 @@
       activate(panel, { updateHistory: true, focus: true });
     });
   });
+
+  // Let the desktop rail quietly travel down the buttons on its own. This is
+  // only a visual cue; it never changes the selected section or URL.
+  let railSweepIndex = 0;
+  let railSweepTimer = 0;
+
+  function clearRailSweep() {
+    window.clearTimeout(railSweepTimer);
+    railSweepTimer = 0;
+    railButtons.forEach(button => button.classList.remove("is-auto-scale"));
+  }
+
+  function runRailSweep() {
+    if (mobileFlowQuery.matches || reducedMotion.matches || document.hidden) {
+      clearRailSweep();
+      return;
+    }
+
+    const button = railButtons[railSweepIndex];
+    if (!button) return;
+
+    railButtons.forEach(item => item.classList.remove("is-auto-scale"));
+    button.classList.add("is-auto-scale");
+    railSweepIndex = (railSweepIndex + 1) % railButtons.length;
+    railSweepTimer = window.setTimeout(runRailSweep, 820);
+  }
+
+  function startRailSweep() {
+    clearRailSweep();
+    railSweepIndex = 0;
+    if (mobileFlowQuery.matches || reducedMotion.matches || document.hidden || !railButtons.length) return;
+    railSweepTimer = window.setTimeout(runRailSweep, 650);
+  }
+
+  mobileFlowQuery.addEventListener("change", startRailSweep);
+  reducedMotion.addEventListener("change", startRailSweep);
+  document.addEventListener("visibilitychange", startRailSweep);
+  startRailSweep();
 
   function atDesktopPanelEnd(panel) {
     return panel.element.scrollHeight - panel.element.clientHeight - panel.element.scrollTop <= 8;

@@ -11,8 +11,10 @@
   const footer = document.querySelector(".footer-reveal-shell");
   const mobileQuery = window.matchMedia("(max-width: 850px)");
   const recipient = "aazizimassine@gmail.com";
+  const railOpeners = [...document.querySelectorAll("[data-feedback-open]")];
 
   if (!panel || !form || !submit) return;
+  if (railOpeners.length) panel.classList.add("has-rail-opener");
 
   const placePanel = () => {
     if (mobileQuery.matches && contact) {
@@ -31,6 +33,20 @@
   mobileQuery.addEventListener("change", placePanel);
 
   const ratingInputs = [...form.querySelectorAll("input[name='rating']")];
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const syncRailOpeners = () => railOpeners.forEach(button => button.setAttribute("aria-expanded", String(panel.open)));
+  railOpeners.forEach(button => button.addEventListener("click", () => {
+    if (mobileQuery.matches) {
+      panel.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "center" });
+      return;
+    }
+
+    panel.open = !panel.open;
+    syncRailOpeners();
+    if (panel.open) ratingInputs[0]?.focus({ preventScroll: true });
+  }));
+  panel.addEventListener("toggle", syncRailOpeners);
+
   const paintRating = () => {
     const value = Number(ratingInputs.find(input => input.checked)?.value || 0);
     ratingInputs.forEach(input => input.closest("label")?.classList.toggle("is-active", Number(input.value) <= value));
