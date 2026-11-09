@@ -165,7 +165,7 @@ body.section-view-ready #top > #work {
 
 /* 02 — EVOLUTION / the old and new marks presented as an identity study */
 body.section-view-ready #top > #process {
-  padding: clamp(30px, 4vw, 54px) clamp(20px, 4.3vw, 72px) 38px;
+  padding: clamp(22px, 2.6vw, 36px) clamp(20px, 4.3vw, 72px) 38px;
   border-top: 1px solid var(--line);
   background:
     linear-gradient(115deg, color-mix(in srgb, var(--red) 9%, var(--ink)), var(--ink) 42%),
@@ -175,14 +175,15 @@ body.section-view-ready #top > #process {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(200px, .45fr);
   align-items: end;
-  gap: 8px 32px;
+  gap: 6px 32px;
   max-width: none;
-  margin: 0 0 22px;
+  margin: 0 0 14px;
 }
 #process .section-head .eyebrow { grid-column: 1 / -1; }
 #process .section-head h2 {
-  max-width: 700px;
-  font: 600 clamp(2.8rem, 5.6vw, 5.8rem)/.9 var(--display);
+  max-width: 980px;
+  margin: 0;
+  font: 600 clamp(2.5rem, 4vw, 4.6rem)/.98 var(--display);
   letter-spacing: -.08em;
 }
 #process .section-head .intro {
@@ -766,7 +767,7 @@ body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-
   #work .discover-search { grid-row: 1; }
   #work .project-grid[data-view="grid"] { grid-template-columns: 1fr; padding: 10px; }
   #work .project-grid[data-view="3d"].carousel-ready { height: 330px; min-height: 330px; }
-  #process .section-head h2 { font-size: clamp(2.55rem, 11vw, 4rem); }
+  #process .section-head h2 { font-size: clamp(2.2rem, 9vw, 3.35rem); }
   #process .comparison { aspect-ratio: 1 / 1; border-radius: 14px; }
   #identity { grid-template-columns: 1fr !important; gap: 20px !important; }
   #identity .gb-teaser-logo { width: 100%; height: min(58vw, 280px); aspect-ratio: 1.25; }
