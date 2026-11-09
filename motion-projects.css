@@ -263,7 +263,7 @@
   #motion .motion-project-play { right: 7px; bottom: 7px; gap: 4px; padding: 7px; font-size: .4rem; }
   #motion .motion-project-meta { gap: 5px; padding: 9px 8px 10px; }
   #motion .motion-project-meta small { font-size: .4rem; }
-  #motion .motion-project-meta strong { font-size: .68rem; }
+  #motion .motion-project-meta strong { font-size: .68rem; text-overflow: clip; white-space: normal; }
   #motion .motion-project-meta > span { font-size: .38rem; }
   #motion .motion-case-dialog {
     width: calc(100vw - 16px);
