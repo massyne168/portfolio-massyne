@@ -231,10 +231,11 @@
     transitionSequence += 1;
     const sequence = transitionSequence;
     panels.forEach(item => {
-      if (item !== active && item !== panel && item.element.classList.contains("section-panel-leaving")) {
-        item.element.classList.remove("section-panel-leaving");
-        item.element.hidden = true;
-      }
+      if (item === active || item === panel) return;
+      item.element.classList.remove("section-panel-entering", "section-panel-leaving");
+      item.element.hidden = true;
+      item.element.setAttribute("aria-hidden", "true");
+      setInert(item.element, true);
     });
 
     const previous = active;

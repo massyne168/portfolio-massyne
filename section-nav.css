@@ -372,6 +372,11 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
   }
 }
 
+/* Keep inactive desktop panels out of view even when a section has its own display rule. */
+html body.section-view-ready:not(.mobile-scroll-flow) #top > [data-panel-section][aria-hidden="true"]:not(.section-panel-leaving) {
+  display: none !important;
+}
+
 /* Keep the touch dock in normal flow inside its fixed mobile anchor. */
 @media (max-width: 850px) {
   body.section-view-ready #section-rail {
