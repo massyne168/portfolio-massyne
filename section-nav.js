@@ -119,6 +119,7 @@
   const initial = resolveHash(window.location.hash) || { panel: byKey.get("home"), target: null };
   let active = initial.panel;
   let transitionSequence = 0;
+  let returningToHome = false;
 
   const applyPanelVisibility = () => {
     const mobileFlow = mobileFlowQuery.matches;
@@ -150,8 +151,12 @@
   });
 
   function updateButtons(panel) {
+    const currentIndex = specs.findIndex(spec => spec.key === panel.key);
+    const previousIndex = (currentIndex - 1 + specs.length) % specs.length;
+    const nextIndex = (currentIndex + 1) % specs.length;
     buttons.forEach(button => {
-      const selected = button.dataset.sectionTarget === panel.key;
+      const buttonIndex = specs.findIndex(spec => spec.key === button.dataset.sectionTarget);
+      const selected = buttonIndex === currentIndex;
       if (selected) {
         button.setAttribute("aria-current", "page");
         button.classList.add("is-current");
@@ -159,6 +164,8 @@
         button.removeAttribute("aria-current");
         button.classList.remove("is-current");
       }
+      button.classList.toggle("is-previous", buttonIndex === previousIndex);
+      button.classList.toggle("is-next", buttonIndex === nextIndex);
     });
   }
 
@@ -214,6 +221,7 @@
 
   function activate(panel, options = {}) {
     if (!panel) return;
+    if (panel.key !== "contact") returningToHome = false;
     const anchorTarget = options.target && options.target !== panel.element ? options.target : null;
     if (panel === active) {
       reconcileActivePanel();
@@ -295,6 +303,49 @@
       activate(panel, { updateHistory: true, focus: true });
     });
   });
+
+  function atDesktopPanelEnd(panel) {
+    return panel.element.scrollHeight - panel.element.clientHeight - panel.element.scrollTop <= 8;
+  }
+
+  function atMobileDocumentEnd() {
+    const scroller = document.scrollingElement || document.documentElement;
+    return scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop <= 8;
+  }
+
+  function returnToHomeFromContact() {
+    if (returningToHome) return;
+    returningToHome = true;
+    if (mobileFlowQuery.matches) {
+      if (window.location.hash !== "#top") window.history.pushState({ section: "home" }, "", "#top");
+      window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
+    } else {
+      activate(byKey.get("home"), { updateHistory: true, hash: "#top", focus: false });
+    }
+    window.setTimeout(() => { returningToHome = false; }, reducedMotion.matches ? 120 : 1000);
+  }
+
+  contactPanel.element.addEventListener("wheel", event => {
+    if (mobileFlowQuery.matches || active !== contactPanel || event.deltaY <= 0 || returningToHome) return;
+    if (!atDesktopPanelEnd(contactPanel)) return;
+    event.preventDefault();
+    returnToHomeFromContact();
+  }, { passive: false });
+
+  let touchStartY = null;
+  document.addEventListener("touchstart", event => {
+    touchStartY = event.touches[0]?.clientY ?? null;
+  }, { passive: true });
+  document.addEventListener("touchmove", event => {
+    if (!mobileFlowQuery.matches || active !== contactPanel || returningToHome || touchStartY === null) return;
+    const currentY = event.touches[0]?.clientY;
+    if (currentY === undefined) return;
+    const fingerMovingUp = touchStartY - currentY > 5;
+    touchStartY = currentY;
+    if (!fingerMovingUp || !atMobileDocumentEnd()) return;
+    if (event.cancelable) event.preventDefault();
+    returnToHomeFromContact();
+  }, { passive: false });
 
   document.addEventListener("click", event => {
     if (event.defaultPrevented || mobileFlowQuery.matches) return;

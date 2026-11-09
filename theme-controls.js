@@ -45,6 +45,12 @@
      if(link.dataset.mobileTarget===current)link.setAttribute("aria-current","location");
      else link.removeAttribute("aria-current");
     });
+    const activeIndex=items.findIndex(item=>item.id===current);
+    links.forEach(link=>{
+     const index=items.findIndex(item=>item.id===link.dataset.mobileTarget);
+     link.classList.toggle("is-previous",index===(activeIndex-1+items.length)%items.length);
+     link.classList.toggle("is-next",index===(activeIndex+1)%items.length);
+    });
    };
    const schedule=()=>{if(!frame)frame=window.requestAnimationFrame(update);};
    mobileNav.addEventListener("click",event=>{

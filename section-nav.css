@@ -662,3 +662,40 @@ body .site-header.brand-header .header-socials .header-social-be {
     animation: none !important;
   }
 }
+
+/* Follow the selected section with a quiet, looping scale along the rail. */
+@media (min-width: 851px) {
+  body.section-view-ready .section-rail-button {
+    --rail-scale: .86;
+    z-index: 1;
+    opacity: .68;
+    transform: scale(var(--rail-scale));
+    transform-origin: left center;
+    transition: transform .34s cubic-bezier(.2,.8,.2,1), opacity .34s ease, width .36s cubic-bezier(.2,.8,.2,1), border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease, padding .34s cubic-bezier(.2,.8,.2,1);
+  }
+  body.section-view-ready .section-rail-button.is-previous {
+    --rail-scale: .96;
+    opacity: .86;
+  }
+  body.section-view-ready .section-rail-button.is-next {
+    --rail-scale: 1.06;
+    opacity: .94;
+  }
+  body.section-view-ready .section-rail-button.is-current {
+    --rail-scale: 1.2;
+    z-index: 5;
+    opacity: 1;
+  }
+  body.section-view-ready .section-rail-button:is(:hover, :focus-visible):not(.is-current) {
+    --rail-scale: 1;
+    z-index: 6;
+    opacity: 1;
+    transform: translateX(2px) scale(var(--rail-scale));
+  }
+  body.section-view-ready .section-rail-button.is-current:is(:hover, :focus-visible) {
+    transform: translateX(2px) scale(var(--rail-scale));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.section-view-ready .section-rail-button { transform: none !important; opacity: 1; }
+}
