@@ -129,7 +129,6 @@
   // User-initiated; no heavy third-party video libraries, no fabricated video file.
   const reel = document.getElementById("showreel-player");
   const open = document.getElementById("showreel-play");
-  if (!reel || !open) return;
   // Keep the clips independently of the original motion grid.
   const clips = [...Array.from({length:6}, (_, i) => `images/optimized/motion${i + 1}.mp4`), 'images/motion/exotic-roleplay.mp4', 'images/motion/counter-assault-team.mp4'];
   // Site-wide statistic: count each curated/archive entry and each identity
@@ -144,6 +143,7 @@
     portfolioTotal.textContent = String(curated.size + archive.size + identity + signature + clips.length);
   }
   if (motionTotal) motionTotal.textContent = String(clips.length).padStart(2, '0');
+  if (!reel || !open) return;
   const indicators = Array.from(document.querySelectorAll("[data-reel-index]"));
   const prev = document.getElementById("reel-prev");
   const next = document.getElementById("reel-next");
