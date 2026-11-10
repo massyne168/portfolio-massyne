@@ -1970,6 +1970,9 @@ body.section-view-ready #top > #creative-lab {
   box-shadow: 0 12px 30px rgba(0,0,0,.2);
   transition: transform .45s cubic-bezier(.2,.75,.25,1), box-shadow .45s ease;
 }
+#creative-lab .lab-art-canvas.is-blank { background:#fff; box-shadow:0 12px 30px rgba(0,0,0,.2); }
+#creative-lab .lab-art-canvas.is-blank::before,
+#creative-lab .lab-art-canvas.is-blank::after { content:none!important; }
 #creative-lab .lab-art-canvas::before {
   content: "";
   position: absolute;
