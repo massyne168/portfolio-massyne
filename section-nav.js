@@ -338,6 +338,7 @@
   function clearDockScale() {
     railButtons.forEach(button => {
       button.style.setProperty("--rail-scale", "1");
+      button.style.setProperty("--dock-spread", "0px");
       button.style.removeProperty("z-index");
     });
   }
@@ -350,13 +351,26 @@
     const horizontal = dockUsesHorizontalAxis();
     const radius = dockSettings.hoverRange;
     const scaleRange = dockSettings.magnification;
+    let accumulatedSpread = 0;
 
-    railButtons.forEach(button => {
+    const metrics = railButtons.map(button => {
       const rect = button.getBoundingClientRect();
+      const styles = window.getComputedStyle(button);
+      const size = horizontal ? button.offsetWidth : button.offsetHeight;
+      const beforeSpread = Number.parseFloat(styles[horizontal ? "marginLeft" : "marginTop"]) || 0;
+      const afterSpread = Number.parseFloat(styles[horizontal ? "marginRight" : "marginBottom"]) || 0;
       const buttonCenter = horizontal ? rect.left + rect.width / 2 : rect.top + rect.height / 2;
-      const distance = Math.abs(pointerCoordinate - buttonCenter);
+      const restingCenter = buttonCenter - accumulatedSpread - beforeSpread;
+      accumulatedSpread += beforeSpread + afterSpread;
+      return { button, size, restingCenter };
+    });
+
+    metrics.forEach(({ button, size, restingCenter }) => {
+      const distance = Math.abs(pointerCoordinate - restingCenter);
       const influence = distance >= radius ? 0 : (1 + Math.cos((distance / radius) * Math.PI)) / 2;
-      button.style.setProperty("--rail-scale", (1 + scaleRange * influence).toFixed(3));
+      const scale = 1 + scaleRange * influence;
+      button.style.setProperty("--rail-scale", scale.toFixed(3));
+      button.style.setProperty("--dock-spread", `${((size * (scale - 1)) / 2).toFixed(2)}px`);
       button.style.zIndex = String(1 + Math.round(influence * 12));
     });
   }

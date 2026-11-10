@@ -800,6 +800,18 @@ body .site-header.brand-header .header-socials .header-social-be {
     transform-origin: center center;
     transition: transform var(--dock-smoothness, .18s) cubic-bezier(.22,1,.36,1), opacity .18s ease, border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease;
   }
+  body.section-view-ready .section-rail[data-dock-position="left"] .section-rail-button,
+  body.section-view-ready .section-rail[data-dock-position="right"] .section-rail-button {
+    margin-top: var(--dock-spread, 0px);
+    margin-bottom: var(--dock-spread, 0px);
+    transition: transform var(--dock-smoothness, .18s) cubic-bezier(.22,1,.36,1), margin-top var(--dock-smoothness, .18s) cubic-bezier(.22,1,.36,1), margin-bottom var(--dock-smoothness, .18s) cubic-bezier(.22,1,.36,1), opacity .18s ease, border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  body.section-view-ready .section-rail[data-dock-position="top"] .section-rail-button,
+  body.section-view-ready .section-rail[data-dock-position="bottom"] .section-rail-button {
+    margin-left: var(--dock-spread, 0px);
+    margin-right: var(--dock-spread, 0px);
+    transition: transform var(--dock-smoothness, .18s) cubic-bezier(.22,1,.36,1), margin-left var(--dock-smoothness, .18s) cubic-bezier(.22,1,.36,1), margin-right var(--dock-smoothness, .18s) cubic-bezier(.22,1,.36,1), opacity .18s ease, border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
   body.section-view-ready .section-rail[data-dock-position="left"] .section-rail-button:is(:hover, :focus-visible),
   body.section-view-ready .section-rail[data-dock-position="right"] .section-rail-button:is(:hover, :focus-visible),
   body.section-view-ready .section-rail[data-dock-position="top"] .section-rail-button:is(:hover, :focus-visible),
