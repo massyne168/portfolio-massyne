@@ -8,13 +8,13 @@
   <link rel="icon" href="images/favicon.png">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0d0e11">
-  <title>MASSYNE Lab — Poster Studio</title>
+  <title>MASSYNE Lab — Creative Studio</title>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Sora:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="poster-lab.css?v=2">
-  <script src="poster-lab.js?v=20261107-pro" defer></script>
+  <link rel="stylesheet" href="poster-lab.css?v=20261110-canvas">
+  <script src="poster-lab.js?v=20261110-canvas" defer></script>
   <script src="poster-text-layers.js?v=20261107-pro" defer></script>
   <script src="poster-image-layers.js" defer></script>
-  <script src="poster-shapes.js?v=20261107-pro" defer></script>
+  <script src="poster-shapes.js?v=20261110-tools" defer></script>
   <script src="poster-editor.js" defer></script>
   <script src="poster-workspace.js" defer></script>
   <script src="/theme-controls.js" defer></script>
@@ -22,7 +22,7 @@
 <body>
   <header class="topbar">
     <a class="brand" href="index.html#creative-lab" aria-label="Return to MASSYNE portfolio">MASSYNE <span>/ LAB</span></a>
-    <div class="document-title"><span>POSTER STUDIO / 001</span><strong>Untitled composition</strong></div>
+    <div class="document-title"><span>CREATIVE LAB / 001</span><strong>Untitled design</strong></div>
     <div class="top-actions">
       <div class="history-controls" role="group" aria-label="Edit history">
         <button id="poster-undo" data-history="undo" type="button" aria-label="Undo" title="Undo" disabled>↶</button>
@@ -38,8 +38,8 @@
 
   <main class="editor-main">
     <div class="editor-heading">
-      <div><p class="kicker">MASSYNE LAB / CREATIVE TOOL</p><h1>Poster studio<span>.</span></h1></div>
-      <p>Build the composition your way. Add text, shape, color and your own marks.</p>
+      <div><p class="kicker">MASSYNE LAB / CREATIVE TOOL</p><h1>Design canvas<span>.</span></h1></div>
+      <p>Start with a blank white canvas. Add text, images and shapes, or draw freely.</p>
     </div>
 
     <div class="workspace">
@@ -54,7 +54,7 @@
         <button class="tool-button" id="tool-eraser" type="button" data-tool-target="erase" aria-pressed="false" aria-label="Eraser tool" title="Eraser"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 14 8-9a2 2 0 0 1 2.8 0l5.2 5.2a2 2 0 0 1 0 2.8l-6 6H8l-4-4a2 2 0 0 1 0-1Z"/><path d="m9 9 7 7M8 19h13"/></svg><span>Eraser</span></button>
       </aside>
 
-      <section class="canvas-desk" aria-label="Poster canvas workspace">
+      <section class="canvas-desk" aria-label="Design canvas workspace">
         <div class="canvas-toolbar">
           <div class="canvas-label"><span class="canvas-live-dot" aria-hidden="true"></span><span>PAGE 01</span><span class="toolbar-separator">/</span><span>1080 × 1350</span></div>
           <div class="zoom-controls" role="group" aria-label="Canvas zoom">
@@ -65,17 +65,17 @@
           </div>
         </div>
         <div class="canvas-workarea">
-          <section class="preview" aria-label="Live poster preview">
+          <section class="preview" aria-label="Live design canvas">
             <div class="preview-meta"><span>LIVE CANVAS</span><span>4 : 5</span></div>
             <div class="canvas-stage">
               <canvas id="poster-canvas" tabindex="0" width="1080" height="1350" role="img" aria-label="MASSYNE personalized poster"></canvas>
             </div>
-            <p class="preview-foot">Click and drag text or shapes. Choose a tool to draw.</p>
+            <p class="preview-foot">Drag any layer to move it. Choose Pen or Eraser to draw.</p>
           </section>
         </div>
       </section>
 
-      <aside class="controls" aria-label="Poster editor">
+      <aside class="controls" aria-label="Design tools">
         <div class="inspector-tabs" role="tablist" aria-label="Editor panels">
           <button id="design-tab" type="button" role="tab" aria-selected="true" aria-controls="design-panel">Design</button>
           <button id="layers-tab" type="button" role="tab" aria-selected="false" aria-controls="layers-panel">Layers <span id="layers-count">01</span></button>
@@ -83,11 +83,17 @@
         <section class="inspector-panel" id="design-panel" role="tabpanel" aria-labelledby="design-tab">
           <div class="inspector-heading"><div><p class="kicker">DESIGN / 01</p><h2>Properties</h2></div></div>
           <div class="inspector-scroll">
+            <fieldset>
+              <legend>Page</legend>
+              <label for="page-background">Background color<input id="page-background" type="color" value="#ffffff"></label>
+              <p class="hint">A clean white page is ready. Pick any background color you like.</p>
+            </fieldset>
+
             <fieldset class="text-editor">
-              <legend>Text / Main title</legend>
-              <label class="field-label" for="poster-name">Your words</label>
-              <input class="title-input" id="poster-name" type="text" maxlength="28" value="MASSYNE" autocomplete="off" spellcheck="false">
-              <p class="hint">Edit the headline, then drag it on the canvas.</p>
+              <legend>Quick text</legend>
+              <label class="field-label" for="poster-name">Type to add text</label>
+              <input class="title-input" id="poster-name" type="text" maxlength="120" placeholder="Write something…" value="" autocomplete="off" spellcheck="false">
+              <p class="hint">Use this quick text or add as many separate text layers as you need.</p>
               <div class="shape-fields title-properties">
                 <label for="text-scale">Size <output id="text-scale-value" for="text-scale">100%</output><input id="text-scale" type="range" min="40" max="150" value="100"></label>
                 <label for="text-angle">Rotation <output id="text-angle-value" for="text-angle">0°</output><input id="text-angle" type="range" min="-90" max="90" value="0"></label>
@@ -101,17 +107,8 @@
             </fieldset>
 
             <fieldset>
-              <legend>Color palette</legend>
-              <div class="options palettes">
-                <button type="button" data-palette="crimson" aria-pressed="false"><i style="background:#a42739"></i>Crimson</button>
-                <button type="button" data-palette="paper" aria-pressed="true"><i style="background:#fff"></i>Paper</button>
-                <button type="button" data-palette="mono" aria-pressed="false"><i style="background:#171719"></i>Mono</button>
-              </div>
-            </fieldset>
-
-            <fieldset>
-              <legend>Typeface</legend>
-              <div class="font-options options" role="group" aria-label="Main title typeface">
+              <legend>Quick text typeface</legend>
+              <div class="font-options options" role="group" aria-label="Quick text typeface">
                 <button type="button" data-font="Sora" aria-pressed="true">Sora</button>
                 <button type="button" data-font="Manrope" aria-pressed="false">Manrope</button>
                 <button type="button" data-font="DM Serif Display" aria-pressed="false">DM Serif</button>
@@ -125,26 +122,24 @@
               </div>
             </fieldset>
 
-            <fieldset>
-              <legend>Composition</legend>
-              <div class="options">
-                <button type="button" data-layout="signal" aria-pressed="true">Signal</button>
-                <button type="button" data-layout="orbit" aria-pressed="false">Orbit</button>
-                <button type="button" data-layout="editorial" aria-pressed="false">Editorial</button>
-                <button type="button" data-layout="free" aria-pressed="false">Free canvas</button>
-              </div>
-            </fieldset>
-
             <fieldset class="y2k-shapes">
-              <legend>Shapes / accents</legend>
+              <legend>Shapes</legend>
               <div class="options">
+                <button type="button" data-add-shape="Rectangle">▰ Rectangle +</button>
+                <button type="button" data-add-shape="Square">◼ Square +</button>
+                <button type="button" data-add-shape="Circle">● Circle +</button>
+                <button type="button" data-add-shape="Triangle">▲ Triangle +</button>
+                <button type="button" data-add-shape="Diamond">◆ Diamond +</button>
+                <button type="button" data-add-shape="Line">／ Line +</button>
+                <button type="button" data-add-shape="Arrow">➜ Arrow +</button>
+                <button type="button" data-add-shape="Heart">♥ Heart +</button>
                 <button type="button" data-add-shape="Star">✳ Star +</button>
                 <button type="button" data-add-shape="Spark">✦ Spark +</button>
                 <button type="button" data-add-shape="Orbit">◎ Orbit +</button>
                 <button type="button" data-add-shape="Checker">▦ Checker +</button>
               </div>
-              <p class="hint">Add a shape, drag it, and edit its finish.</p>
-              <label class="field-label" for="shape-layer">Selected shape <span id="shape-count">0 / 12</span></label>
+              <p class="hint">Add, drag, rotate, recolor, and resize shapes on the page.</p>
+              <label class="field-label" for="shape-layer">Selected shape <span id="shape-count">0 / 50</span></label>
               <select id="shape-layer" aria-label="Selected shape"></select>
               <div class="shape-fields">
                 <label for="shape-size">Size<output id="shape-size-value" for="shape-size">180 px</output><input id="shape-size" type="range" min="50" max="360" value="180" disabled></label>
@@ -158,10 +153,23 @@
               <div class="options"><button type="button" id="remove-shape" disabled>Remove</button><button type="button" id="clear-shapes">Clear shapes</button></div>
             </fieldset>
 
-            <div class="freehand-anchor" aria-label="Freehand tools"></div>
+            <fieldset class="freehand-controls">
+              <legend>Freehand drawing</legend>
+              <div class="options" role="group" aria-label="Canvas tool">
+                <button type="button" data-draw-tool="select" aria-pressed="true">Select</button>
+                <button type="button" data-draw-tool="draw" aria-pressed="false">Pen</button>
+                <button type="button" data-draw-tool="erase" aria-pressed="false">Eraser</button>
+              </div>
+              <div class="shape-fields draw-fields">
+                <label for="draw-color">Pen color<input id="draw-color" type="color" value="#171719"></label>
+                <label for="draw-size">Brush size <output id="draw-size-value" for="draw-size">16 px</output><input id="draw-size" type="range" min="2" max="120" value="16"></label>
+              </div>
+              <div class="options"><button type="button" id="clear-drawing">Clear drawing</button></div>
+              <p class="hint">Draw or erase with a mouse, touch screen, or stylus. Undo restores your strokes.</p>
+            </fieldset>
             <div class="export-row">
               <button type="button" id="reset-poster" class="reset">Reset design</button>
-              <p>PNG / 1080 × 1350 px. Your work stays in this browser.</p>
+              <p>PNG / 1080 × 1350 px. Export to save your design.</p>
               <p id="lab-status" role="status" aria-live="polite"></p>
             </div>
           </div>
@@ -170,7 +178,7 @@
         <section class="inspector-panel layers-panel" id="layers-panel" role="tabpanel" aria-labelledby="layers-tab" hidden>
           <div class="inspector-heading layers-heading"><div><p class="kicker">STRUCTURE / 02</p><h2>Layers</h2></div><button class="small-add" type="button" data-editor-action="add-text">+ Text</button></div>
           <p class="layers-hint">Select a layer to edit or move it on the canvas.</p>
-          <div id="layer-list" class="layer-list" role="list" aria-label="Poster layers"></div>
+          <div id="layer-list" class="layer-list" role="list" aria-label="Design layers"></div>
           <div class="layer-order-controls" role="group" aria-label="Reorder selected layer">
             <button type="button" id="layer-send-back">Send backward</button>
             <button type="button" id="layer-bring-front">Bring forward</button>
