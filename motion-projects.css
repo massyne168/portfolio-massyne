@@ -228,6 +228,16 @@
   background: #050507;
   object-fit: contain;
 }
+#motion .motion-case-gif {
+  display: block;
+  width: 100%;
+  max-height: 58vh;
+  object-fit: contain;
+  background: #050507;
+}
+#motion .motion-case-player[hidden],
+#motion .motion-case-gif[hidden],
+#motion .motion-case-process[hidden] { display: none !important; }
 #motion .motion-case-process {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
