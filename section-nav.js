@@ -97,6 +97,7 @@
   const buttons = [...menu.querySelectorAll("[data-section-target]")];
   const railButtons = [...menu.querySelectorAll(".section-rail-button")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const railDockQuery = window.matchMedia("(min-width: 851px) and (hover: hover) and (pointer: fine)");
   const footer = document.querySelector(".footer-reveal-shell");
   const contactPanel = byKey.get("contact");
   if (footer && contactPanel && !contactPanel.element.contains(footer)) contactPanel.element.append(footer);
@@ -305,43 +306,79 @@
     });
   });
 
-  // Let the desktop rail quietly travel down the buttons on its own. This is
-  // only a visual cue; it never changes the selected section or URL.
-  let railSweepIndex = 0;
-  let railSweepTimer = 0;
+  // Let the buttons follow the pointer like a smooth desktop dock.
+  let dockPointerY = null;
+  let dockPointerInside = false;
+  let focusedRailButton = null;
 
-  function clearRailSweep() {
-    window.clearTimeout(railSweepTimer);
-    railSweepTimer = 0;
-    railButtons.forEach(button => button.classList.remove("is-auto-scale"));
+  function clearDockScale() {
+    railButtons.forEach(button => {
+      button.style.setProperty("--rail-scale", "1");
+      button.style.removeProperty("z-index");
+    });
   }
 
-  function runRailSweep() {
-    if (mobileFlowQuery.matches || reducedMotion.matches || document.hidden) {
-      clearRailSweep();
+  function setDockScale(centerY) {
+    const radius = 104;
+    const scaleRange = 0.34;
+
+    railButtons.forEach(button => {
+      const rect = button.getBoundingClientRect();
+      const distance = Math.abs(centerY - (rect.top + rect.height / 2));
+      const influence = distance >= radius ? 0 : (1 + Math.cos((distance / radius) * Math.PI)) / 2;
+      button.style.setProperty("--rail-scale", (1 + scaleRange * influence).toFixed(3));
+      button.style.zIndex = String(1 + Math.round(influence * 12));
+    });
+  }
+
+  function refreshDockScale() {
+    if (!railDockQuery.matches || reducedMotion.matches || document.hidden) {
+      clearDockScale();
       return;
     }
 
-    const button = railButtons[railSweepIndex];
-    if (!button) return;
+    if (dockPointerInside && dockPointerY !== null) {
+      setDockScale(dockPointerY);
+      return;
+    }
 
-    railButtons.forEach(item => item.classList.remove("is-auto-scale"));
-    button.classList.add("is-auto-scale");
-    railSweepIndex = (railSweepIndex + 1) % railButtons.length;
-    railSweepTimer = window.setTimeout(runRailSweep, 360);
+    if (focusedRailButton?.isConnected) {
+      const rect = focusedRailButton.getBoundingClientRect();
+      setDockScale(rect.top + rect.height / 2);
+      return;
+    }
+
+    clearDockScale();
   }
 
-  function startRailSweep() {
-    clearRailSweep();
-    railSweepIndex = 0;
-    if (mobileFlowQuery.matches || reducedMotion.matches || document.hidden || !railButtons.length) return;
-    railSweepTimer = window.setTimeout(runRailSweep, 650);
-  }
-
-  mobileFlowQuery.addEventListener("change", startRailSweep);
-  reducedMotion.addEventListener("change", startRailSweep);
-  document.addEventListener("visibilitychange", startRailSweep);
-  startRailSweep();
+  menu.addEventListener("pointermove", event => {
+    if (event.pointerType !== "mouse" && event.pointerType !== "pen") return;
+    dockPointerInside = true;
+    dockPointerY = event.clientY;
+    refreshDockScale();
+  });
+  menu.addEventListener("pointerleave", () => {
+    dockPointerInside = false;
+    dockPointerY = null;
+    refreshDockScale();
+  });
+  menu.addEventListener("focusin", event => {
+    focusedRailButton = event.target.closest(".section-rail-button");
+    dockPointerInside = false;
+    refreshDockScale();
+  });
+  menu.addEventListener("focusout", () => {
+    window.requestAnimationFrame(() => {
+      focusedRailButton = menu.contains(document.activeElement)
+        ? document.activeElement.closest(".section-rail-button")
+        : null;
+      refreshDockScale();
+    });
+  });
+  railDockQuery.addEventListener("change", refreshDockScale);
+  reducedMotion.addEventListener("change", refreshDockScale);
+  document.addEventListener("visibilitychange", refreshDockScale);
+  refreshDockScale();
 
   function atDesktopPanelEnd(panel) {
     return panel.element.scrollHeight - panel.element.clientHeight - panel.element.scrollTop <= 8;
