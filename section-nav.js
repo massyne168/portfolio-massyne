@@ -99,7 +99,7 @@
   const railButtons = [...menu.querySelectorAll(".section-rail-button")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const railDockQuery = window.matchMedia("(min-width: 851px) and (hover: hover) and (pointer: fine)");
-  const dockSettingsDefaults = { position: "left", smoothness: 0.18, magnification: 0.6, hoverRange: 120, iconSize: 40 };
+  const dockSettingsDefaults = { position: "left", smoothness: 0.22, magnification: 0.3, hoverRange: 100, iconSize: 40 };
   const dockSettings = (() => {
     try {
       const saved = JSON.parse(window.localStorage.getItem("massyneDockSettings") || "{}");
@@ -110,8 +110,8 @@
       return {
         position: ["top", "left", "right", "bottom"].includes(saved.position) ? saved.position : dockSettingsDefaults.position,
         smoothness: clamp(saved.smoothness, 0.05, 0.5, dockSettingsDefaults.smoothness),
-        magnification: clamp(saved.magnification, 0.1, 1.2, dockSettingsDefaults.magnification),
-        hoverRange: clamp(saved.hoverRange, 40, 240, dockSettingsDefaults.hoverRange),
+        magnification: clamp(saved.magnification, 0.1, 0.4, dockSettingsDefaults.magnification),
+        hoverRange: clamp(saved.hoverRange, 40, 180, dockSettingsDefaults.hoverRange),
         iconSize: clamp(saved.iconSize, 28, 56, dockSettingsDefaults.iconSize)
       };
     } catch (_) {
@@ -375,16 +375,10 @@
       return railButtons.map(() => ({ scale: 1, shift: 0, influence: 0 }));
     }
 
-    let anchorIndex = 0;
-    let nearestDistance = Infinity;
     const targets = railButtons.map((button, index) => {
       const distance = Math.abs(pointerCoordinate - centers[index]);
       const influence = distance >= radius ? 0 : (1 + Math.cos((distance / radius) * Math.PI)) / 2;
       const scale = 1 + scaleRange * influence;
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        anchorIndex = index;
-      }
       const size = horizontal ? button.offsetWidth : button.offsetHeight;
       return { scale, growth: size * (scale - 1) / 2, influence };
     });
@@ -397,7 +391,18 @@
       expandedBefore += target.growth;
       return expandedCenter;
     });
-    const anchorShift = expandedCenters[anchorIndex] || 0;
+    // Interpolate the dock's anchor between neighboring icons. Switching to a
+    // nearest-icon anchor caused the whole rail to jump at each midpoint.
+    let anchorShift = expandedCenters[0] || 0;
+    if (pointerCoordinate >= centers[centers.length - 1]) {
+      anchorShift = expandedCenters[expandedCenters.length - 1] || 0;
+    } else if (pointerCoordinate > centers[0]) {
+      const nextIndex = centers.findIndex((center, index) => index > 0 && center >= pointerCoordinate);
+      const previousIndex = nextIndex - 1;
+      const interval = centers[nextIndex] - centers[previousIndex];
+      const progress = interval > 0 ? (pointerCoordinate - centers[previousIndex]) / interval : 0;
+      anchorShift = expandedCenters[previousIndex] + (expandedCenters[nextIndex] - expandedCenters[previousIndex]) * progress;
+    }
 
     return targets.map((target, index) => ({
       scale: target.scale,
@@ -483,6 +488,7 @@
     sectionRail.style.setProperty("--dock-magnification", String(dockSettings.magnification));
     sectionRail.style.setProperty("--dock-hover-range", `${dockSettings.hoverRange}px`);
     sectionRail.style.setProperty("--dock-icon-size", `${dockSettings.iconSize}px`);
+    document.body.style.setProperty("--dock-icon-size", `${dockSettings.iconSize}px`);
 
     dockPositionOptions.forEach(option => {
       const selected = option.dataset.dockPositionOption === dockSettings.position;

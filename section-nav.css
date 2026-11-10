@@ -746,19 +746,19 @@ body .site-header.brand-header .header-socials .header-social-be {
 /* User-adjustable dock position and magnification. */
 @media (min-width: 851px) {
   body.section-view-ready .section-rail[data-dock-position="left"] {
-    left: max(0px, env(safe-area-inset-left));
+    left: max(10px, env(safe-area-inset-left));
     right: auto;
     top: 50%;
     bottom: auto;
-    width: 50px;
+    width: calc(var(--dock-icon-size, 40px) + 10px);
     transform: translateY(-50%);
   }
   body.section-view-ready .section-rail[data-dock-position="right"] {
     left: auto;
-    right: max(0px, env(safe-area-inset-right));
+    right: max(10px, env(safe-area-inset-right));
     top: 50%;
     bottom: auto;
-    width: 50px;
+    width: calc(var(--dock-icon-size, 40px) + 10px);
     transform: translateY(-50%);
   }
   body.section-view-ready .section-rail[data-dock-position="top"] {
@@ -914,7 +914,13 @@ body:not(.section-view-ready) .dock-settings-ui { display: none; }
 }
 .dock-settings-panel[hidden] { display: none; }
 @media (min-width: 851px) {
-.section-rail[data-dock-position="right"] ~ .dock-settings-ui .dock-settings-panel { right: 74px; left: auto; }
+.section-rail[data-dock-position="left"] ~ .dock-settings-ui .dock-settings-panel {
+  left: calc(max(10px, env(safe-area-inset-left)) + var(--dock-icon-size, 40px) + 24px);
+}
+.section-rail[data-dock-position="right"] ~ .dock-settings-ui .dock-settings-panel {
+  right: calc(max(10px, env(safe-area-inset-right)) + var(--dock-icon-size, 40px) + 24px);
+  left: auto;
+}
 .section-rail[data-dock-position="top"] ~ .dock-settings-ui .dock-settings-panel {
   top: 76px;
   left: 50%;
@@ -1053,8 +1059,8 @@ body:not(.section-view-ready) .dock-settings-ui { display: none; }
     max-width: none;
     transform: translateY(-50%);
   }
-  body.section-view-ready .section-rail[data-dock-position="left"] { right: auto; left: max(4px, env(safe-area-inset-left)); }
-  body.section-view-ready .section-rail[data-dock-position="right"] { right: max(4px, env(safe-area-inset-right)); left: auto; }
+  body.section-view-ready .section-rail[data-dock-position="left"] { right: auto; left: max(10px, env(safe-area-inset-left)); }
+  body.section-view-ready .section-rail[data-dock-position="right"] { right: max(10px, env(safe-area-inset-right)); left: auto; }
   body.section-view-ready .section-rail[data-dock-position="left"] .section-rail-menu,
   body.section-view-ready .section-rail[data-dock-position="right"] .section-rail-menu {
     box-sizing: border-box;
