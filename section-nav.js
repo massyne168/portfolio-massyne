@@ -334,12 +334,23 @@
   let dockPointer = null;
   let dockPointerInside = false;
   let focusedRailButton = null;
+  let dockAnimationFrame = 0;
+  let dockPreviousFrameTime = 0;
+  const dockMotion = railButtons.map(() => ({ scale: 1, shift: 0 }));
 
   function clearDockScale() {
+    if (dockAnimationFrame) window.cancelAnimationFrame(dockAnimationFrame);
+    dockAnimationFrame = 0;
+    dockPreviousFrameTime = 0;
     railButtons.forEach(button => {
       button.style.setProperty("--rail-scale", "1");
-      button.style.setProperty("--dock-spread", "0px");
+      button.style.setProperty("--dock-shift-x", "0px");
+      button.style.setProperty("--dock-shift-y", "0px");
       button.style.removeProperty("z-index");
+    });
+    dockMotion.forEach(motion => {
+      motion.scale = 1;
+      motion.shift = 0;
     });
   }
 
@@ -347,32 +358,80 @@
     return sectionRail.dataset.dockPosition === "top" || sectionRail.dataset.dockPosition === "bottom";
   }
 
-  function setDockScale(pointerCoordinate) {
+  function getDockMagnificationTargets() {
     const horizontal = dockUsesHorizontalAxis();
     const radius = dockSettings.hoverRange;
     const scaleRange = dockSettings.magnification;
-    let accumulatedSpread = 0;
+    const menuRect = menu.getBoundingClientRect();
+    const menuOrigin = horizontal ? menuRect.left + menu.clientLeft : menuRect.top + menu.clientTop;
+    const centers = railButtons.map(button => menuOrigin + (horizontal
+      ? button.offsetLeft + button.offsetWidth / 2
+      : button.offsetTop + button.offsetHeight / 2));
+    const pointerCoordinate = dockPointerInside && dockPointer
+      ? (horizontal ? dockPointer.x : dockPointer.y)
+      : centers[railButtons.indexOf(focusedRailButton)];
 
-    const metrics = railButtons.map(button => {
-      const rect = button.getBoundingClientRect();
-      const styles = window.getComputedStyle(button);
-      const size = horizontal ? button.offsetWidth : button.offsetHeight;
-      const beforeSpread = Number.parseFloat(styles[horizontal ? "marginLeft" : "marginTop"]) || 0;
-      const afterSpread = Number.parseFloat(styles[horizontal ? "marginRight" : "marginBottom"]) || 0;
-      const buttonCenter = horizontal ? rect.left + rect.width / 2 : rect.top + rect.height / 2;
-      const restingCenter = buttonCenter - accumulatedSpread - beforeSpread;
-      accumulatedSpread += beforeSpread + afterSpread;
-      return { button, size, restingCenter };
-    });
+    if (!Number.isFinite(pointerCoordinate)) {
+      return railButtons.map(() => ({ scale: 1, shift: 0, influence: 0 }));
+    }
 
-    metrics.forEach(({ button, size, restingCenter }) => {
-      const distance = Math.abs(pointerCoordinate - restingCenter);
+    let anchorIndex = 0;
+    let nearestDistance = Infinity;
+    const targets = railButtons.map((button, index) => {
+      const distance = Math.abs(pointerCoordinate - centers[index]);
       const influence = distance >= radius ? 0 : (1 + Math.cos((distance / radius) * Math.PI)) / 2;
       const scale = 1 + scaleRange * influence;
-      button.style.setProperty("--rail-scale", scale.toFixed(3));
-      button.style.setProperty("--dock-spread", `${((size * (scale - 1)) / 2).toFixed(2)}px`);
-      button.style.zIndex = String(1 + Math.round(influence * 12));
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        anchorIndex = index;
+      }
+      const size = horizontal ? button.offsetWidth : button.offsetHeight;
+      return { scale, growth: size * (scale - 1) / 2, influence };
     });
+
+    // Grow the gaps with transforms only. This keeps pointer tracking out of
+    // the layout/reflow path and makes each frame independent of the last one.
+    let expandedBefore = 0;
+    const expandedCenters = targets.map(target => {
+      const expandedCenter = expandedBefore * 2 + target.growth;
+      expandedBefore += target.growth;
+      return expandedCenter;
+    });
+    const anchorShift = expandedCenters[anchorIndex] || 0;
+
+    return targets.map((target, index) => ({
+      scale: target.scale,
+      shift: expandedCenters[index] - anchorShift,
+      influence: target.influence
+    }));
+  }
+
+  function animateDockScale(time) {
+    dockAnimationFrame = 0;
+    const delta = dockPreviousFrameTime ? Math.min(50, time - dockPreviousFrameTime) : 16;
+    dockPreviousFrameTime = time;
+    const responseTime = Math.max(0.017, dockSettings.smoothness / 3);
+    const progress = 1 - Math.exp(-(delta / 1000) / responseTime);
+    const targets = getDockMagnificationTargets();
+    let stillMoving = false;
+
+    railButtons.forEach((button, index) => {
+      const current = dockMotion[index];
+      const target = targets[index];
+      current.scale += (target.scale - current.scale) * progress;
+      current.shift += (target.shift - current.shift) * progress;
+      if (Math.abs(target.scale - current.scale) < 0.001) current.scale = target.scale;
+      if (Math.abs(target.shift - current.shift) < 0.03) current.shift = target.shift;
+      if (current.scale !== target.scale || current.shift !== target.shift) stillMoving = true;
+
+      button.style.setProperty("--rail-scale", current.scale.toFixed(4));
+      button.style.setProperty("--dock-shift-x", `${(dockUsesHorizontalAxis() ? current.shift : 0).toFixed(2)}px`);
+      button.style.setProperty("--dock-shift-y", `${(dockUsesHorizontalAxis() ? 0 : current.shift).toFixed(2)}px`);
+      button.style.zIndex = String(1 + Math.round(target.influence * 12));
+    });
+
+    if (stillMoving) dockAnimationFrame = window.requestAnimationFrame(animateDockScale);
+    else dockPreviousFrameTime = 0;
   }
 
   function refreshDockScale() {
@@ -380,19 +439,7 @@
       clearDockScale();
       return;
     }
-
-    if (dockPointerInside && dockPointer) {
-      setDockScale(dockUsesHorizontalAxis() ? dockPointer.x : dockPointer.y);
-      return;
-    }
-
-    if (focusedRailButton?.isConnected) {
-      const rect = focusedRailButton.getBoundingClientRect();
-      setDockScale(dockUsesHorizontalAxis() ? rect.left + rect.width / 2 : rect.top + rect.height / 2);
-      return;
-    }
-
-    clearDockScale();
+    if (!dockAnimationFrame) dockAnimationFrame = window.requestAnimationFrame(animateDockScale);
   }
 
   menu.addEventListener("pointermove", event => {
@@ -419,6 +466,7 @@
       refreshDockScale();
     });
   });
+  window.addEventListener("resize", refreshDockScale, { passive: true });
 
   const dockRanges = [
     { key: "smoothness", input: "#dock-smoothness", output: "#dock-smoothness-output", format: value => Number(value).toFixed(2) },
