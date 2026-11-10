@@ -328,7 +328,7 @@
     railButtons.forEach(item => item.classList.remove("is-auto-scale"));
     button.classList.add("is-auto-scale");
     railSweepIndex = (railSweepIndex + 1) % railButtons.length;
-    railSweepTimer = window.setTimeout(runRailSweep, 820);
+    railSweepTimer = window.setTimeout(runRailSweep, 360);
   }
 
   function startRailSweep() {
