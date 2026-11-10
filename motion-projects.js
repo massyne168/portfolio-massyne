@@ -4,12 +4,14 @@
   const section = document.getElementById('motion');
   const dialog = document.getElementById('motion-case-dialog');
   const player = document.getElementById('motion-case-player');
+  const gifViewer = document.getElementById('motion-case-gif');
   const title = document.getElementById('motion-case-title');
   const label = document.getElementById('motion-case-label');
+  const process = dialog?.querySelector('.motion-case-process');
   const closeButton = document.getElementById('motion-case-close');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (!section || !dialog || !player || !title || !label || !closeButton) return;
+  if (!section || !dialog || !player || !gifViewer || !title || !label || !process || !closeButton) return;
 
   const cards = [...section.querySelectorAll('[data-motion-case]')];
   let motionIsVisible = false;
@@ -17,9 +19,9 @@
   const stopPreview = card => {
     const preview = card?.querySelector('.motion-project-preview');
     if (!preview) return;
-    preview.pause();
+    if (preview.tagName === 'VIDEO') preview.pause();
     preview.removeAttribute('src');
-    preview.load();
+    if (preview.tagName === 'VIDEO') preview.load();
     card.classList.remove('is-previewing');
   };
 
@@ -36,6 +38,12 @@
     const preview = card.querySelector('.motion-project-preview');
     const source = card.dataset.motionSource;
     if (!preview || !source) return;
+
+    if (card.dataset.motionKind === 'gif') {
+      if (preview.getAttribute('src') !== source) preview.src = source;
+      card.classList.add('is-previewing');
+      return;
+    }
 
     if (preview.getAttribute('src') !== source) {
       preview.src = source;
@@ -101,14 +109,32 @@
     card.addEventListener('click', () => {
       stopAllPreviews();
       const projectName = card.dataset.projectName || 'Motion study';
+      const source = card.dataset.motionSource;
+      const isGif = card.dataset.motionKind === 'gif';
       title.textContent = projectName;
       label.textContent = card.dataset.projectLabel || 'MOTION / SELECTED WORK';
-      player.src = card.dataset.motionSource;
-      player.muted = true;
-      player.load();
+      process.hidden = card.dataset.hideProcess === 'true';
+      if (isGif) {
+        player.pause();
+        player.removeAttribute('src');
+        player.load();
+        player.hidden = true;
+        gifViewer.alt = `${projectName} animation`;
+        gifViewer.src = source;
+        gifViewer.hidden = false;
+      } else {
+        gifViewer.removeAttribute('src');
+        gifViewer.hidden = true;
+        player.hidden = false;
+        player.src = source;
+        player.muted = true;
+        player.load();
+      }
       dialog.showModal();
-      const playing = player.play();
-      if (playing && typeof playing.catch === 'function') playing.catch(() => {});
+      if (!isGif) {
+        const playing = player.play();
+        if (playing && typeof playing.catch === 'function') playing.catch(() => {});
+      }
     });
   });
 
@@ -120,6 +146,10 @@
     player.pause();
     player.removeAttribute('src');
     player.load();
+    player.hidden = false;
+    gifViewer.removeAttribute('src');
+    gifViewer.hidden = true;
+    process.hidden = false;
     refreshVisiblePreviews();
   });
   document.addEventListener('visibilitychange', () => {
