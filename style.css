@@ -40,7 +40,7 @@ nav i{font-style:normal;color:var(--red-bright)}
 .hero-meta,.eyebrow,.index{font:500 .64rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .eyebrow{color:var(--red-bright)}
 .hero-title{grid-column:1;grid-row:2;align-self:center;position:relative;z-index:3;padding:20px 0}
-.hero-title .eyebrow{margin:0 0:clamp(25px,4.5vw,65px)}
+.hero-title .eyebrow{margin:0 0 clamp(25px,4.5vw,65px)}
 .hero-title h1{font:600 clamp(4.5rem,8.4vw,9.1rem)/.78 var(--display);letter-spacing:-.105em;margin:0;white-space:normal}
 .hero-title h1 span{display:block;font:inherit;letter-spacing:-.095em}
 .hero-title h1 em{display:inline-block;font:400 italic clamp(4rem,7.3vw,8rem)/.9 var(--serif);letter-spacing:-.055em;color:var(--red-bright);padding-right:.05em}
@@ -118,7 +118,7 @@ figcaption{font:500 .6rem var(--mono);letter-spacing:.05em;text-transform:upperc
 .filters button{background:transparent;border:1px solid var(--line);border-radius:50px;color:#b9b4b8;font:500 .6rem var(--mono);text-transform:uppercase;padding:11px 14px;cursor:pointer;transition:color .3s,background .3s,border-color .3s}
 .filters button:hover,.filters button.active{color:white;background:#922034;border-color:#922034}
 .archive-grid{columns:4;column-gap:clamp(12px,1.5vw,20px)}
-.archive-item{break-inside:avoid;display:block;margin:0 0:clamp(16px,2vw,28px);overflow:hidden}
+.archive-item{break-inside:avoid;display:block;margin:0 0 clamp(16px,2vw,28px);overflow:hidden}
 .archive-item img{height:auto;aspect-ratio:auto}
 .archive-item figcaption{padding:10px 1px;display:flex;justify-content:space-between;color:#b9b3b6}
 .archive-item figcaption span{color:var(--red-bright)}

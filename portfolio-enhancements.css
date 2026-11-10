@@ -23,7 +23,7 @@
   z-index:2;grid-column:1;grid-row:2;align-self:center;
   max-width:800px;padding-block:clamp(15px,4vw,58px)
 }
-.hero-kicker{display:flex;align-items:center;gap:10px;letter-spacing:.115em;color:#dad1d4;margin:0 0:clamp(24px,4vw,55px)}
+.hero-kicker{display:flex;align-items:center;gap:10px;letter-spacing:.115em;color:#dad1d4;margin:0 0 clamp(24px,4vw,55px)}
 .hero-status-dot{
   display:inline-block;width:8px;height:8px;flex-shrink:0;border-radius:50%;
   background:var(--red-bright);box-shadow:0 0 0 4px rgba(238,52,75,.12);
