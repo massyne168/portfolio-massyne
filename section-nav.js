@@ -99,29 +99,7 @@
   const railButtons = [...menu.querySelectorAll(".section-rail-button")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const railDockQuery = window.matchMedia("(min-width: 851px) and (hover: hover) and (pointer: fine)");
-  const dockSettingsDefaults = { position: "left", smoothness: 0.22, magnification: 0.3, hoverRange: 100, iconSize: 40 };
-  const dockSettings = (() => {
-    try {
-      const saved = JSON.parse(window.localStorage.getItem("massyneDockSettings") || "{}");
-      const clamp = (value, min, max, fallback) => {
-        const number = Number(value);
-        return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallback;
-      };
-      return {
-        position: ["top", "left", "right", "bottom"].includes(saved.position) ? saved.position : dockSettingsDefaults.position,
-        smoothness: clamp(saved.smoothness, 0.05, 0.5, dockSettingsDefaults.smoothness),
-        magnification: clamp(saved.magnification, 0.1, 0.4, dockSettingsDefaults.magnification),
-        hoverRange: clamp(saved.hoverRange, 40, 180, dockSettingsDefaults.hoverRange),
-        iconSize: clamp(saved.iconSize, 28, 56, dockSettingsDefaults.iconSize)
-      };
-    } catch (_) {
-      return { ...dockSettingsDefaults };
-    }
-  })();
-  const dockSettingsToggle = document.querySelector("#dock-settings-toggle");
-  const dockSettingsPanel = document.querySelector("#dock-settings-panel");
-  const dockSettingsHeading = document.querySelector("#dock-settings-heading");
-  const dockSettingsFields = document.querySelector("#dock-settings-fields");
+  const dockPreset = Object.freeze({ position: "left", smoothness: 0.5, magnification: 0.3, hoverRange: 130, iconSize: 42 });
   const footer = document.querySelector(".footer-reveal-shell");
   const contactPanel = byKey.get("contact");
   if (footer && contactPanel && !contactPanel.element.contains(footer)) contactPanel.element.append(footer);
@@ -360,8 +338,8 @@
 
   function getDockMagnificationTargets() {
     const horizontal = dockUsesHorizontalAxis();
-    const radius = dockSettings.hoverRange;
-    const scaleRange = dockSettings.magnification;
+    const radius = dockPreset.hoverRange;
+    const scaleRange = dockPreset.magnification;
     const menuRect = menu.getBoundingClientRect();
     const menuOrigin = horizontal ? menuRect.left + menu.clientLeft : menuRect.top + menu.clientTop;
     const centers = railButtons.map(button => menuOrigin + (horizontal
@@ -415,7 +393,7 @@
     dockAnimationFrame = 0;
     const delta = dockPreviousFrameTime ? Math.min(50, time - dockPreviousFrameTime) : 16;
     dockPreviousFrameTime = time;
-    const responseTime = Math.max(0.017, dockSettings.smoothness / 3);
+    const responseTime = Math.max(0.017, dockPreset.smoothness / 3);
     const progress = 1 - Math.exp(-(delta / 1000) / responseTime);
     const targets = getDockMagnificationTargets();
     let stillMoving = false;
@@ -473,102 +451,14 @@
   });
   window.addEventListener("resize", refreshDockScale, { passive: true });
 
-  const dockRanges = [
-    { key: "smoothness", input: "#dock-smoothness", output: "#dock-smoothness-output", format: value => Number(value).toFixed(2) },
-    { key: "magnification", input: "#dock-magnification", output: "#dock-magnification-output", format: value => Number(value).toString() },
-    { key: "hoverRange", input: "#dock-hover-range", output: "#dock-hover-range-output", format: value => `${Number(value)}px` },
-    { key: "iconSize", input: "#dock-icon-size", output: "#dock-icon-size-output", format: value => `${Number(value)}px` }
-  ];
-  const dockPositionOptions = [...document.querySelectorAll("[data-dock-position-option]")];
-
-  function applyDockSettings(persist = false) {
-    sectionRail.dataset.dockPosition = dockSettings.position;
-    document.body.dataset.dockPosition = dockSettings.position;
-    sectionRail.style.setProperty("--dock-smoothness", `${dockSettings.smoothness}s`);
-    sectionRail.style.setProperty("--dock-magnification", String(dockSettings.magnification));
-    sectionRail.style.setProperty("--dock-hover-range", `${dockSettings.hoverRange}px`);
-    sectionRail.style.setProperty("--dock-icon-size", `${dockSettings.iconSize}px`);
-    document.body.style.setProperty("--dock-icon-size", `${dockSettings.iconSize}px`);
-
-    dockPositionOptions.forEach(option => {
-      const selected = option.dataset.dockPositionOption === dockSettings.position;
-      option.setAttribute("aria-checked", String(selected));
-      option.tabIndex = selected ? 0 : -1;
-    });
-    dockRanges.forEach(({ key, input: inputSelector, output: outputSelector, format }) => {
-      const input = document.querySelector(inputSelector);
-      const output = document.querySelector(outputSelector);
-      if (input) input.value = String(dockSettings[key]);
-      if (output) output.value = format(dockSettings[key]);
-    });
-
-    if (persist) {
-      try { window.localStorage.setItem("massyneDockSettings", JSON.stringify(dockSettings)); } catch (_) {}
-    }
+  function applyDockPreset() {
+    sectionRail.dataset.dockPosition = dockPreset.position;
+    document.body.dataset.dockPosition = dockPreset.position;
+    sectionRail.style.setProperty("--dock-icon-size", `${dockPreset.iconSize}px`);
     refreshDockScale();
   }
 
-  function setDockSettingsOpen(open) {
-    if (!dockSettingsPanel || !dockSettingsToggle) return;
-    dockSettingsPanel.hidden = !open;
-    dockSettingsToggle.setAttribute("aria-expanded", String(open));
-    dockSettingsToggle.setAttribute("aria-label", open ? "Close dock settings" : "Open dock settings");
-  }
-
-  dockPositionOptions.forEach((option, index) => {
-    option.addEventListener("click", () => {
-      dockSettings.position = option.dataset.dockPositionOption;
-      applyDockSettings(true);
-    });
-    option.addEventListener("keydown", event => {
-      const [rowDelta, columnDelta] = {
-        ArrowRight: [0, 1],
-        ArrowDown: [1, 0],
-        ArrowLeft: [0, -1],
-        ArrowUp: [-1, 0]
-      }[event.key] || [];
-      if (rowDelta === undefined) return;
-      event.preventDefault();
-      const row = Math.floor(index / 2);
-      const column = index % 2;
-      const nextRow = (row + rowDelta + 2) % 2;
-      const nextColumn = (column + columnDelta + 2) % 2;
-      const next = dockPositionOptions[nextRow * 2 + nextColumn];
-      next.focus();
-      next.click();
-    });
-  });
-
-  dockRanges.forEach(({ key, input: inputSelector }) => {
-    const input = document.querySelector(inputSelector);
-    if (!input) return;
-    input.addEventListener("input", () => {
-      dockSettings[key] = Number(input.value);
-      applyDockSettings(false);
-    });
-    input.addEventListener("change", () => {
-      dockSettings[key] = Number(input.value);
-      applyDockSettings(true);
-    });
-  });
-
-  dockSettingsToggle?.addEventListener("click", () => setDockSettingsOpen(dockSettingsPanel?.hidden));
-  dockSettingsHeading?.addEventListener("click", () => {
-    if (!dockSettingsFields) return;
-    const expanded = dockSettingsHeading.getAttribute("aria-expanded") === "true";
-    dockSettingsHeading.setAttribute("aria-expanded", String(!expanded));
-    dockSettingsFields.hidden = expanded;
-  });
-  document.addEventListener("pointerdown", event => {
-    if (!dockSettingsPanel?.hidden && !event.target.closest("#dock-settings-ui")) setDockSettingsOpen(false);
-  });
-  document.addEventListener("keydown", event => {
-    if (event.key !== "Escape" || dockSettingsPanel?.hidden) return;
-    setDockSettingsOpen(false);
-    dockSettingsToggle?.focus({ preventScroll: true });
-  });
-
-  applyDockSettings(false);
+  applyDockPreset();
   railDockQuery.addEventListener("change", refreshDockScale);
   reducedMotion.addEventListener("change", refreshDockScale);
   document.addEventListener("visibilitychange", refreshDockScale);
