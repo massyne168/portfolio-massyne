@@ -3,7 +3,8 @@
 
   const main = document.querySelector("#top");
   const menu = document.querySelector("#section-rail-menu");
-  if (!main || !menu) return;
+  const sectionRail = document.querySelector("#section-rail");
+  if (!main || !menu || !sectionRail) return;
   const mobileFlowQuery = window.matchMedia("(max-width: 850px)");
 
   // Combine the introduction and profile into one balanced Home composition.
@@ -98,6 +99,29 @@
   const railButtons = [...menu.querySelectorAll(".section-rail-button")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const railDockQuery = window.matchMedia("(min-width: 851px) and (hover: hover) and (pointer: fine)");
+  const dockSettingsDefaults = { position: "left", smoothness: 0.18, magnification: 0.6, hoverRange: 120, iconSize: 40 };
+  const dockSettings = (() => {
+    try {
+      const saved = JSON.parse(window.localStorage.getItem("massyneDockSettings") || "{}");
+      const clamp = (value, min, max, fallback) => {
+        const number = Number(value);
+        return Number.isFinite(number) ? Math.min(max, Math.max(min, number)) : fallback;
+      };
+      return {
+        position: ["top", "left", "right", "bottom"].includes(saved.position) ? saved.position : dockSettingsDefaults.position,
+        smoothness: clamp(saved.smoothness, 0.05, 0.5, dockSettingsDefaults.smoothness),
+        magnification: clamp(saved.magnification, 0.1, 1.2, dockSettingsDefaults.magnification),
+        hoverRange: clamp(saved.hoverRange, 40, 240, dockSettingsDefaults.hoverRange),
+        iconSize: clamp(saved.iconSize, 28, 56, dockSettingsDefaults.iconSize)
+      };
+    } catch (_) {
+      return { ...dockSettingsDefaults };
+    }
+  })();
+  const dockSettingsToggle = document.querySelector("#dock-settings-toggle");
+  const dockSettingsPanel = document.querySelector("#dock-settings-panel");
+  const dockSettingsHeading = document.querySelector("#dock-settings-heading");
+  const dockSettingsFields = document.querySelector("#dock-settings-fields");
   const footer = document.querySelector(".footer-reveal-shell");
   const contactPanel = byKey.get("contact");
   if (footer && contactPanel && !contactPanel.element.contains(footer)) contactPanel.element.append(footer);
@@ -307,7 +331,7 @@
   });
 
   // Let the buttons follow the pointer like a smooth desktop dock.
-  let dockPointerY = null;
+  let dockPointer = null;
   let dockPointerInside = false;
   let focusedRailButton = null;
 
@@ -318,13 +342,19 @@
     });
   }
 
-  function setDockScale(centerY) {
-    const radius = 104;
-    const scaleRange = 0.34;
+  function dockUsesHorizontalAxis() {
+    return sectionRail.dataset.dockPosition === "top" || sectionRail.dataset.dockPosition === "bottom";
+  }
+
+  function setDockScale(pointerCoordinate) {
+    const horizontal = dockUsesHorizontalAxis();
+    const radius = dockSettings.hoverRange;
+    const scaleRange = dockSettings.magnification;
 
     railButtons.forEach(button => {
       const rect = button.getBoundingClientRect();
-      const distance = Math.abs(centerY - (rect.top + rect.height / 2));
+      const buttonCenter = horizontal ? rect.left + rect.width / 2 : rect.top + rect.height / 2;
+      const distance = Math.abs(pointerCoordinate - buttonCenter);
       const influence = distance >= radius ? 0 : (1 + Math.cos((distance / radius) * Math.PI)) / 2;
       button.style.setProperty("--rail-scale", (1 + scaleRange * influence).toFixed(3));
       button.style.zIndex = String(1 + Math.round(influence * 12));
@@ -337,14 +367,14 @@
       return;
     }
 
-    if (dockPointerInside && dockPointerY !== null) {
-      setDockScale(dockPointerY);
+    if (dockPointerInside && dockPointer) {
+      setDockScale(dockUsesHorizontalAxis() ? dockPointer.x : dockPointer.y);
       return;
     }
 
     if (focusedRailButton?.isConnected) {
       const rect = focusedRailButton.getBoundingClientRect();
-      setDockScale(rect.top + rect.height / 2);
+      setDockScale(dockUsesHorizontalAxis() ? rect.left + rect.width / 2 : rect.top + rect.height / 2);
       return;
     }
 
@@ -354,12 +384,12 @@
   menu.addEventListener("pointermove", event => {
     if (event.pointerType !== "mouse" && event.pointerType !== "pen") return;
     dockPointerInside = true;
-    dockPointerY = event.clientY;
+    dockPointer = { x: event.clientX, y: event.clientY };
     refreshDockScale();
   });
   menu.addEventListener("pointerleave", () => {
     dockPointerInside = false;
-    dockPointerY = null;
+    dockPointer = null;
     refreshDockScale();
   });
   menu.addEventListener("focusin", event => {
@@ -375,6 +405,102 @@
       refreshDockScale();
     });
   });
+
+  const dockRanges = [
+    { key: "smoothness", input: "#dock-smoothness", output: "#dock-smoothness-output", format: value => Number(value).toFixed(2) },
+    { key: "magnification", input: "#dock-magnification", output: "#dock-magnification-output", format: value => Number(value).toString() },
+    { key: "hoverRange", input: "#dock-hover-range", output: "#dock-hover-range-output", format: value => `${Number(value)}px` },
+    { key: "iconSize", input: "#dock-icon-size", output: "#dock-icon-size-output", format: value => `${Number(value)}px` }
+  ];
+  const dockPositionOptions = [...document.querySelectorAll("[data-dock-position-option]")];
+
+  function applyDockSettings(persist = false) {
+    sectionRail.dataset.dockPosition = dockSettings.position;
+    document.body.dataset.dockPosition = dockSettings.position;
+    sectionRail.style.setProperty("--dock-smoothness", `${dockSettings.smoothness}s`);
+    sectionRail.style.setProperty("--dock-magnification", String(dockSettings.magnification));
+    sectionRail.style.setProperty("--dock-hover-range", `${dockSettings.hoverRange}px`);
+    sectionRail.style.setProperty("--dock-icon-size", `${dockSettings.iconSize}px`);
+
+    dockPositionOptions.forEach(option => {
+      const selected = option.dataset.dockPositionOption === dockSettings.position;
+      option.setAttribute("aria-checked", String(selected));
+      option.tabIndex = selected ? 0 : -1;
+    });
+    dockRanges.forEach(({ key, input: inputSelector, output: outputSelector, format }) => {
+      const input = document.querySelector(inputSelector);
+      const output = document.querySelector(outputSelector);
+      if (input) input.value = String(dockSettings[key]);
+      if (output) output.value = format(dockSettings[key]);
+    });
+
+    if (persist) {
+      try { window.localStorage.setItem("massyneDockSettings", JSON.stringify(dockSettings)); } catch (_) {}
+    }
+    refreshDockScale();
+  }
+
+  function setDockSettingsOpen(open) {
+    if (!dockSettingsPanel || !dockSettingsToggle) return;
+    dockSettingsPanel.hidden = !open;
+    dockSettingsToggle.setAttribute("aria-expanded", String(open));
+    dockSettingsToggle.setAttribute("aria-label", open ? "Close dock settings" : "Open dock settings");
+  }
+
+  dockPositionOptions.forEach((option, index) => {
+    option.addEventListener("click", () => {
+      dockSettings.position = option.dataset.dockPositionOption;
+      applyDockSettings(true);
+    });
+    option.addEventListener("keydown", event => {
+      const [rowDelta, columnDelta] = {
+        ArrowRight: [0, 1],
+        ArrowDown: [1, 0],
+        ArrowLeft: [0, -1],
+        ArrowUp: [-1, 0]
+      }[event.key] || [];
+      if (rowDelta === undefined) return;
+      event.preventDefault();
+      const row = Math.floor(index / 2);
+      const column = index % 2;
+      const nextRow = (row + rowDelta + 2) % 2;
+      const nextColumn = (column + columnDelta + 2) % 2;
+      const next = dockPositionOptions[nextRow * 2 + nextColumn];
+      next.focus();
+      next.click();
+    });
+  });
+
+  dockRanges.forEach(({ key, input: inputSelector }) => {
+    const input = document.querySelector(inputSelector);
+    if (!input) return;
+    input.addEventListener("input", () => {
+      dockSettings[key] = Number(input.value);
+      applyDockSettings(false);
+    });
+    input.addEventListener("change", () => {
+      dockSettings[key] = Number(input.value);
+      applyDockSettings(true);
+    });
+  });
+
+  dockSettingsToggle?.addEventListener("click", () => setDockSettingsOpen(dockSettingsPanel?.hidden));
+  dockSettingsHeading?.addEventListener("click", () => {
+    if (!dockSettingsFields) return;
+    const expanded = dockSettingsHeading.getAttribute("aria-expanded") === "true";
+    dockSettingsHeading.setAttribute("aria-expanded", String(!expanded));
+    dockSettingsFields.hidden = expanded;
+  });
+  document.addEventListener("pointerdown", event => {
+    if (!dockSettingsPanel?.hidden && !event.target.closest("#dock-settings-ui")) setDockSettingsOpen(false);
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key !== "Escape" || dockSettingsPanel?.hidden) return;
+    setDockSettingsOpen(false);
+    dockSettingsToggle?.focus({ preventScroll: true });
+  });
+
+  applyDockSettings(false);
   railDockQuery.addEventListener("change", refreshDockScale);
   reducedMotion.addEventListener("change", refreshDockScale);
   document.addEventListener("visibilitychange", refreshDockScale);
