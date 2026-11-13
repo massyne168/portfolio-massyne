@@ -4,8 +4,8 @@
   const safe = value => String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   if (projects.length) {
     grid.innerHTML = projects.map((p, i) => {
-      const image = '../' + String(p.image).replace(/^\//, '');
-      const href = '../projects/' + encodeURIComponent(p.slug) + '.html';
+      const image = String(p.image).replace(/^\//, '');
+      const href = 'projects/' + encodeURIComponent(p.slug) + '.html';
       return '<a class="work-card" href="' + href + '"><div class="work-image"><img src="' + image + '" alt="' + safe(p.title) + '" loading="lazy" decoding="async"></div><div class="work-meta"><span>' + String(i + 1).padStart(2, '0') + ' / ' + safe(p.category) + '</span><span>' + safe(p.year) + '</span></div><h3 class="work-title">' + safe(p.title) + '</h3></a>';
     }).join('');
   } else {
