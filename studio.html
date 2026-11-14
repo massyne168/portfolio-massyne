@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#0b0b0e">
+  <title>MASSYNE STUDIO — Content Manager</title>
+  <link rel="icon" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="studio.css">
+</head>
+<body>
+  <a class="skip-link" href="#studio-content">Skip to workspace</a>
+  <div class="studio-frame">
+    <aside class="studio-rail" aria-label="Studio navigation">
+      <a class="studio-brand" href="studio.html" aria-label="MASSYNE Studio home">
+        <span class="brand-mark">M<span>.</span></span>
+        <span class="brand-copy"><strong>MASSYNE</strong><small>STUDIO / CONTENT</small></span>
+      </a>
+      <div class="rail-divider"></div>
+      <p class="rail-label">WORKSPACE</p>
+      <nav class="studio-nav" aria-label="Content sections">
+        <button type="button" class="nav-item is-active" data-page="overview"><span class="nav-icon" aria-hidden="true">◫</span>Overview</button>
+        <button type="button" class="nav-item" data-page="projects"><span class="nav-icon" aria-hidden="true">▧</span>Selected work<span class="nav-count" data-count="projects">—</span></button>
+        <button type="button" class="nav-item" data-page="archive"><span class="nav-icon" aria-hidden="true">▤</span>Archive<span class="nav-count" data-count="archive">—</span></button>
+        <button type="button" class="nav-item" data-page="motion"><span class="nav-icon" aria-hidden="true">▷</span>Motion<span class="nav-count" data-count="motion">—</span></button>
+        <button type="button" class="nav-item" data-page="services"><span class="nav-icon" aria-hidden="true">✳</span>Services<span class="nav-count" data-count="services">—</span></button>
+        <button type="button" class="nav-item" data-page="profile"><span class="nav-icon" aria-hidden="true">◎</span>Studio profile</button>
+      </nav>
+      <div class="rail-spacer"></div>
+      <div class="rail-status"><span class="status-led"></span><div><strong>LOCAL CONTENT DESK</strong><small>Drafts stay in this browser</small></div></div>
+      <a class="rail-site-link" href="index.html"><span aria-hidden="true">↗</span> View public portfolio</a>
+      <div class="rail-footer"><span>CONTENT WORKSPACE</span><span>V1.0 / 2026</span></div>
+    </aside>
+    <div class="studio-main">
+      <header class="studio-topbar">
+        <div class="topbar-context"><span class="topbar-kicker">MASSYNE / STUDIO</span><span class="topbar-divider">/</span><span id="page-title">Overview</span></div>
+        <div class="topbar-actions">
+          <span id="save-state" class="save-state"><i aria-hidden="true"></i><span>All changes saved</span></span>
+          <label class="button button-quiet import-button" for="import-file">Import package</label>
+          <input id="import-file" type="file" accept="application/json,.json" hidden>
+          <button class="button button-primary" type="button" data-action="export">Export content <span aria-hidden="true">↓</span></button>
+        </div>
+      </header>
+      <main class="studio-content" id="studio-content" tabindex="-1"></main>
+      <footer class="studio-foot"><span>MASSYNE STUDIO / CONTENT MANAGEMENT</span><span>Changes are private to this browser until exported.</span></footer>
+    </div>
+  </div>
+  <dialog class="editor-dialog" id="editor-dialog" aria-labelledby="editor-title">
+    <form method="dialog" class="dialog-close-form"><button class="dialog-close" value="cancel" aria-label="Close editor">×</button></form>
+    <div id="editor-body"></div>
+  </dialog>
+  <div class="studio-toast" id="studio-toast" role="status" aria-live="polite"></div>
+  <script src="project-data.js"></script>
+  <script src="studio.js"></script>
+</body>
+</html>
+
