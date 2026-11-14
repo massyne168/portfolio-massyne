@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "name": "MASSYNE",
+    "tagline": "Design with purpose.",
+    "headline": "I create cinematic visuals, bold identities and distinctive digital stories — designed to leave an impression.",
+    "location": "Morocco — Worldwide",
+    "aboutHeadline": "Different by design.",
+    "aboutLead": "I'm MASSYNE. I turn ideas into expressive visuals that don't disappear into the scroll.",
+    "aboutDescription": "My work brings together cinematic poster composition, graphic design, visual identity and motion. I'm drawn to strong concepts, considered typography and bold artistic direction.",
+    "portrait": "assets/massyne-hero-portrait.png",
+    "availability": "inquiries",
+    "availabilityDescription": "For projects, collaborations and visual ideas.",
+    "email": "aazizimassine@gmail.com",
+    "whatsapp": "https://wa.me/212659377324",
+    "instagram": "https://www.instagram.com/massyne_901/",
+    "behance": "https://www.behance.net/massyne",
+    "resume": "resume.html",
+    "portfolioPdf": "images/massyne-portfolio.pdf"
+  },
+  "services": [
+    {
+      "id": "service-1",
+      "title": "Poster & Key Art",
+      "description": "Cinematic compositions, expressive typography and campaign-ready creative artwork that makes the idea impossible to overlook.",
+      "link": "projects/veiled-sorrow.html"
+    },
+    {
+      "id": "service-2",
+      "title": "Visual Identity",
+      "description": "Distinct marks and cohesive graphic worlds that give a brand a recognizable personality across its visuals.",
+      "link": "projects/gurzil-team.html"
+    },
+    {
+      "id": "service-3",
+      "title": "Art Direction",
+      "description": "Concept-led visual direction where composition, color, subject and type tell the same story.",
+      "link": "projects/the-cursed-crown.html"
+    },
+    {
+      "id": "service-4",
+      "title": "Motion Graphics",
+      "description": "Animated visual studies, digital movement and compelling transitions that turn static ideas into living content.",
+      "link": "#motion"
+    }
+  ],
+  "motion": [
+    {
+      "id": "motion-01",
+      "title": "EXOTIC Roleplay",
+      "category": "BRAND MOTION / SELECTED WORK",
+      "source": "images/motion/exotic-roleplay.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-02",
+      "title": "Counter Assault Team",
+      "category": "CINEMATIC MOTION / SELECTED WORK",
+      "source": "images/motion/counter-assault-team.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-03",
+      "title": "Motion Study 01",
+      "category": "ORIGINAL MOTION / STUDY 01",
+      "source": "images/optimized/motion1.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-04",
+      "title": "Motion Study 02",
+      "category": "ORIGINAL MOTION / STUDY 02",
+      "source": "images/optimized/motion2.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-05",
+      "title": "Motion Study 03",
+      "category": "ORIGINAL MOTION / STUDY 03",
+      "source": "images/optimized/motion3.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-06",
+      "title": "Motion Study 04",
+      "category": "ORIGINAL MOTION / STUDY 04",
+      "source": "images/optimized/motion4.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-07",
+      "title": "Motion Study 05",
+      "category": "ORIGINAL MOTION / STUDY 05",
+      "source": "images/optimized/motion5.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-08",
+      "title": "Motion Study 06",
+      "category": "ORIGINAL MOTION / STUDY 06",
+      "source": "images/optimized/motion6.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-09",
+      "title": "Homeless",
+      "category": "MOTION / HOMELESS",
+      "source": "images/motion/homeless-0513.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-10",
+      "title": "Master County — Motion 01",
+      "category": "MOTION / MASTER COUNTY",
+      "source": "images/motion/master-county-0421.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-11",
+      "title": "Master County — Motion 02",
+      "category": "MOTION / MASTER COUNTY",
+      "source": "images/motion/master-county-0421-alt.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-12",
+      "title": "Master County — Banner Fluxo",
+      "category": "MOTION / MASTER COUNTY",
+      "source": "images/motion/master-county-banner-fluxo.mp4",
+      "kind": "video"
+    },
+    {
+      "id": "motion-13",
+      "title": "Coastal County Roleplay",
+      "category": "MOTION / COASTAL COUNTY",
+      "source": "images/motion/coastal-county-roleplay.gif",
+      "kind": "gif"
+    },
+    {
+      "id": "motion-14",
+      "title": "Private Zone — Avatar",
+      "category": "MOTION / PRIVATE ZONE",
+      "source": "images/motion/private-zone-avatar.gif",
+      "kind": "gif"
+    },
+    {
+      "id": "motion-15",
+      "title": "Private Zone — Banner",
+      "category": "MOTION / PRIVATE ZONE",
+      "source": "images/motion/private-zone-banner.gif",
+      "kind": "gif"
+    }
+  ],
+  "archive": [
+    {
+      "id": "archive-01",
+      "title": "Yediiklim",
+      "category": "posters",
+      "image": "images/posters/yediiklim.webp",
+      "alt": "Yediiklim — blue cultural association poster"
+    },
+    {
+      "id": "archive-02",
+      "title": "EXOTIC Roleplay / Logo",
+      "category": "logos",
+      "image": "images/logos/exotic-roleplay.webp",
+      "alt": "EXOTIC Roleplay — gold and white geometric logo"
+    },
+    {
+      "id": "archive-03",
+      "title": "EXOTIC Roleplay",
+      "category": "posters",
+      "image": "images/posters/exotic-roleplay.webp",
+      "alt": "EXOTIC Roleplay — navy and gold community banner"
+    },
+    {
+      "id": "archive-04",
+      "title": "Poster study / 01",
+      "category": "posters",
+      "image": "images/archive1.webp",
+      "alt": "Poster study / 01"
+    },
+    {
+      "id": "archive-05",
+      "title": "Poster study / 02",
+      "category": "posters",
+      "image": "images/archive2.webp",
+      "alt": "Poster study / 02"
+    },
+    {
+      "id": "archive-06",
+      "title": "Poster study / 03",
+      "category": "posters",
+      "image": "images/archive3.webp",
+      "alt": "Poster study / 03"
+    },
+    {
+      "id": "archive-07",
+      "title": "Poster study / 04",
+      "category": "posters",
+      "image": "images/archive4.webp",
+      "alt": "Poster study / 04"
+    },
+    {
+      "id": "archive-08",
+      "title": "Poster study / 05",
+      "category": "posters",
+      "image": "images/archive5.webp",
+      "alt": "Poster study / 05"
+    },
+    {
+      "id": "archive-09",
+      "title": "Identity study / 06",
+      "category": "identity logos",
+      "image": "images/archive6.webp",
+      "alt": "Identity study / 06"
+    },
+    {
+      "id": "archive-10",
+      "title": "Identity study / 07",
+      "category": "identity logos",
+      "image": "images/archive7.webp",
+      "alt": "Identity study / 07"
+    },
+    {
+      "id": "archive-11",
+      "title": "Poster study / 08",
+      "category": "posters",
+      "image": "images/archive8.webp",
+      "alt": "Poster study / 08"
+    },
+    {
+      "id": "archive-12",
+      "title": "Poster study / 09",
+      "category": "posters",
+      "image": "images/archive9.webp",
+      "alt": "Poster study / 09"
+    },
+    {
+      "id": "archive-13",
+      "title": "Identity study / 14",
+      "category": "identity logos",
+      "image": "images/archive14.webp",
+      "alt": "Identity study / 14"
+    },
+    {
+      "id": "archive-14",
+      "title": "Poster study / 15",
+      "category": "posters",
+      "image": "images/archive15.webp",
+      "alt": "Poster study / 15"
+    },
+    {
+      "id": "archive-15",
+      "title": "Visual experiment / 16",
+      "category": "experiments",
+      "image": "images/archive16.webp",
+      "alt": "Visual experiment / 16"
+    },
+    {
+      "id": "archive-16",
+      "title": "Poster study / 17",
+      "category": "posters",
+      "image": "images/archive17.webp",
+      "alt": "Poster study / 17"
+    },
+    {
+      "id": "archive-17",
+      "title": "Poster study / 18",
+      "category": "posters",
+      "image": "images/archive18.webp",
+      "alt": "Poster study / 18"
+    },
+    {
+      "id": "archive-18",
+      "title": "Identity study / 19",
+      "category": "identity logos",
+      "image": "images/archive19.webp",
+      "alt": "Identity study / 19"
+    },
+    {
+      "id": "archive-19",
+      "title": "Logo study / 20",
+      "category": "logos",
+      "image": "images/archive20.webp",
+      "alt": "Logo study / 20"
+    },
+    {
+      "id": "archive-20",
+      "title": "Logo study / 21",
+      "category": "logos",
+      "image": "images/archive21.webp",
+      "alt": "Logo study / 21"
+    },
+    {
+      "id": "archive-21",
+      "title": "Poster study / 22",
+      "category": "posters",
+      "image": "images/archive22.webp",
+      "alt": "Poster study / 22"
+    },
+    {
+      "id": "archive-22",
+      "title": "Poster study / 23",
+      "category": "posters",
+      "image": "images/archive23.webp",
+      "alt": "Poster study / 23"
+    },
+    {
+      "id": "archive-23",
+      "title": "Poster study / 24",
+      "category": "posters",
+      "image": "images/archive24.webp",
+      "alt": "Poster study / 24"
+    },
+    {
+      "id": "archive-24",
+      "title": "Logo study / 27",
+      "category": "logos",
+      "image": "images/archive27.webp",
+      "alt": "Logo study / 27"
+    },
+    {
+      "id": "archive-25",
+      "title": "Logo study / 28",
+      "category": "logos",
+      "image": "images/archive28.webp",
+      "alt": "Logo study / 28"
+    },
+    {
+      "id": "archive-26",
+      "title": "Logo study / 29",
+      "category": "logos",
+      "image": "images/archive29.webp",
+      "alt": "Logo study / 29"
+    },
+    {
+      "id": "archive-27",
+      "title": "YORO / Cover Art",
+      "category": "posters",
+      "image": "images/posters/yoro-cover-art.jpg",
+      "alt": "YORO cover art, a grainy monochrome portrait with gold lettering"
+    },
+    {
+      "id": "archive-28",
+      "title": "Toxic Chill / Poster",
+      "category": "posters",
+      "image": "images/posters/toxic-chill-poster.jpg",
+      "alt": "Toxic Chill poster with neon magenta lettering and green light"
+    },
+    {
+      "id": "archive-29",
+      "title": "MASSYNE / Poster",
+      "category": "posters",
+      "image": "images/posters/massyne-poster.jpg",
+      "alt": "MASSYNE metallic wordmark over a dark background with green accents"
+    },
+    {
+      "id": "archive-30",
+      "title": "1UPC / City Roleplay Banner",
+      "category": "posters",
+      "image": "images/posters/1upc-city-roleplay-banner.jpg",
+      "alt": "1UPC City Roleplay blue banner with GTA San Andreas and Multi Theft Auto lettering"
+    }
+  ]
+}
+
