@@ -49,6 +49,12 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 - **Immersive artwork viewer** upgrades the existing native dialog with previous/next work, keyboard arrows, touch swipe, a zoom toggle and links to other real case studies. This shares the existing `case-study.js` and `case-study.css`.
 - **Integration:** PR #25 (Spotlight, filters, related projects) and PR #24 (LAB, breakdown, viewer) have both been merged into `main`. Source structure, 3D gallery, original work and introduction flow are retained; browser visual QA remains advisable after deployments.
 
+### MASSYNE STUDIO content dashboard
+
+- `studio.html` is a noindex content workspace for the selected project data, archive, motion projects, services and studio profile.
+- It starts from `project-data.js` and `studio-content.json`. Edits are kept in the current browser's local storage and can be exported as a portable JSON content package. The Selected work page can also export a replacement `project-data.js`.
+- This portfolio is static, so the dashboard does not write to GitHub or publish changes by itself. To apply an edit to the public site, update and commit the corresponding source file. When a case-study entry changes, regenerate its static `projects/<slug>.html` snapshot using the guidance below.
+
 ## Updating case studies
 
 Edit `project-data.js` first; the script populates the legacy template and the 20 pre-rendered HTML snapshots. When you change a project title, summary, images or design notes, **regenerate the matching `projects/<slug>.html` snapshot** so SEO HTML stays in sync. Current snapshots are deliberately static rather than relying on browser-only rendering.
