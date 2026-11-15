@@ -76,17 +76,19 @@
     <form method="dialog" class="dialog-close-form"><button class="dialog-close" value="cancel" aria-label="Close GitHub connection">×</button></form>
     <div class="editor-content">
       <p class="eyebrow">PUBLISH / GITHUB</p>
-      <h2 id="github-dialog-title">Connect to main.</h2>
-      <p class="editor-description">A fine-grained GitHub token lets Studio commit content files to <strong>massyne168/portfolio-massyne</strong>. The token stays in memory for this tab and is never written to the package or browser storage.</p>
+      <h2 id="github-dialog-title">Keep GitHub connected.</h2>
+      <p class="editor-description">Studio publishes through a private Vercel server connection. The GitHub token stays on the server and is never sent to this browser.</p>
       <ol class="github-steps">
         <li>Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">fine-grained token on GitHub ↗</a>.</li>
-        <li>Choose <strong>Only select repositories</strong> → <strong>portfolio-massyne</strong>.</li>
+        <li>Limit it to <strong>Only select repositories → portfolio-massyne</strong>.</li>
         <li>Grant <strong>Contents: Read and write</strong>. No other permissions are needed.</li>
+        <li>In Vercel, add it as a Production Secret named <strong>MASSYNE_STUDIO_GITHUB_TOKEN</strong>, then redeploy.</li>
       </ol>
-      <form id="github-form" class="github-form">
-        <div class="field"><label for="github-token">Fine-grained token</label><input id="github-token" name="token" type="password" required autocomplete="off" spellcheck="false" placeholder="github_pat_…"></div>
-        <div class="dialog-actions"><span class="field-help">F5 reloads the dashboard from GitHub. Reconnect to publish again.</span><div><button class="button button-quiet" type="button" data-action="close-github">Cancel</button><button class="button button-primary" type="submit">Connect securely</button></div></div>
-      </form>
+      <p id="github-status-message" class="field-help" role="status">Checking the permanent GitHub connection…</p>
+      <div class="dialog-actions">
+        <a class="button button-quiet" href="https://vercel.com/massyne/portfolio-massyne/settings/environment-variables" target="_blank" rel="noopener noreferrer">Open Vercel settings ↗</a>
+        <button class="button button-primary" type="button" data-action="close-github">Close</button>
+      </div>
     </div>
   </dialog>
   <div class="studio-toast" id="studio-toast" role="status" aria-live="polite"></div>

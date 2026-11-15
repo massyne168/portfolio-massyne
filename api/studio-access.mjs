@@ -36,6 +36,11 @@ function validSession(req, code) {
   return secureEqual(signature.toLowerCase(), makeSignature(expires, code));
 }
 
+export function isStudioSessionAuthenticated(req) {
+  const code = String(process.env.MASSYNE_STUDIO_ACCESS_CODE || "").trim();
+  return code.length >= 12 && validSession(req, code);
+}
+
 export default function handler(req, res) {
   res.setHeader("Cache-Control", "no-store, max-age=0");
   res.setHeader("Pragma", "no-cache");
