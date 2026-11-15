@@ -527,7 +527,11 @@
 
   async function editorSubmit(event) {
     event.preventDefault();
-    const form = event.currentTarget;
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement)) {
+      showToast("The content form could not be read. Close it and try again.");
+      return;
+    }
     const page = form.dataset.collection;
     const originalId = form.dataset.originalId;
     const submitButton = form.querySelector('button[type="submit"]');
