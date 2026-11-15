@@ -24,6 +24,7 @@
   let pendingPublish = false;
   let publishing = false;
   let contentRevision = 0;
+  let draggedItem = null;
   const githubApi = "/api/studio-publish";
   const githubDialog = document.getElementById("github-dialog");
   const githubConnectButton = document.getElementById("github-connect-button");
@@ -294,16 +295,24 @@
       results.innerHTML = `<div class="empty-state"><div><strong>${query ? "No matching content" : "Nothing here yet"}</strong><p>${query ? "Try another search or category." : "Add an item to begin building this collection."}</p></div></div>`;
       return;
     }
-    results.innerHTML = filtered.map(item => {
+    results.innerHTML = filtered.map((item, visibleIndex) => {
       const preview = page === "projects" || page === "archive" ? item.image : "";
       const kind = page === "motion" ? item.kind : "";
       const secondary = page === "projects" ? (item.focus || item.summary || "") : page === "archive" ? item.alt : page === "motion" ? item.source : item.description;
       const date = page === "projects" ? item.year || "PROJECT" : page === "motion" ? kind || "MOTION" : page.toUpperCase();
-      return `<article class="content-card" data-card-id="${escapeHtml(item.id || item.slug || "")}">
+      const itemId = String(item.id || item.slug || "");
+      const previousItem = filtered[visibleIndex - 1];
+      const nextItem = filtered[visibleIndex + 1];
+      const previousId = previousItem ? String(previousItem.id || previousItem.slug || "") : "";
+      const nextId = nextItem ? String(nextItem.id || nextItem.slug || "") : "";
+      return `<article class="content-card" data-card-id="${escapeHtml(itemId)}" data-collection="${page}">
         ${imageMarkup(preview, item.alt || item.title, kind)}
         <div class="card-body"><div class="card-overline"><span>${escapeHtml(item.category || "Uncategorized")}</span><span>${escapeHtml(date)}</span></div>
         <h2 class="card-title" title="${escapeHtml(titleFor(item))}">${escapeHtml(titleFor(item))}</h2><p class="card-summary">${escapeHtml(secondary)}</p>
         <div class="card-footer"><small>${escapeHtml(item.slug || item.source || item.link || "Content item")}</small><div class="card-actions">
+          <button class="icon-button reorder-handle" type="button" draggable="true" aria-label="Drag ${escapeHtml(titleFor(item))} to reorder" title="Drag to reorder" data-drag-handle>⠿</button>
+          <button class="icon-button reorder-button" type="button" aria-label="Move ${escapeHtml(titleFor(item))} up" title="Move up" data-action="move-item" data-direction="up" data-collection="${page}" data-id="${escapeHtml(itemId)}" data-target-id="${escapeHtml(previousId)}" ${previousId ? "" : "disabled"}>↑</button>
+          <button class="icon-button reorder-button" type="button" aria-label="Move ${escapeHtml(titleFor(item))} down" title="Move down" data-action="move-item" data-direction="down" data-collection="${page}" data-id="${escapeHtml(itemId)}" data-target-id="${escapeHtml(nextId)}" ${nextId ? "" : "disabled"}>↓</button>
           <button class="icon-button" type="button" aria-label="Edit ${escapeHtml(titleFor(item))}" title="Edit" data-action="edit" data-collection="${page}" data-id="${escapeHtml(item.id || item.slug || "")}">✎</button>
           <button class="icon-button danger" type="button" aria-label="Delete ${escapeHtml(titleFor(item))}" title="Delete" data-action="delete" data-collection="${page}" data-id="${escapeHtml(item.id || item.slug || "")}">×</button>
         </div></div></div></article>`;
@@ -319,7 +328,7 @@
     const addLabel = page === "projects" ? "Add project" : page === "archive" ? "Add artwork" : page === "motion" ? "Add motion" : "Add service";
     contentRoot.innerHTML = `
       ${heading(`CONTENT / ${String(["projects", "archive", "motion", "services"].indexOf(page) + 1).padStart(2, "0")}`, collectionTitle(page), collectionDescription(page), `${action}<button class="button button-primary" type="button" data-action="new-item" data-collection="${page}">＋ ${addLabel}</button>`)}
-      <div class="collection-toolbar"><div class="toolbar-left"><label class="search-box"><span aria-hidden="true">⌕</span><input id="collection-search" type="search" autocomplete="off" placeholder="Search ${escapeHtml(collectionTitle(page).toLowerCase())}…" aria-label="Search ${escapeHtml(collectionTitle(page).toLowerCase())}"></label>${filters}</div><div class="toolbar-right"><span class="collection-meta" id="collection-count"></span></div></div>
+      <div class="collection-toolbar"><div class="toolbar-left"><label class="search-box"><span aria-hidden="true">⌕</span><input id="collection-search" type="search" autocomplete="off" placeholder="Search ${escapeHtml(collectionTitle(page).toLowerCase())}…" aria-label="Search ${escapeHtml(collectionTitle(page).toLowerCase())}"></label>${filters}</div><div class="toolbar-right"><span class="collection-order-hint">Drag the grip or use the arrows to set website order.</span><span class="collection-meta" id="collection-count"></span></div></div>
       <div class="collection-grid" id="collection-results"></div>`;
     renderCollection(page);
   }
@@ -473,7 +482,8 @@
           ${field("summary", "Summary", item.summary || "", { type: "textarea", wide: true, rows: 3 })}
           ${field("concept", "Concept", item.concept || "", { type: "textarea", wide: true, rows: 3 })}
           ${field("direction", "Visual direction", item.direction || "", { type: "textarea", wide: true, rows: 3 })}
-          ${field("gallery", "Gallery artwork paths", gallery, { type: "textarea", wide: true, rows: 3, help: "One existing repository path per line, or upload gallery images below." })}
+          ${field("gallery", "Gallery artwork paths", gallery, { type: "textarea", wide: true, rows: 3, help: "One repository path per line. Use the controls below to change gallery order." })}
+          <div class="field wide gallery-order-field"><label>Gallery order</label><div class="gallery-order-list" data-gallery-order></div></div>
           ${fileUploadField("galleryUploads", "Upload gallery images", "Optional. Select one or more images to add to this project.", { multiple: true })}
           ${field("details", "Design observations (JSON)", details, { type: "textarea", wide: true, rows: 6, cls: "extra-field", help: "Use an array of title and description pairs." })}
         </div>`;
@@ -515,6 +525,7 @@
           <div class="dialog-actions"><div>${deleteButton}</div><div><button class="button button-quiet" type="button" data-action="close-editor">Cancel</button><button class="button button-primary" type="submit">Save changes</button></div></div>
         </form>
       </div>`;
+    renderGalleryOrder(draft.gallery);
     dialog.showModal();
     dialog.querySelector("input:not([type=hidden]),textarea,select")?.focus({ preventScroll: true });
   }
@@ -523,6 +534,52 @@
     const items = listFor(page);
     const index = items.findIndex(item => (item.id || item.slug) === id);
     return { items, index, item: items[index] };
+  }
+
+  function renderGalleryOrder(paths) {
+    const list = editorBody.querySelector("[data-gallery-order]");
+    if (!list) return;
+    const textarea = editorBody.querySelector('textarea[name="gallery"]');
+    const items = Array.isArray(paths) ? paths : String(textarea?.value || "").split(/\r?\n/).map(path => path.trim()).filter(Boolean);
+    if (!items.length) {
+      list.innerHTML = '<p class="gallery-order-empty">No gallery images yet. Add paths above or upload gallery images below.</p>';
+      return;
+    }
+    list.innerHTML = items.map((path, index) => `
+      <div class="gallery-order-row">
+        <span class="gallery-order-index">${String(index + 1).padStart(2, "0")}</span>
+        <span class="gallery-order-path" title="${escapeHtml(path)}">${escapeHtml(path)}</span>
+        <div class="gallery-order-actions">
+          <button class="icon-button reorder-button" type="button" data-gallery-order-action="up" data-gallery-index="${index}" aria-label="Move gallery image ${index + 1} up" title="Move up" ${index === 0 ? "disabled" : ""}>↑</button>
+          <button class="icon-button reorder-button" type="button" data-gallery-order-action="down" data-gallery-index="${index}" aria-label="Move gallery image ${index + 1} down" title="Move down" ${index === items.length - 1 ? "disabled" : ""}>↓</button>
+        </div>
+      </div>`).join("");
+  }
+
+  function moveGalleryOrder(index, direction) {
+    const textarea = editorBody.querySelector('textarea[name="gallery"]');
+    if (!textarea) return;
+    const items = String(textarea.value || "").split(/\r?\n/).map(path => path.trim()).filter(Boolean);
+    const nextIndex = index + direction;
+    if (index < 0 || index >= items.length || nextIndex < 0 || nextIndex >= items.length) return;
+    [items[index], items[nextIndex]] = [items[nextIndex], items[index]];
+    textarea.value = items.join("\n");
+    renderGalleryOrder(items);
+  }
+
+  function moveItem(page, id, targetId, after = false) {
+    const items = listFor(page);
+    const sourceIndex = items.findIndex(item => (item.id || item.slug) === id);
+    if (sourceIndex < 0 || !targetId || id === targetId) return;
+    const [item] = items.splice(sourceIndex, 1);
+    const targetIndex = items.findIndex(entry => (entry.id || entry.slug) === targetId);
+    if (targetIndex < 0) {
+      items.splice(sourceIndex, 0, item);
+      return;
+    }
+    items.splice(targetIndex + (after ? 1 : 0), 0, item);
+    persist("Order updated", true);
+    renderCollection(page);
   }
 
   async function editorSubmit(event) {
@@ -642,6 +699,7 @@
         if (imagePathField && result.image) imagePathField.value = result.image;
         if (galleryField && Array.isArray(result.gallery)) galleryField.value = result.gallery.join("\n");
         if (motionPathField && result.source) motionPathField.value = result.source;
+        if (page === "projects") renderGalleryOrder(result.gallery);
       }
 
       if (page === "projects" && result.image !== previousImage && (!existing || existing.preview === previousImage)) {
@@ -749,6 +807,7 @@
     if (action === "close-editor") return dialog.close();
     if (action === "new-project") return openEditor("projects");
     if (action === "new-item") return openEditor(page);
+    if (action === "move-item") return moveItem(page, id, button.dataset.targetId, button.dataset.direction === "down");
     if (action === "edit") {
       const { item } = collectionAndIndex(page, id);
       if (item) openEditor(page, item);
@@ -791,8 +850,54 @@
   document.addEventListener("change", event => {
     if (event.target.id === "collection-filter") renderCollection(activePage);
   });
+  contentRoot.addEventListener("dragstart", event => {
+    const handle = event.target instanceof Element ? event.target.closest("[data-drag-handle]") : null;
+    const card = handle?.closest(".content-card[data-card-id]");
+    if (!card) return;
+    draggedItem = { page: card.dataset.collection, id: card.dataset.cardId };
+    card.classList.add("is-dragging");
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/plain", `${draggedItem.page}:${draggedItem.id}`);
+    }
+  });
+  contentRoot.addEventListener("dragover", event => {
+    const card = event.target instanceof Element ? event.target.closest(".content-card[data-card-id]") : null;
+    if (!draggedItem || !card || card.dataset.cardId === draggedItem.id) return;
+    event.preventDefault();
+    if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+    contentRoot.querySelectorAll(".content-card.is-drop-target").forEach(target => target.classList.remove("is-drop-target"));
+    card.classList.add("is-drop-target");
+  });
+  contentRoot.addEventListener("drop", event => {
+    const card = event.target instanceof Element ? event.target.closest(".content-card[data-card-id]") : null;
+    if (!draggedItem || !card) return;
+    event.preventDefault();
+    const source = draggedItem;
+    draggedItem = null;
+    const rect = card.getBoundingClientRect();
+    const after = event.clientY >= rect.top + rect.height / 2;
+    contentRoot.querySelectorAll(".content-card.is-dragging, .content-card.is-drop-target").forEach(target => {
+      target.classList.remove("is-dragging", "is-drop-target");
+    });
+    if (source.page === card.dataset.collection) moveItem(source.page, source.id, card.dataset.cardId, after);
+  });
+  contentRoot.addEventListener("dragend", () => {
+    draggedItem = null;
+    contentRoot.querySelectorAll(".content-card.is-dragging, .content-card.is-drop-target").forEach(target => {
+      target.classList.remove("is-dragging", "is-drop-target");
+    });
+  });
   editorBody.addEventListener("change", event => {
     if (event.target.matches("input[data-studio-media-upload]")) updateUploadSelection(event.target);
+  });
+  editorBody.addEventListener("input", event => {
+    if (event.target.matches('textarea[name="gallery"]')) renderGalleryOrder();
+  });
+  editorBody.addEventListener("click", event => {
+    const button = event.target instanceof Element ? event.target.closest("[data-gallery-order-action]") : null;
+    if (!button) return;
+    moveGalleryOrder(Number(button.dataset.galleryIndex), button.dataset.galleryOrderAction === "down" ? 1 : -1);
   });
   editorBody.addEventListener("submit", event => {
     if (event.target.id === "content-form") void editorSubmit(event);
