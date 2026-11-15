@@ -154,6 +154,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
+      "title": "MASSYNE metallic ",
+      "category": "posters",
+      "image": "/images/studio-uploads/1794709091958-5a0b0c7e-MASSYNE2.jpg",
+      "alt": "",
+      "id": "archiv-massyne-metallic"
+    },
+    {
       "id": "archive-01",
       "title": "Yediiklim",
       "category": "posters",
@@ -1263,4 +1270,3 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "removedProjects": []
 };
-
