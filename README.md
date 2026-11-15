@@ -51,9 +51,11 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 
 ### MASSYNE STUDIO content dashboard
 
-- `studio.html` is a noindex content workspace for the selected project data, archive, motion projects, services and studio profile.
-- It starts from `project-data.js` and `studio-content.json`. Edits are kept in the current browser's local storage and can be exported as a portable JSON content package. The Selected work page can also export a replacement `project-data.js`.
-- This portfolio is static, so the dashboard does not write to GitHub or publish changes by itself. To apply an edit to the public site, update and commit the corresponding source file. When a case-study entry changes, regenerate its static `projects/<slug>.html` snapshot using the guidance below.
+- `studio.html` is a noindex content workspace for selected projects, archive artwork, motion projects, services and the public studio profile.
+- Connect with a fine-grained GitHub token limited to this repository and **Contents: Read and write**. Each dashboard Save commits `studio-content.json`, `project-data.js` and the generated `studio-content.js` together to `main`. The token stays in tab memory only and is cleared by refresh; reconnect before the next publish.
+- The public homepage reads the committed content through `studio-live.js`, preserving the existing page templates, animations and interactions. Vercel deploys the commit automatically. Dashboard refresh loads the latest JSON directly from GitHub; the public site reflects it once deployment finishes.
+- New project entries use the existing dynamic `project.html?work=<slug>` case-study template. Existing static case-study pages continue to read the updated `project-data.js` collection.
+- Export/import remains available for backups and moving content between browsers. Image and video files must already exist in the repository; the dashboard edits their paths and descriptions but does not upload media binaries.
 
 ## Updating case studies
 
@@ -117,3 +119,4 @@ Project copy is an editorial description of the existing artwork; it does not as
 The Curated Works **Mockups** filter groups original T-shirt, hoodie and other mockup projects. Until original mockups are added, it displays an empty state; existing artwork is not reclassified or replaced.
 
 For each new completed mockup, add its original image to `images/`, create its project page and matching `project-data.js` entry using the existing project structure, and add a `.project` card to `index.html` with `data-case-study="<slug>"` and `data-discover-categories="mockups"`. Multiple categories may be separated by spaces, e.g. `data-discover-categories="mockups identity"`. Include T-shirt / Hoodie / Mockup in the card title or category caption so visitors can search by garment type. Update the gallery totals and search placeholder when adding cards. No hardcoded filter catalog edit is needed for tagged cards.
+

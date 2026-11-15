@@ -32,7 +32,9 @@
     const element = find(id);
     if (element) element.textContent = value || "";
   };
-  const projectHref = item => new URL("projects/" + encodeURIComponent(item.slug) + ".html", document.baseURI).href;
+  const projectHref = item => new URL(item.staticPage === false
+    ? "project.html?work=" + encodeURIComponent(item.slug)
+    : "projects/" + encodeURIComponent(item.slug) + ".html", document.baseURI).href;
 
   // The same menu behaviour works for both the legacy query page and static project routes.
   const menu = document.querySelector(".menu");
@@ -487,7 +489,9 @@
     counter.textContent = String(current+1).padStart(2,"0") + " / " +
       String(items.length).padStart(2,"0") + " — SELECTED WORKS";
     detail.hidden = item.slug === project.slug;
-    detail.href = new URL("projects/" + encodeURIComponent(item.slug) + ".html",document.baseURI).href;
+    detail.href = new URL(item.staticPage === false
+      ? "project.html?work=" + encodeURIComponent(item.slug)
+      : "projects/" + encodeURIComponent(item.slug) + ".html",document.baseURI).href;
   };
   const open = idx => {
     show(idx);
@@ -536,3 +540,4 @@
     pointerX=null;
   });
 })();
+

@@ -217,6 +217,19 @@ img { display: block; max-width: 100%; }
 .button-danger:hover { border-color: #f04a5a9a; background: #ef40531a; color: #ff9ca4; }
 .studio-toast { position: fixed; z-index: 50; right: 22px; bottom: 22px; max-width: min(360px, calc(100vw - 40px)); padding: 12px 15px; border: 1px solid #ffffff24; border-radius: 6px; background: #19191f; color: #eeeaf0; box-shadow: 0 10px 35px #0007; font-size: 10px; opacity: 0; pointer-events: none; transform: translateY(8px); transition: opacity .22s, transform .22s; }
 .studio-toast.is-visible { opacity: 1; transform: translateY(0); }
+.github-dialog { width: min(560px, calc(100% - 28px)); max-height: min(88vh, 760px); overflow: auto; padding: 0; border: 1px solid #ffffff25; border-radius: 11px; background: #151519; color: var(--studio-paper); box-shadow: 0 30px 120px #000b; }
+.github-dialog::backdrop { background: #030305bf; backdrop-filter: blur(5px); }
+.github-steps { display: grid; gap: 9px; margin: 17px 0 20px; padding: 14px 15px 14px 34px; border: 1px solid var(--studio-line); border-radius: 6px; background: #ffffff04; color: #a29ea6; font-size: 10px; line-height: 1.55; }
+.github-steps strong { color: #dedbe0; font-weight: 600; }
+.github-steps a { color: #f16b7a; text-decoration: underline; text-underline-offset: 3px; }
+.github-steps a:hover { color: #ffabb4; }
+.github-form { display: grid; gap: 15px; }
+.github-form input { width: 100%; height: 39px; padding: 0 11px; border: 1px solid var(--studio-line-strong); border-radius: 5px; outline: 0; background: #0e0e12; color: var(--studio-paper); font: 11px var(--studio-mono); }
+.github-form input:focus { border-color: #ee344b80; }
+.github-form input::placeholder { color: #65616a; }
+.github-form .dialog-actions { align-items: center; }
+.github-form .dialog-actions .field-help { max-width: 220px; }
+.github-dialog .editor-content { padding-top: 30px; }
 
 @media (max-width: 1100px) {
   .studio-rail { width: 218px; }
@@ -260,6 +273,8 @@ img { display: block; max-width: 100%; }
 @media (max-width: 530px) {
   .topbar-actions .import-button { display: none; }
   .topbar-actions .button-primary { min-width: 94px; }
+  .topbar-actions #github-connect-button { min-width: 37px; padding: 0 9px; font-size: 0; }
+  .topbar-actions #github-connect-button span { font-size: 13px; }
   .collection-toolbar { align-items: stretch; flex-direction: column; }
   .toolbar-left, .toolbar-right { width: 100%; }
   .search-box { flex: 1; min-width: 0; }
@@ -291,4 +306,5 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
 

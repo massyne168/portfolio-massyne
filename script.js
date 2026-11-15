@@ -119,7 +119,11 @@
     const slug = card?.dataset.caseStudy;
     if (!slug) return;
     prepareProjectTransition(card);
-    window.location.assign(new URL("projects/" + encodeURIComponent(slug) + ".html", document.baseURI).href);
+    const project = (window.MASSYNE_PROJECTS || []).find(item => item.slug === slug);
+    const destination = project?.staticPage === false
+      ? "project.html?work=" + encodeURIComponent(slug)
+      : "projects/" + encodeURIComponent(slug) + ".html";
+    window.location.assign(new URL(destination, document.baseURI).href);
   };
   curated?.querySelectorAll(".project[data-case-study]").forEach(card => {
     card.addEventListener("click", event => {
@@ -234,3 +238,4 @@
     else setupReveals();
   });
 })();
+

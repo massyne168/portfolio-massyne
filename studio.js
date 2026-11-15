@@ -19,6 +19,14 @@
   let activePage = "overview";
   let toastTimer = 0;
   let state;
+  let githubToken = "";
+  let pendingPublish = false;
+  let publishing = false;
+  let contentRevision = 0;
+  const githubApi = "https://api.github.com/repos/massyne168/portfolio-massyne";
+  const githubDialog = document.getElementById("github-dialog");
+  const githubForm = document.getElementById("github-form");
+  const githubConnectButton = document.getElementById("github-connect-button");
 
   const clone = value => JSON.parse(JSON.stringify(value));
   const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -36,7 +44,8 @@
     services: safeArray(input.services).map(item => ({ ...item })),
     motion: safeArray(input.motion).map(item => ({ ...item })),
     archive: safeArray(input.archive).map(item => ({ ...item })),
-    projects: safeArray(input.projects).map(item => ({ ...item }))
+    projects: safeArray(input.projects).map(item => ({ ...item })),
+    removedProjects: [...new Set(safeArray(input.removedProjects).map(String))]
   });
 
   function showToast(message) {
@@ -46,15 +55,16 @@
     toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2600);
   }
 
-  function setSaveState(message = "Draft saved locally") {
+  function setSaveState(message = "Draft saved locally", unsaved = false) {
     saveState.querySelector("span").textContent = message;
-    saveState.classList.remove("is-unsaved");
+    saveState.classList.toggle("is-unsaved", unsaved);
   }
 
-  function persist(message = "Draft saved locally") {
+  function storeLocally(message, pending) {
+    pendingPublish = pending;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      setSaveState(message);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ content: state, pending: pendingPublish }));
+      setSaveState(message, pendingPublish);
       return true;
     } catch (error) {
       saveState.querySelector("span").textContent = "Browser storage is full";
@@ -64,30 +74,199 @@
     }
   }
 
-  async function loadState() {
-    const fromProjectFile = safeArray(window.MASSYNE_PROJECTS).map(project => ({ ...project }));
-    let source = {};
-    try {
-      const response = await fetch("studio-content.json", { cache: "no-store" });
-      if (response.ok) source = await response.json();
-    } catch (error) {
-      showToast("Studio settings could not be loaded. You can still import a content package.");
+  function persist(message = "Changes saved", pending = true) {
+    const cached = storeLocally(message, pending);
+    if (!pending) return true;
+    contentRevision += 1;
+    if (githubToken) {
+      void publishToGitHub();
+    } else {
+      showToast("Draft saved. Connect GitHub to publish it to main.");
+      openGitHubDialog();
     }
-    const base = normalizeState({ ...source, projects: fromProjectFile });
+    return cached;
+  }
+
+  async function loadState() {
+    let source = {};
+    let loadedFromGitHub = false;
+    try {
+      const response = await fetch(`https://raw.githubusercontent.com/massyne168/portfolio-massyne/main/studio-content.json?studio=${Date.now()}`, { cache: "no-store" });
+      if (response.ok) {
+        source = await response.json();
+        loadedFromGitHub = true;
+      }
+      else throw new Error("GitHub content could not be read");
+    } catch (error) {
+      try {
+        const response = await fetch("studio-content.json", { cache: "no-store" });
+        if (response.ok) source = await response.json();
+      } catch (_) {
+        showToast("Studio content could not be loaded. Check your connection and refresh.");
+      }
+    }
+    const fromProjectFile = safeArray(window.MASSYNE_PROJECTS).map(project => ({ ...project }));
+    const base = normalizeState({ ...source, projects: safeArray(source.projects).length ? source.projects : fromProjectFile });
     try {
       const localDraft = localStorage.getItem(STORAGE_KEY);
       if (localDraft) {
         const parsed = JSON.parse(localDraft);
-        if (parsed && Array.isArray(parsed.projects)) {
-          state = normalizeState(parsed);
+        if (parsed?.pending && Array.isArray(parsed.content?.projects)) {
+          state = normalizeState(parsed.content);
+          pendingPublish = true;
+          setSaveState("Local draft waiting to publish", true);
+          return;
+        }
+        if (!loadedFromGitHub && Array.isArray(parsed?.content?.projects)) {
+          state = normalizeState(parsed.content);
+          setSaveState("Last saved content · offline cache");
           return;
         }
       }
     } catch (error) {
-      localStorage.removeItem(STORAGE_KEY);
+      try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
     }
     state = base;
     setSaveState("Content loaded");
+  }
+
+  function updateConnectionButton() {
+    if (!githubConnectButton) return;
+    githubConnectButton.innerHTML = githubToken
+      ? '<span aria-hidden="true">✓</span> Connected · Disconnect'
+      : '<span aria-hidden="true">⌘</span> Connect GitHub';
+    githubConnectButton.classList.toggle("is-connected", Boolean(githubToken));
+    githubConnectButton.setAttribute("aria-label", githubToken ? "Disconnect GitHub" : "Connect GitHub");
+  }
+
+  function openGitHubDialog() {
+    if (githubToken) return;
+    if (!githubDialog.open) githubDialog.showModal();
+    document.getElementById("github-token")?.focus({ preventScroll: true });
+  }
+
+  async function githubRequest(path, options = {}) {
+    if (!githubToken) throw new Error("Connect GitHub before publishing.");
+    const response = await fetch(githubApi + path, {
+      ...options,
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${githubToken}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+        "Content-Type": "application/json",
+        ...(options.headers || {})
+      }
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(body.message || `GitHub returned ${response.status}.`);
+    return body;
+  }
+
+  function contentFiles(content = state) {
+    const projectSource = `/* MASSYNE — individual original artwork captions and grounded concept notes. */\nwindow.MASSYNE_PROJECTS = ${JSON.stringify(content.projects, null, 2)};\n`;
+    const contentJson = JSON.stringify(content, null, 2) + "\n";
+    const contentScript = `/* Generated by MASSYNE STUDIO from studio-content.json. */\nwindow.MASSYNE_STUDIO_CONTENT = ${JSON.stringify(content, null, 2)};\n`;
+    return [
+      { path: "studio-content.json", content: contentJson },
+      { path: "project-data.js", content: projectSource },
+      { path: "studio-content.js", content: contentScript }
+    ];
+  }
+
+  async function createGitHubCommit(files) {
+    const ref = await githubRequest("/git/ref/heads/main");
+    const parent = ref.object?.sha;
+    if (!parent) throw new Error("GitHub could not read the main branch.");
+    const current = await githubRequest(`/git/commits/${parent}`);
+    const blobs = await Promise.all(files.map(async file => {
+      const blob = await githubRequest("/git/blobs", {
+        method: "POST",
+        body: JSON.stringify({ content: file.content, encoding: "utf-8" })
+      });
+      return { path: file.path, mode: "100644", type: "blob", sha: blob.sha };
+    }));
+    const tree = await githubRequest("/git/trees", {
+      method: "POST",
+      body: JSON.stringify({ base_tree: current.tree.sha, tree: blobs })
+    });
+    const commit = await githubRequest("/git/commits", {
+      method: "POST",
+      body: JSON.stringify({
+        message: "Update portfolio content from MASSYNE Studio",
+        tree: tree.sha,
+        parents: [parent]
+      })
+    });
+    await githubRequest("/git/refs/heads/main", {
+      method: "PATCH",
+      body: JSON.stringify({ sha: commit.sha, force: false })
+    });
+    return commit.sha;
+  }
+
+  async function publishToGitHub() {
+    if (!githubToken) {
+      openGitHubDialog();
+      return false;
+    }
+    if (publishing) return false;
+    publishing = true;
+    try {
+      let latestCommit = "";
+      while (pendingPublish && githubToken) {
+        const revision = contentRevision;
+        const snapshot = clone(state);
+        setSaveState("Committing to main…", true);
+        latestCommit = await createGitHubCommit(contentFiles(snapshot));
+        if (revision === contentRevision) {
+          storeLocally("Committed to main", false);
+        }
+      }
+      if (latestCommit) showToast(`Saved to main · ${latestCommit.slice(0, 7)}. The public site is deploying.`);
+      return true;
+    } catch (error) {
+      storeLocally("Changes waiting to publish", true);
+      showToast(`GitHub save failed: ${error.message}`);
+      return false;
+    } finally {
+      publishing = false;
+    }
+  }
+
+  async function connectGitHub(event) {
+    event.preventDefault();
+    const tokenInput = document.getElementById("github-token");
+    const token = String(new FormData(githubForm).get("token") || "").trim();
+    if (!token) return showToast("Enter your fine-grained GitHub token.");
+    const submit = githubForm.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    submit.textContent = "Checking access…";
+    try {
+      const response = await fetch(githubApi, {
+        headers: {
+          Accept: "application/vnd.github+json",
+          Authorization: `Bearer ${token}`,
+          "X-GitHub-Api-Version": "2022-11-28"
+        }
+      });
+      const repo = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(repo.message || "GitHub could not verify that token.");
+      if (repo.full_name?.toLowerCase() !== "massyne168/portfolio-massyne") throw new Error("That token does not have access to the MASSYNE repository.");
+      if (repo.permissions?.push === false) throw new Error("The token needs Contents: Read and write for this repository.");
+      githubToken = token;
+      tokenInput.value = "";
+      githubDialog.close();
+      updateConnectionButton();
+      showToast("GitHub connected for this tab. The token is not stored.");
+      if (pendingPublish) await publishToGitHub();
+    } catch (error) {
+      githubToken = "";
+      updateConnectionButton();
+      showToast(error.message);
+    } finally {
+      submit.disabled = false;
+      submit.textContent = "Connect securely";
+    }
   }
 
   const itemLabel = page => ({
@@ -146,7 +325,7 @@
           <button class="quick-action" type="button" data-action="go-page" data-page="archive"><span class="quick-icon">▤</span><span><strong>Review the archive</strong><small>Curate supporting artwork</small></span></button>
           <button class="quick-action" type="button" data-action="go-page" data-page="profile"><span class="quick-icon">◎</span><span><strong>Update studio details</strong><small>Profile, links and availability</small></span></button>
           <button class="quick-action" type="button" data-action="export"><span class="quick-icon">↓</span><span><strong>Export content package</strong><small>Keep a portable copy of your edits</small></span></button>
-        </div><div class="overview-note"><span aria-hidden="true">ⓘ</span><span><b>Local draft workspace.</b> Changes stay in this browser. Export a package to move drafts between devices or keep a backup.</span></div></section>
+        </div><div class="overview-note"><span aria-hidden="true">ⓘ</span><span><b>Save to GitHub main.</b> Connect once in this tab, then every Save publishes your changes. Refresh loads the latest committed content.</span></div></section>
       </div>`;
   }
 
@@ -207,7 +386,7 @@
     contentRoot.innerHTML = `
       ${heading("STUDIO / 06", "Studio profile", "Keep the public-facing identity, availability and contact routes together.")}
       <div class="profile-layout">
-        <form class="form-panel" id="profile-form"><h2>Portfolio identity</h2><p>Changes are saved as a local draft. Export a content package when you are ready to keep or move them.</p>
+        <form class="form-panel" id="profile-form"><h2>Portfolio identity</h2><p>Save commits these changes to GitHub main. Refresh the dashboard to load the latest version.</p>
           <div class="field-grid">
             ${profileInput("name", "Studio name", site.name || "")}
             ${profileInput("tagline", "Tagline", site.tagline || "")}
@@ -230,7 +409,7 @@
         </form>
         <aside class="profile-preview">
           <div class="profile-card"><div class="profile-avatar" aria-hidden="true">M<span>.</span></div><h3>${escapeHtml(site.name || "MASSYNE")}</h3><p>${escapeHtml(site.tagline || "")}</p><span class="profile-status">${escapeHtml(site.availability || "inquiries")}</span></div>
-          <div class="publish-note"><strong>How content moves</strong>This static portfolio does not connect to a publishing server. Profile edits stay in this browser until you export the content package and update the source files.</div>
+          <div class="publish-note"><strong>Publishing to main</strong>Connect GitHub in the top bar. Your fine-grained token stays in this tab’s memory; reconnect after a refresh to publish again.</div>
           <button class="button button-quiet" type="button" data-action="export">↓ Export current package</button>
         </aside>
       </div>
@@ -351,7 +530,13 @@
       const collision = state.projects.some(project => project.slug === result.slug && project.slug !== originalId);
       if (collision) return showToast("Each project needs its own URL slug.");
       const existing = state.projects.find(project => project.slug === originalId);
-      if (existing) result = { ...existing, ...result };
+      if (existing) {
+        result = { ...existing, ...result };
+        if (existing.image !== result.image && existing.preview === existing.image) result.preview = result.image;
+      } else {
+        const nextNumber = Math.max(0, ...state.projects.map(project => Number.parseInt(project.number, 10) || 0)) + 1;
+        result = { ...result, number: String(nextNumber).padStart(2, "0"), preview: result.image, staticPage: false };
+      }
     } else {
       const { item: existing } = collectionAndIndex(page, originalId);
       result.id = existing?.id || idFor(page.slice(0, -1), values.title);
@@ -366,7 +551,7 @@
     persist();
     dialog.close();
     render();
-    showToast(`${creatingLabel(index)} saved to your local draft.`);
+    showToast(`${creatingLabel(index)} saved.`);
   }
 
   function creatingLabel(index) {
@@ -379,18 +564,18 @@
     state.site = { ...state.site, ...values };
     persist();
     renderProfile();
-    showToast("Studio profile saved to your local draft.");
+    showToast("Studio profile saved.");
   }
 
   function removeItem(page, id) {
     const { items, index, item } = collectionAndIndex(page, id);
     if (index < 0) return showToast("This item could not be found.");
-    if (!window.confirm(`Delete “${titleFor(item)}” from this local draft?`)) return;
+    if (!window.confirm(`Delete “${titleFor(item)}” from the portfolio?`)) return;
     items.splice(index, 1);
     persist();
     if (dialog.open) dialog.close();
     render();
-    showToast("Content removed from your local draft.");
+    showToast("Content removed.");
   }
 
   function download(filename, text, mime = "application/json;charset=utf-8") {
@@ -459,6 +644,18 @@
       render();
       return;
     }
+    if (action === "connect-github") {
+      if (githubToken) {
+        githubToken = "";
+        updateConnectionButton();
+        setSaveState(pendingPublish ? "Changes waiting to publish" : "Connected content loaded", pendingPublish);
+        showToast("GitHub disconnected. Your token was cleared from memory.");
+      } else {
+        openGitHubDialog();
+      }
+      return;
+    }
+    if (action === "close-github") return githubDialog.close();
   }
 
   document.querySelectorAll(".nav-item").forEach(button => button.addEventListener("click", () => {
@@ -491,9 +688,12 @@
   dialog.addEventListener("click", event => {
     if (event.target === dialog) dialog.close();
   });
+  githubForm?.addEventListener("submit", connectGitHub);
+  updateConnectionButton();
 
   loadState().then(render).catch(error => {
     contentRoot.innerHTML = '<div class="empty-state"><div><strong>Studio could not load</strong><p>Refresh the page. If the issue continues, import a saved content package.</p></div></div>';
   });
 })();
+
 

@@ -27,7 +27,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Visual storytelling",
         "description": "A mood-led scene that invites the viewer to look a second time"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/featured-project.webp"
   },
   {
     "slug": "ghost-protocol",
@@ -56,7 +58,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Cinematic direction",
         "description": "Depth and dramatic atmosphere connect the scene"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/work1-1400.webp"
   },
   {
     "slug": "power-speaks",
@@ -85,7 +89,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Impact",
         "description": "A concentrated palette and direct composition keep the message memorable"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/card14.webp"
   },
   {
     "slug": "the-cursed-crown",
@@ -114,7 +120,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Title treatment",
         "description": "Editorial contrast between a bold title and supporting detail"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/work3-1400.webp"
   },
   {
     "slug": "velocity",
@@ -143,7 +151,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Visual pace",
         "description": "Typography and framing reinforce the energy of the theme"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/card13.webp"
   },
   {
     "slug": "ashes-of-innocence",
@@ -172,7 +182,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Editorial finish",
         "description": "Supporting elements stay subordinate to the image"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/work2-1400.webp"
   },
   {
     "slug": "the-queen",
@@ -201,7 +213,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Poster rhythm",
         "description": "Type and graphic elements reinforce the scene"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/work4-1400.webp"
   },
   {
     "slug": "the-final-fall",
@@ -230,7 +244,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Cinematic atmosphere",
         "description": "Shadow and mood support the central action"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/card8-1400.webp"
   },
   {
     "slug": "legends",
@@ -259,7 +275,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Composed hierarchy",
         "description": "Graphic and image elements are balanced within a poster format"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/card10-1400.webp"
   },
   {
     "slug": "nyctophile",
@@ -288,7 +306,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Atmospheric finish",
         "description": "Depth and visual texture bring the scene together"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/card11-1400.webp"
   },
   {
     "slug": "warriors-break",
@@ -317,7 +337,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Dramatic tone",
         "description": "Lighting and contrast give the artwork its weight"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/card12-1400.webp"
   },
   {
     "slug": "veiled-sorrow-surreal",
@@ -346,7 +368,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Alternate interpretation",
         "description": "A separate study in how one idea can shift visual tone"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/optimized/card9-1400.webp"
   },
   {
     "slug": "silver-throne",
@@ -375,7 +399,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Presentation",
         "description": "Spacing and hierarchy make the study feel intentional"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/archive25.webp"
   },
   {
     "slug": "mssn-chrome",
@@ -404,7 +430,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Minimal frame",
         "description": "Space around the mark keeps the form prominent"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/archive26.webp"
   },
   {
     "slug": "gurzil-team",
@@ -437,7 +465,9 @@ window.MASSYNE_PROJECTS = [
         "title": "Consistent language",
         "description": "The imagery holds together through shared style and attitude"
       }
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/gurzil/jersey-1536.webp"
   },
   {
     "slug": "glory",
@@ -466,7 +496,9 @@ window.MASSYNE_PROJECTS = [
     "number": "16",
     "gallery": [
       "images/curated/design%20works80b.png"
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/curated/design%20works80b.png"
   },
   {
     "slug": "nocturne-red-sun",
@@ -495,7 +527,9 @@ window.MASSYNE_PROJECTS = [
     "number": "17",
     "gallery": [
       "images/curated/design%20works6.png"
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/curated/design%20works6.png"
   },
   {
     "slug": "envy",
@@ -524,7 +558,9 @@ window.MASSYNE_PROJECTS = [
     "number": "18",
     "gallery": [
       "images/curated/design%20works80.png"
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/curated/design%20works80.png"
   },
   {
     "slug": "nocturne-dark-veil",
@@ -553,7 +589,9 @@ window.MASSYNE_PROJECTS = [
     "number": "19",
     "gallery": [
       "images/curated/design%20works87.png"
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/curated/design%20works87.png"
   },
   {
     "slug": "the-last-oath",
@@ -582,7 +620,9 @@ window.MASSYNE_PROJECTS = [
     "number": "20",
     "gallery": [
       "images/curated/design%20works8.png"
-    ]
+    ],
+    "staticPage": true,
+    "preview": "images/curated/design%20works8.png"
   },
   {
     "slug": "design-works8sw",
@@ -598,7 +638,9 @@ window.MASSYNE_PROJECTS = [
     ],
     "concept": "An independent graphic design exploration centred on the original composition.",
     "direction": "Presented in its original form, with the visual work kept as the primary focus.",
-    "details": []
+    "details": [],
+    "staticPage": false,
+    "preview": "images/curated/design%20works8sw.png"
   },
   {
     "slug": "designs-works",
@@ -627,7 +669,9 @@ window.MASSYNE_PROJECTS = [
     "number": "21",
     "gallery": [
       "images/curated/designs%20works.png"
-    ]
+    ],
+    "staticPage": false,
+    "preview": "images/curated/designs%20works.png"
   },
   {
     "slug": "designfd-works2",
@@ -656,152 +700,200 @@ window.MASSYNE_PROJECTS = [
     "number": "22",
     "gallery": [
       "images/curated/designfd%20works2.png"
-    ]
-  },
-{
-  "slug": "suspended-tribal-tshirt",
-  "title": "Suspended Tribal T-Shirt",
-  "category": "T-Shirt Mockup",
-  "year": "2026",
-  "image": "Tshirt%20mockup.png",
-  "focus": "Apparel mockup / tribal logo / monochrome atmosphere",
-  "summary": "A white T-shirt with a dark tribal MASSYNE chest logo, suspended by chains in a dramatic industrial setting.",
-  "concept": "An apparel mockup presenting the MASSYNE tribal mark on a white T-shirt. The suspended composition makes the garment and chest graphic the centre of the image.",
-  "direction": "Monochrome lighting, metal chains and a dark industrial backdrop contrast with the white fabric and its folds.",
-  "details": [
-    {
-      "title": "Chest graphic",
-      "description": "A dark tribal logo sits at the centre of the white T-shirt."
-    },
-    {
-      "title": "Suspended silhouette",
-      "description": "Metal chains extend from the garment into the surrounding scene."
-    },
-    {
-      "title": "Fabric and light",
-      "description": "Directional light reveals the folds and texture against a dark background."
-    }
-  ],
-  "number": "23",
-  "gallery": [
-    "Tshirt%20mockup.png"
-  ]
-}
-,
-{
-  "slug": "velocity-streetwear",
-  "title": "Velocity — Streetwear Mockup",
-  "category": "T-Shirt Mockup",
-  "year": "2026",
-  "image": "images/mockups/velocity-streetwear-full.webp",
-  "focus": "Motorsport / apparel / street photography",
-  "summary": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car.",
-  "concept": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car. The composition presents the design in an everyday apparel context.",
-  "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
-  "details": [
-    {
-      "title": "Graphic application",
-      "description": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car."
-    },
-    {
-      "title": "Context and composition",
-      "description": "The garment and surrounding environment create a distinct presentation for the printed design."
-    },
-    {
-      "title": "Fabric and detail",
-      "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
-    }
-  ],
-  "number": "24",
-  "gallery": [
-    "images/mockups/velocity-streetwear-full.webp"
-  ]
-},
-{
-  "slug": "veiled-sorrow-mountain",
-  "title": "Veiled Sorrow — Mountain Mockup",
-  "category": "T-Shirt Mockup",
-  "year": "2026",
-  "image": "images/mockups/veiled-sorrow-mountain-full.webp",
-  "focus": "Apparel / outdoor presentation / cinematic artwork",
-  "summary": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape.",
-  "concept": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape. The composition presents the design in an everyday apparel context.",
-  "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
-  "details": [
-    {
-      "title": "Graphic application",
-      "description": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape."
-    },
-    {
-      "title": "Context and composition",
-      "description": "The garment and surrounding environment create a distinct presentation for the printed design."
-    },
-    {
-      "title": "Fabric and detail",
-      "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
-    }
-  ],
-  "number": "25",
-  "gallery": [
-    "images/mockups/veiled-sorrow-mountain-full.webp"
-  ]
-},
-{
-  "slug": "gothic-store-streetwear",
-  "title": "Gothic — Streetwear Mockup",
-  "category": "T-Shirt Mockup",
-  "year": "2026",
-  "image": "images/mockups/gothic-store-streetwear-full.webp",
-  "focus": "Apparel / gothic typography / lifestyle presentation",
-  "summary": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting.",
-  "concept": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting. The composition presents the design in an everyday apparel context.",
-  "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
-  "details": [
-    {
-      "title": "Graphic application",
-      "description": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting."
-    },
-    {
-      "title": "Context and composition",
-      "description": "The garment and surrounding environment create a distinct presentation for the printed design."
-    },
-    {
-      "title": "Fabric and detail",
-      "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
-    }
-  ],
-  "number": "26",
-  "gallery": [
-    "images/mockups/gothic-store-streetwear-full.webp"
-  ]
-},
-{
-  "slug": "nocturne-flatlay",
-  "title": "Nocturne — Flat Lay Mockup",
-  "category": "T-Shirt Mockup",
-  "year": "2026",
-  "image": "images/mockups/nocturne-flatlay-full.webp",
-  "focus": "Apparel / distressed graphics / flat lay",
-  "summary": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay.",
-  "concept": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay. The composition presents the design in an everyday apparel context.",
-  "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
-  "details": [
-    {
-      "title": "Graphic application",
-      "description": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay."
-    },
-    {
-      "title": "Context and composition",
-      "description": "The garment and surrounding environment create a distinct presentation for the printed design."
-    },
-    {
-      "title": "Fabric and detail",
-      "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
-    }
-  ],
-  "number": "27",
-  "gallery": [
-    "images/mockups/nocturne-flatlay-full.webp"
-  ]
-}
+    ],
+    "staticPage": false,
+    "preview": "images/curated/designfd%20works2.png"
+  },
+  {
+    "slug": "suspended-tribal-tshirt",
+    "title": "Suspended Tribal T-Shirt",
+    "category": "T-Shirt Mockup",
+    "year": "2026",
+    "image": "Tshirt%20mockup.png",
+    "focus": "Apparel mockup / tribal logo / monochrome atmosphere",
+    "summary": "A white T-shirt with a dark tribal MASSYNE chest logo, suspended by chains in a dramatic industrial setting.",
+    "concept": "An apparel mockup presenting the MASSYNE tribal mark on a white T-shirt. The suspended composition makes the garment and chest graphic the centre of the image.",
+    "direction": "Monochrome lighting, metal chains and a dark industrial backdrop contrast with the white fabric and its folds.",
+    "details": [
+      {
+        "title": "Chest graphic",
+        "description": "A dark tribal logo sits at the centre of the white T-shirt."
+      },
+      {
+        "title": "Suspended silhouette",
+        "description": "Metal chains extend from the garment into the surrounding scene."
+      },
+      {
+        "title": "Fabric and light",
+        "description": "Directional light reveals the folds and texture against a dark background."
+      }
+    ],
+    "number": "23",
+    "gallery": [
+      "Tshirt%20mockup.png"
+    ],
+    "staticPage": true,
+    "preview": "Tshirt%20mockup.png"
+  },
+  {
+    "slug": "velocity-streetwear",
+    "title": "Velocity — Streetwear Mockup",
+    "category": "T-Shirt Mockup",
+    "year": "2026",
+    "image": "images/mockups/velocity-streetwear-full.webp",
+    "focus": "Motorsport / apparel / street photography",
+    "summary": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car.",
+    "concept": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car. The composition presents the design in an everyday apparel context.",
+    "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car."
+      },
+      {
+        "title": "Context and composition",
+        "description": "The garment and surrounding environment create a distinct presentation for the printed design."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
+      }
+    ],
+    "number": "24",
+    "gallery": [
+      "images/mockups/velocity-streetwear-full.webp"
+    ],
+    "staticPage": false,
+    "preview": "images/mockups/velocity-streetwear-full.webp"
+  },
+  {
+    "slug": "veiled-sorrow-mountain",
+    "title": "Veiled Sorrow — Mountain Mockup",
+    "category": "T-Shirt Mockup",
+    "year": "2026",
+    "image": "images/mockups/veiled-sorrow-mountain-full.webp",
+    "focus": "Apparel / outdoor presentation / cinematic artwork",
+    "summary": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape.",
+    "concept": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape. The composition presents the design in an everyday apparel context.",
+    "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape."
+      },
+      {
+        "title": "Context and composition",
+        "description": "The garment and surrounding environment create a distinct presentation for the printed design."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
+      }
+    ],
+    "number": "25",
+    "gallery": [
+      "images/mockups/veiled-sorrow-mountain-full.webp"
+    ],
+    "staticPage": false,
+    "preview": "images/mockups/veiled-sorrow-mountain-full.webp"
+  },
+  {
+    "slug": "gothic-store-streetwear",
+    "title": "Gothic — Streetwear Mockup",
+    "category": "T-Shirt Mockup",
+    "year": "2026",
+    "image": "images/mockups/gothic-store-streetwear-full.webp",
+    "focus": "Apparel / gothic typography / lifestyle presentation",
+    "summary": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting.",
+    "concept": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting. The composition presents the design in an everyday apparel context.",
+    "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting."
+      },
+      {
+        "title": "Context and composition",
+        "description": "The garment and surrounding environment create a distinct presentation for the printed design."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
+      }
+    ],
+    "number": "26",
+    "gallery": [
+      "images/mockups/gothic-store-streetwear-full.webp"
+    ],
+    "staticPage": false,
+    "preview": "images/mockups/gothic-store-streetwear-full.webp"
+  },
+  {
+    "slug": "nocturne-flatlay",
+    "title": "Nocturne — Flat Lay Mockup",
+    "category": "T-Shirt Mockup",
+    "year": "2026",
+    "image": "images/mockups/nocturne-flatlay-full.webp",
+    "focus": "Apparel / distressed graphics / flat lay",
+    "summary": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay.",
+    "concept": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay. The composition presents the design in an everyday apparel context.",
+    "direction": "The supplied mockup is presented in full, preserving its garment, print placement, environment and lighting.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay."
+      },
+      {
+        "title": "Context and composition",
+        "description": "The garment and surrounding environment create a distinct presentation for the printed design."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "The full image retains the fabric texture, print details and lighting of the supplied mockup."
+      }
+    ],
+    "number": "27",
+    "gallery": [
+      "images/mockups/nocturne-flatlay-full.webp"
+    ],
+    "staticPage": false,
+    "preview": "images/mockups/nocturne-flatlay-full.webp"
+  },
+  {
+    "slug": "two-souls",
+    "title": "Two Souls",
+    "category": "New artwork",
+    "year": "2026",
+    "image": "images/curated/two-souls.jpg",
+    "preview": "images/curated/two-souls.jpg",
+    "focus": "Original artwork",
+    "summary": "Two Souls poster: a blindfolded couple beneath a white horse, surrounded by red roses",
+    "concept": "A standalone artwork preserved from the existing selected-work gallery.",
+    "direction": "Presented in its original form without adding production or client claims.",
+    "number": "23",
+    "gallery": [
+      "images/curated/two-souls.jpg"
+    ],
+    "details": [],
+    "staticPage": false
+  },
+  {
+    "slug": "beauty-in-pain",
+    "title": "Beauty in Pain",
+    "category": "New artwork",
+    "year": "2026",
+    "image": "images/curated/beauty-in-pain.jpg",
+    "preview": "images/curated/beauty-in-pain.jpg",
+    "focus": "Original artwork",
+    "summary": "Beauty in Pain poster: a rose covered in thorns and barbed wire against a blush background",
+    "concept": "A standalone artwork preserved from the existing selected-work gallery.",
+    "direction": "Presented in its original form without adding production or client claims.",
+    "number": "24",
+    "gallery": [
+      "images/curated/beauty-in-pain.jpg"
+    ],
+    "details": [],
+    "staticPage": false
+  }
 ];
+

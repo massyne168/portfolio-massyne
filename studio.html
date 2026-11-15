@@ -31,7 +31,7 @@
         <button type="button" class="nav-item" data-page="profile"><span class="nav-icon" aria-hidden="true">◎</span>Studio profile</button>
       </nav>
       <div class="rail-spacer"></div>
-      <div class="rail-status"><span class="status-led"></span><div><strong>LOCAL CONTENT DESK</strong><small>Drafts stay in this browser</small></div></div>
+      <div class="rail-status"><span class="status-led"></span><div><strong>GITHUB CONTENT DESK</strong><small>Save changes to main</small></div></div>
       <a class="rail-site-link" href="index.html"><span aria-hidden="true">↗</span> View public portfolio</a>
       <div class="rail-footer"><span>CONTENT WORKSPACE</span><span>V1.0 / 2026</span></div>
     </aside>
@@ -39,7 +39,8 @@
       <header class="studio-topbar">
         <div class="topbar-context"><span class="topbar-kicker">MASSYNE / STUDIO</span><span class="topbar-divider">/</span><span id="page-title">Overview</span></div>
         <div class="topbar-actions">
-          <span id="save-state" class="save-state"><i aria-hidden="true"></i><span>All changes saved</span></span>
+          <span id="save-state" class="save-state"><i aria-hidden="true"></i><span>Loading portfolio…</span></span>
+          <button id="github-connect-button" class="button button-quiet" type="button" data-action="connect-github"><span aria-hidden="true">⌘</span> Connect GitHub</button>
           <label class="button button-quiet import-button" for="import-file">Import package</label>
           <input id="import-file" type="file" accept="application/json,.json" hidden>
           <button class="button button-primary" type="button" data-action="export">Export content <span aria-hidden="true">↓</span></button>
@@ -53,9 +54,27 @@
     <form method="dialog" class="dialog-close-form"><button class="dialog-close" value="cancel" aria-label="Close editor">×</button></form>
     <div id="editor-body"></div>
   </dialog>
+  <dialog class="github-dialog" id="github-dialog" aria-labelledby="github-dialog-title">
+    <form method="dialog" class="dialog-close-form"><button class="dialog-close" value="cancel" aria-label="Close GitHub connection">×</button></form>
+    <div class="editor-content">
+      <p class="eyebrow">PUBLISH / GITHUB</p>
+      <h2 id="github-dialog-title">Connect to main.</h2>
+      <p class="editor-description">A fine-grained GitHub token lets Studio commit content files to <strong>massyne168/portfolio-massyne</strong>. The token stays in memory for this tab and is never written to the package or browser storage.</p>
+      <ol class="github-steps">
+        <li>Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">fine-grained token on GitHub ↗</a>.</li>
+        <li>Choose <strong>Only select repositories</strong> → <strong>portfolio-massyne</strong>.</li>
+        <li>Grant <strong>Contents: Read and write</strong>. No other permissions are needed.</li>
+      </ol>
+      <form id="github-form" class="github-form">
+        <div class="field"><label for="github-token">Fine-grained token</label><input id="github-token" name="token" type="password" required autocomplete="off" spellcheck="false" placeholder="github_pat_…"></div>
+        <div class="dialog-actions"><span class="field-help">F5 reloads the dashboard from GitHub. Reconnect to publish again.</span><div><button class="button button-quiet" type="button" data-action="close-github">Cancel</button><button class="button button-primary" type="submit">Connect securely</button></div></div>
+      </form>
+    </div>
+  </dialog>
   <div class="studio-toast" id="studio-toast" role="status" aria-live="polite"></div>
   <script src="project-data.js"></script>
   <script src="studio.js"></script>
 </body>
 </html>
+
 

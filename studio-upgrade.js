@@ -6,7 +6,7 @@
   const form = document.getElementById("project-brief");
   const feedback = document.getElementById("brief-feedback");
   const copyButton = document.getElementById("copy-brief");
-  const recipient = "aazizimassine@gmail.com";
+  const recipient = window.MASSYNE_STUDIO_CONTENT?.site?.email || "aazizimassine@gmail.com";
   const buildBrief = () => {
     if (!form || !form.reportValidity()) return null;
     const fields = new FormData(form);
@@ -264,3 +264,4 @@
   }
   refresh();
 })();
+
