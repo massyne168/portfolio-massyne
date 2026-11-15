@@ -394,6 +394,69 @@
     return `<div class="field ${wide ? "wide" : ""}"><label for="field-${name}">${escapeHtml(label)}</label>${input}${help ? `<small class="field-help">${escapeHtml(help)}</small>` : ""}</div>`;
   };
 
+  const MAX_STUDIO_MEDIA_UPLOAD_BYTES = 3 * 1024 * 1024;
+  const STUDIO_IMAGE_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
+
+  const fileUploadField = (name, label, help, options = {}) => {
+    const { multiple = false, accept = "image/png,image/jpeg,image/webp,image/gif" } = options;
+    return `<div class="field wide media-upload-field">
+      <label for="field-${name}">${escapeHtml(label)}</label>
+      <input id="field-${name}" name="${name}" type="file" accept="${accept}" ${multiple ? "multiple" : ""} data-studio-media-upload>
+      <small class="field-help">${escapeHtml(help)}</small>
+      <span class="media-upload-selection" data-upload-selection aria-live="polite">No file selected</span>
+    </div>`;
+  };
+
+  function updateUploadSelection(input) {
+    const status = input.closest(".media-upload-field")?.querySelector("[data-upload-selection]");
+    if (!status) return;
+    const files = Array.from(input.files || []);
+    if (!files.length) {
+      status.textContent = "No file selected";
+      return;
+    }
+    const totalBytes = files.reduce((total, file) => total + file.size, 0);
+    const names = files.map(file => file.name).join(", ");
+    status.textContent = `${names} · ${(totalBytes / (1024 * 1024)).toFixed(2)} MB`;
+  }
+
+  async function encodeStudioMediaFile(file) {
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    let binary = "";
+    for (let offset = 0; offset < bytes.length; offset += 0x8000) {
+      binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000));
+    }
+    return { name: file.name, type: file.type, base64: btoa(binary) };
+  }
+
+  async function uploadStudioMedia(tasks) {
+    const totalBytes = tasks.reduce((total, task) => total + task.file.size, 0);
+    if (!tasks.length) return [];
+    if (totalBytes > MAX_STUDIO_MEDIA_UPLOAD_BYTES) {
+      throw new Error("Keep image uploads under 3 MB total per save.");
+    }
+    for (const task of tasks) {
+      if (!STUDIO_IMAGE_TYPES.has(task.file.type)) {
+        throw new Error("Upload PNG, JPG, WEBP or GIF images only.");
+      }
+      if (!task.file.size) throw new Error("That image file is empty.");
+    }
+
+    const files = await Promise.all(tasks.map(task => encodeStudioMediaFile(task.file)));
+    const response = await fetch("/api/studio-media-upload", {
+      method: "POST",
+      cache: "no-store",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ files })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !Array.isArray(result.files) || result.files.length !== tasks.length) {
+      throw new Error(result.message || "GitHub could not upload these images.");
+    }
+    return result.files;
+  }
+
   function editorFields(page, item) {
     if (page === "projects") {
       const gallery = safeArray(item.gallery).join("\n");
@@ -404,26 +467,30 @@
           ${field("slug", "URL slug", item.slug || idFor("", item.title).replace(/^-/, ""), { help: "Use lowercase letters, numbers and hyphens." })}
           ${field("category", "Category", item.category || "")}
           ${field("year", "Year", item.year || "")}
-          ${field("image", "Artwork path", item.image || "", { wide: true, help: "Use a path that exists in the portfolio repository." })}
+          ${field("image", "Artwork path", item.image || "", { wide: true, help: "Paste an existing repository path or upload a new image below." })}
+          ${fileUploadField("imageUpload", "Upload cover image", "Optional. Upload a PNG, JPG, WEBP or GIF. All selected images must total 3 MB or less.")}
           ${field("focus", "Creative focus", item.focus || "", { wide: true })}
           ${field("summary", "Summary", item.summary || "", { type: "textarea", wide: true, rows: 3 })}
           ${field("concept", "Concept", item.concept || "", { type: "textarea", wide: true, rows: 3 })}
           ${field("direction", "Visual direction", item.direction || "", { type: "textarea", wide: true, rows: 3 })}
-          ${field("gallery", "Gallery artwork paths", gallery, { type: "textarea", wide: true, rows: 3, help: "One repository path per line." })}
+          ${field("gallery", "Gallery artwork paths", gallery, { type: "textarea", wide: true, rows: 3, help: "One existing repository path per line, or upload gallery images below." })}
+          ${fileUploadField("galleryUploads", "Upload gallery images", "Optional. Select one or more images to add to this project.", { multiple: true })}
           ${field("details", "Design observations (JSON)", details, { type: "textarea", wide: true, rows: 6, cls: "extra-field", help: "Use an array of title and description pairs." })}
         </div>`;
     }
     if (page === "archive") return `<div class="field-grid">
       ${field("title", "Artwork title", item.title || "", { wide: true })}
       ${field("category", "Category", item.category || "")}
-      ${field("image", "Artwork path", item.image || "", { wide: true })}
+      ${field("image", "Artwork path", item.image || "", { wide: true, help: "Paste an existing repository path or upload an image below." })}
+      ${fileUploadField("imageUpload", "Upload artwork", "Optional. Upload a PNG, JPG, WEBP or GIF. Files are added to the public portfolio repository.")}
       ${field("alt", "Accessible image description", item.alt || "", { type: "textarea", wide: true, rows: 3 })}
     </div>`;
     if (page === "motion") return `<div class="field-grid">
       ${field("title", "Motion project", item.title || "", { wide: true })}
       ${field("category", "Project label", item.category || "")}
       ${field("kind", "Media type", item.kind || "video", { options: [{ value: "video", label: "Video" }, { value: "gif", label: "Animated GIF" }] })}
-      ${field("source", "Media source path", item.source || "", { wide: true, help: "Use a repository path that points to the video or GIF." })}
+      ${field("source", "Media source path", item.source || "", { wide: true, help: "Use a repository path for video, or upload an animated GIF below." })}
+      ${fileUploadField("mediaUpload", "Upload animated GIF", "Optional. Animated GIF only; MP4 video still uses an existing repository path.", { accept: "image/gif,.gif" })}
     </div>`;
     return `<div class="field-grid">
       ${field("title", "Service title", item.title || "", { wide: true })}
@@ -442,10 +509,10 @@
     const label = creating ? "NEW CONTENT / DRAFT" : `EDIT / ${escapeHtml(collectionTitle(page).toUpperCase())}`;
     const deleteButton = creating ? "" : `<button class="button button-danger" type="button" data-action="delete-from-editor" data-collection="${page}" data-id="${escapeHtml(item.id || item.slug)}">Delete</button>`;
     editorBody.innerHTML = `
-      <div class="editor-content"><p class="eyebrow">${label}</p><h2 id="editor-title">${creating ? `New ${escapeHtml(itemLabel(page))}` : escapeHtml(titleFor(item))}</h2><p class="editor-description">Update this content entry. Save it to your browser draft, then export the full content package when ready.</p>
+      <div class="editor-content"><p class="eyebrow">${label}</p><h2 id="editor-title">${creating ? `New ${escapeHtml(itemLabel(page))}` : escapeHtml(titleFor(item))}</h2><p class="editor-description">Add or edit content, then save it to the GitHub portfolio. Uploaded images are stored in the public repository.</p>
         <form id="content-form" data-collection="${page}" data-original-id="${escapeHtml(item?.id || item?.slug || "")}">
           ${editorFields(page, draft)}
-          <div class="dialog-actions"><div>${deleteButton}</div><div><button class="button button-quiet" type="button" data-action="close-editor">Cancel</button><button class="button button-primary" type="submit">Save draft</button></div></div>
+          <div class="dialog-actions"><div>${deleteButton}</div><div><button class="button button-quiet" type="button" data-action="close-editor">Cancel</button><button class="button button-primary" type="submit">Save changes</button></div></div>
         </form>
       </div>`;
     dialog.showModal();
@@ -458,47 +525,145 @@
     return { items, index, item: items[index] };
   }
 
-  function editorSubmit(event) {
+  async function editorSubmit(event) {
     event.preventDefault();
     const form = event.currentTarget;
     const page = form.dataset.collection;
     const originalId = form.dataset.originalId;
-    const formData = new FormData(form);
-    const values = Object.fromEntries(formData.entries());
-    let result = { ...values };
-    if (page === "projects") {
-      result.slug = String(values.slug || "").trim().toLowerCase().replace(/\s+/g, "-");
-      if (!result.slug) result.slug = idFor("", values.title).replace(/^-/, "");
-      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(result.slug)) return showToast("Use a simple lowercase URL slug.");
-      result.gallery = String(values.gallery || "").split(/\r?\n/).map(path => path.trim()).filter(Boolean);
-      try { result.details = JSON.parse(values.details || "[]"); }
-      catch (error) { return showToast("Design observations must be valid JSON."); }
-      if (!Array.isArray(result.details)) return showToast("Design observations must be a JSON array.");
-      const collision = state.projects.some(project => project.slug === result.slug && project.slug !== originalId);
-      if (collision) return showToast("Each project needs its own URL slug.");
-      const existing = state.projects.find(project => project.slug === originalId);
-      if (existing) {
-        result = { ...existing, ...result };
-        if (existing.image !== result.image && existing.preview === existing.image) result.preview = result.image;
-      } else {
-        const nextNumber = Math.max(0, ...state.projects.map(project => Number.parseInt(project.number, 10) || 0)) + 1;
-        result = { ...result, number: String(nextNumber).padStart(2, "0"), preview: result.image, staticPage: false };
-      }
-    } else {
-      const { item: existing } = collectionAndIndex(page, originalId);
-      result.id = existing?.id || idFor(page.slice(0, -1), values.title);
-      if (existing) result = { ...existing, ...result };
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton?.disabled) return;
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Saving changes…";
     }
-    const required = page === "projects" ? ["title", "slug", "category", "image", "summary"] : page === "archive" ? ["title", "category", "image"] : page === "motion" ? ["title", "source"] : ["title", "description"];
-    if (required.some(key => !String(result[key] || "").trim())) return showToast("Complete the required content fields before saving.");
-    const list = listFor(page);
-    const index = list.findIndex(item => (item.id || item.slug) === originalId);
-    if (index >= 0) list[index] = result;
-    else list.unshift(result);
-    persist();
-    dialog.close();
-    render();
-    showToast(`${creatingLabel(index)} saved.`);
+
+    try {
+      const formData = new FormData(form);
+      const entries = [...formData.entries()].filter(([, value]) => !(typeof File !== "undefined" && value instanceof File));
+      const values = Object.fromEntries(entries);
+      let result = { ...values };
+      const uploadTasks = [];
+      const imageInput = form.querySelector('input[name="imageUpload"]');
+      const galleryInput = form.querySelector('input[name="galleryUploads"]');
+      const motionInput = form.querySelector('input[name="mediaUpload"]');
+
+      if ((page === "projects" || page === "archive") && imageInput?.files?.[0]) {
+        uploadTasks.push({ role: "cover", file: imageInput.files[0], input: imageInput });
+      }
+      if (page === "projects" && galleryInput?.files?.length) {
+        for (const file of Array.from(galleryInput.files)) uploadTasks.push({ role: "gallery", file, input: galleryInput });
+      }
+      if (page === "motion" && motionInput?.files?.[0]) {
+        const file = motionInput.files[0];
+        if (file.type !== "image/gif") {
+          showToast("Motion uploads currently support animated GIFs. Use a repository path for MP4 video.");
+          return;
+        }
+        uploadTasks.push({ role: "motion", file, input: motionInput });
+      }
+
+      let existing = null;
+      let previousImage = "";
+      if (page === "projects") {
+        result.slug = String(values.slug || "").trim().toLowerCase().replace(/\s+/g, "-");
+        if (!result.slug) result.slug = idFor("", values.title).replace(/^-/, "");
+        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(result.slug)) {
+          showToast("Use a simple lowercase URL slug.");
+          return;
+        }
+        result.gallery = String(values.gallery || "").split(/\r?\n/).map(path => path.trim()).filter(Boolean);
+        try { result.details = JSON.parse(values.details || "[]"); }
+        catch (_) {
+          showToast("Design observations must be valid JSON.");
+          return;
+        }
+        if (!Array.isArray(result.details)) {
+          showToast("Design observations must be a JSON array.");
+          return;
+        }
+        const collision = state.projects.some(project => project.slug === result.slug && project.slug !== originalId);
+        if (collision) {
+          showToast("Each project needs its own URL slug.");
+          return;
+        }
+        existing = state.projects.find(project => project.slug === originalId) || null;
+        previousImage = existing?.image || "";
+        if (existing) {
+          result = { ...existing, ...result };
+        } else {
+          const nextNumber = Math.max(0, ...state.projects.map(project => Number.parseInt(project.number, 10) || 0)) + 1;
+          result = { ...result, number: String(nextNumber).padStart(2, "0"), preview: result.image, staticPage: false };
+        }
+      } else {
+        existing = collectionAndIndex(page, originalId).item || null;
+        result.id = existing?.id || idFor(page.slice(0, -1), values.title);
+        if (existing) result = { ...existing, ...result };
+      }
+
+      const required = page === "projects" ? ["title", "slug", "category", "image", "summary"] : page === "archive" ? ["title", "category", "image"] : page === "motion" ? ["title", "source"] : ["title", "description"];
+      const hasCoverUpload = uploadTasks.some(task => task.role === "cover");
+      const hasMotionUpload = uploadTasks.some(task => task.role === "motion");
+      const missingBeforeUpload = required.some(key => !String(result[key] || "").trim()
+        && !(key === "image" && hasCoverUpload)
+        && !(key === "source" && hasMotionUpload));
+      if (missingBeforeUpload) {
+        showToast("Complete the required content fields before saving.");
+        return;
+      }
+
+      if (uploadTasks.length) {
+        if (!githubConnected) {
+          openGitHubDialog();
+          showToast("Connect GitHub before uploading portfolio images.");
+          return;
+        }
+        submitButton.textContent = "Uploading images…";
+        const uploaded = await uploadStudioMedia(uploadTasks);
+        let index = 0;
+        for (const task of uploadTasks) {
+          const media = uploaded[index++];
+          if (!media?.path) throw new Error("GitHub did not return an image path.");
+          if (task.role === "cover") result.image = media.path;
+          if (task.role === "gallery") result.gallery.push(media.path);
+          if (task.role === "motion") {
+            result.source = media.path;
+            result.kind = "gif";
+          }
+          task.input.value = "";
+          updateUploadSelection(task.input);
+        }
+        const imagePathField = form.querySelector('[name="image"]');
+        const galleryField = form.querySelector('[name="gallery"]');
+        const motionPathField = form.querySelector('[name="source"]');
+        if (imagePathField && result.image) imagePathField.value = result.image;
+        if (galleryField && Array.isArray(result.gallery)) galleryField.value = result.gallery.join("\n");
+        if (motionPathField && result.source) motionPathField.value = result.source;
+      }
+
+      if (page === "projects" && result.image !== previousImage && (!existing || existing.preview === previousImage)) {
+        result.preview = result.image;
+      }
+      if (required.some(key => !String(result[key] || "").trim())) {
+        showToast("Complete the required content fields before saving.");
+        return;
+      }
+
+      const list = listFor(page);
+      const index = list.findIndex(item => (item.id || item.slug) === originalId);
+      if (index >= 0) list[index] = result;
+      else list.unshift(result);
+      persist();
+      dialog.close();
+      render();
+      showToast(`${creatingLabel(index)} saved.`);
+    } catch (error) {
+      showToast(error?.message || "Could not upload or save this content.");
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Save changes";
+      }
+    }
   }
 
   function creatingLabel(index) {
@@ -622,8 +787,11 @@
   document.addEventListener("change", event => {
     if (event.target.id === "collection-filter") renderCollection(activePage);
   });
+  editorBody.addEventListener("change", event => {
+    if (event.target.matches("input[data-studio-media-upload]")) updateUploadSelection(event.target);
+  });
   editorBody.addEventListener("submit", event => {
-    if (event.target.id === "content-form") editorSubmit(event);
+    if (event.target.id === "content-form") void editorSubmit(event);
   });
   document.getElementById("import-file").addEventListener("change", event => {
     importPackage(event.target.files?.[0]);
