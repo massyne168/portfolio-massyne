@@ -19,3 +19,56 @@
   .footer-reveal-shell footer { align-items: center; }
   .footer-dashboard-link { min-height: 38px; padding-inline: 11px; font-size: 9px; }
 }
+
+.footer-dashboard-link {
+  border-color: #ef5265;
+  background: #c6293d;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
+.footer-dashboard-link:hover {
+  border-color: #ff8290;
+  background: #dc354a;
+  color: #fff;
+}
+.dashboard-shortcut {
+  position: fixed;
+  z-index: 1200;
+  right: clamp(14px, 2.5vw, 30px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid #ff8290;
+  border-radius: 999px;
+  background: #c6293d;
+  box-shadow: 0 12px 32px #0009;
+  color: #fff;
+  font: 600 11px/1 "IBM Plex Mono", monospace;
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color .22s ease, box-shadow .22s ease, transform .22s ease;
+}
+.dashboard-shortcut:hover {
+  transform: translateY(-3px);
+  background: #dc354a;
+  box-shadow: 0 16px 38px #000a;
+}
+.dashboard-shortcut:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .dashboard-shortcut {
+    right: 14px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
+    min-height: 46px;
+    padding-inline: 15px;
+    font-size: 10px;
+  }
+}
