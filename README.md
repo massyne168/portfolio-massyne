@@ -52,6 +52,7 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 ### MASSYNE STUDIO content dashboard
 
 - `studio.html` is a noindex content workspace for selected projects, archive artwork, motion projects, services and the public studio profile.
+- The public footer's **Private Studio** button opens a code gate. Vercel verifies the code in `api/studio-access.mjs` and creates a short-lived, HttpOnly session cookie; the access code is never placed in browser JavaScript or committed to GitHub. Set a private value of at least 12 characters as the `MASSYNE_STUDIO_ACCESS_CODE` Vercel environment variable for Production, then redeploy. Without this setting, the dashboard remains locked.
 - Connect with a fine-grained GitHub token limited to this repository and **Contents: Read and write**. Each dashboard Save commits `studio-content.json`, `project-data.js` and the generated `studio-content.js` together to `main`. The token stays in tab memory only and is cleared by refresh; reconnect before the next publish.
 - The public homepage reads the committed content through `studio-live.js`, preserving the existing page templates, animations and interactions. Vercel deploys the commit automatically. Dashboard refresh loads the latest JSON directly from GitHub; the public site reflects it once deployment finishes.
 - New project entries use the existing dynamic `project.html?work=<slug>` case-study template. Existing static case-study pages continue to read the updated `project-data.js` collection.

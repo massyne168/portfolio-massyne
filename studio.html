@@ -13,12 +13,29 @@
   <link rel="stylesheet" href="studio.css">
 </head>
 <body>
+  <section class="studio-access-screen" id="studio-access-screen" aria-labelledby="studio-access-title">
+    <div class="studio-access-glow" aria-hidden="true"></div>
+    <div class="studio-access-card">
+      <a class="studio-access-logo" href="/" aria-label="MASSYNE portfolio home"><img src="images/optimized/logo-480.webp" alt="MASSYNE"></a>
+      <p class="eyebrow">PRIVATE WORKSPACE / 01</p>
+      <h1 id="studio-access-title">Your work,<br><em>well kept.</em></h1>
+      <p class="studio-access-copy">Enter your private access code to open MASSYNE Studio.</p>
+      <form id="studio-access-form" class="studio-access-form">
+        <label for="studio-access-code">Private access code</label>
+        <input id="studio-access-code" name="code" type="password" autocomplete="current-password" required maxlength="256" placeholder="Enter your code">
+        <button class="button button-primary" type="submit">ENTER THE STUDIO</button>
+        <p id="studio-access-message" class="studio-access-message" role="status" aria-live="polite"></p>
+      </form>
+      <a class="studio-access-back" href="/">← Back to the portfolio</a>
+      <span class="studio-access-index" aria-hidden="true">M / STUDIO</span>
+    </div>
+  </section>
   <a class="skip-link" href="#studio-content">Skip to workspace</a>
-  <div class="studio-frame">
+  <div class="studio-frame" hidden>
     <aside class="studio-rail" aria-label="Studio navigation">
       <a class="studio-brand" href="studio.html" aria-label="MASSYNE Studio home">
-        <span class="brand-mark">M<span>.</span></span>
-        <span class="brand-copy"><strong>MASSYNE</strong><small>STUDIO / CONTENT</small></span>
+        <img class="brand-logo" src="images/optimized/logo-480.webp" alt="MASSYNE">
+        <span class="brand-copy"><strong>STUDIO</strong><small>CONTENT / CONTROL</small></span>
       </a>
       <div class="rail-divider"></div>
       <p class="rail-label">WORKSPACE</p>
@@ -40,6 +57,7 @@
         <div class="topbar-context"><span class="topbar-kicker">MASSYNE / STUDIO</span><span class="topbar-divider">/</span><span id="page-title">Overview</span></div>
         <div class="topbar-actions">
           <span id="save-state" class="save-state"><i aria-hidden="true"></i><span>Loading portfolio…</span></span>
+          <button class="button button-quiet studio-lock-button" type="button" data-studio-logout><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 7V4.75a2.5 2.5 0 0 1 5 0V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Lock Studio</button>
           <button id="github-connect-button" class="button button-quiet" type="button" data-action="connect-github"><span aria-hidden="true">⌘</span> Connect GitHub</button>
           <label class="button button-quiet import-button" for="import-file">Import package</label>
           <input id="import-file" type="file" accept="application/json,.json" hidden>
@@ -47,7 +65,7 @@
         </div>
       </header>
       <main class="studio-content" id="studio-content" tabindex="-1"></main>
-      <footer class="studio-foot"><span>MASSYNE STUDIO / CONTENT MANAGEMENT</span><span>Changes are private to this browser until exported.</span></footer>
+      <footer class="studio-foot"><span>MASSYNE STUDIO / CONTENT MANAGEMENT</span><span>Private session / Lock Studio when you are done.</span></footer>
     </div>
   </div>
   <dialog class="editor-dialog" id="editor-dialog" aria-labelledby="editor-title">
@@ -72,8 +90,7 @@
     </div>
   </dialog>
   <div class="studio-toast" id="studio-toast" role="status" aria-live="polite"></div>
-  <script src="project-data.js"></script>
-  <script src="studio.js"></script>
+  <script src="studio-auth.js"></script>
 </body>
 </html>
 
