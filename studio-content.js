@@ -154,18 +154,18 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
-      "id": "archive-01",
-      "title": "Yediiklim",
-      "category": "posters",
-      "image": "images/posters/yediiklim.webp",
-      "alt": "Yediiklim — blue cultural association poster"
-    },
-    {
       "id": "archive-04",
       "title": "Poster study / 01",
       "category": "posters",
       "image": "images/archive1.webp",
       "alt": "Poster study / 01"
+    },
+    {
+      "id": "archive-01",
+      "title": "Yediiklim",
+      "category": "posters",
+      "image": "images/posters/yediiklim.webp",
+      "alt": "Yediiklim — blue cultural association poster"
     },
     {
       "id": "archive-02",
