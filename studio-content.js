@@ -154,18 +154,18 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
-      "id": "archive-01",
-      "title": "Yediiklim",
-      "category": "posters",
-      "image": "images/posters/yediiklim.webp",
-      "alt": "Yediiklim — blue cultural association poster"
-    },
-    {
       "title": "MASSYNE metallic ",
       "category": "posters",
       "image": "/images/studio-uploads/1794709091958-5a0b0c7e-MASSYNE2.jpg",
       "alt": "",
       "id": "archiv-massyne-metallic"
+    },
+    {
+      "id": "archive-01",
+      "title": "Yediiklim",
+      "category": "posters",
+      "image": "images/posters/yediiklim.webp",
+      "alt": "Yediiklim — blue cultural association poster"
     },
     {
       "id": "archive-02",
