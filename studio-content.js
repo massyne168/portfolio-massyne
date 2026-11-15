@@ -161,6 +161,13 @@ window.MASSYNE_STUDIO_CONTENT = {
       "alt": "Yediiklim — blue cultural association poster"
     },
     {
+      "id": "archive-04",
+      "title": "Poster study / 01",
+      "category": "posters",
+      "image": "images/archive1.webp",
+      "alt": "Poster study / 01"
+    },
+    {
       "id": "archive-02",
       "title": "EXOTIC Roleplay / Logo",
       "category": "logos",
@@ -173,13 +180,6 @@ window.MASSYNE_STUDIO_CONTENT = {
       "category": "posters",
       "image": "images/posters/exotic-roleplay.webp",
       "alt": "EXOTIC Roleplay — navy and gold community banner"
-    },
-    {
-      "id": "archive-04",
-      "title": "Poster study / 01",
-      "category": "posters",
-      "image": "images/archive1.webp",
-      "alt": "Poster study / 01"
     },
     {
       "id": "archive-05",
