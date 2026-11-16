@@ -3,9 +3,24 @@
 
   const STORAGE_KEY = "massyne-studio-content-v1";
   const DEFAULT_SITE_COLORS = Object.freeze({ accent: "#990011", light: "#FCF6F5" });
+  const DEFAULT_SITE_BACKGROUND = Object.freeze({ type: "theme", color: "#FCF6F5", src: "", overlay: 0, fit: "cover", position: "center" });
   const safeHex = (value, fallback = null) => /^#[0-9a-f]{6}$/i.test(String(value || "").trim())
     ? String(value).trim().toUpperCase()
     : fallback;
+  const safeBackgroundSource = value => {
+    const source = String(value || "").trim();
+    if (!source) return "";
+    if (/^https:\/\//i.test(source)) {
+      try { return new URL(source).protocol === "https:" ? new URL(source).href : ""; }
+      catch (_) { return ""; }
+    }
+    const path = source.replace(/^\/+/, "");
+    return /^(images|assets)\//i.test(path) && !/(?:^|\/)(?:\.{1,2}|%2e%2e)(?:\/|$)/i.test(path) && !/[<>"'\\\s]/.test(path)
+      ? path
+      : "";
+  };
+  let backgroundPreviewObjectUrl = "";
+  let backgroundPreviewFile = null;
   const titles = {
     overview: "Overview",
     projects: "Selected work",
@@ -51,7 +66,21 @@
       colors: {
         accent: safeHex(input.site?.colors?.accent, DEFAULT_SITE_COLORS.accent),
         light: safeHex(input.site?.colors?.light, DEFAULT_SITE_COLORS.light)
-      }
+      },
+      background: (() => {
+        const source = input.site?.background && typeof input.site.background === "object" ? input.site.background : {};
+        const siteLight = safeHex(input.site?.colors?.light, DEFAULT_SITE_COLORS.light);
+        const type = ["theme", "color", "image", "gif", "video"].includes(source.type) ? source.type : DEFAULT_SITE_BACKGROUND.type;
+        const overlay = Number(source.overlay);
+        return {
+          type,
+          color: safeHex(source.color, siteLight),
+          src: safeBackgroundSource(source.src),
+          overlay: Number.isFinite(overlay) ? Math.min(70, Math.max(0, Math.round(overlay))) : DEFAULT_SITE_BACKGROUND.overlay,
+          fit: ["cover", "contain"].includes(source.fit) ? source.fit : DEFAULT_SITE_BACKGROUND.fit,
+          position: ["center", "top", "bottom", "left", "right"].includes(source.position) ? source.position : DEFAULT_SITE_BACKGROUND.position
+        };
+      })()
     },
     services: safeArray(input.services).map(item => ({ ...item })),
     motion: safeArray(input.motion).map(item => ({ ...item })),
@@ -283,7 +312,7 @@
           <button class="quick-action" type="button" data-action="new-project"><span class="quick-icon">＋</span><span><strong>Add a project</strong><small>Create a new case study draft</small></span></button>
           <button class="quick-action" type="button" data-action="go-page" data-page="archive"><span class="quick-icon">▤</span><span><strong>Review the archive</strong><small>Curate supporting artwork</small></span></button>
           <button class="quick-action" type="button" data-action="go-page" data-page="profile"><span class="quick-icon">◎</span><span><strong>Update studio details</strong><small>Profile, links and availability</small></span></button>
-          <button class="quick-action" type="button" data-action="go-page" data-page="appearance"><span class="quick-icon">◉</span><span><strong>Change site colors</strong><small>Set the public palette</small></span></button>
+          <button class="quick-action" type="button" data-action="go-page" data-page="appearance"><span class="quick-icon">◉</span><span><strong>Manage site appearance</strong><small>Colors, background and media</small></span></button>
           <button class="quick-action" type="button" data-action="export"><span class="quick-icon">↓</span><span><strong>Export content package</strong><small>Keep a portable copy of your edits</small></span></button>
         </div><div class="overview-note"><span aria-hidden="true">ⓘ</span><span><b>Save to GitHub main.</b> Connect once in this tab, then every Save publishes your changes. Refresh loads the latest committed content.</span></div></section>
       </div>`;
@@ -386,47 +415,101 @@
   }
 
   function renderAppearance() {
+    if (backgroundPreviewObjectUrl) {
+      URL.revokeObjectURL(backgroundPreviewObjectUrl);
+      backgroundPreviewObjectUrl = "";
+      backgroundPreviewFile = null;
+    }
     const colors = state.site.colors || DEFAULT_SITE_COLORS;
+    const background = state.site.background || { ...DEFAULT_SITE_BACKGROUND, color: colors.light };
     contentRoot.innerHTML = `
-      ${heading("SITE / 07", "Site appearance", "Choose the primary red and warm white used across the public portfolio.")}
+      ${heading("SITE / 07", "Site appearance", "Set the colors and background used across the public portfolio.")}
       <div class="appearance-layout">
         <form class="form-panel" id="appearance-form">
           <h2>Portfolio colors</h2>
           <p>These colors update the homepage, project pages, resume, navigation, buttons and site accents.</p>
           <div class="field-grid">
             <div class="field">
-              <label for="appearance-accent">Primary red</label>
+              <label for="appearance-accent">Primary accent</label>
               <div class="site-color-input-row">
-                <input type="color" value="${escapeHtml(colors.accent)}" data-palette-picker="accent" aria-label="Choose primary red">
+                <input type="color" value="${escapeHtml(colors.accent)}" data-palette-picker="accent" aria-label="Choose primary accent">
                 <input id="appearance-accent" name="accent" type="text" value="${escapeHtml(colors.accent)}" maxlength="7" pattern="#[0-9A-Fa-f]{6}" autocomplete="off" spellcheck="false" required data-palette-hex="accent">
               </div>
               <small class="field-help">Main accent for links, buttons, borders and highlights.</small>
             </div>
             <div class="field">
-              <label for="appearance-light">Warm white</label>
+              <label for="appearance-light">Light color</label>
               <div class="site-color-input-row">
-                <input type="color" value="${escapeHtml(colors.light)}" data-palette-picker="light" aria-label="Choose warm white">
+                <input type="color" value="${escapeHtml(colors.light)}" data-palette-picker="light" aria-label="Choose light color">
                 <input id="appearance-light" name="light" type="text" value="${escapeHtml(colors.light)}" maxlength="7" pattern="#[0-9A-Fa-f]{6}" autocomplete="off" spellcheck="false" required data-palette-hex="light">
               </div>
               <small class="field-help">Main light background and light text color. Keep it bright for the dark theme.</small>
             </div>
           </div>
           <p class="palette-contrast-note" id="palette-contrast-note" role="status" aria-live="polite">Preview updates as you edit.</p>
-          <div class="form-actions"><button class="button button-quiet" type="reset">Reset form</button><button class="button button-primary" type="submit">Save site colors</button></div>
+          <section class="site-background-editor" aria-labelledby="site-background-heading">
+            <div class="site-background-editor-head"><h2 id="site-background-heading">Site background</h2><p>Use the theme background, a solid color, an image, a GIF or an MP4 video.</p></div>
+            <div class="field-grid">
+              ${field("backgroundType", "Background type", background.type, { options: [
+                { value: "theme", label: "Use light / dark theme" },
+                { value: "color", label: "Solid color" },
+                { value: "image", label: "Image" },
+                { value: "gif", label: "Animated GIF" },
+                { value: "video", label: "MP4 video" }
+              ] })}
+              <div class="field" id="background-color-control">
+                <label for="appearance-background-color">Background color</label>
+                <div class="site-color-input-row">
+                  <input type="color" value="${escapeHtml(background.color || colors.light)}" data-background-color-picker aria-label="Choose site background color">
+                  <input id="appearance-background-color" name="backgroundColor" type="text" value="${escapeHtml(background.color || colors.light)}" maxlength="7" pattern="#[0-9A-Fa-f]{6}" autocomplete="off" spellcheck="false" required data-background-color-hex>
+                </div>
+                <small class="field-help">Used for a solid background and behind media.</small>
+              </div>
+            </div>
+            <div class="site-background-media-fields" id="background-media-fields">
+              <div class="field-grid">
+                ${field("backgroundPath", "Media path or HTTPS URL", background.src || "", { wide: true, help: "Upload a file here or enter an existing path such as images/studio-uploads/background.mp4." })}
+                ${fileUploadField("backgroundUpload", "Upload background media", "PNG, JPG, WEBP, GIF or MP4. Keep the selected file under 3 MB.", { accept: "image/png,image/jpeg,image/webp,image/gif,video/mp4" })}
+              </div>
+              <div class="field-grid site-background-display-fields" id="background-display-fields">
+                ${field("backgroundFit", "Media fit", background.fit || "cover", { options: [
+                  { value: "cover", label: "Cover the screen" },
+                  { value: "contain", label: "Show the whole file" }
+                ] })}
+                ${field("backgroundPosition", "Media position", background.position || "center", { options: [
+                  { value: "center", label: "Center" },
+                  { value: "top", label: "Top" },
+                  { value: "bottom", label: "Bottom" },
+                  { value: "left", label: "Left" },
+                  { value: "right", label: "Right" }
+                ] })}
+                <div class="field wide">
+                  <label for="field-backgroundOverlay">Dark overlay <output id="background-overlay-value">${Number(background.overlay || 0)}%</output></label>
+                  <input id="field-backgroundOverlay" name="backgroundOverlay" type="range" min="0" max="70" step="5" value="${Number(background.overlay || 0)}">
+                  <small class="field-help">Raise it if the background makes text harder to read.</small>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="form-actions"><button class="button button-quiet" type="reset">Reset form</button><button class="button button-primary" type="submit">Save appearance</button></div>
         </form>
-        <aside class="appearance-preview-column" aria-label="Color preview">
+        <aside class="appearance-preview-column" aria-label="Site appearance preview">
           <div class="dashboard-panel">
-            <div class="panel-head"><h2>Live preview</h2><span class="collection-meta">SITE PALETTE</span></div>
+            <div class="panel-head"><h2>Color preview</h2><span class="collection-meta">SITE PALETTE</span></div>
             <div class="site-palette-preview" id="site-palette-preview">
               <div class="palette-preview-light"><span>LIGHT SURFACE</span><strong>MASSYNE</strong><small>Portfolio / Selected work</small></div>
               <div class="palette-preview-accent"><span>PRIMARY ACCENT</span><strong>VIEW PROJECT ↗</strong><small>Buttons / links / highlights</small></div>
             </div>
           </div>
-          <div class="publish-note"><strong>Publishes to the public site</strong>Saving sends these colors to GitHub main with the other Studio content. The site updates after deployment.</div>
+          <div class="dashboard-panel">
+            <div class="panel-head"><h2>Background preview</h2><span class="collection-meta">PUBLIC SITE</span></div>
+            <div class="site-background-preview" id="site-background-preview"><span>LIVE SITE BACKGROUND</span></div>
+          </div>
+          <div class="publish-note"><strong>Publishes to the public site</strong>Saving sends colors and background media settings to GitHub main. Uploaded media is stored in the portfolio repository.</div>
         </aside>
       </div>`;
     const form = document.getElementById("appearance-form");
-    form.addEventListener("input", event => {
+    const syncPreview = event => {
       const key = event.target.dataset.palettePicker || event.target.dataset.paletteHex;
       if (key === "accent" || key === "light") {
         const picker = form.querySelector(`[data-palette-picker="${key}"]`);
@@ -437,11 +520,88 @@
           if (valid) picker.value = valid;
         }
       }
+      if (event.target.hasAttribute("data-background-color-picker")) {
+        form.querySelector("[data-background-color-hex]").value = event.target.value.toUpperCase();
+      } else if (event.target.hasAttribute("data-background-color-hex")) {
+        const valid = safeHex(event.target.value);
+        if (valid) form.querySelector("[data-background-color-picker]").value = valid;
+      }
+      if (event.target.matches('input[type="file"][name="backgroundUpload"]')) updateUploadSelection(event.target);
+      const overlay = form.querySelector('[name="backgroundOverlay"]');
+      document.getElementById("background-overlay-value").textContent = `${overlay.value}%`;
       updatePalettePreview(form);
-    });
-    form.addEventListener("reset", () => window.setTimeout(() => updatePalettePreview(form), 0));
+      updateBackgroundControls(form);
+      updateBackgroundPreview(form);
+    };
+    form.addEventListener("input", syncPreview);
+    form.addEventListener("change", syncPreview);
+    form.addEventListener("reset", () => window.setTimeout(() => {
+      updatePalettePreview(form);
+      updateBackgroundControls(form);
+      updateBackgroundPreview(form);
+    }, 0));
     form.addEventListener("submit", saveAppearance);
     updatePalettePreview(form);
+    updateBackgroundControls(form);
+    updateBackgroundPreview(form);
+  }
+
+  function updateBackgroundControls(form) {
+    const type = form.elements.backgroundType.value;
+    form.querySelector("#background-color-control").hidden = type !== "color";
+    form.elements.backgroundColor.required = type === "color";
+    form.querySelector("#background-media-fields").hidden = !["image", "gif", "video"].includes(type);
+  }
+
+  function updateBackgroundPreview(form) {
+    const preview = document.getElementById("site-background-preview");
+    const type = form.elements.backgroundType.value;
+    const color = safeHex(form.elements.backgroundColor.value, state.site.colors.light);
+    const path = safeBackgroundSource(form.elements.backgroundPath.value);
+    const file = form.querySelector('[name="backgroundUpload"]').files?.[0] || null;
+    preview.style.backgroundColor = type === "theme" ? safeHex(form.elements.light.value, state.site.colors.light) : color;
+    preview.replaceChildren();
+    let source = "";
+    if (file) {
+      if (backgroundPreviewFile !== file) {
+        if (backgroundPreviewObjectUrl) URL.revokeObjectURL(backgroundPreviewObjectUrl);
+        backgroundPreviewObjectUrl = URL.createObjectURL(file);
+        backgroundPreviewFile = file;
+      }
+      source = backgroundPreviewObjectUrl;
+    } else {
+      if (backgroundPreviewObjectUrl) URL.revokeObjectURL(backgroundPreviewObjectUrl);
+      backgroundPreviewObjectUrl = "";
+      backgroundPreviewFile = null;
+      source = path ? (/^https:\/\//i.test(path) ? path : "/" + path) : "";
+    }
+    if (type === "image" || type === "gif" || type === "video") {
+      if (source) {
+        const media = document.createElement(type === "video" ? "video" : "img");
+        media.className = "site-background-preview-media";
+        media.style.objectFit = form.elements.backgroundFit.value;
+        media.style.objectPosition = form.elements.backgroundPosition.value;
+        if (type === "video") {
+          media.muted = true;
+          media.autoplay = true;
+          media.loop = true;
+          media.playsInline = true;
+          media.preload = "metadata";
+          media.src = source;
+        } else {
+          media.alt = "";
+          media.src = source;
+        }
+        preview.append(media);
+      }
+      const overlay = document.createElement("div");
+      overlay.className = "site-background-preview-overlay";
+      overlay.style.opacity = String(Math.min(70, Math.max(0, Number(form.elements.backgroundOverlay.value) || 0)) / 100);
+      preview.append(overlay);
+    }
+    const label = document.createElement("span");
+    label.textContent = type === "theme" ? "LIGHT / DARK THEME" : type === "color" ? "SOLID COLOR" : source ? type.toUpperCase() : "CHOOSE OR UPLOAD MEDIA";
+    preview.append(label);
   }
 
   function updatePalettePreview(form) {
@@ -465,26 +625,81 @@
     const contrast = (values[0] + 0.05) / (values[1] + 0.05);
     note.textContent = contrast >= 4.5
       ? `Text contrast: ${contrast.toFixed(1)}:1 — readable for normal text.`
-      : `Text contrast: ${contrast.toFixed(1)}:1 — consider a darker red for readable text.`;
+      : `Text contrast: ${contrast.toFixed(1)}:1 — consider adjusting the accent or light color for readable text.`;
     note.classList.toggle("is-warning", contrast < 4.5);
   }
 
-  function saveAppearance(event) {
+  async function saveAppearance(event) {
     event.preventDefault();
     const form = event.currentTarget;
+    const submitButton = form.querySelector('button[type="submit"]');
     const accent = safeHex(form.elements.accent.value);
     const light = safeHex(form.elements.light.value);
-    if (!accent || !light) {
+    const backgroundType = form.elements.backgroundType.value;
+    const selectedBackgroundColor = safeHex(form.elements.backgroundColor.value);
+    const backgroundColor = selectedBackgroundColor || light;
+    const fileInput = form.querySelector('[name="backgroundUpload"]');
+    const file = fileInput.files?.[0] || null;
+    let source = safeBackgroundSource(form.elements.backgroundPath.value);
+    if (!accent || !light || (backgroundType === "color" && !selectedBackgroundColor)) {
       showToast("Enter valid 6-digit HEX colors before saving.");
       return;
     }
-    const willPublish = githubConnected;
-    state.site = { ...state.site, colors: { accent, light } };
-    persist("Site colors saved", true);
-    renderAppearance();
-    showToast(willPublish
-      ? "Site colors saved. The public site is updating."
-      : "Colors saved as a draft. Connect GitHub to publish them.");
+    if (file) {
+      const permitted = backgroundType === "video" ? new Set(["video/mp4"])
+        : backgroundType === "gif" ? new Set(["image/gif"])
+          : backgroundType === "image" ? new Set(["image/png", "image/jpeg", "image/webp"])
+            : new Set();
+      if (!permitted.has(file.type)) {
+        showToast("Choose a file that matches the selected background type.");
+        return;
+      }
+    }
+    if (["image", "gif", "video"].includes(backgroundType) && !file && !source) {
+      showToast("Choose or upload a background file first.");
+      return;
+    }
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = file ? "Uploading background…" : "Saving appearance…";
+    }
+    try {
+      if (file) {
+        if (!githubConnected) {
+          openGitHubDialog();
+          showToast("Connect GitHub to upload background media.");
+          return;
+        }
+        const uploaded = await uploadStudioMedia([{ role: "background", file, input: fileInput }]);
+        source = safeBackgroundSource(uploaded[0]?.path);
+        if (!source) throw new Error("GitHub did not return a valid media path.");
+        fileInput.value = "";
+        updateUploadSelection(fileInput);
+        form.elements.backgroundPath.value = source;
+      }
+      const background = {
+        type: backgroundType,
+        color: backgroundColor,
+        src: ["image", "gif", "video"].includes(backgroundType) ? source : "",
+        overlay: ["image", "gif", "video"].includes(backgroundType) ? (Number(form.elements.backgroundOverlay.value) || 0) : 0,
+        fit: form.elements.backgroundFit.value,
+        position: form.elements.backgroundPosition.value
+      };
+      const willPublish = githubConnected;
+      state.site = { ...state.site, colors: { accent, light }, background };
+      persist("Site appearance saved", true);
+      renderAppearance();
+      showToast(willPublish
+        ? "Appearance saved. The public site is updating."
+        : "Appearance saved as a draft. Connect GitHub to publish it.");
+    } catch (error) {
+      showToast(error?.message || "Could not save the site appearance.");
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Save appearance";
+      }
+    }
   }
 
   function render() {
@@ -519,7 +734,7 @@
   };
 
   const MAX_STUDIO_MEDIA_UPLOAD_BYTES = 3 * 1024 * 1024;
-  const STUDIO_IMAGE_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
+  const STUDIO_MEDIA_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/gif", "video/mp4"]);
 
   const fileUploadField = (name, label, help, options = {}) => {
     const { multiple = false, accept = "image/png,image/jpeg,image/webp,image/gif" } = options;
@@ -557,13 +772,13 @@
     const totalBytes = tasks.reduce((total, task) => total + task.file.size, 0);
     if (!tasks.length) return [];
     if (totalBytes > MAX_STUDIO_MEDIA_UPLOAD_BYTES) {
-      throw new Error("Keep image uploads under 3 MB total per save.");
+      throw new Error("Keep media uploads under 3 MB total per save.");
     }
     for (const task of tasks) {
-      if (!STUDIO_IMAGE_TYPES.has(task.file.type)) {
-        throw new Error("Upload PNG, JPG, WEBP or GIF images only.");
+      if (!STUDIO_MEDIA_TYPES.has(task.file.type)) {
+        throw new Error("Upload PNG, JPG, WEBP, GIF or MP4 media only.");
       }
-      if (!task.file.size) throw new Error("That image file is empty.");
+      if (!task.file.size) throw new Error("That media file is empty.");
     }
 
     const files = await Promise.all(tasks.map(task => encodeStudioMediaFile(task.file)));
@@ -576,7 +791,7 @@
     });
     const result = await response.json().catch(() => ({}));
     if (!response.ok || !Array.isArray(result.files) || result.files.length !== tasks.length) {
-      throw new Error(result.message || "GitHub could not upload these images.");
+      throw new Error(result.message || "GitHub could not upload this media.");
     }
     return result.files;
   }
@@ -790,10 +1005,10 @@
       if (uploadTasks.length) {
         if (!githubConnected) {
           openGitHubDialog();
-          showToast("Connect GitHub before uploading portfolio images.");
+          showToast("Connect GitHub before uploading portfolio media.");
           return;
         }
-        submitButton.textContent = "Uploading images…";
+        submitButton.textContent = "Uploading media…";
         const uploaded = await uploadStudioMedia(uploadTasks);
         let index = 0;
         for (const task of uploadTasks) {

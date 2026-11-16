@@ -21,6 +21,14 @@ window.MASSYNE_STUDIO_CONTENT = {
     "colors": {
       "accent": "#004643",
       "light": "#F0EDE5"
+    },
+    "background": {
+      "type": "theme",
+      "color": "#F0EDE5",
+      "src": "",
+      "overlay": 0,
+      "fit": "cover",
+      "position": "center"
     }
   },
   "services": [

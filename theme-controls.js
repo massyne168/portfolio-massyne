@@ -11,6 +11,78 @@
  paletteStyles.href="/site-theme.css?studio="+Date.now();
  paletteStyles.dataset.sitePalette="true";
  document.head.appendChild(paletteStyles);
+ let siteAppearance=null;
+ const safeHex=(value,fallback)=>/^#[0-9a-f]{6}$/i.test(String(value||"").trim())?String(value).trim().toUpperCase():fallback;
+ const safeMediaUrl=value=>{
+  const source=String(value||"").trim();
+  if(!source)return "";
+  if(/^https:\/\//i.test(source)){try{return new URL(source).protocol==="https:"?new URL(source).href:"";}catch{return "";}}
+  const path=source.replace(/^\/+/,"");
+  return /^(images|assets)\//i.test(path)&&!/(?:^|\/)(?:\.{1,2}|%2e%2e)(?:\/|$)/i.test(path)&&!/[<>"'\\\s]/.test(path)?"/"+path:"";
+ };
+ const syncBackgroundColor=()=>{
+  if(!siteAppearance)return;
+  const background=siteAppearance.background||{};
+  const light=safeHex(siteAppearance.colors?.light,"#FCF6F5");
+  const color=background.type==="theme"
+   ? (root.dataset.theme==="dark"?"#09090c":light)
+   : safeHex(background.color,light);
+  root.style.setProperty("--site-background-color",color);
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta&&root.dataset.theme!=="dark")meta.setAttribute("content",color);
+ };
+ const applySiteAppearance=config=>{
+  siteAppearance=config&&typeof config==="object"?config:null;
+  if(!siteAppearance)return;
+  const colors=siteAppearance.colors||{};
+  root.style.setProperty("--site-accent",safeHex(colors.accent,"#990011"));
+  root.style.setProperty("--site-light",safeHex(colors.light,"#FCF6F5"));
+  const background=siteAppearance.background||{};
+  const type=["theme","color","image","gif","video"].includes(background.type)?background.type:"theme";
+  const fit=["cover","contain"].includes(background.fit)?background.fit:"cover";
+  const position=["center","top","bottom","left","right"].includes(background.position)?background.position:"center";
+  const overlay=Math.min(70,Math.max(0,Number(background.overlay)||0));
+  root.style.setProperty("--site-background-fit",fit);
+  root.style.setProperty("--site-background-position",position);
+  root.style.setProperty("--site-background-overlay",String(overlay/100));
+  let layer=document.getElementById("site-background-layer");
+  if(!layer){
+   layer=document.createElement("div");
+   layer.id="site-background-layer";
+   layer.setAttribute("aria-hidden","true");
+   document.body.insertBefore(layer,document.body.firstChild);
+  }
+  layer.replaceChildren();
+  const reducedMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const source=safeMediaUrl(background.src);
+  if(source&&["image","gif","video"].includes(type)&&!(reducedMotion&&(type==="video"||type==="gif"))){
+   const media=document.createElement(type==="video"?"video":"img");
+   media.className="site-background-media"+(type==="video"?" site-background-video":"");
+   if(type==="video"){
+    media.muted=true;
+    media.loop=true;
+    media.autoplay=true;
+    media.playsInline=true;
+    media.preload="metadata";
+    media.src=source;
+   }else{
+    media.alt="";
+    media.decoding="async";
+    media.fetchPriority="low";
+    media.src=source;
+   }
+   layer.append(media);
+   if(type==="video")media.play().catch(()=>{});
+  }
+  const tint=document.createElement("div");
+  tint.className="site-background-overlay";
+  layer.append(tint);
+  syncBackgroundColor();
+ };
+ fetch("/site-theme.json?studio="+Date.now(),{cache:"no-store"})
+  .then(response=>response.ok?response.json():null)
+  .then(applySiteAppearance)
+  .catch(()=>{});
 
  const onHome=location.pathname==="/"||/\/index\.html$/i.test(location.pathname);
  const mobileNav=document.createElement("nav");
@@ -84,7 +156,8 @@
   root.dataset.theme=theme;
   root.style.colorScheme=theme;
   control.querySelectorAll("button").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.themeChoice===theme)));
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content",theme==="light"?"#F8FAED":"#110d10");
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content",theme==="dark"?"#110d10":(siteAppearance?.background?.type==="color"?safeHex(siteAppearance.background.color,"#FCF6F5"):safeHex(siteAppearance?.colors?.light,"#FCF6F5")));
+  syncBackgroundColor();
  };
  control.querySelectorAll("button").forEach(button=>button.addEventListener("click",()=>{
   const theme=button.dataset.themeChoice;

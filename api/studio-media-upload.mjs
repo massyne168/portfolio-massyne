@@ -5,11 +5,12 @@ const REPOSITORY = "massyne168/portfolio-massyne";
 const GITHUB_API = "https://api.github.com";
 const MAX_UPLOAD_BYTES = 3 * 1024 * 1024;
 const MAX_FILES = 12;
-const IMAGE_TYPES = {
+const MEDIA_TYPES = {
   "image/png": { extension: "png" },
   "image/jpeg": { extension: "jpg" },
   "image/webp": { extension: "webp" },
-  "image/gif": { extension: "gif" }
+  "image/gif": { extension: "gif" },
+  "video/mp4": { extension: "mp4" }
 };
 
 function send(res, status, body) {
@@ -48,7 +49,7 @@ function safeBaseName(name) {
   return safe || "artwork";
 }
 
-function matchesImageType(bytes, mimeType) {
+function matchesMediaType(bytes, mimeType) {
   if (mimeType === "image/png") {
     return bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
   }
@@ -64,12 +65,15 @@ function matchesImageType(bytes, mimeType) {
       && bytes.subarray(0, 4).toString("ascii") === "RIFF"
       && bytes.subarray(8, 12).toString("ascii") === "WEBP";
   }
+  if (mimeType === "video/mp4") {
+    return bytes.length >= 12 && bytes.subarray(4, 8).toString("ascii") === "ftyp";
+  }
   return false;
 }
 
 function validateFiles(inputFiles) {
   if (!Array.isArray(inputFiles) || inputFiles.length < 1 || inputFiles.length > MAX_FILES) {
-    const error = new Error("Choose between 1 and 12 images.");
+    const error = new Error("Choose between 1 and 12 media files.");
     error.status = 400;
     throw error;
   }
@@ -82,27 +86,27 @@ function validateFiles(inputFiles) {
       throw error;
     }
     const mimeType = String(file.type || "").toLowerCase();
-    const typeInfo = IMAGE_TYPES[mimeType];
+    const typeInfo = MEDIA_TYPES[mimeType];
     if (!typeInfo) {
-      const error = new Error("Upload PNG, JPG, WEBP or GIF images only.");
+      const error = new Error("Upload PNG, JPG, WEBP, GIF or MP4 media only.");
       error.status = 400;
       throw error;
     }
     const base64 = String(file.base64 || "");
     if (!base64 || base64.length > Math.ceil(MAX_UPLOAD_BYTES * 4 / 3) + 8 || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(base64)) {
-      const error = new Error("One of the selected images could not be read.");
+      const error = new Error("One of the selected media files could not be read.");
       error.status = 400;
       throw error;
     }
     const bytes = Buffer.from(base64, "base64");
-    if (!bytes.length || bytes.toString("base64") !== base64 || !matchesImageType(bytes, mimeType)) {
-      const error = new Error("One of the selected files does not match its image type.");
+    if (!bytes.length || bytes.toString("base64") !== base64 || !matchesMediaType(bytes, mimeType)) {
+      const error = new Error("One of the selected files does not match its media type.");
       error.status = 400;
       throw error;
     }
     totalBytes += bytes.length;
     if (totalBytes > MAX_UPLOAD_BYTES) {
-      const error = new Error("Keep image uploads under 3 MB total per save.");
+      const error = new Error("Keep media uploads under 3 MB total per save.");
       error.status = 413;
       throw error;
     }
@@ -153,7 +157,7 @@ async function createMediaCommit(token, files) {
   const commit = await githubRequest(token, "/repos/" + REPOSITORY + "/git/commits", {
     method: "POST",
     body: JSON.stringify({
-      message: "Upload portfolio images from MASSYNE Studio",
+      message: "Upload portfolio media from MASSYNE Studio",
       tree: tree.sha,
       parents: [parent]
     })
@@ -189,7 +193,7 @@ export default async function handler(req, res) {
   try {
     files = validateFiles(readBody(req).files);
   } catch (error) {
-    return send(res, error.status || 400, { message: error.message || "The selected images are invalid." });
+    return send(res, error.status || 400, { message: error.message || "The selected media files are invalid." });
   }
 
   try {
