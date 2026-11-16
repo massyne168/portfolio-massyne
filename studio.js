@@ -2,13 +2,18 @@
   "use strict";
 
   const STORAGE_KEY = "massyne-studio-content-v1";
+  const DEFAULT_SITE_COLORS = Object.freeze({ accent: "#990011", light: "#FCF6F5" });
+  const safeHex = (value, fallback = null) => /^#[0-9a-f]{6}$/i.test(String(value || "").trim())
+    ? String(value).trim().toUpperCase()
+    : fallback;
   const titles = {
     overview: "Overview",
     projects: "Selected work",
     archive: "Archive",
     motion: "Motion",
     services: "Services",
-    profile: "Studio profile"
+    profile: "Studio profile",
+    appearance: "Site appearance"
   };
   const contentRoot = document.getElementById("studio-content");
   const dialog = document.getElementById("editor-dialog");
@@ -41,7 +46,13 @@
   const safeArray = value => Array.isArray(value) ? value : [];
   const normalizeState = input => ({
     schemaVersion: 1,
-    site: { ...(input.site || {}) },
+    site: {
+      ...(input.site || {}),
+      colors: {
+        accent: safeHex(input.site?.colors?.accent, DEFAULT_SITE_COLORS.accent),
+        light: safeHex(input.site?.colors?.light, DEFAULT_SITE_COLORS.light)
+      }
+    },
     services: safeArray(input.services).map(item => ({ ...item })),
     motion: safeArray(input.motion).map(item => ({ ...item })),
     archive: safeArray(input.archive).map(item => ({ ...item })),
@@ -272,6 +283,7 @@
           <button class="quick-action" type="button" data-action="new-project"><span class="quick-icon">＋</span><span><strong>Add a project</strong><small>Create a new case study draft</small></span></button>
           <button class="quick-action" type="button" data-action="go-page" data-page="archive"><span class="quick-icon">▤</span><span><strong>Review the archive</strong><small>Curate supporting artwork</small></span></button>
           <button class="quick-action" type="button" data-action="go-page" data-page="profile"><span class="quick-icon">◎</span><span><strong>Update studio details</strong><small>Profile, links and availability</small></span></button>
+          <button class="quick-action" type="button" data-action="go-page" data-page="appearance"><span class="quick-icon">◉</span><span><strong>Change site colors</strong><small>Set the public palette</small></span></button>
           <button class="quick-action" type="button" data-action="export"><span class="quick-icon">↓</span><span><strong>Export content package</strong><small>Keep a portable copy of your edits</small></span></button>
         </div><div class="overview-note"><span aria-hidden="true">ⓘ</span><span><b>Save to GitHub main.</b> Connect once in this tab, then every Save publishes your changes. Refresh loads the latest committed content.</span></div></section>
       </div>`;
@@ -373,6 +385,108 @@
     document.getElementById("profile-form").addEventListener("submit", saveProfile);
   }
 
+  function renderAppearance() {
+    const colors = state.site.colors || DEFAULT_SITE_COLORS;
+    contentRoot.innerHTML = `
+      ${heading("SITE / 07", "Site appearance", "Choose the primary red and warm white used across the public portfolio.")}
+      <div class="appearance-layout">
+        <form class="form-panel" id="appearance-form">
+          <h2>Portfolio colors</h2>
+          <p>These colors update the homepage, project pages, resume, navigation, buttons and site accents.</p>
+          <div class="field-grid">
+            <div class="field">
+              <label for="appearance-accent">Primary red</label>
+              <div class="site-color-input-row">
+                <input type="color" value="${escapeHtml(colors.accent)}" data-palette-picker="accent" aria-label="Choose primary red">
+                <input id="appearance-accent" name="accent" type="text" value="${escapeHtml(colors.accent)}" maxlength="7" pattern="#[0-9A-Fa-f]{6}" autocomplete="off" spellcheck="false" required data-palette-hex="accent">
+              </div>
+              <small class="field-help">Main accent for links, buttons, borders and highlights.</small>
+            </div>
+            <div class="field">
+              <label for="appearance-light">Warm white</label>
+              <div class="site-color-input-row">
+                <input type="color" value="${escapeHtml(colors.light)}" data-palette-picker="light" aria-label="Choose warm white">
+                <input id="appearance-light" name="light" type="text" value="${escapeHtml(colors.light)}" maxlength="7" pattern="#[0-9A-Fa-f]{6}" autocomplete="off" spellcheck="false" required data-palette-hex="light">
+              </div>
+              <small class="field-help">Main light background and light text color. Keep it bright for the dark theme.</small>
+            </div>
+          </div>
+          <p class="palette-contrast-note" id="palette-contrast-note" role="status" aria-live="polite">Preview updates as you edit.</p>
+          <div class="form-actions"><button class="button button-quiet" type="reset">Reset form</button><button class="button button-primary" type="submit">Save site colors</button></div>
+        </form>
+        <aside class="appearance-preview-column" aria-label="Color preview">
+          <div class="dashboard-panel">
+            <div class="panel-head"><h2>Live preview</h2><span class="collection-meta">SITE PALETTE</span></div>
+            <div class="site-palette-preview" id="site-palette-preview">
+              <div class="palette-preview-light"><span>LIGHT SURFACE</span><strong>MASSYNE</strong><small>Portfolio / Selected work</small></div>
+              <div class="palette-preview-accent"><span>PRIMARY ACCENT</span><strong>VIEW PROJECT ↗</strong><small>Buttons / links / highlights</small></div>
+            </div>
+          </div>
+          <div class="publish-note"><strong>Publishes to the public site</strong>Saving sends these colors to GitHub main with the other Studio content. The site updates after deployment.</div>
+        </aside>
+      </div>`;
+    const form = document.getElementById("appearance-form");
+    form.addEventListener("input", event => {
+      const key = event.target.dataset.palettePicker || event.target.dataset.paletteHex;
+      if (key === "accent" || key === "light") {
+        const picker = form.querySelector(`[data-palette-picker="${key}"]`);
+        const hex = form.querySelector(`[data-palette-hex="${key}"]`);
+        if (event.target.dataset.palettePicker) hex.value = event.target.value.toUpperCase();
+        else {
+          const valid = safeHex(event.target.value);
+          if (valid) picker.value = valid;
+        }
+      }
+      updatePalettePreview(form);
+    });
+    form.addEventListener("reset", () => window.setTimeout(() => updatePalettePreview(form), 0));
+    form.addEventListener("submit", saveAppearance);
+    updatePalettePreview(form);
+  }
+
+  function updatePalettePreview(form) {
+    const accent = safeHex(form.querySelector('[data-palette-hex="accent"]').value);
+    const light = safeHex(form.querySelector('[data-palette-hex="light"]').value);
+    const preview = document.getElementById("site-palette-preview");
+    const note = document.getElementById("palette-contrast-note");
+    if (!accent || !light) {
+      note.textContent = "Enter both colors as 6-digit HEX values, for example #990011.";
+      note.classList.add("is-warning");
+      return;
+    }
+    preview.style.setProperty("--preview-accent", accent);
+    preview.style.setProperty("--preview-light", light);
+    const luminance = hex => {
+      const channels = [1, 3, 5].map(index => parseInt(hex.slice(index, index + 2), 16) / 255)
+        .map(value => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+      return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+    };
+    const values = [luminance(accent), luminance(light)].sort((a, b) => b - a);
+    const contrast = (values[0] + 0.05) / (values[1] + 0.05);
+    note.textContent = contrast >= 4.5
+      ? `Text contrast: ${contrast.toFixed(1)}:1 — readable for normal text.`
+      : `Text contrast: ${contrast.toFixed(1)}:1 — consider a darker red for readable text.`;
+    note.classList.toggle("is-warning", contrast < 4.5);
+  }
+
+  function saveAppearance(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const accent = safeHex(form.elements.accent.value);
+    const light = safeHex(form.elements.light.value);
+    if (!accent || !light) {
+      showToast("Enter valid 6-digit HEX colors before saving.");
+      return;
+    }
+    const willPublish = githubConnected;
+    state.site = { ...state.site, colors: { accent, light } };
+    persist("Site colors saved", true);
+    renderAppearance();
+    showToast(willPublish
+      ? "Site colors saved. The public site is updating."
+      : "Colors saved as a draft. Connect GitHub to publish them.");
+  }
+
   function render() {
     pageTitle.textContent = titles[activePage] || "Overview";
     document.querySelectorAll(".nav-item").forEach(button => {
@@ -387,6 +501,7 @@
     document.querySelector('[data-count="services"]').textContent = state.services.length;
     if (activePage === "overview") contentRoot.innerHTML = renderOverview();
     else if (activePage === "profile") renderProfile();
+    else if (activePage === "appearance") renderAppearance();
     else renderCollectionPage(activePage);
   }
 

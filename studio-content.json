@@ -16,7 +16,11 @@
     "instagram": "https://www.instagram.com/massyne_901/",
     "behance": "https://www.behance.net/massyne",
     "resume": "resume.html",
-    "portfolioPdf": "images/massyne-portfolio.pdf"
+    "portfolioPdf": "images/massyne-portfolio.pdf",
+    "colors": {
+      "accent": "#990011",
+      "light": "#FCF6F5"
+    }
   },
   "services": [
     {

@@ -1,6 +1,6 @@
 /* Quiet chapter transitions; no images, no external animation library. */
-.section-flow{width:calc(100% - 10vw);max-width:1320px;margin:0 auto;padding:18px 0 0;--flow-line:#f8faed26;--flow-text:#afa4a9}
-html[data-theme=light] .section-flow{--flow-line:#8c263530;--flow-text:#80565a}
+.section-flow{width:calc(100% - 10vw);max-width:1320px;margin:0 auto;padding:18px 0 0;--flow-line:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 14.9%, transparent);--flow-text:#afa4a9}
+html[data-theme=light] .section-flow{--flow-line:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 18.8%, transparent);--flow-text:var(--site-accent, #990011)}
 .section-flow-line{height:1px;background:var(--flow-line);transform-origin:left}
 .section-flow-label{display:flex;justify-content:space-between;gap:20px;padding-top:18px;font:400 10px/1.5 'IBM Plex Mono',monospace;letter-spacing:.1em;color:var(--flow-text)}
 @media(prefers-reduced-motion:no-preference){

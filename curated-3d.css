@@ -14,7 +14,7 @@
   width:min(1120px,115vw);height:clamp(220px,32vw,340px);
   transform:translateX(-50%);
   border:0;box-shadow:none;border-radius:50%;
-  background:radial-gradient(ellipse 55% 70% at 50% 52%,rgba(218,39,76,.19),rgba(112,20,42,.06) 55%,transparent 82%);
+  background:radial-gradient(ellipse 55% 70% at 50% 52%,color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 19%, transparent),color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 6%, transparent) 55%,transparent 82%);
   pointer-events:none;
 }
 .curated-stage.carousel-active::after{
@@ -35,8 +35,8 @@
   height:auto;min-width:0;margin:0;padding:7px;
   grid-column:auto;display:block;
   background:linear-gradient(155deg,#252024,#101014 58%);
-  border:1px solid rgba(255,255,255,.10);border-radius:15px;
-  box-shadow:0 17px 55px #0008,inset 0 1px 0 rgba(255,255,255,.04);
+  border:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 10%, transparent);border-radius:15px;
+  box-shadow:0 17px 55px #0008,inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 4%, transparent);
   transform-style:preserve-3d;backface-visibility:hidden;
   transform:translate3d(calc(-50% + var(--carousel-x,0px)),-50%,var(--carousel-z,0px))
     rotateY(var(--carousel-rotate,0deg)) scale(var(--carousel-scale,1));
@@ -60,8 +60,8 @@
   cursor:pointer
 }
 .project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active{
-  border-color:rgba(238,52,75,.48);
-  box-shadow:0 32px 80px rgba(0,0,0,.66),0 0 0 1px rgba(238,52,75,.24)
+  border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 48%, transparent);
+  box-shadow:0 32px 80px rgba(0,0,0,.66),0 0 0 1px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 24%, transparent)
 }
 .project-grid[data-view="3d"].carousel-ready > .project img,
 .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n) img{
@@ -128,11 +128,11 @@
 .carousel-hint span{color:var(--red-bright);font-size:.9rem}
 .carousel-actions{display:flex;gap:10px;align-items:center;flex:0 0 auto}
 .carousel-actions button{
-  color:var(--paper);border:1px solid #5e303a;background:#171418;
+  color:var(--paper);border:1px solid var(--site-accent, var(--site-accent, #990011));background:#171418;
   cursor:pointer;transition:background .24s,border-color .24s,transform .24s
 }
 .carousel-actions button:hover,.carousel-actions button:focus-visible{
-  background:#8d1d2e;border-color:var(--red-bright);
+  background:var(--site-accent, var(--site-accent, #990011));border-color:var(--red-bright);
 }
 .carousel-arrow{
   width:52px;height:52px;display:grid;place-items:center;
@@ -215,15 +215,15 @@
     from var(--massyne-edge-angle),
     transparent 0deg,
     transparent 242deg,
-    rgba(203,35,57,.12) 268deg,
-    rgba(238,52,75,.9) 289deg,
-    rgba(255,239,235,1) 305deg,
-    rgba(238,52,75,.75) 324deg,
+    color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 12%, transparent) 268deg,
+    color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 90%, transparent) 289deg,
+    var(--site-light, var(--site-light, #FCF6F5)) 305deg,
+    color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 75%, transparent) 324deg,
     transparent 346deg
   );
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask:linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0) content-box,linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0);
   -webkit-mask-composite:xor;
-  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0) content-box,linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0);
   mask-composite:exclude;
   transition:opacity 250ms ease;
 }
@@ -311,7 +311,7 @@
 .project-grid[data-view="3d"].carousel-ready > .project img{
  animation:none!important; /* Avoid unnecessary continuous repaints during slide motion. */
 }
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active{border-color:rgba(236,65,91,.48)}
+.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active{border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 48%, transparent)}
 @media(max-width:550px){
  .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){transition-duration:500ms,340ms,340ms}
 }

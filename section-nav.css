@@ -59,7 +59,7 @@ body.section-view-ready .site-header .menu {
   color: var(--paper);
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--surface) 88%, white 4%), color-mix(in srgb, var(--surface) 82%, var(--ink) 8%));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 3px 10px rgba(8,7,7,.1);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 20%, transparent), 0 3px 10px rgba(8,7,7,.1);
   -webkit-backdrop-filter: blur(16px) saturate(155%);
   backdrop-filter: blur(16px) saturate(155%);
   cursor: pointer;
@@ -84,7 +84,7 @@ body.section-view-ready .site-header .menu {
   z-index: 1;
   inset: 2px;
   border-radius: inherit;
-  background: linear-gradient(125deg, rgba(255,255,255,.44), transparent 35%, rgba(255,255,255,.05) 64%, rgba(169,220,255,.2));
+  background: linear-gradient(125deg, color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 44%, transparent), transparent 35%, color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 5%, transparent) 64%, rgba(169,220,255,.2));
   opacity: .5;
   pointer-events: none;
   transition: opacity .24s ease, filter .24s ease;
@@ -164,7 +164,7 @@ body.section-view-ready .site-header .menu {
 .section-rail-button:hover,
 .section-rail-button:focus-visible {
   transform: translateX(2px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.56), inset 0 -1px 0 rgba(19,16,25,.06), 0 6px 16px rgba(8,7,7,.14);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 56%, transparent), inset 0 -1px 0 rgba(19,16,25,.06), 0 6px 16px rgba(8,7,7,.14);
 }
 .section-rail-button[aria-current="page"]:hover,
 .section-rail-button[aria-current="page"]:focus-visible {
@@ -222,7 +222,7 @@ body.section-view-ready .footer-reveal-shell[hidden] {
       linear-gradient(to right, var(--red-bright, var(--red)) 0 0) 50% 30px / 92% 1px no-repeat,
       linear-gradient(to right, var(--red-bright, var(--red)) 0 0) 50% calc(100% - 30px) / 92% 1px no-repeat,
       linear-gradient(145deg, color-mix(in srgb, var(--surface) 88%, white 4%), color-mix(in srgb, var(--surface) 82%, var(--ink) 8%));
-    box-shadow: 0 12px 28px rgba(8,7,7,.14), inset 0 1px 0 rgba(255,255,255,.2);
+    box-shadow: 0 12px 28px rgba(8,7,7,.14), inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 20%, transparent);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
     backdrop-filter: blur(20px) saturate(160%);
   }
@@ -493,7 +493,7 @@ html body.section-view-ready:not(.mobile-scroll-flow) #top > [data-panel-section
     border-radius: 50%;
     color: var(--paper);
     background: color-mix(in srgb, var(--surface) 90%, transparent);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 3px 9px rgba(0,0,0,.16);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 18%, transparent), 0 3px 9px rgba(0,0,0,.16);
     -webkit-backdrop-filter: blur(12px) saturate(150%);
     backdrop-filter: blur(12px) saturate(150%);
     transition: color .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
@@ -502,7 +502,7 @@ html body.section-view-ready:not(.mobile-scroll-flow) #top > [data-panel-section
     color: var(--red-bright, var(--red));
     border-color: var(--red-bright, var(--red));
     background: color-mix(in srgb, var(--red) 23%, var(--surface));
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 13%, transparent), 0 0 13px color-mix(in srgb, var(--red-bright, var(--red)) 30%, transparent), inset 0 1px 0 rgba(255,255,255,.28);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 13%, transparent), 0 0 13px color-mix(in srgb, var(--red-bright, var(--red)) 30%, transparent), inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 28%, transparent);
     animation: sectionRailActiveBreathe 2.8s ease-in-out infinite;
   }
   .section-rail-button[aria-current="page"]::before {
@@ -551,14 +551,14 @@ body .site-header.brand-header .header-socials a::before {
   background: conic-gradient(
     from var(--massyne-orbit-angle),
     transparent 0 62%,
-    rgba(255,255,255,.98) 70%,
-    #ee7187 77%,
+    color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 98%, transparent) 70%,
+    var(--site-accent, var(--site-accent, #990011)) 77%,
     transparent 88%
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0) content-box, linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  filter: drop-shadow(0 0 4px rgba(255,255,255,.62)) drop-shadow(0 0 8px rgba(216,65,92,.42));
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 62%, transparent)) drop-shadow(0 0 8px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 42%, transparent));
   animation: massyneOrbitHalo 4.6s linear infinite;
   pointer-events: none;
 }
@@ -576,11 +576,11 @@ body .site-header.brand-header .header-socials .header-social-be {
       conic-gradient(
         from var(--massyne-orbit-angle),
         transparent 0 62%,
-        rgba(255,255,255,.98) 70%,
-        var(--red-bright, #ee7187) 77%,
+        color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 98%, transparent) 70%,
+        var(--red-bright, var(--site-accent, var(--site-accent, #990011))) 77%,
         transparent 88%
       ) border-box,
-      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+      conic-gradient(from 210deg, #6d6d73, var(--site-light, var(--site-light, #FCF6F5)), #77777c, #303035, #d0d0c9, #6d6d73) border-box;
     animation: massyneOrbitHalo 4.6s linear infinite;
   }
   body .section-rail-button[aria-current="page"] {
@@ -589,11 +589,11 @@ body .site-header.brand-header .header-socials .header-social-be {
       conic-gradient(
         from var(--massyne-orbit-angle),
         transparent 0 62%,
-        rgba(255,255,255,.98) 70%,
-        var(--red-bright, #ee7187) 77%,
+        color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 98%, transparent) 70%,
+        var(--red-bright, var(--site-accent, var(--site-accent, #990011))) 77%,
         transparent 88%
       ) border-box,
-      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+      conic-gradient(from 210deg, #6d6d73, var(--site-light, var(--site-light, #FCF6F5)), #77777c, #303035, #d0d0c9, #6d6d73) border-box;
     animation: sectionRailActiveBreathe 2.8s ease-in-out infinite, massyneOrbitHalo 4.6s linear infinite;
   }
   body .section-rail-button:hover,
@@ -604,11 +604,11 @@ body .site-header.brand-header .header-socials .header-social-be {
       conic-gradient(
         from var(--massyne-orbit-angle),
         transparent 0 62%,
-        rgba(255,255,255,.98) 70%,
-        var(--red-bright, #ee7187) 77%,
+        color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 98%, transparent) 70%,
+        var(--red-bright, var(--site-accent, var(--site-accent, #990011))) 77%,
         transparent 88%
       ) border-box,
-      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+      conic-gradient(from 210deg, #6d6d73, var(--site-light, var(--site-light, #FCF6F5)), #77777c, #303035, #d0d0c9, #6d6d73) border-box;
   }
   body .section-rail-button[aria-current="page"]:hover,
   body .section-rail-button[aria-current="page"]:focus-visible {
@@ -618,11 +618,11 @@ body .site-header.brand-header .header-socials .header-social-be {
       conic-gradient(
         from var(--massyne-orbit-angle),
         transparent 0 62%,
-        rgba(255,255,255,.98) 70%,
-        var(--red-bright, #ee7187) 77%,
+        color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 98%, transparent) 70%,
+        var(--red-bright, var(--site-accent, var(--site-accent, #990011))) 77%,
         transparent 88%
       ) border-box,
-      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+      conic-gradient(from 210deg, #6d6d73, var(--site-light, var(--site-light, #FCF6F5)), #77777c, #303035, #d0d0c9, #6d6d73) border-box;
   }
 }
 @media (max-width:850px) {
@@ -634,11 +634,11 @@ body .site-header.brand-header .header-socials .header-social-be {
       conic-gradient(
         from var(--massyne-orbit-angle),
         transparent 0 62%,
-        rgba(255,255,255,.98) 70%,
-        var(--red-bright, #ee7187) 77%,
+        color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 98%, transparent) 70%,
+        var(--red-bright, var(--site-accent, var(--site-accent, #990011))) 77%,
         transparent 88%
       ) border-box,
-      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+      conic-gradient(from 210deg, #6d6d73, var(--site-light, var(--site-light, #FCF6F5)), #77777c, #303035, #d0d0c9, #6d6d73) border-box;
     animation: massyneOrbitHalo 4.6s linear infinite;
   }
   body .section-rail-button[aria-current="page"] svg {
@@ -648,11 +648,11 @@ body .site-header.brand-header .header-socials .header-social-be {
       conic-gradient(
         from var(--massyne-orbit-angle),
         transparent 0 62%,
-        rgba(255,255,255,.98) 70%,
-        var(--red-bright, #ee7187) 77%,
+        color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 98%, transparent) 70%,
+        var(--red-bright, var(--site-accent, var(--site-accent, #990011))) 77%,
         transparent 88%
       ) border-box,
-      conic-gradient(from 210deg, #6d6d73, #f0f0eb, #77777c, #303035, #d0d0c9, #6d6d73) border-box;
+      conic-gradient(from 210deg, #6d6d73, var(--site-light, var(--site-light, #FCF6F5)), #77777c, #303035, #d0d0c9, #6d6d73) border-box;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -917,7 +917,7 @@ body .site-header.brand-header .header-socials .header-social-be {
     padding: 6px 3px;
     border-radius: 19px;
     background: linear-gradient(145deg, color-mix(in srgb, var(--surface) 88%, white 4%), color-mix(in srgb, var(--surface) 82%, var(--ink) 8%));
-    box-shadow: 0 12px 28px rgba(8,7,7,.14), inset 0 1px 0 rgba(255,255,255,.2);
+    box-shadow: 0 12px 28px rgba(8,7,7,.14), inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 20%, transparent);
     scrollbar-width: none;
   }
   body.section-view-ready .section-rail[data-dock-position="left"] .section-rail-menu::-webkit-scrollbar,

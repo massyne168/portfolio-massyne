@@ -6,6 +6,11 @@
  navStyles.rel="stylesheet";
  navStyles.href="/mobile-nav.css";
  document.head.appendChild(navStyles);
+ const paletteStyles=document.createElement("link");
+ paletteStyles.rel="stylesheet";
+ paletteStyles.href="/site-theme.css?studio="+Date.now();
+ paletteStyles.dataset.sitePalette="true";
+ document.head.appendChild(paletteStyles);
 
  const onHome=location.pathname==="/"||/\/index\.html$/i.test(location.pathname);
  const mobileNav=document.createElement("nav");

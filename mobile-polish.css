@@ -33,7 +33,7 @@
 }
 @media(hover:none),(pointer:coarse){
  .creative-cursor{display:none!important}
- .project-grid > .project,.archive-item{-webkit-tap-highlight-color:rgba(235,62,89,.18)}
+ .project-grid > .project,.archive-item{-webkit-tap-highlight-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 18%, transparent)}
 }
 @media(prefers-reduced-motion:reduce){
  .loader-curved-gallery .loader-curve-card{animation:none!important;transition:none!important}
