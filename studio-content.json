@@ -18,8 +18,8 @@
     "resume": "resume.html",
     "portfolioPdf": "images/massyne-portfolio.pdf",
     "colors": {
-      "accent": "#7F011F",
-      "light": "#F5EBD0"
+      "accent": "#EC4D09",
+      "light": "#141414"
     },
     "background": {
       "type": "theme",
