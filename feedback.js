@@ -10,7 +10,7 @@
   const main = document.getElementById("top");
   const footer = document.querySelector(".footer-reveal-shell");
   const mobileQuery = window.matchMedia("(max-width: 850px)");
-  const recipient = "aazizimassine@gmail.com";
+  const whatsappNumber = "212659377324";
   const railOpeners = [...document.querySelectorAll("[data-feedback-open]")];
 
   if (!panel || !form || !submit) return;
@@ -53,49 +53,26 @@
   };
   ratingInputs.forEach(input => input.addEventListener("change", paintRating));
 
-  form.addEventListener("submit", async event => {
+  form.addEventListener("submit", event => {
     event.preventDefault();
     if (!form.reportValidity() || submit.disabled) return;
 
     const fields = new FormData(form);
-    const payload = {
-      _subject: "Portfolio feedback — MASSYNE",
-      _template: "table",
-      _honey: String(fields.get("_honey") || ""),
-      rating: String(fields.get("rating") || ""),
-      name: String(fields.get("name") || "Visitor").trim() || "Visitor",
-      feedback: String(fields.get("feedback") || "").trim()
-    };
+    const rating = String(fields.get("rating") || "");
+    const name = String(fields.get("name") || "Visitor").trim() || "Visitor";
+    const feedback = String(fields.get("feedback") || "").trim();
+    const message = [
+      "Portfolio feedback — MASSYNE",
+      `Rating: ${rating}/5`,
+      `Name: ${name}`,
+      "",
+      feedback
+    ].join("\n");
+    const target = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
-    submit.disabled = true;
-    submit.setAttribute("aria-busy", "true");
-    if (status) status.textContent = "Sending your feedback…";
-
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/" + recipient, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      const result = await response.json();
-      const accepted = response.ok && (result.success === true || result.success === "true");
-
-      if (!accepted) {
-        const activation = /activat|confirm/i.test(String(result.message || ""));
-        if (status) status.textContent = activation
-          ? "Email delivery needs one-time inbox activation. Please email me directly using the link below."
-          : "Feedback could not be delivered. Please email me directly using the link below.";
-        return;
-      }
-
-      form.reset();
-      paintRating();
-      if (status) status.textContent = "Thanks — your feedback was sent privately.";
-    } catch (_) {
-      if (status) status.textContent = "Could not connect to the email service. Please email me directly using the link below.";
-    } finally {
-      submit.disabled = false;
-      submit.removeAttribute("aria-busy");
-    }
+    if (status) status.textContent = "WhatsApp is opening with your feedback. Review it and press Send.";
+    const opened = window.open(target, "_blank");
+    if (opened) opened.opener = null;
+    else window.location.href = target;
   });
 })();
