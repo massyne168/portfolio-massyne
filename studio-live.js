@@ -255,3 +255,52 @@
     if (title) title.textContent = project.title || title.textContent;
   });
 })();
+function applyStudioAppearance(content) {
+  if (!content) return;
+const colors = content.colors || (content.appearance && content.appearance.colors) || {};
+const root = document.documentElement.style;
+if (colors.accent) {
+root.setProperty("--accent", colors.accent);
+root.setProperty("--accent-color", colors.accent);
+root.setProperty("--studio-accent", colors.accent);
+}
+if (colors.light) {
+root.setProperty("--light", colors.light);
+root.setProperty("--text-light", colors.light);
+}
+  if (!document.body) return;
+const bg = content.background || (content.appearance && content.appearance.background) || {};
+const existing = document.getElementById("massyne-live-bg");
+if (bg.type === "color" && (bg.color || bg.backgroundColor)) {
+if (existing) existing.remove();
+document.body.style.backgroundColor = bg.color || bg.backgroundColor;
+return;
+}
+if (bg.type === "image" || bg.type === "gif" || bg.type === "video") {
+const src = bg.path || bg.backgroundPath || bg.source;
+if (!src) return;
+const layer = existing || document.createElement("div");
+layer.id = "massyne-live-bg";
+layer.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;";
+const fit = bg.fit || bg.backgroundFit || "cover";
+const pos = bg.position || bg.backgroundPosition || "center";
+const media = document.createElement(bg.type === "video" ? "video" : "img");
+media.src = src;
+if (bg.type === "video") {
+media.autoplay = true;
+media.muted = true;
+media.loop = true;
+media.playsInline = true;
+}
+media.style.cssText = `width:100%;height:100%;object-fit:${fit};object-position:${pos};`;
+const overlay = document.createElement("div");
+const alpha = Math.max(0, Math.min(70, Number(bg.overlay || 0))) / 100;
+overlay.style.cssText = `position:absolute;inset:0;background:rgba(0,0,0,${alpha});`;
+layer.replaceChildren(media, overlay);
+if (!existing) document.body.prepend(layer);
+}
+}
+if (window.MASSYNE_STUDIO_CONTENT) applyStudioAppearance(window.MASSYNE_STUDIO_CONTENT);
+document.addEventListener("DOMContentLoaded", () => {
+if (window.MASSYNE_STUDIO_CONTENT) applyStudioAppearance(window.MASSYNE_STUDIO_CONTENT);
+});
