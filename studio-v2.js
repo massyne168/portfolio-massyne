@@ -4,6 +4,33 @@
     const topbarActions = document.querySelector(".topbar-actions");
     if (!contentEl || !topbarActions || document.getElementById("studio-live-preview")) return;
 
+    // 0. Add MASSYNE monogram & Upload Budget card
+    const studioBrand = document.querySelector(".studio-brand");
+    if (studioBrand && !studioBrand.querySelector(".v2-monogram")) {
+      const monogram = document.createElement("span");
+      monogram.className = "v2-monogram";
+      monogram.textContent = "M";
+      const brandCopy = studioBrand.querySelector(".brand-copy");
+      if (brandCopy) {
+        studioBrand.insertBefore(monogram, brandCopy);
+      } else {
+        studioBrand.prepend(monogram);
+      }
+    }
+
+    const studioRail = document.querySelector(".studio-rail");
+    if (studioRail && !studioRail.querySelector(".v2-budget-card")) {
+      const budgetCard = document.createElement("div");
+      budgetCard.className = "v2-budget-card";
+      budgetCard.innerHTML = '<div class="v2-budget-row"><span>Upload Budget</span><strong>Auto-WebP · 3 MB max</strong></div><div class="v2-budget-track"><div class="v2-budget-fill"></div></div><div class="v2-budget-note">PNG/JPG &gt; 350 KB auto-compressed · Vercel safe</div>';
+      const railStatus = studioRail.querySelector(".rail-status");
+      if (railStatus) {
+        studioRail.insertBefore(budgetCard, railStatus);
+      } else {
+        studioRail.appendChild(budgetCard);
+      }
+    }
+    
     // 1. Wrap #studio-content in a split container + add Live Preview pane
     const splitWrap = document.createElement("div");
     splitWrap.className = "studio-workspace-split";
@@ -49,9 +76,9 @@
     // 2. Add Command Palette (Ctrl+K) & Split Preview toggle to topbar
     const cmdBtn = document.createElement("button");
     cmdBtn.type = "button";
-    cmdBtn.className = "button button-quiet";
+    cmdBtn.className = "v2-cmd-pill";
     cmdBtn.id = "v2-cmd-btn";
-    cmdBtn.textContent = "⌘K Search";
+    cmdBtn.innerHTML = '<span>Search projects, actions...</span><kbd>Ctrl K</kbd>';
 
     const toggleBtn = document.createElement("button");
     toggleBtn.type = "button";
