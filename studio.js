@@ -830,7 +830,7 @@
       ${field("category", "Project label", item.category || "")}
       ${field("kind", "Media type", item.kind || "video", { options: [{ value: "video", label: "Video" }, { value: "gif", label: "Animated GIF" }] })}
       ${field("source", "Media source path", item.source || "", { wide: true, help: "Use a repository path for video, or upload an animated GIF below." })}
-      ${fileUploadField("mediaUpload", "Upload animated GIF", "Optional. Upload an MP4 video or animated GIF (under 3 MB)."
+      ${fileUploadField("mediaUpload", "Upload animated GIF", "Optional. Upload an MP4 video or animated GIF (under 3 MB).", { accept: "video/mp4,.mp4,image/gif,.gif" })}
     </div>`;
     return `<div class="field-grid">
       ${field("title", "Service title", item.title || "", { wide: true })}
