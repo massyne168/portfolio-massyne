@@ -10,7 +10,8 @@ const MEDIA_TYPES = {
   "image/jpeg": { extension: "jpg" },
   "image/webp": { extension: "webp" },
   "image/gif": { extension: "gif" },
-  "video/mp4": { extension: "mp4" }
+  "video/mp4": { extension: "mp4" },
+"application/pdf": { extension: "pdf" }  
 };
 
 function send(res, status, body) {
@@ -68,6 +69,7 @@ function matchesMediaType(bytes, mimeType) {
   if (mimeType === "video/mp4") {
     return bytes.length >= 12 && bytes.subarray(4, 8).toString("ascii") === "ftyp";
   }
+  if (mimeType === "application/pdf") { return bytes.length >= 5 && bytes[0] === 0x25 && bytes[1] === 0x50 && bytes[2] === 0x44 && bytes[3] === 0x46 && bytes[4] === 0x2d; }
   return false;
 }
 
