@@ -366,4 +366,299 @@ document.addEventListener("DOMContentLoaded", initStudioV2Extras);
 } else {
 initStudioV2Extras();
 }
+}(function () {
+function injectFscStyles() {
+if (document.getElementById("v2-fsc-styles")) return;
+const st = document.createElement("style");
+st.id = "v2-fsc-styles";
+st.textContent = `
+.v2-fsc-wrap{background:#0b0b0f;color:#f4f4f6;padding:24px;border-radius:18px;border:1px solid rgba(255,255,255,0.08);font-family:Inter,system-ui,sans-serif;max-width:1100px;margin:0 auto;}
+.v2-fsc-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.v2-fsc-title{font-size:20px;font-weight:700;margin:0;letter-spacing:-0.02em;}
+.v2-fsc-sub{font-size:13px;color:#9ca3af;margin:4px 0 0;}
+.v2-fsc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.v2-fsc-tab{background:#16161d;color:#a1a1aa;border:1px solid rgba(255,255,255,0.08);padding:10px 16px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s;}
+.v2-fsc-tab.active{background:#ff4d2e;color:#fff;border-color:#ff4d2e;}
+.v2-fsc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.v2-fsc-card{background:#14141b;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.v2-fsc-card h4{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:0.06em;color:#9ca3af;}
+.v2-fsc-field{display:flex;flex-direction:column;gap:6px;}
+.v2-fsc-field label{font-size:12px;color:#d4d4d8;font-weight:500;display:flex;justify-content:space-between;}
+.v2-fsc-input,.v2-fsc-select,.v2-fsc-textarea{background:#0b0b0f;color:#f4f4f6;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:9px 12px;font-size:13px;width:100%;box-sizing:border-box;}
+.v2-fsc-textarea{min-height:130px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+.v2-fsc-btn{background:#ff4d2e;color:#fff;border:none;border-radius:10px;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer;}
+.v2-fsc-btn:disabled{opacity:0.6;cursor:not-allowed;}
+.v2-fsc-btn-sec{background:#1f1f29;color:#e4e4e7;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;}
+.v2-fsc-check{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#0b0b0f;border:1px solid rgba(255,255,255,0.08);border-radius:10px;cursor:pointer;font-size:13px;}
+.v2-fsc-exp-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:center;padding:10px;background:#0b0b0f;border-radius:10px;border:1px solid rgba(255,255,255,0.08);}
+.v2-fsc-status{font-size:12px;color:#a1a1aa;}
+`;
+document.head.appendChild(st);
+}
+async function loadLatestContent() {
+try {
+const res = await fetch("/studio-content.json?t=" + Date.now());
+if (res.ok) return await res.json();
+} catch (_) {}
+return window.MASSYNE_STUDIO_CONTENT || {};
+}
+function uploadMediaFile(file) {
+return new Promise((resolve, reject) => {
+const reader = new FileReader();
+reader.onload = async () => {
+try {
+const base64 = String(reader.result || "").split(",")[1] || "";
+const res = await fetch("/api/studio-media-upload", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ files: [{ name: file.name, type: file.type, data: base64 }] })
+});
+const data = await res.json();
+if (!res.ok) throw new Error(data.error || "Upload failed");
+const url = (data.files && data.files[0] && (data.files[0].url || data.files[0].path)) || data.url || data.path || "";
+resolve(url);
+} catch (err) { reject(err); }
+};
+reader.onerror = () => reject(new Error("File read failed"));
+reader.readAsDataURL(file);
+});
+}
+function refreshPreviewIframe() {
+const frame = document.getElementById("studio-live-preview") || document.querySelector("iframe");
+if (frame && frame.src) {
+const base = frame.src.split("?")[0];
+frame.src = base + "?t=" + Date.now();
+}
+}
+ async function renderFullSiteControl() {
+injectFscStyles();
+const host = document.getElementById("studio-content");
+if (!host) return;
+host.innerHTML = `<div class="v2-fsc-wrap"><p class="v2-fsc-status">Loading studio-content.json...</p></div>`;
+const content = await loadLatestContent();
+const bg = Object.assign({ type: "theme", color: "#0a0a0c", gradColor1: "#0b0b0f", gradColor2: "#1f1235", gradAngle: 135, url: "", fit: "cover", position: "center", overlay: 0, blur: 0, opacity: 100 }, content.background || (content.site && content.site.background) || {});
+const extras = Object.assign({ heroBadge: "VISUAL THINKER.", heroRole: "", heroEyebrowLeft: "", heroEyebrowRight: "", heroPrimaryCta: "", heroSecondaryCta: "", skills: [], experience: [], sectionVisibility: { "#work": true, "#archive": true, "#motion": true, "#about": true, "#services": true, "#contact": true }, customCss: "" }, content.extras || {});
+let expRows = Array.isArray(extras.experience) ? extras.experience.map(x => typeof x === "string" ? { role: x, company: "", period: "", description: "" } : Object.assign({ role: "", company: "", period: "", description: "" }, x)) : [];
+let activeTab = "bg";
+
+host.innerHTML = `
+<div class="v2-fsc-wrap">
+  <div class="v2-fsc-head">
+    <div>
+      <h2 class="v2-fsc-title">Full Site Control</h2>
+      <p class="v2-fsc-sub">Background Studio, Hero & Badges, Skills & Experience, Sections & Custom CSS</p>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span id="fsc-status" class="v2-fsc-status">Ready</span>
+      <button type="button" id="fsc-publish-btn" class="v2-fsc-btn">Save &amp; Publish to main</button>
+    </div>
+  </div>
+  <div class="v2-fsc-tabs">
+    <button type="button" class="v2-fsc-tab active" data-tab="bg">1. Background Studio</button>
+    <button type="button" class="v2-fsc-tab" data-tab="hero">2. Hero &amp; Badges</button>
+    <button type="button" class="v2-fsc-tab" data-tab="skills">3. Skills &amp; Experience</button>
+    <button type="button" class="v2-fsc-tab" data-tab="sections">4. Sections &amp; Custom CSS</button>
+  </div>
+  <div id="fsc-panel-bg" class="v2-fsc-panel">
+    <div class="v2-fsc-grid">
+      <div class="v2-fsc-card">
+        <h4>Type &amp; Colors</h4>
+        <div class="v2-fsc-field"><label>Background Type</label><select id="fsc-bg-type" class="v2-fsc-select"><option value="theme">Theme (Default)</option><option value="color">Solid Color</option><option value="gradient">Gradient</option><option value="image">Image</option><option value="gif">GIF</option><option value="video">Video (MP4)</option></select></div>
+        <div class="v2-fsc-field"><label>Solid Color</label><input type="color" id="fsc-bg-color" class="v2-fsc-input" style="height:40px;padding:4px;" value="${bg.color || "#0a0a0c"}"></div>
+        <div class="v2-fsc-field"><label>Gradient Color 1</label><input type="color" id="fsc-bg-g1" class="v2-fsc-input" style="height:40px;padding:4px;" value="${bg.gradColor1 || "#0b0b0f"}"></div>
+        <div class="v2-fsc-field"><label>Gradient Color 2</label><input type="color" id="fsc-bg-g2" class="v2-fsc-input" style="height:40px;padding:4px;" value="${bg.gradColor2 || "#1f1235"}"></div>
+        <div class="v2-fsc-field"><label>Gradient Angle (deg)</label><input type="number" id="fsc-bg-gang" class="v2-fsc-input" min="0" max="360" value="${Number(bg.gradAngle ?? 135)}"></div>
+      </div>
+      <div class="v2-fsc-card">
+        <h4>Media &amp; Upload</h4>
+        <div class="v2-fsc-field"><label>Direct Upload (Image / GIF / MP4)</label><input type="file" id="fsc-bg-file" class="v2-fsc-input" accept="image/*,.gif,video/mp4,video/*"></div>
+        <div class="v2-fsc-field"><label>Media Path / URL</label><input type="text" id="fsc-bg-url" class="v2-fsc-input" placeholder="/media/bg.mp4 or https://..." value="${bg.url || ""}"></div>
+        <div class="v2-fsc-field"><label>Fit</label><select id="fsc-bg-fit" class="v2-fsc-select"><option value="cover">cover</option><option value="contain">contain</option></select></div>
+        <div class="v2-fsc-field"><label>Position</label><input type="text" id="fsc-bg-pos" class="v2-fsc-input" placeholder="center" value="${bg.position || "center"}"></div>
+      </div>
+      <div class="v2-fsc-card">
+        <h4>Effects</h4>
+        <div class="v2-fsc-field"><label><span>Overlay Darken</span><span id="fsc-ov-val">${Number(bg.overlay || 0)}%</span></label><input type="range" id="fsc-bg-ov" min="0" max="85" value="${Number(bg.overlay || 0)}"></div>
+        <div class="v2-fsc-field"><label><span>Blur</span><span id="fsc-bl-val">${Number(bg.blur || 0)}px</span></label><input type="range" id="fsc-bg-bl" min="0" max="24" value="${Number(bg.blur || 0)}"></div>
+        <div class="v2-fsc-field"><label><span>Opacity</span><span id="fsc-op-val">${Number(bg.opacity ?? 100)}%</span></label><input type="range" id="fsc-bg-op" min="10" max="100" value="${Number(bg.opacity ?? 100)}"></div>
+      </div>
+    </div>
+  </div>
+  <div id="fsc-panel-hero" class="v2-fsc-panel" style="display:none;">
+    <div class="v2-fsc-grid">
+      <div class="v2-fsc-card">
+        <h4>Hero &amp; Badges</h4>
+        <div class="v2-fsc-field"><label>Hero Badge</label><input type="text" id="fsc-hero-badge" class="v2-fsc-input" placeholder="VISUAL THINKER." value="${extras.heroBadge || ""}"></div>
+        <div class="v2-fsc-field"><label>Hero Role</label><input type="text" id="fsc-hero-role" class="v2-fsc-input" value="${extras.heroRole || ""}"></div>
+        <div class="v2-fsc-field"><label>Eyebrow Left</label><input type="text" id="fsc-hero-el" class="v2-fsc-input" value="${extras.heroEyebrowLeft || ""}"></div>
+        <div class="v2-fsc-field"><label>Eyebrow Right</label><input type="text" id="fsc-hero-er" class="v2-fsc-input" value="${extras.heroEyebrowRight || ""}"></div>
+        <div class="v2-fsc-field"><label>Primary CTA</label><input type="text" id="fsc-hero-c1" class="v2-fsc-input" value="${extras.heroPrimaryCta || ""}"></div>
+        <div class="v2-fsc-field"><label>Secondary CTA</label><input type="text" id="fsc-hero-c2" class="v2-fsc-input" value="${extras.heroSecondaryCta || ""}"></div>
+      </div>
+    </div>
+  </div>
+  <div id="fsc-panel-skills" class="v2-fsc-panel" style="display:none;">
+    <div class="v2-fsc-grid">
+      <div class="v2-fsc-card">
+        <h4>Skills (Comma-Separated)</h4>
+        <div class="v2-fsc-field"><label>Skills List</label><textarea id="fsc-skills" class="v2-fsc-textarea" style="min-height:90px;" placeholder="After Effects, Premiere Pro, Figma, Brand Strategy">${Array.isArray(extras.skills) ? extras.skills.join(", ") : ""}</textarea></div>
+      </div>
+      <div class="v2-fsc-card" style="grid-column:span 2;">
+        <div style="display:flex;justify-content:space-between;align-items:center;"><h4>Experience Timeline</h4><button type="button" id="fsc-add-exp" class="v2-fsc-btn-sec">+ Add Row</button></div>
+        <div id="fsc-exp-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+    </div>
+  </div>
+  <div id="fsc-panel-sections" class="v2-fsc-panel" style="display:none;">
+    <div class="v2-fsc-grid">
+      <div class="v2-fsc-card">
+        <h4>Section Visibility</h4>
+        ${["#work", "#archive", "#motion", "#about", "#services", "#contact"].map(sec => {
+          const checked = extras.sectionVisibility && extras.sectionVisibility[sec] === false ? "" : "checked";
+          return `<label class="v2-fsc-check"><input type="checkbox" class="fsc-sec-chk" data-sec="${sec}" ${checked}><span>Show ${sec}</span></label>`;
+        }).join("")}
+      </div>
+      <div class="v2-fsc-card">
+        <h4>Custom CSS</h4>
+        <textarea id="fsc-custom-css" class="v2-fsc-textarea" placeholder="/* Custom CSS injected into portfolio */">${extras.customCss || ""}</textarea>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+document.getElementById("fsc-bg-type").value = bg.type || "theme";
+document.getElementById("fsc-bg-fit").value = bg.fit === "contain" ? "contain" : "cover";
+
+const statusEl = document.getElementById("fsc-status");
+const setStatus = msg => { if (statusEl) statusEl.textContent = msg; };
+
+host.querySelectorAll(".v2-fsc-tab").forEach(tab => {
+tab.addEventListener("click", () => {
+activeTab = tab.dataset.tab;
+host.querySelectorAll(".v2-fsc-tab").forEach(t => t.classList.toggle("active", t === tab));
+host.querySelectorAll(".v2-fsc-panel").forEach(p => { p.style.display = p.id === "fsc-panel-" + activeTab ? "block" : "none"; });
+});
+});
+
+const bindRange = (id, lblId, unit) => {
+const el = document.getElementById(id);
+const lbl = document.getElementById(lblId);
+if (el && lbl) el.addEventListener("input", () => { lbl.textContent = el.value + unit; });
+};
+bindRange("fsc-bg-ov", "fsc-ov-val", "%");
+bindRange("fsc-bg-bl", "fsc-bl-val", "px");
+bindRange("fsc-bg-op", "fsc-op-val", "%");
+
+const fileInput = document.getElementById("fsc-bg-file");
+if (fileInput) {
+fileInput.addEventListener("change", async () => {
+const f = fileInput.files && fileInput.files[0];
+if (!f) return;
+setStatus("Uploading media...");
+try {
+const url = await uploadMediaFile(f);
+document.getElementById("fsc-bg-url").value = url;
+if (/video/i.test(f.type)) document.getElementById("fsc-bg-type").value = "video";
+else if (/gif/i.test(f.type)) document.getElementById("fsc-bg-type").value = "gif";
+else document.getElementById("fsc-bg-type").value = "image";
+setStatus("Uploaded: " + url);
+} catch (err) {
+setStatus("Upload error: " + err.message);
+}
+});
+}
+
+function renderExpRows() {
+const wrap = document.getElementById("fsc-exp-list");
+if (!wrap) return;
+wrap.innerHTML = "";
+expRows.forEach((row, idx) => {
+const div = document.createElement("div");
+div.className = "v2-fsc-exp-row";
+div.innerHTML = `<input class="v2-fsc-input" placeholder="Role" value="${row.role || ""}" data-k="role"><input class="v2-fsc-input" placeholder="Company" value="${row.company || ""}" data-k="company"><input class="v2-fsc-input" placeholder="Period" value="${row.period || ""}" data-k="period"><button type="button" class="v2-fsc-btn-sec">Remove</button>`;
+div.querySelectorAll("input").forEach(inp => inp.addEventListener("input", () => { expRows[idx][inp.dataset.k] = inp.value; }));
+div.querySelector("button").addEventListener("click", () => { expRows.splice(idx, 1); renderExpRows(); });
+wrap.appendChild(div);
+});
+}
+renderExpRows();
+const addExpBtn = document.getElementById("fsc-add-exp");
+if (addExpBtn) addExpBtn.addEventListener("click", () => { expRows.push({ role: "", company: "", period: "", description: "" }); renderExpRows(); });
+
+const pubBtn = document.getElementById("fsc-publish-btn");
+if (pubBtn) {
+pubBtn.addEventListener("click", async () => {
+pubBtn.disabled = true;
+setStatus("Publishing to main...");
+try {
+const latest = await loadLatestContent();
+const newBg = {
+type: document.getElementById("fsc-bg-type").value,
+color: document.getElementById("fsc-bg-color").value,
+gradColor1: document.getElementById("fsc-bg-g1").value,
+gradColor2: document.getElementById("fsc-bg-g2").value,
+gradAngle: Number(document.getElementById("fsc-bg-gang").value || 135),
+url: document.getElementById("fsc-bg-url").value.trim(),
+fit: document.getElementById("fsc-bg-fit").value,
+position: document.getElementById("fsc-bg-pos").value.trim() || "center",
+overlay: Number(document.getElementById("fsc-bg-ov").value || 0),
+blur: Number(document.getElementById("fsc-bg-bl").value || 0),
+opacity: Number(document.getElementById("fsc-bg-op").value || 100)
+};
+const secVis = {};
+host.querySelectorAll(".fsc-sec-chk").forEach(c => { secVis[c.dataset.sec] = c.checked; });
+const skillsArr = document.getElementById("fsc-skills").value.split(",").map(s => s.trim()).filter(Boolean);
+const newExtras = {
+heroBadge: document.getElementById("fsc-hero-badge").value.trim(),
+heroRole: document.getElementById("fsc-hero-role").value.trim(),
+heroEyebrowLeft: document.getElementById("fsc-hero-el").value.trim(),
+heroEyebrowRight: document.getElementById("fsc-hero-er").value.trim(),
+heroPrimaryCta: document.getElementById("fsc-hero-c1").value.trim(),
+heroSecondaryCta: document.getElementById("fsc-hero-c2").value.trim(),
+skills: skillsArr,
+experience: expRows.filter(r => r.role || r.company || r.period),
+sectionVisibility: secVis,
+customCss: document.getElementById("fsc-custom-css").value
+};
+const merged = Object.assign({}, latest, { background: newBg, extras: newExtras });
+const res = await fetch("/api/studio-publish", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ content: merged })
+});
+const out = await res.json();
+if (!res.ok) throw new Error(out.error || "Publish failed");
+setStatus("Published to main!");
+refreshPreviewIframe();
+} catch (err) {
+setStatus("Error: " + err.message);
+} finally {
+pubBtn.disabled = false;
+}
+});
+}
+}
+
+function initFullSiteControl() {
+const nav = document.querySelector(".studio-nav");
+if (!nav || nav.querySelector("[data-page='v2-control']")) return;
+const sample = nav.querySelector("button");
+const btn = document.createElement("button");
+btn.type = "button";
+btn.className = sample ? sample.className.replace(/\bactive\b/g, "").trim() : "nav-btn";
+btn.setAttribute("data-page", "v2-control");
+btn.textContent = "Full Site Control";
+btn.addEventListener("click", () => {
+nav.querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
+renderFullSiteControl();
+});
+nav.appendChild(btn);
+}
+
+if (document.readyState === "loading") {
+document.addEventListener("DOMContentLoaded", initFullSiteControl);
+} else {
+initFullSiteControl();
+}
 })();
+)();
