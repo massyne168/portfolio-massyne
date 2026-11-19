@@ -256,50 +256,168 @@
   });
 })();
 function applyStudioAppearance(content) {
-  if (!content) return;
+  if (!content || typeof content !== "object") return;
+const root = document.documentElement;
 const colors = content.colors || (content.appearance && content.appearance.colors) || {};
-const root = document.documentElement.style;
-if (colors.accent) {
-root.setProperty("--accent", colors.accent);
-root.setProperty("--accent-color", colors.accent);
-root.setProperty("--studio-accent", colors.accent);
+  if (colors.accent) {
+root.style.setProperty("--accent", colors.accent);
+root.style.setProperty("--accent-color", colors.accent);
+root.style.setProperty("--studio-accent", colors.accent);
 }
-if (colors.light) {
-root.setProperty("--light", colors.light);
-root.setProperty("--text-light", colors.light);
+if (colors.light) root.style.setProperty("--light", colors.light);
+if (colors.surface) root.style.setProperty("--surface", colors.surface);
+if (colors.text) {
+root.style.setProperty("--text", colors.text);
+root.style.setProperty("--text-light", colors.text);
 }
-  if (!document.body) return;
 const bg = content.background || (content.appearance && content.appearance.background) || {};
-const existing = document.getElementById("massyne-live-bg");
-if (bg.type === "color" && (bg.color || bg.backgroundColor)) {
-if (existing) existing.remove();
-document.body.style.backgroundColor = bg.color || bg.backgroundColor;
-return;
+const bgType = bg.type || "theme";
+const oldBg = document.getElementById("massyne-live-bg");
+if (oldBg) oldBg.remove();
+const oldOverride = document.getElementById("massyne-live-bg-override");
+if (oldOverride) oldOverride.remove();
+if (bgType === "theme" || !bgType) {
+if (document.body) {
+document.body.style.backgroundColor = "";
+document.body.style.backgroundImage = "";
 }
-if (bg.type === "image" || bg.type === "gif" || bg.type === "video") {
-const src = bg.path || bg.backgroundPath || bg.source;
-if (!src) return;
-const layer = existing || document.createElement("div");
-layer.id = "massyne-live-bg";
-layer.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;";
-const fit = bg.fit || bg.backgroundFit || "cover";
-const pos = bg.position || bg.backgroundPosition || "center";
-const media = document.createElement(bg.type === "video" ? "video" : "img");
-media.src = src;
-if (bg.type === "video") {
-media.autoplay = true;
-media.muted = true;
-media.loop = true;
-media.playsInline = true;
+} else if (document.body) {
+const ov = document.createElement("style");
+ov.id = "massyne-live-bg-override";
+ov.textContent = "html, body, main, .hero, section { background-color: transparent !important; background-image: none !important; }";
+document.head.appendChild(ov);
+const wrap = document.createElement("div");
+wrap.id = "massyne-live-bg";
+wrap.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;";
+const fit = bg.fit === "contain" ? "contain" : "cover";
+const pos = bg.position || "center";
+const overlay = Math.max(0, Math.min(85, Number(bg.overlay || 0)));
+const blur = Math.max(0, Math.min(24, Number(bg.blur || 0)));
+const opacity = Math.max(10, Math.min(100, Number(bg.opacity ?? 100))) / 100;
+let layer = null;
+if (bgType === "color") {
+layer = document.createElement("div");
+layer.style.cssText = `position:absolute;inset:0;background:${bg.color || "#0a0a0c"};opacity:${opacity};`;
+} else if (bgType === "gradient") {
+layer = document.createElement("div");
+const c1 = bg.gradColor1 || "#0b0b0f";
+const c2 = bg.gradColor2 || "#1f1235";
+const ang = Number(bg.gradAngle ?? 135);
+layer.style.cssText = `position:absolute;inset:0;background:linear-gradient(${ang}deg,${c1},${c2});opacity:${opacity};`;
+} else if ((bgType === "image" || bgType === "gif") && (bg.url || bg.src || bg.image)) {
+layer = document.createElement("img");
+layer.src = bg.url || bg.src || bg.image;
+layer.alt = "";
+layer.style.cssText = `width:100%;height:100%;display:block;object-fit:${fit};object-position:${pos};opacity:${opacity};${blur ? `filter:blur(${blur}px);transform:scale(1.04);` : ""}`;
+} else if (bgType === "video" && (bg.url || bg.src || bg.video)) {
+layer = document.createElement("video");
+layer.src = bg.url || bg.src || bg.video;
+layer.autoplay = true;
+layer.loop = true;
+layer.muted = true;
+layer.playsInline = true;
+layer.style.cssText = `width:100%;height:100%;display:block;object-fit:${fit};object-position:${pos};opacity:${opacity};${blur ? `filter:blur(${blur}px);transform:scale(1.04);` : ""}`;
 }
-media.style.cssText = `width:100%;height:100%;object-fit:${fit};object-position:${pos};`;
-const overlay = document.createElement("div");
-const alpha = Math.max(0, Math.min(70, Number(bg.overlay || 0))) / 100;
-overlay.style.cssText = `position:absolute;inset:0;background:rgba(0,0,0,${alpha});`;
-layer.replaceChildren(media, overlay);
-if (!existing) document.body.prepend(layer);
+if (layer) wrap.appendChild(layer);
+if (overlay > 0) {
+const dim = document.createElement("div");
+dim.style.cssText = `position:absolute;inset:0;background:rgba(0,0,0,${overlay / 100});`;
+wrap.appendChild(dim);
+}
+document.body.prepend(wrap);
+}
+applyStudioExtras(content);
+}
+function applyStudioExtras(content) {
+if (!content || typeof content !== "object") return;
+const extras = content.extras;
+if (!extras || typeof extras !== "object") return;
+if (typeof extras.heroBadge === "string" && extras.heroBadge.trim()) {
+let badge = document.querySelector("[data-studio-hero-badge='1'], .hero-badge, .hero .badge");
+if (!badge) {
+const nodes = document.querySelectorAll(".hero span, .hero div, .hero p, span, div");
+for (const el of nodes) {
+if (el.children.length === 0 && /visual\s*thinker/i.test(el.textContent || "")) {
+badge = el;
+badge.setAttribute("data-studio-hero-badge", "1");
+break;
 }
 }
+}
+if (badge) badge.textContent = extras.heroBadge.trim();
+}
+const heroFields = [
+["heroRole", "[data-studio-field='heroRole'], .hero-role, .hero .role"],
+["heroEyebrowLeft", "[data-studio-field='heroEyebrowLeft'], .hero-eyebrow-left, .hero .eyebrow-left"],
+["heroEyebrowRight", "[data-studio-field='heroEyebrowRight'], .hero-eyebrow-right, .hero .eyebrow-right"],
+["heroPrimaryCta", "[data-studio-field='heroPrimaryCta'], .hero .btn-primary, .hero a.primary"],
+["heroSecondaryCta", "[data-studio-field='heroSecondaryCta'], .hero .btn-secondary, .hero a.secondary"]
+];
+heroFields.forEach(([key, sel]) => {
+if (typeof extras[key] === "string" && extras[key].trim()) {
+const el = document.querySelector(sel);
+if (el) el.textContent = extras[key].trim();
+}
+});
+if (extras.sectionVisibility && typeof extras.sectionVisibility === "object") {
+["#work", "#archive", "#motion", "#about", "#services", "#contact"].forEach(sel => {
+const key = sel.replace("#", "");
+const val = extras.sectionVisibility[sel] !== undefined ? extras.sectionVisibility[sel] : extras.sectionVisibility[key];
+const sec = document.querySelector(sel);
+if (sec) sec.style.display = val === false ? "none" : "";
+});
+}
+if (Array.isArray(extras.skills) && extras.skills.length > 0) {
+const list = document.querySelector(".skills-list");
+if (list) {
+const first = list.firstElementChild;
+const tag = first ? first.tagName.toLowerCase() : "span";
+const cls = first ? first.className : "skill-item";
+list.innerHTML = "";
+extras.skills.forEach(item => {
+const txt = typeof item === "string" ? item : (item && (item.name || item.label || item.title)) || "";
+if (!txt) return;
+const node = document.createElement(tag);
+if (cls) node.className = cls;
+node.textContent = txt;
+list.appendChild(node);
+});
+}
+}
+if (Array.isArray(extras.experience) && extras.experience.length > 0) {
+const timeline = document.querySelector(".experience-timeline");
+if (timeline) {
+timeline.innerHTML = "";
+extras.experience.forEach(item => {
+const row = document.createElement("div");
+row.className = "experience-item";
+if (typeof item === "string") {
+row.textContent = item;
+} else if (item && typeof item === "object") {
+const role = item.role || item.title || "";
+const company = item.company || item.place || "";
+const period = item.period || item.year || "";
+const desc = item.description || "";
+row.innerHTML = `<div class="exp-head"><strong>${role}</strong>${company ? ` <span>@ ${company}</span>` : ""}${period ? ` <small>${period}</small>` : ""}</div>${desc ? `<p>${desc}</p>` : ""}`;
+}
+timeline.appendChild(row);
+});
+}
+}
+let cssEl = document.getElementById("massyne-custom-css");
+if (typeof extras.customCss === "string" && extras.customCss.trim()) {
+if (!cssEl) {
+cssEl = document.createElement("style");
+cssEl.id = "massyne-custom-css";
+document.head.appendChild(cssEl);
+}
+cssEl.textContent = extras.customCss;
+} else if (cssEl) {
+cssEl.remove();
+}
+}
+window.applyStudioAppearance = applyStudioAppearance;
+window.applyStudioExtras = applyStudioExtras;
 if (window.MASSYNE_STUDIO_CONTENT) applyStudioAppearance(window.MASSYNE_STUDIO_CONTENT);
 document.addEventListener("DOMContentLoaded", () => {
 if (window.MASSYNE_STUDIO_CONTENT) applyStudioAppearance(window.MASSYNE_STUDIO_CONTENT);
