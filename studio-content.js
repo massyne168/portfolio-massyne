@@ -28,7 +28,7 @@ window.MASSYNE_STUDIO_CONTENT = {
       "src": "images/studio-uploads/1795199387456-be5ef4cf-Code_Generated_Image.webp",
       "overlay": 65,
       "fit": "cover",
-      "position": "bottom"
+      "position": "center"
     }
   },
   "services": [
