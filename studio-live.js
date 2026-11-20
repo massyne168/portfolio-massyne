@@ -255,3 +255,52 @@
     if (title) title.textContent = project.title || title.textContent;
   });
 })();
+(() => {
+  "use strict";
+
+  async function revealDashboardForOwner() {
+    try {
+      const response = await fetch("/api/studio-access", { credentials: "same-origin" });
+      if (!response.ok) return;
+      const data = await response.json();
+      if (data && data.authenticated === true) {
+        document.querySelectorAll('a[href*="studio.html"]').forEach(link => {
+          link.classList.add("is-studio-owner");
+        });
+      }
+    } catch (_) {}
+  }
+
+  function applyThemeCombo(content) {
+    const combo = content && content.site && content.site.themeCombo;
+    if (!combo) return;
+    const isSafe = v => typeof v === "string" && /^[#a-zA-Z0-9(),.\s%-]+$/.test(v.trim());
+    if (!isSafe(combo.color1) || !isSafe(combo.color2) || !isSafe(combo.background) || !isSafe(combo.button)) return;
+
+    const css = [
+      `:root { --accent: ${combo.color1}; --accent-color: ${combo.color1}; --light: ${combo.color2}; --bg: ${combo.background}; --background: ${combo.background}; --btn-bg: ${combo.button}; }`,
+      `html, body { background-color: ${combo.background} !important; }`,
+      `main, section, footer, #work, #archive, #motion, #about, #services, #contact, .hero, .section { background-color: transparent !important; background-image: none !important; }`,
+      `.button-primary, .btn-primary, .hero-cta-primary, a[href*="studio.html"] { background-color: ${combo.button} !important; border-color: ${combo.button} !important; }`
+    ].join("\n");
+
+    let styleEl = document.getElementById("massyne-theme-combo");
+    if (!styleEl) {
+      styleEl = document.createElement("style");
+      styleEl.id = "massyne-theme-combo";
+      (document.head || document.documentElement).appendChild(styleEl);
+    }
+    styleEl.textContent = css;
+  }
+
+  function initOwnerAndThemeCombo() {
+    revealDashboardForOwner();
+    applyThemeCombo(window.MASSYNE_STUDIO_CONTENT);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initOwnerAndThemeCombo);
+  } else {
+    initOwnerAndThemeCombo();
+  }
+})();
