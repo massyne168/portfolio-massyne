@@ -830,7 +830,7 @@
       ${field("category", "Project label", item.category || "")}
       ${field("kind", "Media type", item.kind || "video", { options: [{ value: "video", label: "Video" }, { value: "gif", label: "Animated GIF" }] })}
       ${field("source", "Media source path", item.source || "", { wide: true, help: "Use a repository path for video, or upload an animated GIF below." })}
-      ${fileUploadField("mediaUpload", "Upload animated GIF", "Optional. Upload an MP4 video or animated GIF (under 3 MB).", { accept: "video/mp4,.mp4,image/gif,.gif" })}
+      ${fileUploadField("mediaUpload", "Upload animated GIF", "Optional. Animated GIF only; MP4 video still uses an existing repository path.", { accept: "image/gif,.gif" })}
     </div>`;
     return `<div class="field-grid">
       ${field("title", "Service title", item.title || "", { wide: true })}
@@ -946,7 +946,7 @@
       }
       if (page === "motion" && motionInput?.files?.[0]) {
         const file = motionInput.files[0];
-        if (file.type !== "image/gif" && file.type !== "video/mp4") {
+        if (file.type !== "image/gif") {
           showToast("Motion uploads currently support animated GIFs. Use a repository path for MP4 video.");
           return;
         }
@@ -1018,7 +1018,7 @@
           if (task.role === "gallery") result.gallery.push(media.path);
           if (task.role === "motion") {
             result.source = media.path;
-            result.kind = task.file.type === "video/mp4" ? "video" : "gif";
+            result.kind = "gif";
           }
           task.input.value = "";
           updateUploadSelection(task.input);
