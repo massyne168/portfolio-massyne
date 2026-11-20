@@ -1,27 +1,46 @@
 (function () {
+  function hasStudioBackground() {
+    const studioBg = document.getElementById("site-background-layer");
+    return Boolean(studioBg && studioBg.querySelector(".site-background-media"));
+  }
+
+  function removeParallaxIfStudioActive() {
+    if (!hasStudioBackground()) return false;
+    const existing = document.getElementById("massyne-parallax-bg");
+    if (existing) existing.remove();
+    return true;
+  }
+
   function initParallaxBg() {
+    if (removeParallaxIfStudioActive()) return;
     if (document.getElementById("massyne-parallax-bg")) return;
 
     const stage = document.createElement("div");
     stage.id = "massyne-parallax-bg";
     stage.setAttribute("aria-hidden", "true");
     stage.style.cssText =
-      "position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;zoom:1.07527;overflow:hidden;perspective:1200px;pointer-events:none;background:#08080a;transition:opacity 0.25s ease;";
+      "position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;zoom:1.07527;overflow:hidden;perspective:1200px;pointer-events:none;background:transparent;transition:opacity 0.25s ease;";
 
     const layer = document.createElement("div");
     layer.style.cssText =
       "position:absolute;inset:-10%;width:120%;height:120%;transform-style:preserve-3d;will-change:transform;";
 
-    const bgCfg = window.MASSYNE_STUDIO_CONTENT?.site?.background; const customBgSrc = bgCfg?.path || bgCfg?.src; const defaultBgSrc = "images/og-preview.jpg"; const bgSrc = customBgSrc || defaultBgSrc; const isVideoBg = bgCfg?.type === "video" || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(bgSrc); const img = document.createElement(isVideoBg ? "video" : "img");
-    img.src = bgSrc; if (isVideoBg) { img.autoplay = true; img.loop = true; img.muted = true; img.playsInline = true; }
+    const bgCfg = window.MASSYNE_STUDIO_CONTENT?.site?.background;
+    const customBgSrc = bgCfg?.path || bgCfg?.src || bgCfg?.url;
+    const defaultBgSrc = "images/og-preview.jpg";
+    const bgSrc = customBgSrc || defaultBgSrc;
+    const isVideoBg = bgCfg?.type === "video" || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(bgSrc);
+    const img = document.createElement(isVideoBg ? "video" : "img");
+    img.src = bgSrc;
+    if (isVideoBg) { img.autoplay = true; img.loop = true; img.muted = true; img.playsInline = true; }
     img.alt = "";
     img.style.cssText =
       "width:100%;height:100%;object-fit:cover;display:block;filter:blur(0px);";
-    img.onerror = function () { img.style.display = "none"; };
+    img.onerror = function () { stage.remove(); };
 
     const overlay = document.createElement("div");
     overlay.style.cssText =
-      "position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%, rgba(8, 8, 10, 0.76), rgba(8, 8, 10, 0.88));";
+      "position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%, rgba(8, 8, 10, 0.35), rgba(8, 8, 10, 0.55));";
 
     layer.appendChild(img);
     stage.appendChild(layer);
@@ -29,10 +48,12 @@
     document.body.prepend(stage);
 
     function syncTheme() {
+      if (removeParallaxIfStudioActive()) return;
       const isLight =
         document.documentElement.getAttribute("data-theme") === "light" ||
         document.body.classList.contains("light-theme");
-      stage.style.display = isLight ? "none" : "block"; stage.style.opacity = isLight ? "0" : "1";
+      stage.style.display = isLight ? "none" : "block";
+      stage.style.opacity = isLight ? "0" : "1";
     }
     syncTheme();
     if (window.MutationObserver) {
@@ -40,10 +61,14 @@
         attributes: true,
         attributeFilter: ["data-theme", "class"]
       });
+      new MutationObserver(removeParallaxIfStudioActive).observe(document.body, {
+        childList: true,
+        subtree: true
+      });
     }
 
     let mx = 0, my = 0, tx = 0, ty = 0;
-    const depth = 1.0; // 100% 3D Depth
+    const depth = 1.0;
 
     window.addEventListener("mousemove", function (e) {
       tx = (e.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
@@ -58,6 +83,7 @@
     }, { passive: true });
 
     function tick() {
+      if (!document.body.contains(stage)) return;
       mx += (tx - mx) * 0.07;
       my += (ty - my) * 0.07;
       const moveX = -mx * 26 * depth;
