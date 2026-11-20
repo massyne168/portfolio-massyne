@@ -33,12 +33,12 @@ function normalizedContent(content) {
   const sourceBackground = content.site.background && typeof content.site.background === "object" && !Array.isArray(content.site.background)
     ? content.site.background
     : {};
-  const type = ["theme", "color", "gradient", "image", "gif", "video"].includes(sourceBackground.type) ? sourceBackground.type : "theme";
+  const type = ["theme", "color", "image", "gif", "video"].includes(sourceBackground.type) ? sourceBackground.type : "theme";
   const overlay = Number(sourceBackground.overlay);
   const background = {
     type,
     color: safeColor(sourceBackground.color, colors.light),
-    src: safeBackgroundSource(sourceBackground.src), url: sourceBackground.url !== undefined ? safeBackgroundSource(sourceBackground.url) : undefined, gradColor1: sourceBackground.gradColor1, gradColor2: sourceBackground.gradColor2, gradAngle: sourceBackground.gradAngle, blur: sourceBackground.blur, opacity: sourceBackground.opacity,
+    src: safeBackgroundSource(sourceBackground.src),
     overlay: Number.isFinite(overlay) ? Math.min(70, Math.max(0, Math.round(overlay))) : 0,
     fit: ["cover", "contain"].includes(sourceBackground.fit) ? sourceBackground.fit : "cover",
     position: ["center", "top", "bottom", "left", "right"].includes(sourceBackground.position) ? sourceBackground.position : "center"
