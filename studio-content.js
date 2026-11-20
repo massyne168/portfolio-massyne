@@ -24,7 +24,7 @@ window.MASSYNE_STUDIO_CONTENT = {
     },
     "background": {
       "type": "color",
-      "color": "#0D0D0D",
+      "color": "#06ABC1",
       "src": "",
       "overlay": 0,
       "fit": "cover",
