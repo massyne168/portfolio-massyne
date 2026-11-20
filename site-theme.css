@@ -37,6 +37,37 @@ html[data-theme] main > section,
 html[data-theme] main > article,
 html[data-theme] main > article > section,
 html[data-theme] body > .resume-shell { background-color: transparent !important; }
+html[data-theme="dark"] body > main,
+html[data-theme="dark"] main > section,
+html[data-theme="dark"] main > article,
+html[data-theme="dark"] main > div,
+html[data-theme="dark"] main > section > div:not(.hero-stamp):not(.gurzil):not(.gurzil-lead):not(.project):not([class*="card"]):not([class*="modal"]):not([class*="badge"]):not([class*="stamp"]),
+html[data-theme="dark"] main > article > section,
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] .hero-v2,
+html[data-theme="dark"] .section,
+html[data-theme="dark"] .identity,
+html[data-theme="dark"] .motion,
+html[data-theme="dark"] .archive,
+html[data-theme="dark"] .about,
+html[data-theme="dark"] .contact,
+html[data-theme="dark"] .ticker,
+html[data-theme="dark"] body > .resume-shell {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+html[data-theme="dark"] main::before,
+html[data-theme="dark"] main::after,
+html[data-theme="dark"] section::before,
+html[data-theme="dark"] section::after,
+html[data-theme="dark"] .hero::before,
+html[data-theme="dark"] .hero::after,
+html[data-theme="dark"] .hero-v2::before,
+html[data-theme="dark"] .hero-v2::after {
+  background: transparent !important;
+  background-image: none !important;
+}
 #site-background-layer { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background-color: var(--site-background-color, var(--site-light)); }
 #site-background-layer .site-background-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: var(--site-background-fit, cover); object-position: var(--site-background-position, center); }
 #site-background-layer .site-background-overlay { position: absolute; inset: 0; background-color: rgba(0,0,0,var(--site-background-overlay, 0)); }
