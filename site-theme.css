@@ -41,3 +41,39 @@ html[data-theme] body > .resume-shell { background-color: transparent !important
 #site-background-layer .site-background-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: var(--site-background-fit, cover); object-position: var(--site-background-position, center); }
 #site-background-layer .site-background-overlay { position: absolute; inset: 0; background-color: rgba(0,0,0,var(--site-background-overlay, 0)); }
 @media (prefers-reduced-motion: reduce) { #site-background-layer .site-background-video { display: none !important; } }
+/* Unify single solid background color across all portfolio sections and remove section glow flashes */
+html,
+body,
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background-color: #f4f2ec !important;
+  background-image: none !important;
+}
+
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+  background-color: var(--bg-dark, #0b0b0e) !important;
+  background-image: none !important;
+}
+
+main,
+section,
+.hero,
+#work,
+#process,
+#identity,
+#motion,
+#creative-lab,
+#archive,
+#services,
+#contact,
+footer,
+section::before,
+section::after,
+.hero::before,
+.hero::after,
+#contact::before,
+#contact::after {
+  background-color: transparent !important;
+  background-image: none !important;
+}
