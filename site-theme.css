@@ -81,3 +81,58 @@ section::after,
 [class*="ambient-glow"], [class*="bg-glow"], [class*="section-glow"], [class*="hero-glow"], [class*="radial-glow"], .studio-bg-glow { display: none !important; background: none !important; }
 html[data-theme="light"] #identity h1, html[data-theme="light"] #identity h2, html[data-theme="light"] #identity h3, html[data-theme="light"] #identity .brand-title, html[data-theme="light"] #identity a, html[data-theme="light"] #identity .stat-label, html[data-theme="light"] #identity .meta-label, body.light-theme #identity h1, body.light-theme #identity h2, body.light-theme #identity h3, body.light-theme #identity .brand-title, body.light-theme #identity a, body.light-theme #identity .stat-label, body.light-theme #identity .meta-label, html.light #identity h1, html.light #identity h2, html.light #identity h3, html.light #identity .brand-title, html.light #identity a, html.light #identity .stat-label, html.light #identity .meta-label { color: #111318 !important; }
 html[data-theme="light"] #motion button, html[data-theme="light"] #motion a[class*="study"], html[data-theme="light"] #motion .open-study, html[data-theme="light"] #top a[href*="resume"], html[data-theme="light"] #top .resume-btn, body.light-theme #motion button, body.light-theme #motion a[class*="study"], body.light-theme #motion .open-study, body.light-theme #top a[href*="resume"], body.light-theme #top .resume-btn, html.light #motion button, html.light #motion a[class*="study"], html.light #motion .open-study, html.light #top a[href*="resume"], html.light #top .resume-btn { color: #ffffff !important; }
+/* Fix #1: Ensure #top (Hero) & its inner wrappers stay transparent in Light Mode so #f4f2ec shows cleanly */
+html[data-theme="light"] #top,
+html[data-theme="light"] #top > *,
+html[data-theme="light"] .hero,
+html[data-theme="light"] .hero-stage,
+html[data-theme="light"] .hero-wrap,
+body.light-theme #top,
+body.light-theme #top > *,
+body.light-theme .hero {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Fix #2: Remove remaining burgundy/maroon tint inside #contact in Dark Mode */
+#contact,
+#contact > *,
+#contact .contact-shell,
+#contact .contact-panel,
+#contact .contact-wrap,
+#contact::before,
+#contact::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Fix #3: Light Mode contrast for GURZIL title in #identity */
+html[data-theme="light"] #identity h1,
+html[data-theme="light"] #identity h2,
+html[data-theme="light"] #identity .brand-title,
+html[data-theme="light"] #identity .identity-title,
+html[data-theme="light"] #identity [class*="title"],
+body.light-theme #identity h1,
+body.light-theme #identity h2,
+body.light-theme #identity [class*="title"] {
+  color: #111116 !important;
+  -webkit-text-fill-color: #111116 !important;
+}
+
+/* Fix #4: Crisp contrast for OPEN STUDY buttons in #motion (both modes) */
+#motion a,
+#motion button,
+#motion .open-study,
+#motion [class*="study"] {
+  color: #ffffff !important;
+}
+html[data-theme="light"] #motion a,
+html[data-theme="light"] #motion button,
+html[data-theme="light"] #motion .open-study,
+html[data-theme="light"] #motion [class*="study"] {
+  background-color: #18181f !important;
+  color: #ffffff !important;
+  border-color: rgba(17, 17, 22, 0.2) !important;
+}
