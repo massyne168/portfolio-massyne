@@ -39,7 +39,7 @@ function normalizedContent(content) {
     type,
     color: safeColor(sourceBackground.color, colors.light),
     src: safeBackgroundSource(sourceBackground.src),
-    overlay: Number.isFinite(overlay) ? Math.min(70, Math.max(0, Math.round(overlay))) : 0,
+    overlay: Number.isFinite(overlay) ? Math.min(100, Math.max(0, Math.round(overlay))) : 0,
     fit: ["cover", "contain"].includes(sourceBackground.fit) ? sourceBackground.fit : "cover",
     position: ["center", "top", "bottom", "left", "right"].includes(sourceBackground.position) ? sourceBackground.position : "center"
   };
@@ -82,13 +82,15 @@ function paletteStyles(colors) {
   --ui-focus: var(--site-light);
 }
 html[data-theme] { background-color: var(--site-background-color, var(--site-light)) !important; }
+html[data-theme="dark"] { background-color: #050608 !important; }
 html[data-theme] body { position: relative; isolation: isolate; background: transparent !important; }
 html[data-theme] body > main,
 html[data-theme] main > section,
 html[data-theme] main > article,
 html[data-theme] main > article > section,
 html[data-theme] body > .resume-shell { background-color: transparent !important; }
-#site-background-layer { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background-color: var(--site-background-color, var(--site-light)); }
+#site-background-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background-color: var(--site-background-color, var(--site-light)); }
+html[data-theme="dark"] #site-background-layer { background-color: #050608; }
 #site-background-layer .site-background-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: var(--site-background-fit, cover); object-position: var(--site-background-position, center); }
 #site-background-layer .site-background-overlay { position: absolute; inset: 0; background-color: rgba(0,0,0,var(--site-background-overlay, 0)); }
 @media (prefers-reduced-motion: reduce) { #site-background-layer .site-background-video { display: none !important; } }
