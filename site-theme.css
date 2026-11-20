@@ -31,124 +31,13 @@
   --ui-focus: var(--site-light);
 }
 html[data-theme] { background-color: var(--site-background-color, var(--site-light)) !important; }
-html[data-theme="dark"] { background-color: #050608 !important; }
-html[data-theme] body { position: relative; isolation: isolate; background: transparent !important; background-image: none !important; }
-html[data-theme] body > main,
-html[data-theme] .footer-reveal-shell,
-html[data-theme] footer { position: relative; z-index: 1; }
-
-/* Unified transparent background across ALL sections (high-specificity ID + class overrides) */
+html[data-theme] body { position: relative; isolation: isolate; background: transparent !important; }
 html[data-theme] body > main,
 html[data-theme] main > section,
 html[data-theme] main > article,
-html[data-theme] main > div.ticker,
-html[data-theme] main > div.section-flow,
 html[data-theme] main > article > section,
-html[data-theme] section#home-panel.hero.hero-v2,
-html[data-theme] #home-panel,
-html[data-theme] section#work.section.featured,
-html[data-theme] #work,
-html[data-theme] section#process.section.process-comparison,
-html[data-theme] #process,
-html[data-theme] section#identity.gurzil-brand.gb-teaser.section,
-html[data-theme] #identity,
-html[data-theme] section#motion.section.motion,
-html[data-theme] #motion,
-html[data-theme] section#creative-lab.section.lab-entry,
-html[data-theme] #creative-lab,
-html[data-theme] section#archive.section.archive,
-html[data-theme] #archive,
-html[data-theme] section#services.studio-services,
-html[data-theme] #services,
-html[data-theme] #services .studio-services-inner,
-html[data-theme] section#about.about.about-v2.section,
-html[data-theme] #about,
-html[data-theme] section#contact.contact.contact-v2,
-html[data-theme] #contact,
-html[data-theme] .ticker,
-html[data-theme] .footer-reveal-shell,
-html[data-theme] footer,
-html[data-theme] body > .resume-shell {
-  background: transparent !important;
-  background-color: transparent !important;
-  background-image: none !important;
-  border-top-color: var(--line) !important;
-}
-
-/* Remove per-section backdrop glows and pseudo-element overlays on ALL sections */
-html[data-theme] main::before,
-html[data-theme] main::after,
-html[data-theme] section::before,
-html[data-theme] section::after,
-html[data-theme] #home-panel::before,
-html[data-theme] #home-panel::after,
-html[data-theme] #home-panel .hero-ambient,
-html[data-theme] #work::before,
-html[data-theme] #work::after,
-html[data-theme] #process::before,
-html[data-theme] #process::after,
-html[data-theme] #identity::before,
-html[data-theme] #identity::after,
-html[data-theme] #motion::before,
-html[data-theme] #motion::after,
-html[data-theme] #creative-lab::before,
-html[data-theme] #creative-lab::after,
-html[data-theme] #archive::before,
-html[data-theme] #archive::after,
-html[data-theme] #services::before,
-html[data-theme] #services::after,
-html[data-theme] #about::before,
-html[data-theme] #about::after,
-html[data-theme] #contact::before,
-html[data-theme] #contact::after {
-  content: none !important;
-  display: none !important;
-  background: transparent !important;
-  background-image: none !important;
-  opacity: 0 !important;
-}
-
-#site-background-layer {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  z-index: 0 !important;
-  zoom: 1.07527;
-  overflow: hidden !important;
-  pointer-events: none !important;
-  background-color: var(--site-background-color, var(--site-light));
-}
-html[data-theme="dark"] #site-background-layer {
-  background-color: #050608;
-}
+html[data-theme] body > .resume-shell { background-color: transparent !important; }
+#site-background-layer { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background-color: var(--site-background-color, var(--site-light)); }
 #site-background-layer .site-background-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: var(--site-background-fit, cover); object-position: var(--site-background-position, center); }
 #site-background-layer .site-background-overlay { position: absolute; inset: 0; background-color: rgba(0,0,0,var(--site-background-overlay, 0)); }
-#massyne-parallax-bg {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  z-index: 0 !important;
-  zoom: 1.07527;
-  overflow: hidden !important;
-  pointer-events: none !important;
-}
 @media (prefers-reduced-motion: reduce) { #site-background-layer .site-background-video { display: none !important; } }
-
-/* Free up 3D curated gallery from tight outer frame and top/bottom clipping */
-#work .curated-stage {
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: clamp(34px, 4.5vw, 64px) 0 !important;
-  overflow-x: clip !important;
-  overflow-y: visible !important;
-  height: auto !important;
-}
-#work .curated-stage .project-grid {
-  overflow: visible !important;
-}

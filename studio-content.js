@@ -23,10 +23,10 @@ window.MASSYNE_STUDIO_CONTENT = {
       "light": "#F5EBD0"
     },
     "background": {
-      "type": "image",
+      "type": "video",
       "color": "#000000",
-      "src": "images/studio-uploads/1795199387456-be5ef4cf-Code_Generated_Image.webp",
-      "overlay": 65,
+      "src": "images/studio-uploads/1795211985976-141d5bdc-12802103_1280_720_30fps.mp4",
+      "overlay": 70,
       "fit": "cover",
       "position": "center"
     }
