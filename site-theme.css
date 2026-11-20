@@ -36,28 +36,35 @@ html[data-theme] body { position: relative; isolation: isolate; background: tran
 html[data-theme] body > main,
 html[data-theme] .footer-reveal-shell,
 html[data-theme] footer { position: relative; z-index: 1; }
+
+/* Unified transparent background across ALL sections (high-specificity ID + class overrides) */
 html[data-theme] body > main,
 html[data-theme] main > section,
 html[data-theme] main > article,
 html[data-theme] main > div.ticker,
 html[data-theme] main > div.section-flow,
 html[data-theme] main > article > section,
-html[data-theme] .hero,
-html[data-theme] .hero-v2,
-html[data-theme] .section,
-html[data-theme] .featured,
-html[data-theme] .process-comparison,
-html[data-theme] .identity,
-html[data-theme] .gurzil-brand,
-html[data-theme] .motion,
-html[data-theme] .lab-entry,
-html[data-theme] .archive,
-html[data-theme] .studio-services,
-html[data-theme] .studio-services-inner,
-html[data-theme] .about,
-html[data-theme] .about-v2,
-html[data-theme] .contact,
-html[data-theme] .contact-v2,
+html[data-theme] section#home-panel.hero.hero-v2,
+html[data-theme] #home-panel,
+html[data-theme] section#work.section.featured,
+html[data-theme] #work,
+html[data-theme] section#process.section.process-comparison,
+html[data-theme] #process,
+html[data-theme] section#identity.gurzil-brand.gb-teaser.section,
+html[data-theme] #identity,
+html[data-theme] section#motion.section.motion,
+html[data-theme] #motion,
+html[data-theme] section#creative-lab.section.lab-entry,
+html[data-theme] #creative-lab,
+html[data-theme] section#archive.section.archive,
+html[data-theme] #archive,
+html[data-theme] section#services.studio-services,
+html[data-theme] #services,
+html[data-theme] #services .studio-services-inner,
+html[data-theme] section#about.about.about-v2.section,
+html[data-theme] #about,
+html[data-theme] section#contact.contact.contact-v2,
+html[data-theme] #contact,
 html[data-theme] .ticker,
 html[data-theme] .footer-reveal-shell,
 html[data-theme] footer,
@@ -65,22 +72,42 @@ html[data-theme] body > .resume-shell {
   background: transparent !important;
   background-color: transparent !important;
   background-image: none !important;
+  border-top-color: var(--line) !important;
 }
+
+/* Remove per-section backdrop glows and pseudo-element overlays on ALL sections */
 html[data-theme] main::before,
 html[data-theme] main::after,
 html[data-theme] section::before,
 html[data-theme] section::after,
-html[data-theme] .hero::before,
-html[data-theme] .hero::after,
-html[data-theme] .hero-v2::before,
-html[data-theme] .hero-v2::after,
-html[data-theme] .contact::before,
-html[data-theme] .contact::after,
-html[data-theme] .studio-services::before,
-html[data-theme] .studio-services::after {
+html[data-theme] #home-panel::before,
+html[data-theme] #home-panel::after,
+html[data-theme] #home-panel .hero-ambient,
+html[data-theme] #work::before,
+html[data-theme] #work::after,
+html[data-theme] #process::before,
+html[data-theme] #process::after,
+html[data-theme] #identity::before,
+html[data-theme] #identity::after,
+html[data-theme] #motion::before,
+html[data-theme] #motion::after,
+html[data-theme] #creative-lab::before,
+html[data-theme] #creative-lab::after,
+html[data-theme] #archive::before,
+html[data-theme] #archive::after,
+html[data-theme] #services::before,
+html[data-theme] #services::after,
+html[data-theme] #about::before,
+html[data-theme] #about::after,
+html[data-theme] #contact::before,
+html[data-theme] #contact::after {
+  content: none !important;
+  display: none !important;
   background: transparent !important;
   background-image: none !important;
+  opacity: 0 !important;
 }
+
 #site-background-layer {
   position: fixed !important;
   inset: 0 !important;
@@ -124,23 +151,4 @@ html[data-theme="dark"] #site-background-layer {
 }
 #work .curated-stage .project-grid {
   overflow: visible !important;
-}
-
-/* Remove red background and red radial glow from #contact */
-html[data-theme] section#contact.contact.contact-v2,
-html[data-theme] #contact {
-  background: transparent !important;
-  background-color: transparent !important;
-  background-image: none !important;
-  border-top-color: var(--line) !important;
-}
-html[data-theme] section#contact.contact.contact-v2::before,
-html[data-theme] section#contact.contact.contact-v2::after,
-html[data-theme] #contact::before,
-html[data-theme] #contact::after {
-  content: none !important;
-  display: none !important;
-  background: transparent !important;
-  background-image: none !important;
-  opacity: 0 !important;
 }
