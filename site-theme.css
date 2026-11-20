@@ -31,13 +31,79 @@
   --ui-focus: var(--site-light);
 }
 html[data-theme] { background-color: var(--site-background-color, var(--site-light)) !important; }
-html[data-theme] body { position: relative; isolation: isolate; background: transparent !important; }
+html[data-theme="dark"] { background-color: #050608 !important; }
+html[data-theme] body { position: relative; isolation: isolate; background: transparent !important; background-image: none !important; }
+html[data-theme] body > main,
+html[data-theme] .footer-reveal-shell,
+html[data-theme] footer { position: relative; z-index: 1; }
 html[data-theme] body > main,
 html[data-theme] main > section,
 html[data-theme] main > article,
+html[data-theme] main > div.ticker,
+html[data-theme] main > div.section-flow,
 html[data-theme] main > article > section,
-html[data-theme] body > .resume-shell { background-color: transparent !important; }
-#site-background-layer { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background-color: var(--site-background-color, var(--site-light)); }
+html[data-theme] .hero,
+html[data-theme] .hero-v2,
+html[data-theme] .section,
+html[data-theme] .featured,
+html[data-theme] .process-comparison,
+html[data-theme] .identity,
+html[data-theme] .gurzil-brand,
+html[data-theme] .motion,
+html[data-theme] .lab-entry,
+html[data-theme] .archive,
+html[data-theme] .studio-services,
+html[data-theme] .studio-services-inner,
+html[data-theme] .about,
+html[data-theme] .about-v2,
+html[data-theme] .contact,
+html[data-theme] .contact-v2,
+html[data-theme] .ticker,
+html[data-theme] .footer-reveal-shell,
+html[data-theme] footer,
+html[data-theme] body > .resume-shell {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+html[data-theme] main::before,
+html[data-theme] main::after,
+html[data-theme] section::before,
+html[data-theme] section::after,
+html[data-theme] .hero::before,
+html[data-theme] .hero::after,
+html[data-theme] .hero-v2::before,
+html[data-theme] .hero-v2::after,
+html[data-theme] .contact::before,
+html[data-theme] .contact::after,
+html[data-theme] .studio-services::before,
+html[data-theme] .studio-services::after {
+  background: transparent !important;
+  background-image: none !important;
+}
+#massyne-parallax-bg {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  z-index: 0 !important;
+  zoom: 1.07527;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+#site-background-layer {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  z-index: -1 !important;
+  zoom: 1.07527;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  background-color: var(--site-background-color, var(--site-light));
+}
 #site-background-layer .site-background-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: var(--site-background-fit, cover); object-position: var(--site-background-position, center); }
 #site-background-layer .site-background-overlay { position: absolute; inset: 0; background-color: rgba(0,0,0,var(--site-background-overlay, 0)); }
 @media (prefers-reduced-motion: reduce) { #site-background-layer .site-background-video { display: none !important; } }
