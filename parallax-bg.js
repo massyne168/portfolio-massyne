@@ -12,8 +12,8 @@
     layer.style.cssText =
       "position:absolute;inset:-7%;width:114%;height:114%;transform-style:preserve-3d;will-change:transform;";
 
-    const img = document.createElement("img");
-    img.src = "images/obsidian-mist-bg.webp";
+    const bgCfg = window.MASSYNE_STUDIO_CONTENT?.site?.background; const customBgSrc = bgCfg?.path || bgCfg?.src; const defaultBgSrc = "images/og-preview.jpg"; const bgSrc = customBgSrc || defaultBgSrc; const isVideoBg = bgCfg?.type === "video" || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(bgSrc); const img = document.createElement(isVideoBg ? "video" : "img");
+    img.src = bgSrc; if (isVideoBg) { img.autoplay = true; img.loop = true; img.muted = true; img.playsInline = true; }
     img.alt = "";
     img.style.cssText =
       "width:100%;height:100%;object-fit:cover;display:block;filter:blur(0px);";
@@ -21,7 +21,7 @@
 
     const overlay = document.createElement("div");
     overlay.style.cssText =
-      "position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%, rgba(8,8,10,0.42), rgba(8,8,10,0.90));";
+      "position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%, rgba(8,8,10,0.35), rgba(8,8,10,0.82));";
 
     layer.appendChild(img);
     stage.appendChild(layer);
