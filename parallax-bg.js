@@ -6,7 +6,7 @@
     stage.id = "massyne-parallax-bg";
     stage.setAttribute("aria-hidden", "true");
     stage.style.cssText =
-      "position:fixed;inset:0;z-index:-1;overflow:hidden;perspective:1200px;pointer-events:none;background:#08080a;transition:opacity 0.25s ease;";
+      "position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;z-index:0;zoom:1.07527;overflow:hidden;perspective:1200px;pointer-events:none;background:#08080a;transition:opacity 0.25s ease;";
 
     const layer = document.createElement("div");
     layer.style.cssText =
