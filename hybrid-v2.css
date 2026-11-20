@@ -6,14 +6,16 @@
   --hybrid-border-strong: rgba(255, 255, 255, 0.18);
 }
 
-/* Single Unified Background (Dark Mode) — never alters position or z-index */
-html[data-theme="dark"],
+/* Single Unified Background (Dark Mode) — never covers #massyne-parallax-bg */
+html[data-theme="dark"] {
+  background-color: var(--hybrid-bg-dark) !important;
+}
+
 html[data-theme="dark"] body,
 body.dark,
 body.dark-theme {
-  background-color: var(--hybrid-bg-dark) !important;
-  background-image: radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.12), transparent 42%) !important;
-  background-attachment: fixed !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 html[data-theme="dark"] main,
