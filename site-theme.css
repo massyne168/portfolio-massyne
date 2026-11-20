@@ -125,3 +125,22 @@ html[data-theme="dark"] #site-background-layer {
 #work .curated-stage .project-grid {
   overflow: visible !important;
 }
+
+/* Remove red background and red radial glow from #contact */
+html[data-theme] section#contact.contact.contact-v2,
+html[data-theme] #contact {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-top-color: var(--line) !important;
+}
+html[data-theme] section#contact.contact.contact-v2::before,
+html[data-theme] section#contact.contact.contact-v2::after,
+html[data-theme] #contact::before,
+html[data-theme] #contact::after {
+  content: none !important;
+  display: none !important;
+  background: transparent !important;
+  background-image: none !important;
+  opacity: 0 !important;
+}
