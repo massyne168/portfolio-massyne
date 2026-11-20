@@ -110,3 +110,18 @@ html[data-theme="dark"] #site-background-layer {
   pointer-events: none !important;
 }
 @media (prefers-reduced-motion: reduce) { #site-background-layer .site-background-video { display: none !important; } }
+
+/* Free up 3D curated gallery from tight outer frame and top/bottom clipping */
+#work .curated-stage {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: clamp(34px, 4.5vw, 64px) 0 !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+  height: auto !important;
+}
+#work .curated-stage .project-grid {
+  overflow: visible !important;
+}
