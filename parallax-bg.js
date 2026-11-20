@@ -32,8 +32,9 @@
     const isVideoBg = bgCfg?.type === "video" || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(bgSrc);
     const img = document.createElement(isVideoBg ? "video" : "img");
     img.src = bgSrc;
-    if (isVideoBg) { img.autoplay = true; img.loop = true; img.muted = true; img.playsInline = true; }
+    if (isVideoBg) { img.autoplay = true; img.loop = true; img.muted = true; img.playsInline = true; img.preload = "metadata"; }
     img.alt = "";
+    img.decoding = "async";
     img.style.cssText =
       "width:100%;height:100%;object-fit:cover;display:block;filter:blur(0px);";
     img.onerror = function () { stage.remove(); };
@@ -47,43 +48,13 @@
     stage.appendChild(overlay);
     document.body.prepend(stage);
 
-    function syncTheme() {
-      if (removeParallaxIfStudioActive()) return;
-      const isLight =
-        document.documentElement.getAttribute("data-theme") === "light" ||
-        document.body.classList.contains("light-theme");
-      stage.style.display = isLight ? "none" : "block";
-      stage.style.opacity = isLight ? "0" : "1";
-    }
-    syncTheme();
-    if (window.MutationObserver) {
-      new MutationObserver(syncTheme).observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["data-theme", "class"]
-      });
-      new MutationObserver(removeParallaxIfStudioActive).observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    }
-
     let mx = 0, my = 0, tx = 0, ty = 0;
+    let rafId = 0;
     const depth = 1.0;
 
-    window.addEventListener("mousemove", function (e) {
-      tx = (e.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
-      ty = (e.clientY / Math.max(1, window.innerHeight)) * 2 - 1;
-    }, { passive: true });
-
-    window.addEventListener("touchmove", function (e) {
-      if (e.touches && e.touches[0]) {
-        tx = (e.touches[0].clientX / Math.max(1, window.innerWidth)) * 2 - 1;
-        ty = (e.touches[0].clientY / Math.max(1, window.innerHeight)) * 2 - 1;
-      }
-    }, { passive: true });
-
     function tick() {
-      if (!document.body.contains(stage)) return;
+      rafId = 0;
+      if (document.hidden || !document.body.contains(stage)) return;
       mx += (tx - mx) * 0.07;
       my += (ty - my) * 0.07;
       const moveX = -mx * 26 * depth;
@@ -92,9 +63,41 @@
       const rotX = -my * 3.5 * depth;
       layer.style.transform =
         "translate3d(" + moveX.toFixed(2) + "px," + moveY.toFixed(2) + "px,0) rotateX(" + rotX.toFixed(2) + "deg) rotateY(" + rotY.toFixed(2) + "deg)";
-      requestAnimationFrame(tick);
+      if (Math.abs(tx - mx) > 0.001 || Math.abs(ty - my) > 0.001) {
+        rafId = requestAnimationFrame(tick);
+      }
     }
-    requestAnimationFrame(tick);
+
+    function wake() {
+      if (!rafId && !document.hidden && document.body.contains(stage)) {
+        rafId = requestAnimationFrame(tick);
+      }
+    }
+
+    if (window.MutationObserver) {
+      new MutationObserver(removeParallaxIfStudioActive).observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    }
+
+    window.addEventListener("mousemove", function (e) {
+      tx = (e.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
+      ty = (e.clientY / Math.max(1, window.innerHeight)) * 2 - 1;
+      wake();
+    }, { passive: true });
+
+    window.addEventListener("touchmove", function (e) {
+      if (e.touches && e.touches[0]) {
+        tx = (e.touches[0].clientX / Math.max(1, window.innerWidth)) * 2 - 1;
+        ty = (e.touches[0].clientY / Math.max(1, window.innerHeight)) * 2 - 1;
+        wake();
+      }
+    }, { passive: true });
+
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) wake();
+    });
   }
 
   if (document.readyState === "loading") {
