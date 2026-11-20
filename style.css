@@ -1,4 +1,3 @@
-
 /* MASSYNE — Cinematic Red 2.0 | 2026 */
 :root{
   --ink:#09090c;--ink-soft:#111115;--surface:#17171c;--paper:var(--site-light, var(--site-light, #FCF6F5));
@@ -468,3 +467,25 @@ body{zoom:.93}
 
 /* Keep full-screen overlays aligned to the viewport under the page scale. */
 body :is(dialog,.site-preloader,.takeover-panel){zoom:1.07527}
+
+/* Keep main sections transparent so custom site background media stays visible across the full page. */
+main,
+section,
+.hero,
+.hero-v2,
+.section,
+.identity,
+.motion,
+.archive,
+.about,
+.contact,
+.ticker {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.site-header {
+  background: rgba(9, 9, 12, 0.45) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
