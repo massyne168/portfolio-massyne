@@ -258,7 +258,7 @@
 function applyStudioAppearance(content) {
   if (!content || typeof content !== "object") return;
 const root = document.documentElement;
-const colors = content.colors || (content.appearance && content.appearance.colors) || {};
+const colors = (content.site && content.site.colors) || content.colors || (content.appearance && content.appearance.colors) || {};
   if (colors.accent) {
 root.style.setProperty("--accent", colors.accent);
 root.style.setProperty("--accent-color", colors.accent);
@@ -270,25 +270,25 @@ if (colors.text) {
 root.style.setProperty("--text", colors.text);
 root.style.setProperty("--text-light", colors.text);
 }
-const bg = content.background || (content.appearance && content.appearance.background) || {};
+const bg = (content.site && content.site.background) || content.background || (content.appearance && content.appearance.background) || {};
 const bgType = bg.type || "theme";
 const oldBg = document.getElementById("massyne-live-bg");
 if (oldBg) oldBg.remove();
 const oldOverride = document.getElementById("massyne-live-bg-override");
-if (oldOverride) oldOverride.remove();
-if (bgType === "theme" || !bgType) {
+if (oldOverride) oldOverride.remove(); const oldUnified = document.getElementById("massyne-unified-bg"); if (oldUnified) oldUnified.remove();
+if (bgType === "theme" || !bgType) { const unified = document.createElement("style"); unified.id = "massyne-unified-bg"; unified.textContent = 'html, body { background: #060709 !important; } html[data-theme="light"], html[data-theme="light"] body, body.light-theme { background: #f5f4f0 !important; } main, section, .hero, .section, [class*="section"], [class*="band"], footer { background-color: transparent !important; background-image: none !important; }'; document.head.appendChild(unified);
 if (document.body) {
 document.body.style.backgroundColor = "";
 document.body.style.backgroundImage = "";
 }
 } else if (document.body) {
 const ov = document.createElement("style");
-ov.id = "massyne-live-bg-override";
-ov.textContent = "html, body, main, .hero, section { background-color: transparent !important; background-image: none !important; }";
+ov.id = "massyne-unified-bg";
+ov.textContent = 'body > *:not(#massyne-live-bg) { position: relative; z-index: 1; } html, body, main, section, .hero, .section, [class*="section"], [class*="band"], footer { background-color: transparent !important; background-image: none !important; }'; //  background-color: transparent !important; background-image: none !important; }";
 document.head.appendChild(ov);
 const wrap = document.createElement("div");
 wrap.id = "massyne-live-bg";
-wrap.style.cssText = "position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;";
+wrap.style.cssText = "position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;";
 const fit = bg.fit === "contain" ? "contain" : "cover";
 const pos = bg.position || "center";
 const overlay = Math.max(0, Math.min(85, Number(bg.overlay || 0)));
