@@ -22,10 +22,10 @@
       "light": "#F5EBD0"
     },
     "background": {
-      "type": "image",
-      "color": "#F0EDE5",
-      "src": "images/studio-uploads/1795130978614-56b71ac3-Chrome-Massyne-Frequency-Core.webp",
-      "overlay": 65,
+      "type": "color",
+      "color": "#0D0D0D",
+      "src": "",
+      "overlay": 0,
       "fit": "cover",
       "position": "center"
     }
