@@ -1,0 +1,112 @@
+/* MASSYNE Hybrid v2 — Unified Obsidian Background + Liquid Chrome Polish */
+:root {
+  --hybrid-bg-dark: #050608;
+  --hybrid-bg-light: #f5f4f0;
+  --hybrid-border: rgba(255, 255, 255, 0.085);
+  --hybrid-border-strong: rgba(255, 255, 255, 0.18);
+}
+
+/* Single Unified Background (Dark Mode) — never alters position or z-index */
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+body.dark,
+body.dark-theme {
+  background-color: var(--hybrid-bg-dark) !important;
+  background-image: radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.12), transparent 42%) !important;
+  background-attachment: fixed !important;
+}
+
+html[data-theme="dark"] main,
+html[data-theme="dark"] main > section,
+html[data-theme="dark"] footer,
+body.dark main,
+body.dark main > section,
+body.dark footer {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Liquid Chrome Card Polish (Dark Mode) */
+html[data-theme="dark"] .project-card,
+html[data-theme="dark"] .work-card,
+html[data-theme="dark"] .motion-card,
+html[data-theme="dark"] .service-card,
+html[data-theme="dark"] .archive-card,
+body.dark .project-card,
+body.dark .work-card,
+body.dark .motion-card,
+body.dark .service-card,
+body.dark .archive-card {
+  background: linear-gradient(180deg, rgba(20, 22, 30, 0.72) 0%, rgba(10, 12, 16, 0.94) 100%) !important;
+  border: 1px solid var(--hybrid-border) !important;
+  border-radius: 18px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 40px rgba(0, 0, 0, 0.45) !important;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+html[data-theme="dark"] .project-card:hover,
+html[data-theme="dark"] .work-card:hover,
+html[data-theme="dark"] .motion-card:hover,
+html[data-theme="dark"] .service-card:hover,
+html[data-theme="dark"] .archive-card:hover,
+body.dark .project-card:hover,
+body.dark .work-card:hover,
+body.dark .motion-card:hover,
+body.dark .service-card:hover,
+body.dark .archive-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--hybrid-border-strong) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 24px 55px rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Floating Archive OS Cursor Preview */
+#hybrid-float-preview {
+  position: fixed;
+  z-index: 900;
+  pointer-events: none;
+  width: 240px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+  background: #08090d;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+#hybrid-float-preview.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+#hybrid-float-preview img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+/* Subtle 3-Mood Accent Pill */
+.hybrid-mood-dock {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  margin-left: 8px;
+}
+.hybrid-mood-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.hybrid-mood-dot:hover,
+.hybrid-mood-dot.is-active {
+  transform: scale(1.2);
+  border-color: #ffffff;
+}
