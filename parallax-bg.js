@@ -10,7 +10,7 @@
 
     const layer = document.createElement("div");
     layer.style.cssText =
-      "position:absolute;inset:-7%;width:114%;height:114%;transform-style:preserve-3d;will-change:transform;";
+      "position:absolute;inset:-10%;width:120%;height:120%;transform-style:preserve-3d;will-change:transform;";
 
     const bgCfg = window.MASSYNE_STUDIO_CONTENT?.site?.background; const customBgSrc = bgCfg?.path || bgCfg?.src; const defaultBgSrc = "images/og-preview.jpg"; const bgSrc = customBgSrc || defaultBgSrc; const isVideoBg = bgCfg?.type === "video" || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(bgSrc); const img = document.createElement(isVideoBg ? "video" : "img");
     img.src = bgSrc; if (isVideoBg) { img.autoplay = true; img.loop = true; img.muted = true; img.playsInline = true; }
@@ -21,7 +21,7 @@
 
     const overlay = document.createElement("div");
     overlay.style.cssText =
-      "position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%, rgba(8,8,10,0.35), rgba(8,8,10,0.82));";
+      "position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%, rgba(8, 8, 10, 0.76), rgba(8, 8, 10, 0.88));";
 
     layer.appendChild(img);
     stage.appendChild(layer);
@@ -32,7 +32,7 @@
       const isLight =
         document.documentElement.getAttribute("data-theme") === "light" ||
         document.body.classList.contains("light-theme");
-      stage.style.opacity = isLight ? "0" : "1";
+      stage.style.display = isLight ? "none" : "block"; stage.style.opacity = isLight ? "0" : "1";
     }
     syncTheme();
     if (window.MutationObserver) {
@@ -60,10 +60,10 @@
     function tick() {
       mx += (tx - mx) * 0.07;
       my += (ty - my) * 0.07;
-      const moveX = -mx * 42 * depth;
-      const moveY = -my * 28 * depth;
-      const rotY = mx * 5.5 * depth;
-      const rotX = -my * 4.5 * depth;
+      const moveX = -mx * 26 * depth;
+      const moveY = -my * 18 * depth;
+      const rotY = mx * 3.5 * depth;
+      const rotX = -my * 3.5 * depth;
       layer.style.transform =
         "translate3d(" + moveX.toFixed(2) + "px," + moveY.toFixed(2) + "px,0) rotateX(" + rotX.toFixed(2) + "deg) rotateY(" + rotY.toFixed(2) + "deg)";
       requestAnimationFrame(tick);
