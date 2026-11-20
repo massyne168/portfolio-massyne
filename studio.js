@@ -76,7 +76,7 @@
           type,
           color: safeHex(source.color, siteLight),
           src: safeBackgroundSource(source.src),
-          overlay: Number.isFinite(overlay) ? Math.min(70, Math.max(0, Math.round(overlay))) : DEFAULT_SITE_BACKGROUND.overlay,
+          overlay: Number.isFinite(overlay) ? Math.min(100, Math.max(0, Math.round(overlay))) : DEFAULT_SITE_BACKGROUND.overlay,
           fit: ["cover", "contain"].includes(source.fit) ? source.fit : DEFAULT_SITE_BACKGROUND.fit,
           position: ["center", "top", "bottom", "left", "right"].includes(source.position) ? source.position : DEFAULT_SITE_BACKGROUND.position
         };
@@ -485,7 +485,7 @@
                 ] })}
                 <div class="field wide">
                   <label for="field-backgroundOverlay">Dark overlay <output id="background-overlay-value">${Number(background.overlay || 0)}%</output></label>
-                  <input id="field-backgroundOverlay" name="backgroundOverlay" type="range" min="0" max="70" step="5" value="${Number(background.overlay || 0)}">
+                  <input id="field-backgroundOverlay" name="backgroundOverlay" type="range" min="0" max="100" step="5" value="${Number(background.overlay || 0)}">
                   <small class="field-help">Raise it if the background makes text harder to read.</small>
                 </div>
               </div>
@@ -596,7 +596,7 @@
       }
       const overlay = document.createElement("div");
       overlay.className = "site-background-preview-overlay";
-      overlay.style.opacity = String(Math.min(70, Math.max(0, Number(form.elements.backgroundOverlay.value) || 0)) / 100);
+      overlay.style.opacity = String(Math.min(100, Math.max(0, Number(form.elements.backgroundOverlay.value) || 0)) / 100);
       preview.append(overlay);
     }
     const label = document.createElement("span");
@@ -1245,5 +1245,3 @@
     contentRoot.innerHTML = '<div class="empty-state"><div><strong>Studio could not load</strong><p>Refresh the page. If the issue continues, import a saved content package.</p></div></div>';
   });
 })();
-
-
