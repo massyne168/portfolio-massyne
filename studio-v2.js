@@ -436,7 +436,7 @@ const host = document.getElementById("studio-content");
 if (!host) return;
 host.innerHTML = `<div class="v2-fsc-wrap"><p class="v2-fsc-status">Loading studio-content.json...</p></div>`;
 const content = await loadLatestContent();
-const bg = Object.assign({ type: "theme", color: "#0a0a0c", gradColor1: "#0b0b0f", gradColor2: "#1f1235", gradAngle: 135, url: "", fit: "cover", position: "center", overlay: 0, blur: 0, opacity: 100 }, content.background || (content.site && content.site.background) || {});
+const bg = Object.assign({ type: "theme", color: "#0a0a0c", gradColor1: "#0b0b0f", gradColor2: "#1f1235", gradAngle: 135, url: "", fit: "cover", position: "center", overlay: 0, blur: 0, opacity: 100 }, ((content.site && content.site.background) || content.background) || (content.site && content.site.background) || {});
 const extras = Object.assign({ heroBadge: "VISUAL THINKER.", heroRole: "", heroEyebrowLeft: "", heroEyebrowRight: "", heroPrimaryCta: "", heroSecondaryCta: "", skills: [], experience: [], sectionVisibility: { "#work": true, "#archive": true, "#motion": true, "#about": true, "#services": true, "#contact": true }, customCss: "" }, content.extras || {});
 let expRows = Array.isArray(extras.experience) ? extras.experience.map(x => typeof x === "string" ? { role: x, company: "", period: "", description: "" } : Object.assign({ role: "", company: "", period: "", description: "" }, x)) : [];
 let activeTab = "bg";
@@ -620,7 +620,7 @@ experience: expRows.filter(r => r.role || r.company || r.period),
 sectionVisibility: secVis,
 customCss: document.getElementById("fsc-custom-css").value
 };
-const merged = Object.assign({}, latest, { background: newBg, extras: newExtras });
+const merged = Object.assign({}, latest, { site: Object.assign({}, (latest && latest.site) || {}, { background: newBg }), background: newBg, extras: newExtras });
 const res = await fetch("/api/studio-publish", {
 method: "POST",
 headers: { "Content-Type": "application/json" },
