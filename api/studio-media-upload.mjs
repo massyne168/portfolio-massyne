@@ -3,7 +3,7 @@ import { isStudioSessionAuthenticated } from "./studio-access.mjs";
 
 const REPOSITORY = "massyne168/portfolio-massyne";
 const GITHUB_API = "https://api.github.com";
-const MAX_UPLOAD_BYTES = 3 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 const MAX_FILES = 12;
 const MEDIA_TYPES = {
   "image/png": { extension: "png" },
@@ -106,7 +106,7 @@ function validateFiles(inputFiles) {
     }
     totalBytes += bytes.length;
     if (totalBytes > MAX_UPLOAD_BYTES) {
-      const error = new Error("Keep media uploads under 3 MB total per save.");
+      const error = new Error("Keep media uploads under 5 MB total per save.");
       error.status = 413;
       throw error;
     }
