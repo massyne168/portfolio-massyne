@@ -25,7 +25,7 @@ window.MASSYNE_STUDIO_CONTENT = {
     "background": {
       "type": "video",
       "color": "#000000",
-      "src": "images/studio-uploads/1795212583382-54ee211d-12802103_1280_720_30fps.mp4",
+      "src": "https://www.pexels.com/download/video/34756980/",
       "overlay": 70,
       "fit": "cover",
       "position": "center"
