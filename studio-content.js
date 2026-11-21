@@ -26,7 +26,7 @@ window.MASSYNE_STUDIO_CONTENT = {
       "type": "image",
       "color": "#000000",
       "src": "images/studio-uploads/1795217280153-c2508e81-asd.png",
-      "overlay": 35,
+      "overlay": 0,
       "fit": "cover",
       "position": "center"
     }
