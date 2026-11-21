@@ -46,15 +46,7 @@ jobs:
         shell: 'bash'
         run: |-
           mkdir -p .gemini
-          jq -n \\
-            --arg title "${TITLE}" \\
-            --arg desc "${DESCRIPTION}" \\
-            --arg event "${EVENT_NAME}" \\
-            --arg pr "${IS_PULL_REQUEST}" \\
-            --arg num "${ISSUE_NUMBER}" \\
-            --arg repo "${REPOSITORY}" \\
-            --arg context "${ADDITIONAL_CONTEXT}" \\
-            '{title: $title, description: $desc, event_name: $event, is_pull_request: $pr, issue_number: $num, repository: $repo, additional_context: $context}' > .gemini/context.json
+          jq -n --arg title "${TITLE}" --arg desc "${DESCRIPTION}" --arg event "${EVENT_NAME}" --arg pr "${IS_PULL_REQUEST}" --arg num "${ISSUE_NUMBER}" --arg repo "${REPOSITORY}" --arg context "${ADDITIONAL_CONTEXT}" '{title: $title, description: $desc, event_name: $event, is_pull_request: $pr, issue_number: $num, repository: $repo, additional_context: $context}' > .gemini/context.json
         env:
           TITLE: '${{ github.event.pull_request.title || github.event.issue.title }}'
           DESCRIPTION: '${{ github.event.pull_request.body || github.event.issue.body }}'
