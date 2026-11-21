@@ -1,0 +1,71 @@
+name: Gemini Cloud Assistant
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  dispatch:
+    if: >-
+      ${{ github.event.issue.pull_request == null &&
+          github.event.sender.type == 'User' &&
+          startsWith(github.event.comment.body, '@gemini-cli') &&
+          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association) }}
+    runs-on: ubuntu-latest
+    outputs:
+      command: ${{ steps.parse.outputs.command }}
+      additional_context: ${{ steps.parse.outputs.additional_context }}
+    steps:
+      - name: Parse Gemini request
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.comment.body.trim();
+            if (body.startsWith('@gemini-cli /approve')) {
+              core.setOutput('command', 'approve');
+              core.setOutput('additional_context', body.replace(/^@gemini-cli \/approve/, '').trim());
+            } else {
+              core.setOutput('command', 'invoke');
+              core.setOutput('additional_context', body.replace(/^@gemini-cli/, '').trim());
+            }
+
+      - name: Acknowledge request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPOSITORY" --body "🤖 I received your request and started working. Track progress: $RUN_URL"
+
+  invoke:
+    needs: dispatch
+    if: ${{ needs.dispatch.outputs.command == 'invoke' }}
+    uses: ./.github/workflows/gemini-invoke.yml
+    permissions:
+      contents: read
+      id-token: write
+      issues: write
+      pull-requests: write
+    with:
+      additional_context: ${{ needs.dispatch.outputs.additional_context }}
+    secrets: inherit
+
+  plan-execute:
+    needs: dispatch
+    if: ${{ needs.dispatch.outputs.command == 'approve' }}
+    uses: ./.github/workflows/gemini-plan-execute.yml
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
+      pull-requests: write
+    with:
+      additional_context: ${{ needs.dispatch.outputs.additional_context }}
+    secrets: inherit
