@@ -46,14 +46,14 @@ jobs:
         shell: 'bash'
         run: |-
           mkdir -p .gemini
-          jq -n \
-            --arg title "${TITLE}" \
-            --arg desc "${DESCRIPTION}" \
-            --arg event "${EVENT_NAME}" \
-            --arg pr "${IS_PULL_REQUEST}" \
-            --arg num "${ISSUE_NUMBER}" \
-            --arg repo "${REPOSITORY}" \
-            --arg context "${ADDITIONAL_CONTEXT}" \
+          jq -n \\
+            --arg title "${TITLE}" \\
+            --arg desc "${DESCRIPTION}" \\
+            --arg event "${EVENT_NAME}" \\
+            --arg pr "${IS_PULL_REQUEST}" \\
+            --arg num "${ISSUE_NUMBER}" \\
+            --arg repo "${REPOSITORY}" \\
+            --arg context "${ADDITIONAL_CONTEXT}" \\
             '{title: $title, description: $desc, event_name: $event, is_pull_request: $pr, issue_number: $num, repository: $repo, additional_context: $context}' > .gemini/context.json
         env:
           TITLE: '${{ github.event.pull_request.title || github.event.issue.title }}'
@@ -84,8 +84,6 @@ jobs:
           use_vertex_ai: '${{ vars.GOOGLE_GENAI_USE_VERTEXAI }}'
           upload_artifacts: '${{ vars.UPLOAD_ARTIFACTS }}'
           workflow_name: 'gemini-invoke'
-          # Assistant workflows can be triggered by comments on either Issues or PRs.
-          # We explicitly map both fields so the CLI can correctly categorize the interaction.
           github_pr_number: '${{ github.event.pull_request.number }}'
           github_issue_number: '${{ github.event.issue.number }}'
           settings: |-
@@ -127,8 +125,8 @@ jobs:
                   }
                 }
               },
-              "tools": {
-                "core": []
-              }
+              "coreTools": [
+                "run_shell_command(echo)"
+              ]
             }
           prompt: '/gemini-invoke'
