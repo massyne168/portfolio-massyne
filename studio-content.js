@@ -19,8 +19,8 @@ window.MASSYNE_STUDIO_CONTENT = {
     "resume": "resume.html",
     "portfolioPdf": "images/massyne-portfolio.pdf",
     "colors": {
-      "accent": "#7F011F",
-      "light": "#F5EBD0"
+      "accent": "#75001B",
+      "light": "#F3EDDD"
     },
     "background": {
       "type": "image",
