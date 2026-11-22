@@ -146,8 +146,14 @@ export default async function handler(req, res) {
     if (!filePath) {
       return send(res, 400, { message: "Invalid or blocked file path." });
     }
+    if (!isAllowedTextFile(filePath)) {
+      return send(res, 403, { message: "This file type is not editable through Full Access." });
+    }
     if (typeof body.content !== "string") {
       return send(res, 400, { message: "File content must be a string." });
+    }
+    if (Buffer.byteLength(body.content, "utf8") > 1_000_000) {
+      return send(res, 413, { message: "This file is too large to edit through Studio." });
     }
 
     const message = String(body.message || `Update ${filePath} via MASSYNE Studio`).trim();
