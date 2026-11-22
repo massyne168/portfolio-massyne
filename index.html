@@ -136,7 +136,8 @@ main section :is(
   .about-resume,
   .about-download,
   .contact-links a,
-  .brief-copy
+  .brief-copy,
+  .contact-glass-pill
 ) {
   position: relative;
   border-radius: 999px !important;
@@ -172,6 +173,7 @@ main section :is(
   .hero-button-primary,
   .contact-v2-button,
   .brief-submit,
+  .contact-glass-pill.is-primary,
   .filters button.active,
   .discover-categories button[aria-pressed="true"],
   .view-switch button[aria-pressed="true"]
@@ -206,7 +208,8 @@ main section :is(
     .about-download,
     .about-collaborate,
     .contact-links a,
-    .brief-copy
+    .brief-copy,
+    .contact-glass-pill
   ):hover {
     transform: translateY(-2px) scale(1.018) !important;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.025) 100%) !important;
@@ -221,6 +224,7 @@ main section :is(
     .hero-button-primary,
     .contact-v2-button,
     .brief-submit,
+    .contact-glass-pill.is-primary,
     .filters button.active,
     .discover-categories button[aria-pressed="true"],
     .view-switch button[aria-pressed="true"]
@@ -251,9 +255,295 @@ main section :is(
   .contact-v2-button,
   .contact-links a,
   .brief-submit,
-  .brief-copy
+  .brief-copy,
+  .contact-glass-pill
 ):active {
   transform: translateY(0) scale(0.97) !important;
+}
+
+/* ===== CONTACT SECTION: Option 2 Centered Liquid Glass Hub + Inline "Tell me your idea." ===== */
+#contact {
+  padding: clamp(56px, 7vw, 110px) clamp(16px, 4vw, 48px) !important;
+}
+#contact .contact-glass-shell {
+  width: min(100%, 1140px);
+  margin: 0 auto;
+  border-radius: 28px;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.068) 0%, rgba(255, 255, 255, 0.022) 55%, rgba(255, 255, 255, 0.045) 100%) !important;
+  -webkit-backdrop-filter: blur(5px) saturate(165%) brightness(1.06) !important;
+  backdrop-filter: blur(5px) saturate(165%) brightness(1.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), inset 0 -1px 0 rgba(255, 255, 255, 0.06), 0 24px 60px rgba(0, 0, 0, 0.42) !important;
+  overflow: hidden;
+}
+#contact .contact-hub {
+  padding: clamp(36px, 5vw, 56px) clamp(20px, 4vw, 48px) clamp(30px, 4vw, 44px);
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+#contact .contact-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font: 500 10px/1.4 'IBM Plex Mono', monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 208, 0.68);
+  margin: 0 0 16px;
+}
+#contact .contact-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.85);
+  flex-shrink: 0;
+}
+#contact .contact-hub h2 {
+  font: 600 clamp(32px, 5.2vw, 66px)/1.04 'Sora', sans-serif !important;
+  letter-spacing: -0.045em !important;
+  color: #F5EBD0 !important;
+  margin: 0 0 18px !important;
+  text-align: center !important;
+}
+#contact .contact-hub h2 span {
+  color: #E10505 !important;
+}
+#contact .contact-email-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 28px;
+}
+#contact .contact-email-big {
+  font: 500 clamp(17px, 2.8vw, 32px)/1.2 'Manrope', sans-serif !important;
+  letter-spacing: -0.02em;
+  color: #F5EBD0 !important;
+  text-decoration: none;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  word-break: break-all;
+}
+#contact .contact-email-big:hover {
+  color: #FFFFFF !important;
+}
+#contact .contact-glass-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  font: 600 11px/1 'IBM Plex Mono', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+}
+#contact .contact-glass-pill.is-sm {
+  padding: 8px 14px;
+  font-size: 10px;
+}
+#contact .contact-hub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Inline "Tell me your idea." brief inside Contact */
+#contact .contact-brief-wrap {
+  padding: clamp(26px, 4vw, 44px) clamp(20px, 4vw, 48px) clamp(32px, 4vw, 46px);
+}
+#contact .contact-brief-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 22px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#contact .contact-brief-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 10px/1 'IBM Plex Mono', monospace;
+  letter-spacing: 0.16em;
+  color: rgba(245, 235, 208, 0.68);
+}
+#contact .contact-brief-tag i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #E10505;
+  display: inline-block;
+}
+#contact .contact-brief-badge {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font: 500 9px/1 'IBM Plex Mono', monospace;
+  letter-spacing: 0.14em;
+  color: rgba(245, 235, 208, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+}
+#contact .contact-brief-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.34fr) 1fr;
+  gap: clamp(24px, 4vw, 44px);
+  align-items: start;
+}
+#contact .contact-brief-side {
+  padding-right: 24px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+#contact .contact-brief-side h3 {
+  font: 700 clamp(34px, 4.2vw, 52px)/0.98 'Sora', sans-serif !important;
+  letter-spacing: -0.05em !important;
+  color: #F5EBD0 !important;
+  margin: 0 !important;
+}
+#contact .contact-brief-side h3 em {
+  display: block;
+  margin-top: 6px;
+  font: italic 400 clamp(38px, 4.8vw, 58px)/1 'DM Serif Display', serif !important;
+  letter-spacing: -0.02em;
+  color: #E10505 !important;
+}
+#contact .contact-brief-side p {
+  margin: 20px 0 0;
+  font: 400 13px/1.7 'Manrope', sans-serif;
+  color: rgba(245, 235, 208, 0.65);
+}
+#contact .contact-brief-loc {
+  margin-top: 16px !important;
+  font: 500 9px/1.6 'IBM Plex Mono', monospace !important;
+  letter-spacing: 0.14em;
+  color: rgba(245, 235, 208, 0.45) !important;
+  text-transform: uppercase;
+}
+
+/* Force #project-brief permanently inline & glass-styled (never modal/hidden) */
+#contact #project-brief {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#contact #project-brief .brief-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+  margin: 0 !important;
+}
+#contact #project-brief .brief-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 7px !important;
+  min-width: 0 !important;
+}
+#contact #project-brief .brief-field.wide {
+  grid-column: 1 / -1 !important;
+}
+#contact #project-brief .brief-field label {
+  font: 500 9px/1.2 'IBM Plex Mono', monospace !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: rgba(245, 235, 208, 0.68) !important;
+}
+#contact #project-brief :is(input, select, textarea) {
+  width: 100% !important;
+  font: 400 13px/1.4 'Manrope', sans-serif !important;
+  color: #F5EBD0 !important;
+  padding: 13px 14px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.038) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  outline: none !important;
+  transition: border-color 0.2s ease, background 0.2s ease !important;
+}
+#contact #project-brief select option {
+  background: #0b0b0f;
+  color: #F5EBD0;
+}
+#contact #project-brief :is(input, textarea)::placeholder {
+  color: rgba(245, 235, 208, 0.36) !important;
+}
+#contact #project-brief :is(input, select, textarea):focus {
+  border-color: rgba(225, 5, 5, 0.7) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+#contact #project-brief textarea {
+  min-height: 120px !important;
+  resize: vertical !important;
+}
+#contact #project-brief .brief-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-top: 4px !important;
+}
+#contact #project-brief .brief-actions button {
+  padding: 12px 22px !important;
+  font: 600 11px/1 'IBM Plex Mono', monospace !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+#contact #project-brief .brief-note {
+  margin: 0 !important;
+  font: 400 11px/1.6 'Manrope', sans-serif !important;
+  color: rgba(245, 235, 208, 0.5) !important;
+}
+#contact #project-brief .brief-feedback {
+  margin: 0 !important;
+  font: 500 12px/1.5 'Manrope', sans-serif !important;
+  color: #F5EBD0 !important;
+}
+
+/* Hide any legacy "Write a project brief" popup trigger if injected by external scripts */
+#contact .brief-open,
+#contact .brief-trigger,
+#contact .project-brief-trigger,
+#contact [data-brief-open],
+#contact [data-open-brief],
+.brief-modal-close {
+  display: none !important;
+}
+
+@media (max-width: 860px) {
+  #contact .contact-brief-layout {
+    grid-template-columns: 1fr;
+  }
+  #contact .contact-brief-side {
+    padding-right: 0;
+    padding-bottom: 20px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  #contact #project-brief .brief-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 </style></head>
 <body><div class="site-preloader" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="MASSYNE portfolio introduction">
@@ -461,33 +751,91 @@ main section :is(
    </div>
  </div>
 </section>
-<div class="section-flow" data-flow-target="contact" aria-hidden="true"><div class="section-flow-line"></div><div class="section-flow-label"><span>UP NEXT / CONTACT</span><span>↓</span></div></div><section class="contact contact-v2" id="contact">
- <div class="contact-v2-heading"><p class="eyebrow">09 / YOUR NEXT PROJECT</p><span>START SOMETHING ORIGINAL / 2026</span></div>
- <h2>HAVE A PROJECT<br><em>IN MIND?</em></h2><div class="availability-block"><div class="availability-strip" data-availability-status data-state="unknown"><span class="availability-dot" aria-hidden="true"></span><a href="#project-brief" data-availability-text>CREATIVE INQUIRIES WELCOME ↗</a></div><p id="availability-description">For projects, collaborations and visual ideas.</p></div>
- <div class="contact-v2-bottom">
-   <p>Let's build something bold together. A great idea deserves a visual identity that stands out.</p>
-   <a class="contact-v2-button studio-link-sheen" data-magnetic href="https://wa.me/212659377324" target="_blank" rel="noopener noreferrer">START A CONVERSATION <span aria-hidden="true">↗</span></a>
+<div class="section-flow" data-flow-target="contact" aria-hidden="true"><div class="section-flow-line"></div><div class="section-flow-label"><span>UP NEXT / CONTACT</span><span>↓</span></div></div><section class="contact contact-v2" id="contact" aria-labelledby="contact-hub-title">
+ <div class="contact-glass-shell">
+  <div class="contact-hub">
+   <p class="contact-eyebrow"><span class="contact-status-dot" aria-hidden="true"></span>09 / DIRECT CONTACT — AVAILABLE FOR PROJECTS</p>
+   <h2 id="contact-hub-title">READY WHEN YOU ARE<span>.</span></h2>
+   <div class="contact-email-row">
+    <a class="contact-email-big" href="mailto:aazizimassine@gmail.com">aazizimassine@gmail.com</a>
+    <button type="button" class="contact-glass-pill is-sm" id="copy-direct-email">COPY</button>
+   </div>
+   <div class="contact-hub-actions">
+    <a class="contact-glass-pill is-primary" href="https://wa.me/212659377324" target="_blank" rel="noopener noreferrer">WHATSAPP <span aria-hidden="true">↗</span></a>
+    <a class="contact-glass-pill" href="mailto:aazizimassine@gmail.com">EMAIL <span aria-hidden="true">↗</span></a>
+    <a class="contact-glass-pill" href="https://www.instagram.com/massyne_901/" target="_blank" rel="noopener noreferrer">INSTAGRAM <span aria-hidden="true">↗</span></a>
+    <a class="contact-glass-pill" href="https://www.behance.net/massyne" target="_blank" rel="noopener noreferrer">BEHANCE <span aria-hidden="true">↗</span></a>
+    <a class="contact-glass-pill" href="images/massyne-portfolio.pdf" download>PORTFOLIO PDF <span aria-hidden="true">↓</span></a>
+   </div>
+  </div>
+  <div class="contact-brief-wrap">
+   <div class="contact-brief-meta">
+    <span class="contact-brief-tag"><i aria-hidden="true"></i>NEW PROJECT / 001</span>
+    <span class="contact-brief-badge">NO ACCOUNT REQUIRED</span>
+   </div>
+   <div class="contact-brief-layout">
+    <div class="contact-brief-side">
+     <h3 id="brief-heading">Tell me<br>your<em>idea.</em></h3>
+     <p>Fill out the quick details and send directly via WhatsApp or Email.</p>
+     <p class="contact-brief-loc">BASED IN MOROCCO — WORKING WORLDWIDE</p>
+    </div>
+    <div id="contact-brief-slot">
+     <form class="project-brief" id="project-brief" data-inline-brief="true" aria-labelledby="brief-heading">
+      <div class="brief-grid">
+       <div class="brief-field"><label for="brief-name">Your name *</label><input id="brief-name" name="name" autocomplete="name" required maxlength="90" placeholder="How should I call you?"></div>
+       <div class="brief-field"><label for="brief-email">Your email *</label><input id="brief-email" name="email" type="email" autocomplete="email" required maxlength="180" placeholder="you@example.com"></div>
+       <div class="brief-field"><label for="brief-type">Project type *</label><select id="brief-type" name="type" required><option value="">Select a service</option><option>Poster / Key Art</option><option>Visual Identity / Branding</option><option>Art Direction</option><option>Motion Graphics</option><option>Other / Not sure yet</option></select></div>
+       <div class="brief-field"><label for="brief-budget">Estimated budget (optional)</label><select id="brief-budget" name="budget"><option>Prefer to discuss</option><option>Under $500 USD</option><option>$500–$1,000 USD</option><option>$1,000–$3,000 USD</option><option>Over $3,000 USD</option></select></div>
+       <div class="brief-field"><label for="brief-timeline">Timeline (optional)</label><select id="brief-timeline" name="timeline"><option>Flexible</option><option>As soon as possible</option><option>2–4 weeks</option><option>1–3 months</option></select></div>
+       <div class="brief-field"><label for="brief-reference">Reference link (optional)</label><input id="brief-reference" name="reference" type="url" placeholder="https://…" maxlength="400"></div>
+       <div class="brief-field wide"><label for="brief-message">Tell me about the idea *</label><textarea id="brief-message" name="message" required minlength="10" maxlength="2500" rows="5" placeholder="What are you creating, who is it for, and what style are you looking for?"></textarea></div>
+      </div>
+      <div class="brief-honeypot" aria-hidden="true" style="position:absolute;left:-9999px"><label>Leave this empty <input name="_honey" tabindex="-1" autocomplete="off"></label></div>
+      <div class="brief-actions"><button class="brief-submit" type="submit">SEND VIA WHATSAPP <span aria-hidden="true">↗</span></button><button class="brief-copy" type="button" id="email-brief">SEND VIA EMAIL <span aria-hidden="true">↗</span></button><button class="brief-copy" type="button" id="copy-brief">COPY BRIEF <span aria-hidden="true">↗</span></button></div>
+      <p class="brief-note">WhatsApp opens a message for you to send. Email submits your brief directly to the inbox through FormSubmit, a third-party email service. First-time email delivery requires inbox activation.</p>
+      <p class="brief-feedback" id="brief-feedback" aria-live="polite"></p><textarea class="brief-output" id="brief-output" aria-label="Prepared project brief; select and copy if automatic clipboard access is unavailable" readonly hidden></textarea>
+     </form>
+    </div>
+   </div>
+  </div>
  </div>
- <a class="email" href="mailto:aazizimassine@gmail.com">aazizimassine@gmail.com <span aria-hidden="true">↗</span></a>
- <div class="contact-links"><a href="https://wa.me/212659377324" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><a href="https://www.instagram.com/massyne_901/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.behance.net/massyne" target="_blank" rel="noopener noreferrer">Behance ↗</a><a href="images/massyne-portfolio.pdf" download>Portfolio PDF ↓</a></div>
-<form class="project-brief" id="project-brief" aria-labelledby="brief-heading">
- <div class="project-brief-head"><span>NEW PROJECT / 001</span><small>NO ACCOUNT REQUIRED</small></div>
- <h3 id="brief-heading">Tell me your<br><em>idea.</em></h3>
- <div class="brief-grid">
-  <div class="brief-field"><label for="brief-name">Your name *</label><input id="brief-name" name="name" autocomplete="name" required maxlength="90" placeholder="How should I call you?"></div>
-  <div class="brief-field"><label for="brief-email">Your email *</label><input id="brief-email" name="email" type="email" autocomplete="email" required maxlength="180" placeholder="you@example.com"></div>
-  <div class="brief-field"><label for="brief-type">Project type *</label><select id="brief-type" name="type" required><option value="">Select a service</option><option>Poster / Key Art</option><option>Visual Identity / Branding</option><option>Art Direction</option><option>Motion Graphics</option><option>Other / Not sure yet</option></select></div>
-  <div class="brief-field"><label for="brief-budget">Estimated budget (optional)</label><select id="brief-budget" name="budget"><option>Prefer to discuss</option><option>Under $500 USD</option><option>$500–$1,000 USD</option><option>$1,000–$3,000 USD</option><option>Over $3,000 USD</option></select></div>
-  <div class="brief-field"><label for="brief-timeline">Timeline (optional)</label><select id="brief-timeline" name="timeline"><option>Flexible</option><option>As soon as possible</option><option>2–4 weeks</option><option>1–3 months</option></select></div>
-  <div class="brief-field"><label for="brief-reference">Reference link (optional)</label><input id="brief-reference" name="reference" type="url" placeholder="https://…" maxlength="400"></div>
-  <div class="brief-field wide"><label for="brief-message">Tell me about the idea *</label><textarea id="brief-message" name="message" required minlength="10" maxlength="2500" rows="5" placeholder="What are you creating, who is it for, and what style are you looking for?"></textarea></div>
- </div>
- <div class="brief-honeypot" aria-hidden="true" style="position:absolute;left:-9999px"><label>Leave this empty <input name="_honey" tabindex="-1" autocomplete="off"></label></div>
- <div class="brief-actions"><button class="brief-submit" type="submit">SEND VIA WHATSAPP <span aria-hidden="true">↗</span></button><button class="brief-copy" type="button" id="email-brief">SEND VIA EMAIL <span aria-hidden="true">↗</span></button><button class="brief-copy" type="button" id="copy-brief">COPY BRIEF <span aria-hidden="true">↗</span></button></div>
- <p class="brief-note">WhatsApp opens a message for you to send. Email submits your brief directly to the inbox through FormSubmit, a third-party email service. First-time email delivery requires inbox activation.</p>
- <p class="brief-feedback" id="brief-feedback" aria-live="polite"></p><textarea class="brief-output" id="brief-output" aria-label="Prepared project brief; select and copy if automatic clipboard access is unavailable" readonly hidden></textarea>
-</form>
-</section></main>
+</section>
+<script>
+(function(){
+  var copyBtn = document.getElementById('copy-direct-email');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function(){
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText('aazizimassine@gmail.com');
+      }
+      copyBtn.textContent = 'COPIED ✓';
+      setTimeout(function(){ copyBtn.textContent = 'COPY'; }, 1800);
+    });
+  }
+  function keepBriefInline() {
+    var slot = document.getElementById('contact-brief-slot');
+    var form = document.getElementById('project-brief');
+    if (slot && form && form.parentElement !== slot) {
+      slot.appendChild(form);
+    }
+    if (form) form.hidden = false;
+    var contact = document.getElementById('contact');
+    if (contact) {
+      contact.querySelectorAll('button, a').forEach(function(el){
+        if (/write a project brief/i.test(el.textContent || '')) el.remove();
+      });
+    }
+    document.querySelectorAll('dialog').forEach(function(d){
+      if (d.classList.contains('brief-dialog') || d.id.indexOf('brief') !== -1) d.remove();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', keepBriefInline);
+  window.addEventListener('load', keepBriefInline);
+  var obs = new MutationObserver(keepBriefInline);
+  obs.observe(document.body, { childList: true, subtree: true });
+  setTimeout(function(){ obs.disconnect(); }, 4500);
+})();
+</script></main>
 <details class="portfolio-feedback" id="portfolio-feedback">
  <summary class="feedback-trigger" aria-label="Give feedback" aria-controls="feedback-popover">
   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l-2 2v-9.5A7.5 7.5 0 0 1 10.5 4h2A7.5 7.5 0 0 1 20 11.5Z"/><path d="M8 11h8M8 14h5"/></svg>
