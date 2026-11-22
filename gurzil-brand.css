@@ -1,47 +1,395 @@
-/* Gurzil Team / personal brand application board. */
-.gurzil-brand{--gb-text:#F8FAED;--gb-muted:#baadb2;--gb-line:#f8faed26;padding-top:100px;padding-bottom:100px;scroll-margin-top:100px;color:var(--gb-text)}
+/* Gurzil Team / personal brand application board (Clear Liquid Glass 5px). */
+.gurzil-brand{
+  --gb-text:#F8FAED;
+  --gb-muted:#baadb2;
+  --gb-line:rgba(255,255,255,.16);
+  --gb-glass-bg:linear-gradient(155deg,rgba(255,255,255,.075) 0%,rgba(255,255,255,.025) 55%,rgba(255,255,255,.05) 100%);
+  --gb-glass-border:rgba(255,255,255,.2);
+  --gb-glass-shadow:inset 0 1px 0 rgba(255,255,255,.32),inset 0 -1px 0 rgba(255,255,255,.06),0 12px 30px rgba(0,0,0,.28);
+  padding-top:100px;
+  padding-bottom:100px;
+  scroll-margin-top:100px;
+  color:var(--gb-text);
+  background:transparent!important;
+}
 html[data-theme=light] .gurzil-brand{--gb-text:#8c2635;--gb-muted:#80565a;--gb-line:#8c263530}
-.gb-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:38px}.gb-heading :is(h1,h2){font:600 clamp(40px,6vw,88px)/1.05 var(--sans,'Sora',sans-serif);letter-spacing:-.06em;margin:16px 0 0}.gb-heading :is(h1,h2)>span{color:#E10505!important}.gb-heading>p{font-size:14px;line-height:1.8;color:var(--gb-muted);margin:0 0 5px}.gb-board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}.gb-board>div,.gb-product{border-radius:24px;overflow:hidden;min-width:0}.gb-mark{grid-column:span 3;background:#171717;display:flex;align-items:center;flex-direction:column;justify-content:center;gap:22px;min-height:390px;padding:30px;color:white}.gb-label{font:9px/1.6 var(--mono,monospace);letter-spacing:.15em;color:#ddd}.gb-mark>img{width:150px;height:150px;object-fit:contain}.gb-mark>strong{font:600 30px/1 var(--sans,sans-serif);letter-spacing:.2em;color:white!important}.gb-mark>strong>span{font-weight:400;color:#E10505!important}.gb-palette{grid-column:span 3;background:#fff;display:flex;flex-direction:column;min-height:390px}.gb-colors{display:flex;flex:1}.gb-colors>div{flex:1;background:var(--color);color:var(--text);display:flex;flex-direction:column;justify-content:space-between;padding:25px 18px;font:10px var(--mono,monospace)}.gb-colors b{color:inherit!important;font:inherit}.gb-palette>p{display:flex;justify-content:space-between;gap:15px;padding:22px;margin:0;color:#171717!important;font:10px var(--mono,monospace)}.gb-ribbon{grid-column:1/-1;display:flex;justify-content:space-around;background:#E10505;padding:20px 15px;border-radius:0!important;gap:30px}.gb-ribbon>span{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0}.gb-ribbon img{width:45px;height:45px;object-fit:contain;filter:grayscale(1) brightness(0) invert(1)}.gb-ribbon b{color:white!important;font:8px var(--mono,monospace);letter-spacing:.08em}.gb-product{position:relative;margin:0;background:#171717}.gb-product>img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}.gb-product:hover>img{transform:scale(1.025)}.gb-product figcaption{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;gap:12px;padding:35px 22px 20px;background:linear-gradient(transparent,#000d);color:#fff!important;font:9px/1.6 var(--mono,monospace);letter-spacing:.06em}.gb-footer{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:25px;border-top:1px solid var(--gb-line);margin-top:30px}.gb-footer p{font:10px var(--mono,monospace);color:var(--gb-muted)}.gb-footer a{color:var(--gb-text);font-size:12px;padding:12px 0;border-bottom:1px solid var(--gb-line)}.gb-footer a:focus-visible{outline:2px solid #E10505;outline-offset:5px}
-@media(max-width:700px){.gurzil-brand{padding-top:65px;padding-bottom:65px}.gb-heading{align-items:flex-start;flex-direction:column;gap:18px;margin-bottom:25px}.gb-board{gap:12px;grid-template-columns:1fr 1fr}.gb-board>div,.gb-product{border-radius:16px}.gb-mark,.gb-palette{grid-column:1/-1;min-height:290px}.gb-mark>img{width:130px;height:130px}.gb-palette{min-height:220px}.gb-ribbon{grid-column:1/-1;justify-content:flex-start;gap:30px}.gb-product figcaption{padding:28px 12px 12px;font-size:8px;flex-direction:column;gap:2px}.gb-footer{align-items:flex-start;flex-direction:column;gap:10px}}
-@media(prefers-reduced-motion:reduce){.gb-product>img{transition:none}.gb-product:hover>img{transform:none}}
 
-/* Separate transparent product assets, four per desktop row. */
-.gb-products{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;overflow:visible!important;border-radius:0!important}
-.gb-products .gb-product{display:flex;flex-direction:column;border:0;background:transparent;border-radius:0}
-html[data-theme=light] .gb-products .gb-product{background:transparent}
-.gb-products .gb-product>img{width:82%;height:auto;aspect-ratio:1;object-fit:contain;padding:22px;box-sizing:border-box;filter:none;align-self:center}
-.gb-products .gb-product figcaption{position:static;margin-top:auto;display:flex;flex-direction:column;gap:6px;padding:18px 22px 22px;border-top:0;background:transparent;color:var(--gb-text)!important;font-size:10px}
+/* Hide light/dark toggle on Gurzil detail page */
+body.gb-detail .brand-logo-light,
+body.gb-detail .theme-toggle,
+body.gb-detail .theme-switcher,
+body.gb-detail [data-theme-toggle]{
+  display:none!important;
+}
+body.gb-detail main,
+body.gb-detail .gurzil-brand{
+  background:transparent!important;
+}
+
+.gb-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:30px;
+  margin-bottom:38px;
+}
+.gb-heading :is(h1,h2){
+  font:600 clamp(40px,6vw,88px)/1.05 var(--sans,'Sora',sans-serif);
+  letter-spacing:-.06em;
+  margin:16px 0 0;
+  color:var(--gb-text)!important;
+}
+.gb-heading :is(h1,h2)>span{color:#E10505!important}
+.gb-heading>p{font-size:14px;line-height:1.8;color:var(--gb-muted);margin:0 0 5px}
+
+.gb-board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
+.gb-board>div,.gb-product{border-radius:24px;overflow:hidden;min-width:0}
+
+/* Primary mark card - Clear Liquid Glass 5px */
+.gb-mark{
+  grid-column:span 3;
+  background:var(--gb-glass-bg)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  border:1px solid var(--gb-glass-border)!important;
+  box-shadow:var(--gb-glass-shadow)!important;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  justify-content:center;
+  gap:22px;
+  min-height:390px;
+  padding:30px;
+  color:white;
+}
+.gb-label{font:9px/1.6 var(--mono,monospace);letter-spacing:.15em;color:#ddd}
+.gb-mark>img{width:150px;height:150px;object-fit:contain}
+.gb-mark>strong{font:600 30px/1 var(--sans,sans-serif);letter-spacing:.2em;color:white!important}
+.gb-mark>strong>span{font-weight:400;color:#E10505!important}
+
+/* Palette card - Glass shell preserving true brand color swatches */
+.gb-palette{
+  grid-column:span 3;
+  background:var(--gb-glass-bg)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  border:1px solid var(--gb-glass-border)!important;
+  box-shadow:var(--gb-glass-shadow)!important;
+  display:flex;
+  flex-direction:column;
+  min-height:390px;
+}
+.gb-colors{display:flex;flex:1}
+.gb-colors>div{
+  flex:1;
+  background:var(--color);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:25px 18px;
+  font:10px var(--mono,monospace);
+}
+.gb-colors b{color:inherit!important;font:inherit}
+.gb-palette>p{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:22px;
+  margin:0;
+  color:var(--gb-text)!important;
+  background:rgba(255,255,255,.04);
+  border-top:1px solid rgba(255,255,255,.14);
+  font:10px var(--mono,monospace);
+}
+
+/* Crimson Liquid Glass ribbon */
+.gb-ribbon{
+  grid-column:1/-1;
+  display:flex;
+  justify-content:space-around;
+  background:linear-gradient(155deg,rgba(225,5,5,.36) 0%,rgba(127,1,31,.26) 100%)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  border:1px solid rgba(255,120,135,.35)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 10px 28px rgba(0,0,0,.26)!important;
+  padding:20px 15px;
+  border-radius:18px!important;
+  gap:30px;
+}
+.gb-ribbon>span{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0}
+.gb-ribbon img{width:45px;height:45px;object-fit:contain;filter:grayscale(1) brightness(0) invert(1)}
+.gb-ribbon b{color:white!important;font:8px var(--mono,monospace);letter-spacing:.08em}
+
+.gb-product{
+  position:relative;
+  margin:0;
+  background:var(--gb-glass-bg)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  border:1px solid var(--gb-glass-border)!important;
+  box-shadow:var(--gb-glass-shadow)!important;
+  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+.gb-product:hover{
+  transform:translateY(-3px);
+  border-color:rgba(255,255,255,.34)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 16px 36px rgba(0,0,0,.35)!important;
+}
+.gb-product>img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.gb-product:hover>img{transform:scale(1.025)}
+.gb-product figcaption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:35px 22px 20px;
+  background:linear-gradient(transparent,#000d);
+  color:#fff!important;
+  font:9px/1.6 var(--mono,monospace);
+  letter-spacing:.06em;
+}
+
+.gb-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  padding-top:25px;
+  border-top:1px solid var(--gb-line);
+  margin-top:30px;
+}
+.gb-footer p{font:10px var(--mono,monospace);color:var(--gb-muted)}
+.gb-footer a{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  color:var(--gb-text)!important;
+  font-size:12px;
+  padding:11px 20px;
+  border-radius:999px;
+  background:var(--gb-glass-bg)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.08)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.08)!important;
+  border:1px solid var(--gb-glass-border)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 8px 22px rgba(0,0,0,.24)!important;
+  transition:transform .22s ease,border-color .22s ease,background .22s ease;
+}
+.gb-footer a:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.38)!important;
+}
+.gb-footer a:focus-visible{outline:2px solid #E10505;outline-offset:5px}
+
+@media(max-width:700px){
+  .gurzil-brand{padding-top:65px;padding-bottom:65px}
+  .gb-heading{align-items:flex-start;flex-direction:column;gap:18px;margin-bottom:25px}
+  .gb-board{gap:12px;grid-template-columns:1fr 1fr}
+  .gb-board>div,.gb-product{border-radius:16px}
+  .gb-mark,.gb-palette{grid-column:1/-1;min-height:290px}
+  .gb-mark>img{width:130px;height:130px}
+  .gb-palette{min-height:220px}
+  .gb-ribbon{grid-column:1/-1;justify-content:flex-start;gap:30px;overflow-x:auto}
+  .gb-product figcaption{padding:28px 12px 12px;font-size:8px;flex-direction:column;gap:2px}
+  .gb-footer{align-items:flex-start;flex-direction:column;gap:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  .gb-product,.gb-product>img,.gb-footer a,.gb-discover,.gb-back{transition:none}
+  .gb-product:hover,.gb-product:hover>img,.gb-footer a:hover,.gb-discover:hover,.gb-back:hover{transform:none}
+}
+
+/* Separate transparent product assets, four per desktop row - Clear Liquid Glass 5px cards */
+.gb-products{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+  overflow:visible!important;
+  border-radius:0!important;
+}
+.gb-products .gb-product{
+  display:flex;
+  flex-direction:column;
+  border-radius:22px!important;
+  background:var(--gb-glass-bg)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  border:1px solid var(--gb-glass-border)!important;
+  box-shadow:var(--gb-glass-shadow)!important;
+}
+html[data-theme=light] .gb-products .gb-product{background:var(--gb-glass-bg)!important}
+.gb-products .gb-product>img{
+  width:82%;
+  height:auto;
+  aspect-ratio:1;
+  object-fit:contain;
+  padding:22px;
+  box-sizing:border-box;
+  filter:drop-shadow(0 14px 22px rgba(0,0,0,.35));
+  align-self:center;
+}
+.gb-products .gb-product figcaption{
+  position:static;
+  margin-top:auto;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:16px 20px 20px;
+  border-top:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.02);
+  color:var(--gb-text)!important;
+  font-size:10px;
+}
 .gb-products .gb-product figcaption>span:last-child{color:var(--gb-muted);font-size:8px;letter-spacing:.1em}
-@media(max-width:1000px){.gb-products{gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}.gb-products .gb-product>img{padding:14px}.gb-products .gb-product figcaption{padding:14px;font-size:9px}}
+
+@media(max-width:1000px){
+  .gb-products{gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .gb-products .gb-product>img{padding:14px}
+  .gb-products .gb-product figcaption{padding:14px;font-size:9px}
+}
 @media(max-width:700px){.gb-products{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:480px){.gb-products{grid-template-columns:1fr}.gb-products .gb-product>img{padding:22px}.gb-products .gb-product figcaption{padding:18px 22px;font-size:10px}}
+@media(max-width:480px){
+  .gb-products{grid-template-columns:1fr}
+  .gb-products .gb-product>img{padding:22px}
+  .gb-products .gb-product figcaption{padding:18px 22px;font-size:10px}
+}
+
+/* Brand system: typography & logo variations */
 .gb-system{grid-column:1/-1;border-radius:0!important;margin:28px 0 20px}
-.gb-system section+section{margin-top:48px}.gb-system header{margin-bottom:25px}
+.gb-system section+section{margin-top:48px}
+.gb-system header{margin-bottom:25px}
 .gb-system-label{font:10px/1.6 'IBM Plex Mono',monospace;letter-spacing:.1em;color:var(--gb-muted)}
 .gb-system h3{font:500 clamp(25px,3vw,42px)/1.2 Sora,sans-serif;letter-spacing:-.045em;margin:12px 0;color:var(--gb-text)!important}
 .gb-system header>p{font:13px/1.8 Manrope,sans-serif;color:var(--gb-muted)!important;max-width:520px}
-.gb-type-specimens{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--gb-line);border-bottom:1px solid var(--gb-line)}
-.gb-type-specimens>div{padding:28px 30px;min-width:0}.gb-type-specimens>div+div{border-left:1px solid var(--gb-line)}
+
+.gb-type-specimens{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-radius:22px;
+  overflow:hidden;
+  background:var(--gb-glass-bg)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  border:1px solid var(--gb-glass-border)!important;
+  box-shadow:var(--gb-glass-shadow)!important;
+}
+.gb-type-specimens>div{padding:28px 30px;min-width:0}
+.gb-type-specimens>div+div{border-left:1px solid var(--gb-line)}
 .gb-system .gb-type-display{font:600 clamp(36px,5vw,68px)/1.1 Sora,sans-serif;letter-spacing:-.05em;margin:25px 0;color:var(--gb-text)!important}
 .gb-system .gb-type-body{font:400 clamp(28px,3.5vw,46px)/1.3 Manrope,sans-serif;margin:25px 0;color:var(--gb-text)!important}
 .gb-system .gb-alphabet{font:11px/1.9 Manrope,sans-serif;overflow-wrap:anywhere;color:var(--gb-muted)!important}
+
 .gb-logo-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.gb-logo-options figure{margin:0;display:flex;flex-direction:column;align-items:center;padding:35px 18px 20px;gap:30px;background:#171717;border-radius:16px}
+.gb-logo-options figure{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:35px 18px 20px;
+  gap:30px;
+  background:var(--gb-glass-bg)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.06)!important;
+  border:1px solid var(--gb-glass-border)!important;
+  box-shadow:var(--gb-glass-shadow)!important;
+  border-radius:20px;
+}
 .gb-logo-options img{width:50%;height:auto;aspect-ratio:1;object-fit:contain}
 .gb-logo-options figcaption{font:9px/1.6 'IBM Plex Mono',monospace;color:#F8FAED!important;text-align:center}
 .gb-logo-white img{filter:grayscale(1) brightness(0) invert(1)}
-.gb-logo-options .gb-logo-black{background:#F8FAED}.gb-logo-black img{filter:brightness(0)}.gb-logo-options .gb-logo-black figcaption{color:#171717!important}
-@media(max-width:700px){.gb-type-specimens>div{padding:22px 15px}.gb-logo-options{gap:8px}.gb-logo-options figure{padding:25px 10px 16px;gap:20px}.gb-logo-options img{width:75%}.gb-logo-options figcaption{font-size:8px}.gb-system{margin-top:18px}}
-@media(max-width:480px){.gb-type-specimens{grid-template-columns:1fr}.gb-type-specimens>div+div{border-left:0;border-top:1px solid var(--gb-line)}.gb-logo-options{grid-template-columns:1fr}.gb-logo-options img{width:110px}.gb-logo-options figure{padding:25px}.gb-system section+section{margin-top:35px}}
+
+/* Light frosted glass card so the pure black Gurzil logo stays 100% crisp and visible */
+.gb-logo-options .gb-logo-black{
+  background:linear-gradient(155deg,rgba(248,250,237,.88) 0%,rgba(248,250,237,.74) 100%)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%)!important;
+  backdrop-filter:blur(5px) saturate(165%)!important;
+  border:1px solid rgba(255,255,255,.55)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 12px 30px rgba(0,0,0,.28)!important;
+}
+.gb-logo-black img{filter:brightness(0)!important;opacity:1!important}
+.gb-logo-options .gb-logo-black figcaption{color:#171717!important}
+
+@media(max-width:700px){
+  .gb-type-specimens>div{padding:22px 15px}
+  .gb-logo-options{gap:8px}
+  .gb-logo-options figure{padding:25px 10px 16px;gap:20px}
+  .gb-logo-options img{width:75%}
+  .gb-logo-options figcaption{font-size:8px}
+  .gb-system{margin-top:18px}
+}
+@media(max-width:480px){
+  .gb-type-specimens{grid-template-columns:1fr}
+  .gb-type-specimens>div+div{border-left:0;border-top:1px solid var(--gb-line)}
+  .gb-logo-options{grid-template-columns:1fr}
+  .gb-logo-options img{width:110px}
+  .gb-logo-options figure{padding:25px}
+  .gb-system section+section{margin-top:35px}
+}
+
+/* Teaser & Glass buttons */
 .gb-teaser{display:grid;grid-template-columns:minmax(160px,.7fr) 1.3fr;align-items:center;gap:7vw}
 .gb-teaser-logo{display:flex;align-items:center;justify-content:center;padding:35px;background:#171717;border-radius:20px;aspect-ratio:1.5;max-height:300px}
 .gb-teaser-logo img{width:45%;max-width:150px;height:auto;aspect-ratio:1;object-fit:contain}
-.gb-teaser-copy h2{font:600 clamp(35px,5vw,68px)/1.1 Sora,sans-serif;letter-spacing:-.05em;margin:16px 0;color:var(--gb-text)!important}.gb-teaser-copy h2 span{color:#E10505!important}
+.gb-teaser-copy h2{font:600 clamp(35px,5vw,68px)/1.1 Sora,sans-serif;letter-spacing:-.05em;margin:16px 0;color:var(--gb-text)!important}
+.gb-teaser-copy h2 span{color:#E10505!important}
 .gb-teaser-copy>p:not(.eyebrow){font:14px/1.8 Manrope,sans-serif;color:var(--gb-muted)!important}
-.gb-discover{display:inline-flex;align-items:center;gap:40px;padding:14px 20px;margin-top:20px;border:1px solid var(--gb-line);border-radius:30px;color:var(--gb-text);font:12px Manrope,sans-serif}
+
+.gb-discover{
+  display:inline-flex;
+  align-items:center;
+  gap:40px;
+  padding:14px 22px;
+  margin-top:20px;
+  border-radius:999px;
+  color:var(--gb-text)!important;
+  font:12px Manrope,sans-serif;
+  background:linear-gradient(160deg,rgba(255,255,255,.075) 0%,rgba(255,255,255,.025) 55%,rgba(255,255,255,.05) 100%)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.08)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.08)!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.36),inset 0 -1px 0 rgba(255,255,255,.06),0 10px 24px rgba(0,0,0,.24)!important;
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.gb-discover:hover{
+  transform:translateY(-2px);
+  border-color:rgba(225,5,5,.55)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 12px 28px rgba(0,0,0,.32)!important;
+}
 .gb-discover:focus-visible,.gb-back:focus-visible{outline:2px solid #e10505;outline-offset:5px}
-.gb-detail main{max-width:1520px;margin:auto;padding:120px 5vw 0}.gb-detail .gurzil-brand{padding:35px 0 60px}.gb-back{display:inline-block;padding:12px 0;color:var(--paper);font:11px 'IBM Plex Mono',monospace}html[data-theme=light] .gb-back{color:#8c2635}
-@media(max-width:700px){.gb-teaser{gap:25px;grid-template-columns:1fr}.gb-teaser-logo{aspect-ratio:2.2;max-height:200px}.gb-teaser-logo img{width:95px}.gb-detail main{padding:100px 5vw 0}}
+
+.gb-detail main{max-width:1520px;margin:auto;padding:120px 5vw 0}
+.gb-detail .gurzil-brand{padding:35px 0 60px}
+.gb-back{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 18px;
+  border-radius:999px;
+  color:var(--paper,#F8FAED)!important;
+  font:11px 'IBM Plex Mono',monospace;
+  background:linear-gradient(160deg,rgba(255,255,255,.075) 0%,rgba(255,255,255,.025) 55%,rgba(255,255,255,.05) 100%)!important;
+  -webkit-backdrop-filter:blur(5px) saturate(165%) brightness(1.08)!important;
+  backdrop-filter:blur(5px) saturate(165%) brightness(1.08)!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 8px 20px rgba(0,0,0,.22)!important;
+  transition:transform .22s ease,border-color .22s ease;
+}
+.gb-back:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.4)!important;
+}
+html[data-theme=light] .gb-back{color:#8c2635}
+
+@media(max-width:700px){
+  .gb-teaser{gap:25px;grid-template-columns:1fr}
+  .gb-teaser-logo{aspect-ratio:2.2;max-height:200px}
+  .gb-teaser-logo img{width:95px}
+  .gb-detail main{padding:100px 5vw 0}
+}
+
 /* A compact doorway into the brand: original assets, no image card. */
 .gb-teaser{grid-template-columns:1fr 1.1fr;gap:5vw;position:relative;padding-top:70px;padding-bottom:70px}
 .gb-teaser-logo{position:relative;isolation:isolate;background:transparent;padding:0;border-radius:0;aspect-ratio:1.25;max-height:360px;overflow:hidden}
@@ -55,4 +403,14 @@ html[data-theme=light] .gb-teaser-logo::before{background:radial-gradient(ellips
 html[data-theme=light] .gb-teaser-logo .gb-teaser-emblem{filter:brightness(0);opacity:.92}
 html[data-theme=light] .gb-teaser-logo .gb-teaser-hoodie{opacity:.8;filter:none}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.gb-teaser-logo:hover .gb-teaser-emblem{transform:translateY(-7px) rotate(-2deg)}}
-@media(max-width:700px){.gb-teaser{grid-template-columns:1fr;gap:20px;padding-top:45px;padding-bottom:60px}.gb-teaser-logo{width:min(100%,420px);height:240px;aspect-ratio:auto;max-height:none;margin:auto}.gb-teaser-logo .gb-teaser-emblem{width:42%;max-width:180px}.gb-teaser-logo .gb-teaser-hoodie{width:67%;left:0;bottom:-30%}.gb-teaser-copy{text-align:center}.gb-teaser-copy h2{font-size:clamp(32px,8vw,48px)}.gb-teaser-copy>p:not(.eyebrow){font-size:13px}.gb-discover{margin-top:14px}.gb-teaser::after{left:42%;width:16%}}
+@media(max-width:700px){
+  .gb-teaser{grid-template-columns:1fr;gap:20px;padding-top:45px;padding-bottom:60px}
+  .gb-teaser-logo{width:min(100%,420px);height:240px;aspect-ratio:auto;max-height:none;margin:auto}
+  .gb-teaser-logo .gb-teaser-emblem{width:42%;max-width:180px}
+  .gb-teaser-logo .gb-teaser-hoodie{width:67%;left:0;bottom:-30%}
+  .gb-teaser-copy{text-align:center}
+  .gb-teaser-copy h2{font-size:clamp(32px,8vw,48px)}
+  .gb-teaser-copy>p:not(.eyebrow){font-size:13px}
+  .gb-discover{margin-top:14px}
+  .gb-teaser::after{left:42%;width:16%}
+}
