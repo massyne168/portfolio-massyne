@@ -44,40 +44,7 @@
     labDescription.textContent = "Draw freely on a blank canvas, or build a poster with type, color and shapes. Save your design as a high-resolution PNG.";
   }
 
-  const contactSection = main.querySelector("#contact");
-  const projectBrief = contactSection?.querySelector("#project-brief");
-  if (contactSection && projectBrief) {
-    const briefDialog = document.createElement("dialog");
-    briefDialog.id = "project-brief-dialog";
-    briefDialog.className = "brief-dialog";
-    briefDialog.setAttribute("aria-labelledby", "brief-dialog-title");
-    const dialogHeader = document.createElement("div");
-    dialogHeader.className = "brief-dialog-header";
-    dialogHeader.innerHTML = '<span id="brief-dialog-title">PROJECT BRIEF / 001</span><button type="button" class="brief-dialog-close" aria-label="Close project brief">CLOSE ×</button>';
-    briefDialog.append(dialogHeader, projectBrief);
-    contactSection.append(briefDialog);
-
-    const briefButton = document.createElement("a");
-    briefButton.className = "contact-v2-button contact-brief-open";
-    briefButton.href = "#project-brief";
-    briefButton.setAttribute("aria-haspopup", "dialog");
-    briefButton.setAttribute("aria-controls", "project-brief-dialog");
-    briefButton.innerHTML = 'WRITE A PROJECT BRIEF <span aria-hidden="true">↗</span>';
-    const actions = contactSection.querySelector(".contact-v2-bottom");
-    actions?.append(briefButton);
-
-    const openBrief = event => {
-      event?.preventDefault();
-      if (!briefDialog.open) briefDialog.showModal();
-      briefDialog.querySelector(".brief-dialog-close")?.focus({ preventScroll: true });
-    };
-    contactSection.querySelectorAll('a[href="#project-brief"]').forEach(link => link.addEventListener("click", openBrief));
-    briefDialog.querySelector(".brief-dialog-close")?.addEventListener("click", () => briefDialog.close());
-    briefDialog.addEventListener("click", event => {
-      if (event.target === briefDialog) briefDialog.close();
-    });
-    if (window.location.hash === "#project-brief") requestAnimationFrame(() => briefDialog.showModal());
-  }
+  // Keep #project-brief directly inline inside #contact (no modal popup / no "Write a project brief" button).
 
   const specs = [
     { key: "home", id: "home-panel", hash: "#top" },
@@ -123,7 +90,6 @@
   const initial = resolveHash(window.location.hash) || { panel: byKey.get("home"), target: null };
   let active = initial.panel;
   let transitionSequence = 0;
-  let returningToHome = false;
 
   const applyPanelVisibility = () => {
     const mobileFlow = mobileFlowQuery.matches;
@@ -210,9 +176,6 @@
   }
 
   function reconcileActivePanel() {
-    // A stale transition can leave the visible panel out of sync with the URL
-    // and selected rail button. Rebuild the current state instead of trusting
-    // the previous animation to have completed.
     transitionSequence += 1;
     panels.forEach(panel => {
       panel.element.classList.remove("section-panel-entering", "section-panel-leaving");
@@ -225,7 +188,6 @@
 
   function activate(panel, options = {}) {
     if (!panel) return;
-    if (panel.key !== "contact") returningToHome = false;
     const anchorTarget = options.target && options.target !== panel.element ? options.target : null;
     if (panel === active) {
       reconcileActivePanel();
@@ -361,16 +323,13 @@
       return { scale, growth: size * (scale - 1) / 2, influence };
     });
 
-    // Grow the gaps with transforms only. This keeps pointer tracking out of
-    // the layout/reflow path and makes each frame independent of the last one.
     let expandedBefore = 0;
     const expandedCenters = targets.map(target => {
       const expandedCenter = expandedBefore * 2 + target.growth;
       expandedBefore += target.growth;
       return expandedCenter;
     });
-    // Interpolate the dock's anchor between neighboring icons. Switching to a
-    // nearest-icon anchor caused the whole rail to jump at each midpoint.
+
     let anchorShift = expandedCenters[0] || 0;
     if (pointerCoordinate >= centers[centers.length - 1]) {
       anchorShift = expandedCenters[expandedCenters.length - 1] || 0;
@@ -463,49 +422,6 @@
   reducedMotion.addEventListener("change", refreshDockScale);
   document.addEventListener("visibilitychange", refreshDockScale);
   refreshDockScale();
-
-  function atDesktopPanelEnd(panel) {
-    return panel.element.scrollHeight - panel.element.clientHeight - panel.element.scrollTop <= 8;
-  }
-
-  function atMobileDocumentEnd() {
-    const scroller = document.scrollingElement || document.documentElement;
-    return scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop <= 8;
-  }
-
-  function returnToHomeFromContact() {
-    if (returningToHome) return;
-    returningToHome = true;
-    if (mobileFlowQuery.matches) {
-      if (window.location.hash !== "#top") window.history.pushState({ section: "home" }, "", "#top");
-      window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
-    } else {
-      activate(byKey.get("home"), { updateHistory: true, hash: "#top", focus: false });
-    }
-    window.setTimeout(() => { returningToHome = false; }, reducedMotion.matches ? 120 : 1000);
-  }
-
-  contactPanel.element.addEventListener("wheel", event => {
-    if (mobileFlowQuery.matches || active !== contactPanel || event.deltaY <= 0 || returningToHome) return;
-    if (!atDesktopPanelEnd(contactPanel)) return;
-    event.preventDefault();
-    returnToHomeFromContact();
-  }, { passive: false });
-
-  let touchStartY = null;
-  document.addEventListener("touchstart", event => {
-    touchStartY = event.touches[0]?.clientY ?? null;
-  }, { passive: true });
-  document.addEventListener("touchmove", event => {
-    if (!mobileFlowQuery.matches || active !== contactPanel || returningToHome || touchStartY === null) return;
-    const currentY = event.touches[0]?.clientY;
-    if (currentY === undefined) return;
-    const fingerMovingUp = touchStartY - currentY > 5;
-    touchStartY = currentY;
-    if (!fingerMovingUp || !atMobileDocumentEnd()) return;
-    if (event.cancelable) event.preventDefault();
-    returnToHomeFromContact();
-  }, { passive: false });
 
   document.addEventListener("click", event => {
     if (event.defaultPrevented || mobileFlowQuery.matches) return;
