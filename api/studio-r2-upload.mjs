@@ -1,15 +1,27 @@
 import { randomUUID, createHash, createHmac } from "node:crypto";
 import { isStudioSessionAuthenticated } from "./studio-access.mjs";
 
-const MAX_UPLOAD_BYTES = 3 * 1024 * 1024;
 const MAX_FILES = 12;
-const MAX_FILE_BYTES = 3 * 1024 * 1024;
-const MEDIA_TYPES = Object.freeze({
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024; // 10 MB per image
+const MAX_VIDEO_BYTES = 25 * 1024 * 1024; // 25 MB per video
+const MAX_BATCH_BYTES = 35 * 1024 * 1024; // 35 MB batch total
+
+const IMAGE_TYPES = Object.freeze({
   "image/png": "png",
   "image/jpeg": "jpg",
   "image/webp": "webp",
-  "image/gif": "gif",
-  "video/mp4": "mp4"
+  "image/avif": "avif",
+  "image/gif": "gif"
+});
+
+const VIDEO_TYPES = Object.freeze({
+  "video/mp4": "mp4",
+  "video/webm": "webm"
+});
+
+const ALL_MEDIA_TYPES = Object.freeze({
+  ...IMAGE_TYPES,
+  ...VIDEO_TYPES
 });
 
 function send(res, status, body) {
@@ -32,7 +44,9 @@ function originAllowed(req) {
   if (!origin || !host) return false;
   try {
     const parsed = new URL(origin);
-    return parsed.protocol === "https:" && parsed.host.toLowerCase() === host.toLowerCase();
+    const isLocal = host.startsWith("localhost:") || host.startsWith("127.0.0.1:") || host === "localhost";
+    const isHttps = parsed.protocol === "https:" || (isLocal && parsed.protocol === "http:");
+    return isHttps && parsed.host.toLowerCase() === host.toLowerCase();
   } catch (_) {
     return false;
   }
@@ -73,7 +87,7 @@ function safeBaseName(name) {
 
 function validateFiles(input) {
   if (!Array.isArray(input) || input.length < 1 || input.length > MAX_FILES) {
-    const error = new Error("Choose between 1 and 12 media files.");
+    const error = new Error(`Choose between 1 and ${MAX_FILES} media files.`);
     error.status = 400;
     throw error;
   }
@@ -84,20 +98,37 @@ function validateFiles(input) {
       error.status = 400;
       throw error;
     }
-    const type = String(file.type || "").toLowerCase();
-    const extension = MEDIA_TYPES[type];
+    const type = String(file.type || "").toLowerCase().trim();
+    const isImage = Boolean(IMAGE_TYPES[type]);
+    const isVideo = Boolean(VIDEO_TYPES[type]);
+    const extension = ALL_MEDIA_TYPES[type];
     const size = Number(file.size);
-    if (!extension || !Number.isSafeInteger(size) || size <= 0 || size > MAX_FILE_BYTES) {
-      const error = new Error("Upload PNG, JPG, WEBP, GIF or MP4 files smaller than 3 MB each.");
+
+    if (!extension || !Number.isSafeInteger(size) || size <= 0) {
+      const error = new Error("Upload PNG, JPG, WEBP, AVIF, GIF images or MP4, WEBM videos.");
       error.status = 400;
       throw error;
     }
+
+    if (isImage && size > MAX_IMAGE_BYTES) {
+      const error = new Error(`Image "${file.name || 'file'}" exceeds 10 MB limit (${(size / (1024 * 1024)).toFixed(1)} MB).`);
+      error.status = 400;
+      throw error;
+    }
+
+    if (isVideo && size > MAX_VIDEO_BYTES) {
+      const error = new Error(`Video "${file.name || 'file'}" exceeds 25 MB limit (${(size / (1024 * 1024)).toFixed(1)} MB).`);
+      error.status = 400;
+      throw error;
+    }
+
     total += size;
-    if (total > MAX_UPLOAD_BYTES) {
-      const error = new Error("Keep media uploads under 3 MB total per save.");
+    if (total > MAX_BATCH_BYTES) {
+      const error = new Error(`Total media uploads exceed 35 MB batch limit (${(total / (1024 * 1024)).toFixed(1)} MB).`);
       error.status = 413;
       throw error;
     }
+
     const now = new Date();
     const prefix = now.getUTCFullYear() + "/" + String(now.getUTCMonth() + 1).padStart(2, "0");
     const key = "studio-uploads/" + prefix + "/" + randomUUID() + "-" + safeBaseName(file.name) + "." + extension;
@@ -112,7 +143,7 @@ function createPresignedPut({ accountId, accessKeyId, secretAccessKey, bucket, k
   const date = amzDate.slice(0, 8);
   const scope = date + "/auto/s3/aws4_request";
   const credential = accessKeyId + "/" + scope;
-  const expires = "300";
+  const expires = "300"; // 5 minutes
   const canonicalUri = "/" + awsEncode(bucket) + "/" + key.split("/").map(awsEncode).join("/");
   const query = [
     ["X-Amz-Algorithm", "AWS4-HMAC-SHA256"],

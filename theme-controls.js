@@ -21,15 +21,9 @@
   return /^(images|assets)\//i.test(path)&&!/(?:^|\/)(?:\.{1,2}|%2e%2e)(?:\/|$)/i.test(path)&&!/[<>"'\\\s]/.test(path)?"/"+path:"";
  };
  const syncBackgroundColor=()=>{
-  if(!siteAppearance)return;
-  const background=siteAppearance.background||{};
-  const light=safeHex(siteAppearance.colors?.light,"#FCF6F5");
-  const color=background.type==="theme"
-   ? (root.dataset.theme==="dark"?"#09090c":light)
-   : safeHex(background.color,light);
-  root.style.setProperty("--site-background-color",color);
+  root.style.setProperty("--site-background-color","#050608");
   const meta=document.querySelector('meta[name="theme-color"]');
-  if(meta&&root.dataset.theme!=="dark")meta.setAttribute("content",color);
+  if(meta)meta.setAttribute("content","#050608");
  };
  const applySiteAppearance=config=>{
   siteAppearance=config&&typeof config==="object"?config:null;
@@ -143,31 +137,12 @@
   else syncNav();
  }
 
- if(isPosterLab)return;
- const control=document.createElement("div");
- control.className="theme-control";
- control.setAttribute("role","group");
- control.setAttribute("aria-label","Color theme");
- control.innerHTML='<button type="button" data-theme-choice="light" aria-label="Use light theme"><span aria-hidden="true">☀</span> Clair</button><button type="button" data-theme-choice="dark" aria-label="Use dark theme"><span aria-hidden="true">☾</span> Sombre</button>';
- const header=document.querySelector(".site-header");
- if(header)header.insertBefore(control,header.querySelector(".menu"));
- else {control.classList.add("theme-control--standalone");(document.querySelector(".resume-topbar")||document.body).appendChild(control);}
- const sync=theme=>{
-  root.dataset.theme=theme;
-  root.style.colorScheme=theme;
-  control.querySelectorAll("button").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.themeChoice===theme)));
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content",theme==="dark"?"#110d10":(siteAppearance?.background?.type==="color"?safeHex(siteAppearance.background.color,"#FCF6F5"):safeHex(siteAppearance?.colors?.light,"#FCF6F5")));
+  root.dataset.theme="dark";
+  root.style.colorScheme="dark";
+  try{localStorage.setItem("massyne:theme","dark");}catch{}
+  matchMedia("(min-width:1101px)").addEventListener("change",()=>{
+   document.getElementById("nav")?.classList.remove("is-open");
+   document.querySelector(".menu")?.setAttribute("aria-expanded","false");
+  });
   syncBackgroundColor();
- };
- control.querySelectorAll("button").forEach(button=>button.addEventListener("click",()=>{
-  const theme=button.dataset.themeChoice;
-  sync(theme);
-  try {localStorage.setItem("massyne:theme",theme);}catch{}
- }));
- window.addEventListener("storage",event=>{if(event.key==="massyne:theme")sync(event.newValue==="dark"?"dark":"light");});
- matchMedia("(min-width:1101px)").addEventListener("change",()=>{
-  document.getElementById("nav")?.classList.remove("is-open");
-  document.querySelector(".menu")?.setAttribute("aria-expanded","false");
- });
- sync(root.dataset.theme==="dark"?"dark":"light");
 })();

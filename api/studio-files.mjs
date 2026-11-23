@@ -1,6 +1,6 @@
 import { isStudioSessionAuthenticated } from "./studio-access.mjs";
+import { getStudioBranch, assertStudioWriteAllowed } from "./_studio-branch.mjs";
 const REPOSITORY = "massyne168/portfolio-massyne";
-const BRANCH = "main";
 const GITHUB_API = "https://api.github.com";
 const ALLOWED_EXTENSIONS = new Set(["html", "css", "js", "mjs", "json", "md", "txt", "xml"]);
 
@@ -100,14 +100,16 @@ export default async function handler(req, res) {
   }
 
   try {
+    const targetBranch = getStudioBranch();
+
     if (req.method === "GET") {
       const url = new URL(req.url || "/", "http://localhost");
       const rawPath = url.searchParams.get("path");
 
       if (!rawPath) {
         const [rootItems, apiItems] = await Promise.all([
-          githubRequest(token, `/repos/${REPOSITORY}/contents?ref=${BRANCH}`),
-          githubRequest(token, `/repos/${REPOSITORY}/contents/api?ref=${BRANCH}`).catch(() => [])
+          githubRequest(token, `/repos/${REPOSITORY}/contents?ref=${encodeURIComponent(targetBranch)}`),
+          githubRequest(token, `/repos/${REPOSITORY}/contents/api?ref=${encodeURIComponent(targetBranch)}`).catch(() => [])
         ]);
 
         const combined = [...(Array.isArray(rootItems) ? rootItems : []), ...(Array.isArray(apiItems) ? apiItems : [])];
@@ -121,7 +123,7 @@ export default async function handler(req, res) {
           }))
           .sort((a, b) => a.path.localeCompare(b.path));
 
-        return send(res, 200, { ok: true, branch: BRANCH, files });
+        return send(res, 200, { ok: true, branch: targetBranch, files });
       }
 
       const filePath = sanitizePath(rawPath);
@@ -131,7 +133,7 @@ export default async function handler(req, res) {
 
       const data = await githubRequest(
         token,
-        `/repos/${REPOSITORY}/contents/${encodeGitHubPath(filePath)}?ref=${BRANCH}`
+        `/repos/${REPOSITORY}/contents/${encodeGitHubPath(filePath)}?ref=${encodeURIComponent(targetBranch)}`
       );
       if (Array.isArray(data) || data.type !== "file") {
         return send(res, 400, { message: "Requested path is not a file." });
@@ -140,6 +142,8 @@ export default async function handler(req, res) {
       const content = Buffer.from(String(data.content || "").replace(/\n/g, ""), "base64").toString("utf8");
       return send(res, 200, { ok: true, path: data.path, sha: data.sha, content });
     }
+
+    assertStudioWriteAllowed(targetBranch);
 
     const body = await readBody(req);
     const filePath = sanitizePath(body.path);
@@ -161,7 +165,7 @@ export default async function handler(req, res) {
     const payload = {
       message,
       content: encodedContent,
-      branch: BRANCH
+      branch: targetBranch
     };
     if (typeof body.sha === "string" && body.sha.trim()) {
       payload.sha = body.sha.trim();

@@ -1,40 +1,80 @@
-# Cloudflare R2 setup for MASSYNE Studio
+# Cloudflare R2 Media Integration & Architecture Runbook
 
-Vercel remains the website host, static frontend host, deployment platform, and API runtime. Cloudflare R2 is used only for media object storage and public media delivery. This integration does not use Cloudflare Pages.
+This document details the architecture, configuration, operation, CI/CD synchronization, and rollback procedures for offloading MASSYNE portfolio media assets to Cloudflare R2 while preserving Vercel as the web host and serverless API runtime.
 
-## 1. Create the bucket and media domain
+---
 
-1. In Cloudflare Dashboard, open **R2 Object Storage** and create a bucket for the portfolio (for example, `massyne-portfolio-media`).
-2. Open the bucket's **Settings → Public access** and connect a custom domain such as `media.your-domain.com`. Use a domain you control and that Cloudflare can manage.
-3. Wait until Cloudflare reports the custom domain as active. Use the HTTPS origin exactly, without a trailing path, in `MASSYNE_R2_PUBLIC_URL`.
-4. Do not enable public access on the R2 S3 API endpoint itself. Public delivery should use the custom domain.
+## 1. System Architecture
 
-## 2. Create a restricted R2 API token
+```
+                       +-----------------------------------+
+                       |      Client Browser / Visitor     |
+                       +-----------------+-----------------+
+                                         |
+               +-------------------------+-------------------------+
+               | HTML / CSS / JS / Favicon                         | Media (Images/Videos/Fonts)
+               v                                                   v
++-------------------------------+               +--------------------------------------+
+|        Vercel Edge/Host       |               |     Cloudflare R2 Object Storage     |
+|   (portfolio-massyne.vercel)  |               |       (massyne-portfolio-01)         |
+|                               |               |                                      |
+|  - Static files (0-build)     |               |  - https://pub-c78e3da...r2.dev      |
+|  - Serverless APIs (api/*)    |               |  - Zero egress bandwidth fees        |
+|  - Dark-Only theme lock       |               |  - CORS restricted to Vercel origins |
+|  - Studio Write Protection    |               |  - S3-compatible SigV4 PUT / GET     |
++---------------+---------------+               +------------------+-------------------+
+                |                                                  ^
+                | Presigned PUT URL                                | Direct Browser PUT
+                +--------------------------------------------------+
+                               Studio Media Upload Flow
+```
 
-Create an R2 token with **Object Read & Write** permission scoped only to this bucket. Copy the Access Key ID and Secret Access Key once. Find the account ID in the Cloudflare dashboard.
+- **Hosting & APIs**: Vercel hosts all web pages, stylesheets, scripts, serverless functions (`api/`), and local favicons (`images/favicon*.png`).
+- **Media Object Storage**: Cloudflare R2 (`massyne-portfolio-01`) stores all images, videos, audio, and font files.
+- **Media Delivery**: Public CDN endpoint (`https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev`) serves media assets with immutable caching.
+- **Studio Protection**: Branch guard (`api/_studio-branch.mjs`) prevents Preview/Dev Studio instances from committing to `main`.
+- **Theme Standard**: Strict Dark-Only theme lock (`data-theme="dark"`). Light theme code and toggle elements are removed.
 
-Add these variables in **Vercel → Project → Settings → Environment Variables**, at least for Production (and Preview if you want to test preview deployments):
+---
 
-- `MASSYNE_R2_ACCOUNT_ID` — Cloudflare account ID
-- `MASSYNE_R2_ACCESS_KEY_ID` — R2 Access Key ID
-- `MASSYNE_R2_SECRET_ACCESS_KEY` — R2 Secret Access Key
-- `MASSYNE_R2_BUCKET` — exact bucket name
-- `MASSYNE_R2_PUBLIC_URL` — active HTTPS custom media domain
+## 2. Environment Variables & Secrets Reference
 
-Keep all five values server-side. Never add them to frontend JavaScript, `studio-content.json`, or Git. Redeploy Vercel after setting them.
+### Vercel Preview & Production Variables
 
-## 3. Configure bucket CORS for browser uploads
+| Variable Name | Description | Scope | Sample / Format |
+|---|---|---|---|
+| `MASSYNE_R2_ACCOUNT_ID` | Cloudflare Account ID | Preview, Prod | 32-character hex string |
+| `MASSYNE_R2_ACCESS_KEY_ID` | R2 API Token ID / S3 Access Key ID | Preview, Prod | 32-character hex string |
+| `MASSYNE_R2_SECRET_ACCESS_KEY` | SHA-256 Hash of R2 API Token Value | Preview, Prod | 64-character hex string |
+| `MASSYNE_R2_BUCKET` | Target R2 bucket name | Preview, Prod | `massyne-portfolio-01` |
+| `MASSYNE_R2_PUBLIC_URL` | Public HTTPS media delivery URL | Preview, Prod | `https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev` |
+| `MASSYNE_STUDIO_GITHUB_BRANCH` | Target branch for Studio commits | Preview only | `feat/r2-performance-optimization` |
+| `MASSYNE_STUDIO_ACCESS_CODE` | Password for MASSYNE Studio session | Preview, Prod | String |
+| `MASSYNE_STUDIO_GITHUB_TOKEN` | GitHub Personal Access Token for Studio | Preview, Prod | Fine-grained token |
 
-Add a bucket CORS policy allowing the exact origins where Studio runs. Example (replace domains with your real production and preview origins):
+### GitHub Actions Secrets
+
+Configured in `massyne168/portfolio-massyne` for the `r2-media-sync.yml` workflow:
+- `MASSYNE_R2_ACCOUNT_ID`
+- `MASSYNE_R2_ACCESS_KEY_ID`
+- `MASSYNE_R2_SECRET_ACCESS_KEY`
+- `MASSYNE_R2_BUCKET`
+- `MASSYNE_R2_PUBLIC_URL`
+
+---
+
+## 3. Bucket CORS Policy
+
+Configured on `massyne-portfolio-01` to authorize direct browser uploads from Vercel environments:
 
 ```json
 [
   {
     "AllowedOrigins": [
       "https://portfolio-massyne.vercel.app",
-      "https://www.your-domain.com"
+      "https://*.vercel.app"
     ],
-    "AllowedMethods": ["PUT", "GET", "HEAD"],
+    "AllowedMethods": ["GET", "HEAD", "PUT"],
     "AllowedHeaders": ["Content-Type", "Cache-Control"],
     "ExposeHeaders": ["ETag"],
     "MaxAgeSeconds": 3600
@@ -42,33 +82,69 @@ Add a bucket CORS policy allowing the exact origins where Studio runs. Example (
 ]
 ```
 
-Do not use `*` for AllowedOrigins in production. Add your actual custom portfolio domain and any Vercel preview domain only if you intend to upload from it.
+---
 
-## 4. Upload behavior
+## 4. Local Media Synchronization (`scripts/r2-sync.mjs`)
 
-- Studio first requests a short-lived (5-minute) presigned PUT URL from `/api/studio-r2-upload`.
-- That endpoint requires a valid MASSYNE Studio session, same-origin HTTPS request, allowed media MIME type, a maximum of 12 files, and a 3 MiB aggregate upload limit.
-- The R2 Access Key ID and Secret Access Key remain in the Vercel API runtime. The browser receives only a time-limited URL scoped to one object and one content type.
-- Uploads use unique object keys under `studio-uploads/YYYY/MM/` and return public custom-domain URLs for use in Studio content.
-- Until all R2 variables are configured, Studio falls back to the existing authenticated GitHub media uploader. Existing GitHub publishing and other API routes remain intact.
+The project includes a dependency-free Node.js CLI script using AWS SigV4:
 
-## 5. Migrate existing media
+### Capabilities:
+- **Zero Dependencies**: Uses standard Node.js `crypto`, `fs/promises`, and native `fetch`.
+- **Dry-Run by Default**: Safe read-only inspection; `--apply` required for uploads.
+- **Idempotency**: Issues `HEAD` requests checking `x-amz-meta-sha256` and file size. Skips unmodified assets.
+- **Multipart Upload**: Automatically activates 5 MiB multipart chunks for assets $\ge$ 8 MiB, with automatic `AbortMultipartUpload` on failure.
+- **Exponential Backoff**: Up to 3 retry attempts per asset.
+- **URL Verification**: Probes public CDN endpoint (`--verify-urls`) ensuring HTTP 200 and MIME match.
+- **Asset Exclusions**: Preserves `images/favicon*.png` on Vercel host; excludes dotfiles, `.zip`, and PDFs (unless `--include-pdfs` passed).
 
-The repository includes `scripts/r2-sync.mjs`, a dependency-free Node.js migration utility. It preserves relative paths under `images/` and `assets/`, so references can be switched without renaming objects.
+### Usage:
 
-1. Clone the repository locally and install a current Node.js LTS release (Node 20+).
-2. Set the four private R2 variables in your local shell. Do not put real values in `.env.example` or commit them.
-3. Run `node scripts/r2-sync.mjs` first. This is a dry run and lists the eligible media files and total bytes.
-4. Confirm the bucket and domain are correct, then run `node scripts/r2-sync.mjs --apply`.
-5. Open several migrated image and video URLs on the custom domain and confirm they return the correct content types.
-6. Only after verifying the migration should the portfolio's static media references be switched to the R2 domain. Keep the original repository files until the site has been verified.
+```bash
+# 1. Dry run audit
+node scripts/r2-sync.mjs
 
-The migration includes supported image, video, font, and SVG files below `images/` and `assets/`; it does not upload PDFs, ZIP archives, QA screenshots, or files outside those two folders. Existing files are not deleted from GitHub.
+# 2. Live sync with public URL verification
+node scripts/r2-sync.mjs --apply --verify-urls
 
-## 6. Cache policy
+# 3. Optional: include PDF documents
+node scripts/r2-sync.mjs --apply --verify-urls --include-pdfs
+```
 
-The migration utility sets existing objects to `public, max-age=86400, stale-while-revalidate=604800`. New Studio uploads use unique object names and a one-year immutable cache policy. If an object is intentionally replaced at the same key, invalidate or wait out the cache before relying on the new bytes.
+---
 
-## 7. Rollback
+## 5. GitHub Actions Workflow (`.github/workflows/r2-media-sync.yml`)
 
-To roll back, remove the R2 environment variables from Vercel and redeploy. New Studio uploads will use the existing GitHub uploader again. Do not delete the R2 bucket or the original GitHub media during rollback.
+Manual trigger (`workflow_dispatch`) only:
+1. Navigate to **Actions → Cloudflare R2 Media Sync**.
+2. Select target feature branch (e.g. `feat/r2-performance-optimization`).
+3. Inputs:
+   - `dry_run`: `true` (default) or `false`.
+   - `include_pdfs`: `false` (default) or `true`.
+   - `confirm_apply`: Type `APPLY_R2_MIGRATION` if running live sync.
+4. **Safety Guards**:
+   - The workflow immediately aborts if triggered on the `main` branch.
+   - Live uploads fail without exact confirmation phrase.
+   - Generates a markdown summary in `$GITHUB_STEP_SUMMARY`.
+
+---
+
+## 6. Studio Media Upload Flow
+
+1. Studio user authenticates via `/api/studio-login`.
+2. User selects media in Studio UI (up to 10 MB per image, 25 MB per video, 35 MB batch).
+3. Studio sends file metadata to `/api/studio-r2-upload.mjs`.
+4. The serverless API checks authentication and origin, then generates 5-minute AWS SigV4 presigned PUT URLs for R2 under `studio-uploads/YYYY/MM/`.
+5. Browser uploads binary directly to R2 bucket via `fetch(presignedUrl, { method: "PUT" })`.
+6. Public CDN URL is written to `studio-content.json`.
+7. `/api/studio-publish.mjs` commits content to GitHub (`feat/r2-performance-optimization` on Preview; blocked from `main` on Preview).
+8. If R2 is unconfigured, Studio falls back to `/api/studio-media-upload.mjs` (GitHub API) with a 5 MB maximum batch limit.
+
+---
+
+## 7. Rollback Plan
+
+All original media files remain backed up in the Git repository (`images/` and `assets/`). In the event of a rollback:
+
+1. **Revert Media References**: Replace R2 CDN domain in HTML/CSS/JS with relative local paths (`/images/` and `/assets/`).
+2. **Remove Vercel Env Vars**: Remove `MASSYNE_R2_*` from Vercel Project Settings. Studio will seamlessly revert to GitHub commit uploads.
+3. **No Data Loss**: The Cloudflare R2 bucket and GitHub repository retain full history.

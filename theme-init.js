@@ -1,7 +1,6 @@
-/* Apply saved theme before styles paint; soft linen is the default. */
+/* MASSYNE — Dark-Only cinematic theme initialization */
 (() => {
- let theme="light";
- try { if(localStorage.getItem("massyne:theme")==="dark")theme="dark"; } catch {}
- document.documentElement.dataset.theme=theme;
- document.documentElement.style.colorScheme=theme;
+  document.documentElement.dataset.theme = "dark";
+  document.documentElement.style.colorScheme = "dark";
+  try { localStorage.setItem("massyne:theme", "dark"); } catch {}
 })();

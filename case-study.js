@@ -213,20 +213,20 @@
     const related=scored.slice(0,3).map(entry=>entry.item);
     if(related.length){
       const thumbs={
-        "ghost-protocol":"images/optimized/work1-480.webp",
-        "the-cursed-crown":"images/optimized/work3-480.webp",
-        "ashes-of-innocence":"images/optimized/work2-480.webp",
-        "the-queen":"images/optimized/work4-480.webp",
-        "the-final-fall":"images/optimized/card8-480.webp",
-        "legends":"images/optimized/card10-480.webp",
-        "nyctophile":"images/optimized/card11-480.webp",
-        "warriors-break":"images/optimized/card12-480.webp",
-        "veiled-sorrow-surreal":"images/optimized/card9-480.webp",
-        "glory":"images/curated/glory-420.webp",
-        "envy":"images/curated/envy-420.webp",
-        "the-last-oath":"images/curated/the-last-oath-420.webp",
-        "nocturne-red-sun":"images/curated/nocturne-red-sun-420.webp",
-        "nocturne-dark-veil":"images/curated/nocturne-dark-veil-420.webp"
+        "ghost-protocol":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work1-480.webp",
+        "the-cursed-crown":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work3-480.webp",
+        "ashes-of-innocence":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work2-480.webp",
+        "the-queen":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work4-480.webp",
+        "the-final-fall":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card8-480.webp",
+        "legends":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card10-480.webp",
+        "nyctophile":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card11-480.webp",
+        "warriors-break":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card12-480.webp",
+        "veiled-sorrow-surreal":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card9-480.webp",
+        "glory":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/glory-420.webp",
+        "envy":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/envy-420.webp",
+        "the-last-oath":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/the-last-oath-420.webp",
+        "nocturne-red-sun":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/nocturne-red-sun-420.webp",
+        "nocturne-dark-veil":"https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/nocturne-dark-veil-420.webp"
       };
       const section=document.createElement("section");
       section.className="case-related";

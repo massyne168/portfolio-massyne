@@ -1,71 +1,28 @@
-/* Satin Linen / Oxblood — interface themes. Project imagery stays unfiltered. */
-:root[data-theme=light]{--ink:var(--site-light, var(--site-light, #FCF6F5));--ink-soft:var(--site-light, var(--site-light, #FCF6F5));--surface:#eceee0;--paper:var(--site-accent, var(--site-accent, #990011));--muted:var(--site-accent, #990011);--red:var(--site-accent, var(--site-accent, #990011));--red-bright:var(--site-accent, var(--site-accent, #990011));--line:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 14.9%, transparent);--ui-stroke:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 33.3%, transparent);--ui-focus:var(--site-accent, var(--site-accent, #990011));--theme-surface:var(--site-light, var(--site-light, #FCF6F5));--theme-text:var(--site-accent, var(--site-accent, #990011));--theme-border:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 18.8%, transparent)}
-:root[data-theme=dark]{--paper:var(--site-light, var(--site-light, #FCF6F5));--theme-surface:#1d151b;--theme-text:var(--site-light, var(--site-light, #FCF6F5));--theme-border:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 18.8%, transparent);--ui-focus:#ffc1ce}
-.theme-control{display:flex;flex:0 0 auto;align-items:center;gap:3px;padding:3px;border:1px solid var(--theme-border);border-radius:30px;background:var(--theme-surface);order:2}
-body .theme-control button{display:flex;align-items:center;justify-content:center;gap:5px;min-height:38px;min-width:0;padding:9px 10px;border:0;border-radius:24px;background:transparent;color:var(--theme-text);font:500 .59rem/1 var(--mono,monospace);cursor:pointer;white-space:nowrap}
-.theme-control button[aria-pressed=true]{background:var(--site-accent, var(--site-accent, #990011));color:var(--site-light, var(--site-light, #FCF6F5))}
-.theme-control button:focus-visible{outline:2px solid var(--ui-focus);outline-offset:3px}
-body .site-header.brand-header .menu{order:3}
-.theme-control--standalone{position:fixed;top:18px;right:18px;z-index:100}
-.resume-topbar .theme-control--standalone{position:static}
-html[data-theme=light] body,html[data-theme=light] body.case-study-page,html[data-theme=light] body.resume-page{background:var(--site-light, var(--site-light, #FCF6F5));color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body :is(h1,h2,h3,h4,h1 span,h2 span,h3 span,strong,.hero-v2-title span,.hero-v2-title em,.email){color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body :is(p,label,small,figcaption,.eyebrow,.index,.intro,.hero-meta,.hero-kicker,.hero-v2-bottom,.hero-v2-scroll,.project-count-label,.gallery-count,.discover-footer,.service-index,.case-facts dd,.case-breadcrumb,.case-category,.case-summary,.resume-return,.resume-facts,.resume-topbar,.resume-hero p,.contact-v2-heading>span){color:var(--site-accent, #990011)}
-html[data-theme=light] body :is(.eyebrow,.about-v2-mini,.index,.hero-kicker,.case-step,.case-chapter-caption){color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body :is(.site-header,.site-header.is-scrolled){background:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 94.1%, transparent);border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 14.9%, transparent);box-shadow:0 10px 30px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 3.1%, transparent)}
-html[data-theme=light] .brand-logo img,html[data-theme=light] .resume-topbar>img{filter:brightness(0) saturate(100%) invert(20%) sepia(40%) saturate(1900%) hue-rotate(325deg) brightness(90%) contrast(91%)}
-html[data-theme=light] body :is(.site-nav a,.site-nav a[aria-current=location],.menu,.availability-strip,.availability-strip a,.project-grid>.project>div,.project-grid>.project>div span,.project-grid>.project b,.carousel-context,.carousel-kicker,.carousel-hint,.carousel-current-name,.discover-count,.spotlight-card-head,.spotlight-card-foot small,.spotlight-bottom,.studio-services-foot,.about-v2-stats span,.contact-links a,.case-project-link,.case-artwork-meta,.case-facts dt,.case-facts dd,.case-related-info,.case-related-info span,.case-chapter-nav a,.resume-cta a){color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body :is(.studio-services,.service-item,.service-item:hover,.contact.contact-v2,.project-brief,.gurzil,.gurzil-lead,.spotlight-card,.studio-showreel,.showreel-side,.case-related-card,.case-mockup-scene,.case-detail-image,.case-gallery-piece,.case-dna,.case-chapters,.case-presentation,.resume-section,.tool-stack .tool-item,.about-actions .about-collaborate){background:var(--site-light, var(--site-light, #FCF6F5));border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 16.9%, transparent);box-shadow:none}
-html[data-theme=light] body .project-brief{background:radial-gradient(ellipse at 0 0,color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 3.9%, transparent),transparent 55%),var(--site-light, var(--site-light, #FCF6F5));box-shadow:inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 40%, transparent),0 20px 65px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 3.1%, transparent)}
-html[data-theme=light] body :is(.project-grid[data-view="3d"].carousel-ready>.project:nth-child(n),.project-grid[data-view=grid]>.project,.identity-gallery figure){background:#eef0e3;border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 22%, transparent);box-shadow:0 15px 35px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 6.3%, transparent)}
-html[data-theme=light] body :is(.curated-stage.carousel-active,.curated-stage[data-collection=mockups]){background:var(--site-light, var(--site-light, #FCF6F5));border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 14.9%, transparent)}
-html[data-theme=light] body .curated-stage.carousel-active::after{background:linear-gradient(90deg,var(--site-light, var(--site-light, #FCF6F5)),transparent 12%,transparent 88%,var(--site-light, var(--site-light, #FCF6F5)))}
-html[data-theme=light] body .curated-stage.carousel-active::before{background:radial-gradient(ellipse,color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 7.1%, transparent),transparent 74%)}
-html[data-theme=light] body :is(.project-grid[data-view="3d"].carousel-ready>.project:nth-child(n)::after){background:none}
-html[data-theme=light] body .project-grid[data-view="3d"]>.project>div{background:transparent}
-html[data-theme=light] body .spotlight-card-foot{background:linear-gradient(0deg,#eef0e3,transparent)}
-html[data-theme=light] body :is(.service-item p,.tool-item small,.about-v2-text,.about-v2-description,.resume-section p,.resume-section li,.resume-section small,.case-story-copy p,.case-insight p,.case-dna p,.case-related-head p,.case-presentation-heading p,.showreel-side p,.showreel-state,.showreel-side .eyebrow,.brief-note,.brief-feedback,.gurzil-lead p){color:var(--site-accent, #990011)}
-html[data-theme=light] body :is(.hero-button-quiet,.contact-links a,.resume-cta>a,.case-expand,.case-contact-link,.case-gallery-open,.case-viewer-control,.discover-categories button,.discover-reset,.filters button,.view-switch button,.carousel-actions button,.showreel-controls button,.brief-copy,.about-actions .about-download,.gurzil-lead a){background:var(--site-light, var(--site-light, #FCF6F5));color:var(--site-accent, var(--site-accent, #990011));border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 30.2%, transparent);box-shadow:none}
-html[data-theme=light] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type,.discover-categories button[aria-pressed=true],.filters button.active,.view-switch button[aria-pressed=true],.theme-control button[aria-pressed=true]){background:var(--site-accent, var(--site-accent, #990011));color:var(--site-light, var(--site-light, #FCF6F5));border-color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type,.theme-control button[aria-pressed=true]) :is(span,strong,i){color:inherit}
-html[data-theme=light] body :is(.hero-v2-title em,.about-collaborate strong,.about-collaborate small,.tool-item strong,.case-related-info strong,.spotlight-card-foot strong,.spotlight-card-head span,.identity-gallery figcaption,.identity-gallery figcaption span,.gurzil-lead h3 span,.spotlight-bottom a){color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body :is(.discover-search,.discover-context,.brief-field input,.brief-field select,.brief-field textarea,.brief-output){background:var(--site-light, var(--site-light, #FCF6F5));border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 25.1%, transparent);color:var(--site-accent, var(--site-accent, #990011));box-shadow:none}
-html[data-theme=light] body .project-brief .brief-field :is(input,select,textarea){background:var(--site-light, var(--site-light, #FCF6F5));border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 25.1%, transparent);color:var(--site-accent, var(--site-accent, #990011));color-scheme:light;box-shadow:inset 0 1px 3px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 2%, transparent)}
-html[data-theme=light] body .project-brief .brief-field :is(input,select,textarea):focus-visible{background:var(--site-light, var(--site-light, #FCF6F5));border-color:var(--site-accent, var(--site-accent, #990011));outline-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 43.9%, transparent)}
-html[data-theme=light] body :is(.discover-search input,.discover-search input::placeholder,.brief-field input::placeholder,.brief-field textarea::placeholder){color:var(--site-accent, #990011)}
-html[data-theme=light] body .project-brief-head>small{background:var(--site-light, var(--site-light, #FCF6F5));border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 18.8%, transparent);color:var(--site-accent, #990011)}
-html[data-theme=light] body :is(.project-brief-head,.project-brief>h3,.services-list,.service-item,.about-v2-stats,.about-v2-stats>div,.identity-gallery figcaption,.case-story,.case-design,.case-details,.case-insight,.case-insights,.case-breadcrumb,.case-next,.resume-hero,.resume-section,.studio-services-foot){border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 14.9%, transparent)}
-/* Dark media mattes preserve logos, videos and the original artwork contrast. */
-html[data-theme=light] body :is(.gurzil-mark,.showreel-screen,.case-fullscreen,.lightbox){background:#171217}
-html[data-theme=light] body :is(.showreel-play,.case-fullscreen,.lightbox) :is(p,span,strong){color:var(--site-light, var(--site-light, #FCF6F5))}
-html[data-theme=light] body .theme-control button[aria-pressed=false]{background:transparent;color:var(--site-accent, var(--site-accent, #990011))}
-@media(max-width:1100px){
- body .site-header.brand-header{gap:10px}
- body .site-header .site-nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:12px;padding:22px;background:#110d10;border-bottom:1px solid var(--line)}
- body .site-header .site-nav.is-open{display:flex;max-height:calc(100svh - 80px);overflow-y:auto}
- body .site-header .menu{display:flex;align-items:center;gap:9px;background:none;border:0;color:var(--paper);font:500 .62rem var(--mono);text-transform:uppercase;cursor:pointer;padding:5px}
- body .site-header .menu b{position:relative;display:block;width:19px;height:1px;background:var(--red-bright)}
- body .site-header .menu b::after{content:"";position:absolute;top:6px;left:0;width:19px;height:1px;background:var(--red-bright)}
- html[data-theme=light] body .site-header .site-nav{background:var(--site-light, var(--site-light, #FCF6F5))}
+/* Satin Linen / Oxblood — Dark-Only cinematic theme lock. */
+:root, :root[data-theme=dark] {
+  --paper: var(--site-light, #FCF6F5);
+  --theme-surface: #1d151b;
+  --theme-text: var(--site-light, #FCF6F5);
+  --theme-border: color-mix(in srgb, var(--site-light, #FCF6F5) 18.8%, transparent);
+  --ui-focus: #ffc1ce;
+  --red: var(--site-accent, #990011);
+  --red-bright: var(--site-accent, #990011);
 }
-@media(max-width:640px){body .site-header.brand-header{gap:7px}body .site-header.brand-header .brand-logo{width:76px!important;max-width:76px!important;flex-basis:76px!important}body .theme-control button{font-size:.54rem;padding:9px 7px;min-height:36px}.theme-control{padding:2px;gap:1px}body .site-header .menu{font-size:.57rem;gap:6px}}
-@media print{.theme-control{display:none!important}}
-html[data-theme=light] body .hero.hero-v2{background:radial-gradient(ellipse 70% 30% at 50% 110%,color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 4.3%, transparent),transparent 85%),var(--site-light, var(--site-light, #FCF6F5))}
-html[data-theme=light] body .hero-v2-portrait{background:radial-gradient(ellipse at 64% 28%,color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 8.2%, transparent),transparent 50%),linear-gradient(140deg,#eceee0,#e2dfd3);border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 18.8%, transparent);box-shadow:inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 60%, transparent),0 20px 60px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 8.2%, transparent);backdrop-filter:none}
-html[data-theme=light] body .hero-v2-portrait::after{background:linear-gradient(180deg,transparent 75%,color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 78.8%, transparent))}
-html[data-theme=light] body :is(h1,h2,h3,h4) em{color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body :is(.hero-v2-portrait figcaption,.hero-v2-portrait figcaption span,.hero-v2-bottom span,.hero-meta span,.hero-v2-scroll span,.availability-block p){color:var(--site-accent, #990011)}
-html[data-theme=light] body .ticker{background:var(--site-accent, var(--site-accent, #990011));border-color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body .ticker span{color:var(--site-light, var(--site-light, #FCF6F5))}
-html[data-theme=light] body footer{background:var(--site-light, var(--site-light, #FCF6F5));color:var(--site-accent, var(--site-accent, #990011));border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 14.9%, transparent)}
-html[data-theme=light] body footer :is(a,span){color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=light] body .project-grid[data-view="3d"]>.project>img{background:#eef0e3}
-/* Comfortable touch targets in both themes. */
-body .theme-control button{min-height:44px}
-@media(max-width:640px){body .theme-control button{min-height:40px}}
-
-/* Sombre keeps the original color roles; only palette values change. */
-:root[data-theme=dark]{--red:var(--site-accent, var(--site-accent, #990011));--red-bright:var(--site-accent, var(--site-accent, #990011));--paper:var(--site-light, var(--site-light, #FCF6F5))}
+.theme-control, .theme-toggle, .theme-switcher, [data-theme-toggle] { display: none !important; }
+@media (max-width:1100px) {
+  body .site-header.brand-header { gap: 10px; }
+  body .site-header .site-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 12px; padding: 22px; background: #110d10; border-bottom: 1px solid var(--line); }
+  body .site-header .site-nav.is-open { display: flex; max-height: calc(100svh - 80px); overflow-y: auto; }
+  body .site-header .menu { display: flex; align-items: center; gap: 9px; background: none; border: 0; color: var(--paper); font: 500 .62rem var(--mono); text-transform: uppercase; cursor: pointer; padding: 5px; }
+  body .site-header .menu b { position: relative; display: block; width: 19px; height: 1px; background: var(--red-bright); }
+  body .site-header .menu b::after { content: ""; position: absolute; top: 6px; left: 0; width: 19px; height: 1px; background: var(--red-bright); }
+}
+@media (max-width:640px) {
+  body .site-header.brand-header { gap: 7px; }
+  body .site-header.brand-header .brand-logo { width: 76px !important; max-width: 76px !important; flex-basis: 76px !important; }
+  body .site-header .menu { font-size: .57rem; gap: 6px; }
+}
+@media print { .theme-control { display: none !important; } }
 
 
 /* Original Sombre selectors, with red and white substituted in place. */
@@ -395,12 +352,8 @@ html[data-theme=dark] body :is(.hero-button-quiet,.case-gallery-open,.case-expan
 html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type){color:var(--site-light, var(--site-light, #FCF6F5))}
 html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type) :is(span,strong,i){color:inherit}
 
-/* Use the supplied outline logo only in Clair, at the same header dimensions. */
+/* Header logo: dark flame metal logo */
 body .site-header .brand-logo-light{display:none!important}
-html[data-theme=light] body .site-header .brand-logo-dark{display:none!important}
-html[data-theme=light] body .site-header .brand-logo-light{display:block!important;filter:none!important;width:100%!important;height:100%!important;object-fit:contain;object-position:center}
-html[data-theme=light] body .site-header.brand-header .brand-logo{order:0;margin-left:0!important}
-html[data-theme=light] body .site-header.brand-header .site-nav{margin-left:auto!important}
 /* About portrait: transparent, frameless double exposure. */
 html[data-theme] :is(.about-v2-image,.hero-v2-portrait){background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;isolation:isolate}
 html[data-theme] :is(.about-v2-image,.hero-v2-portrait)::after{display:none}
@@ -410,7 +363,6 @@ html[data-theme] :is(.about-v2-image,.hero-v2-portrait)::after{display:none}
 :is(.about-v2-image,.hero-v2-portrait).echo-visible picture .about-portrait-echo{animation-play-state:running}
 @keyframes about-exposure-right{0%,15%,100%{opacity:0;transform:translateX(0)}35%,55%{opacity:.27;transform:translateX(24px) rotate(1deg)}80%{opacity:0;transform:translateX(0)}}
 @keyframes about-exposure-left{0%,15%,100%{opacity:0;transform:translateX(0)}35%,55%{opacity:.15;transform:translateX(-19px) rotate(-1deg)}80%{opacity:0;transform:translateX(0)}}
-html[data-theme="light"] :is(.about-v2-image,.hero-v2-portrait) .about-portrait-echo{mix-blend-mode:multiply}
 @media(prefers-reduced-motion:reduce){:is(.about-v2-image,.hero-v2-portrait) picture .about-portrait-echo{display:none;animation:none!important}}
 
 .hero-v2-portrait .hero-portrait-halo{display:none}

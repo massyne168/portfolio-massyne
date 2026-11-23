@@ -6,5 +6,4 @@
 .lab-entry-copy>p:not(.eyebrow){font:13px/1.9 Manrope,sans-serif;max-width:440px;color:var(--muted)}
 .lab-entry-link{display:inline-flex;align-items:center;gap:50px;margin-top:16px;border:1px solid var(--line);padding:14px 20px;border-radius:30px;color:var(--paper);font:12px Manrope,sans-serif}.lab-entry-link:focus-visible{outline:2px solid var(--site-accent, var(--site-accent, #990011));outline-offset:5px}
 .lab-entry-note{display:block;margin-top:20px;font:8px 'IBM Plex Mono',monospace;letter-spacing:.1em;color:var(--muted)}
-html[data-theme=light] .lab-entry-link{color:var(--site-accent, var(--site-accent, #990011));border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 25.1%, transparent)}
 @media(max-width:700px){.lab-entry{grid-template-columns:1fr;gap:35px;padding-block:50px}.lab-entry-art{width:145px;padding:15px}.lab-entry-art strong{font-size:32px}.lab-entry-art>span,.lab-entry-art small{font-size:6px}.lab-entry-copy{text-align:center}.lab-entry-copy>p:not(.eyebrow){margin-inline:auto}.lab-entry-copy h2{font-size:38px}}

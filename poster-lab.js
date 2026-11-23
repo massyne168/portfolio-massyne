@@ -53,11 +53,7 @@
  }));
  titleColor.addEventListener('input',()=>{state.titleColor=titleColor.value;render();});
  titleWeight.addEventListener('change',()=>{state.titleWeight=titleWeight.value;render();});
- document.querySelectorAll('button[data-theme]').forEach(button=>button.addEventListener('click',()=>{
-  document.documentElement.dataset.theme=button.dataset.theme;
-  try{localStorage.setItem('massyne:theme',button.dataset.theme)}catch{}
-  document.querySelectorAll('button[data-theme]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
- }));
+ document.documentElement.dataset.theme = 'dark';
  document.getElementById('reset-poster').addEventListener('click',()=>{
   input.value='';
   Object.assign(state,{font:'Sora',textX:0,textY:0,textScale:100,textAngle:0,titleColor:'#171719',titleWeight:'700',background:'#ffffff'});
@@ -152,7 +148,6 @@
   drawSizeValue.value='16 px';drawSizeValue.textContent='16 px';setDrawTool('select',false);
  });
  setDrawTool('select',false);
- document.querySelectorAll('button[data-theme]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.theme===document.documentElement.dataset.theme)));
  draw();
  Promise.all(['Sora','Manrope','DM Serif Display','Bebas Neue','Anton','Space Grotesk','Oswald','Playfair Display','Montserrat','Orbitron','IBM Plex Mono'].map(font=>document.fonts.load(`700 32px "${font}"`).catch(()=>{}))).then(render);
 })();

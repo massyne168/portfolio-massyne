@@ -90,16 +90,6 @@
 .feedback-note a { color: #ffc1ce; text-underline-offset: 3px; }
 .feedback-status { min-height: 1.4em; color: #ffc1ce; }
 
-html[data-theme="light"] .feedback-popover { border-color: #a35b6b; background: radial-gradient(ellipse at 0 0, #f2d8df, transparent 60%), linear-gradient(145deg, #f5eee8, #ece8e2); box-shadow: 0 22px 65px #38242a35, inset 0 1px #ffffffaa; color: #24191e; }
-html[data-theme="light"] .feedback-head span { color: #8c2635; }
-html[data-theme="light"] .feedback-head span:last-child, html[data-theme="light"] .feedback-intro, html[data-theme="light"] .feedback-note, html[data-theme="light"] .feedback-status { color: #79545d; }
-html[data-theme="light"] .feedback-popover h2 { color: #21181d; }
-html[data-theme="light"] .feedback-rating legend, html[data-theme="light"] .feedback-field label { color: #67434d; }
-html[data-theme="light"] .feedback-stars label { border-color: #8c26352d; background: #fff8f3; color: #9b858b; }
-html[data-theme="light"] .feedback-stars label.is-active { border-color: #a22b40; background: #a22b4015; color: #a22b40; }
-html[data-theme="light"] .feedback-field input, html[data-theme="light"] .feedback-field textarea { border-color: #8c26354a; background: #fffaf5; color: #21181d; }
-html[data-theme="light"] .feedback-field :is(input, textarea)::placeholder { color: #816c72; }
-html[data-theme="light"] .feedback-note a { color: #8c2635; }
 
 @media (max-width: 850px) {
   .portfolio-feedback { position: relative; width: 100%; margin: 0; }

@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { isStudioSessionAuthenticated } from "./studio-access.mjs";
+import { getStudioBranch, assertStudioWriteAllowed } from "./_studio-branch.mjs";
 
 const REPOSITORY = "massyne168/portfolio-massyne";
 const GITHUB_API = "https://api.github.com";
@@ -138,10 +139,10 @@ async function githubRequest(token, path, options = {}) {
   return body;
 }
 
-async function createMediaCommit(token, files) {
-  const ref = await githubRequest(token, "/repos/" + REPOSITORY + "/git/ref/heads/main");
+async function createMediaCommit(token, files, branch) {
+  const ref = await githubRequest(token, "/repos/" + REPOSITORY + "/git/ref/heads/" + branch);
   const parent = ref.object?.sha;
-  if (!parent) throw new Error("GitHub could not read the main branch.");
+  if (!parent) throw new Error("GitHub could not read the " + branch + " branch.");
   const current = await githubRequest(token, "/repos/" + REPOSITORY + "/git/commits/" + parent);
   const blobs = await Promise.all(files.map(async file => {
     const blob = await githubRequest(token, "/repos/" + REPOSITORY + "/git/blobs", {
@@ -162,7 +163,7 @@ async function createMediaCommit(token, files) {
       parents: [parent]
     })
   });
-  await githubRequest(token, "/repos/" + REPOSITORY + "/git/refs/heads/main", {
+  await githubRequest(token, "/repos/" + REPOSITORY + "/git/refs/heads/" + branch, {
     method: "PATCH",
     body: JSON.stringify({ sha: commit.sha, force: false })
   });
@@ -189,6 +190,9 @@ export default async function handler(req, res) {
     return send(res, 503, { message: "GitHub publishing is not configured in Vercel yet." });
   }
 
+  const targetBranch = getStudioBranch();
+  assertStudioWriteAllowed(targetBranch);
+
   let files;
   try {
     files = validateFiles(readBody(req).files);
@@ -197,7 +201,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const commit = await createMediaCommit(token, files);
+    const commit = await createMediaCommit(token, files, targetBranch);
     return send(res, 200, {
       ok: true,
       commit,
@@ -205,7 +209,7 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     if (error.status === 409 || error.status === 422) {
-      return send(res, 409, { message: "The main branch changed while uploading. Refresh Studio and try again." });
+      return send(res, 409, { message: `The ${targetBranch} branch changed while uploading. Refresh Studio and try again.` });
     }
     if ([401, 403].includes(error.status)) {
       return send(res, 503, { message: "The Vercel GitHub token needs repository Contents: Read and write access." });

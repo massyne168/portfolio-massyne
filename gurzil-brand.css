@@ -12,7 +12,6 @@
   color:var(--gb-text);
   background:transparent!important;
 }
-html[data-theme=light] .gurzil-brand{--gb-text:#8c2635;--gb-muted:#80565a;--gb-line:#8c263530}
 
 /* Hide light/dark toggle on Gurzil detail page */
 body.gb-detail .brand-logo-light,
@@ -220,7 +219,6 @@ body.gb-detail .gurzil-brand{
   border:1px solid var(--gb-glass-border)!important;
   box-shadow:var(--gb-glass-shadow)!important;
 }
-html[data-theme=light] .gb-products .gb-product{background:var(--gb-glass-bg)!important}
 .gb-products .gb-product>img{
   width:82%;
   height:auto;
@@ -381,7 +379,6 @@ html[data-theme=light] .gb-products .gb-product{background:var(--gb-glass-bg)!im
   transform:translateY(-2px);
   border-color:rgba(255,255,255,.4)!important;
 }
-html[data-theme=light] .gb-back{color:#8c2635}
 
 @media(max-width:700px){
   .gb-teaser{gap:25px;grid-template-columns:1fr}
@@ -399,9 +396,6 @@ html[data-theme=light] .gb-back{color:#8c2635}
 .gb-teaser-copy h2{font-size:clamp(30px,4.5vw,66px);letter-spacing:-.055em}
 .gb-teaser-copy>p:not(.eyebrow){font-size:16px;letter-spacing:.04em}
 .gb-teaser::after{content:"";position:absolute;bottom:22px;left:46%;width:8%;height:1px;background:linear-gradient(90deg,transparent,#e10505,transparent)}
-html[data-theme=light] .gb-teaser-logo::before{background:radial-gradient(ellipse,#a427391c,transparent 65%)}
-html[data-theme=light] .gb-teaser-logo .gb-teaser-emblem{filter:brightness(0);opacity:.92}
-html[data-theme=light] .gb-teaser-logo .gb-teaser-hoodie{opacity:.8;filter:none}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.gb-teaser-logo:hover .gb-teaser-emblem{transform:translateY(-7px) rotate(-2deg)}}
 @media(max-width:700px){
   .gb-teaser{grid-template-columns:1fr;gap:20px;padding-top:45px;padding-bottom:60px}

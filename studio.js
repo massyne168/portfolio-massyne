@@ -733,8 +733,13 @@
     return `<div class="field ${wide ? "wide" : ""}"><label for="field-${name}">${escapeHtml(label)}</label>${input}${help ? `<small class="field-help">${escapeHtml(help)}</small>` : ""}</div>`;
   };
 
-  const MAX_STUDIO_MEDIA_UPLOAD_BYTES = 3 * 1024 * 1024;
-  const STUDIO_MEDIA_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/gif", "video/mp4"]);
+  const MAX_STUDIO_MEDIA_UPLOAD_BYTES = 35 * 1024 * 1024;
+  const MAX_GITHUB_FALLBACK_BYTES = 5 * 1024 * 1024;
+  const MAX_STUDIO_IMAGE_BYTES = 10 * 1024 * 1024;
+  const MAX_STUDIO_VIDEO_BYTES = 25 * 1024 * 1024;
+  const STUDIO_IMAGE_TYPES = new Set(["image/png", "image/jpeg", "image/webp", "image/avif", "image/gif"]);
+  const STUDIO_VIDEO_TYPES = new Set(["video/mp4", "video/webm"]);
+  const STUDIO_MEDIA_TYPES = new Set([...STUDIO_IMAGE_TYPES, ...STUDIO_VIDEO_TYPES]);
 
   const fileUploadField = (name, label, help, options = {}) => {
     const { multiple = false, accept = "image/png,image/jpeg,image/webp,image/gif" } = options;
@@ -769,16 +774,26 @@
   }
 
   async function uploadStudioMedia(tasks) {
-    const totalBytes = tasks.reduce((total, task) => total + task.file.size, 0);
     if (!tasks.length) return [];
+    if (tasks.length > 12) {
+      throw new Error("Upload up to 12 media files at a time.");
+    }
+    const totalBytes = tasks.reduce((total, task) => total + task.file.size, 0);
     if (totalBytes > MAX_STUDIO_MEDIA_UPLOAD_BYTES) {
-      throw new Error("Keep media uploads under 3 MB total per save.");
+      throw new Error("Keep media uploads under 35 MB total per batch.");
     }
     for (const task of tasks) {
-      if (!STUDIO_MEDIA_TYPES.has(task.file.type)) {
-        throw new Error("Upload PNG, JPG, WEBP, GIF or MP4 media only.");
+      const type = task.file.type;
+      if (!STUDIO_MEDIA_TYPES.has(type)) {
+        throw new Error("Upload PNG, JPG, WEBP, AVIF, GIF images or MP4, WEBM videos.");
       }
       if (!task.file.size) throw new Error("That media file is empty.");
+      if (STUDIO_IMAGE_TYPES.has(type) && task.file.size > MAX_STUDIO_IMAGE_BYTES) {
+        throw new Error(`Image "${task.file.name}" exceeds 10 MB limit (${(task.file.size / (1024 * 1024)).toFixed(1)} MB).`);
+      }
+      if (STUDIO_VIDEO_TYPES.has(type) && task.file.size > MAX_STUDIO_VIDEO_BYTES) {
+        throw new Error(`Video "${task.file.name}" exceeds 25 MB limit (${(task.file.size / (1024 * 1024)).toFixed(1)} MB).`);
+      }
     }
 
     const metadata = tasks.map(task => ({
@@ -816,7 +831,10 @@
     }
 
     // R2 is optional until the owner completes the Vercel setup; preserve the
-    // existing GitHub upload path as a safe fallback during migration.
+    // existing GitHub upload path as a safe fallback during migration (5 MB max).
+    if (totalBytes > MAX_GITHUB_FALLBACK_BYTES) {
+      throw new Error("Cloudflare R2 is not configured, and the GitHub fallback limit is 5 MB total per upload.");
+    }
     const files = await Promise.all(tasks.map(task => encodeStudioMediaFile(task.file)));
     const response = await fetch("/api/studio-media-upload", {
       method: "POST",

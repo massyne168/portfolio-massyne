@@ -5,12 +5,12 @@ window.MASSYNE_PROJECTS = [
     "title": "Veiled Sorrow",
     "category": "Creative Poster Design",
     "year": "2026",
-    "image": "images/featured-project.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/featured-project.webp",
     "focus": "Cinematic atmosphere",
     "summary": "A cinematic poster exploration built around emotion, atmosphere and an expressive visual composition.",
     "number": "01",
     "gallery": [
-      "images/featured-project.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/featured-project.webp"
     ],
     "concept": "An exploration of concealed emotion, where a single image carries a larger story.",
     "direction": "The composition leans into restraint: atmospheric imagery, visual tension and a cinematic poster rhythm.",
@@ -29,19 +29,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/featured-project.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/featured-project.webp"
   },
   {
     "slug": "ghost-protocol",
     "title": "Ghost Protocol",
     "category": "Gaming Poster Design",
     "year": "2026",
-    "image": "images/optimized/work1-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work1-1400.webp",
     "focus": "Gaming / visual storytelling",
     "summary": "A gaming-inspired poster study exploring dynamic hierarchy and cinematic presentation.",
     "number": "02",
     "gallery": [
-      "images/optimized/work1-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work1-1400.webp"
     ],
     "concept": "A gaming-led image study with the visual intensity of a cinematic campaign.",
     "direction": "The framing borrows from game-key-art language: identifiable subject, dramatic environment and a crisp information hierarchy.",
@@ -60,19 +60,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/work1-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work1-1400.webp"
   },
   {
     "slug": "power-speaks",
     "title": "Power Speaks",
     "category": "Creative Poster Design",
     "year": "2026",
-    "image": "images/card14.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/card14.webp",
     "focus": "Typography / statement",
     "summary": "A bold poster composition that brings visual energy to a direct, memorable statement.",
     "number": "03",
     "gallery": [
-      "images/card14.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/card14.webp"
     ],
     "concept": "A poster built around the visual impact of a short statement.",
     "direction": "Expressive lettering and high-contrast imagery work together as a single message rather than separate elements.",
@@ -91,19 +91,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/card14.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/card14.webp"
   },
   {
     "slug": "the-cursed-crown",
     "title": "The Cursed Crown",
     "category": "Dark Fantasy Poster Design",
     "year": "2026",
-    "image": "images/optimized/work3-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work3-1400.webp",
     "focus": "Fantasy / atmosphere",
     "summary": "A dark fantasy visual study shaped by dramatic contrast and a distinct story-world mood.",
     "number": "04",
     "gallery": [
-      "images/optimized/work3-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work3-1400.webp"
     ],
     "concept": "An imagined dark-fantasy world condensed into one poster frame.",
     "direction": "The visual direction uses regal symbolism, dramatic atmosphere and typography that feels part of the world.",
@@ -122,19 +122,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/work3-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work3-1400.webp"
   },
   {
     "slug": "velocity",
     "title": "Velocity",
     "category": "Biker Poster Design",
     "year": "2026",
-    "image": "images/card13.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/card13.webp",
     "focus": "Energy / movement",
     "summary": "A high-impact biker poster study focused on motion, speed and attitude.",
     "number": "05",
     "gallery": [
-      "images/card13.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/card13.webp"
     ],
     "concept": "A motorsport-inspired poster study about speed, movement and attitude.",
     "direction": "Diagonal energy, a bold subject and compact visual details give the artwork a fast-paced feel.",
@@ -153,19 +153,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/card13.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/card13.webp"
   },
   {
     "slug": "ashes-of-innocence",
     "title": "Ashes of Innocence",
     "category": "Dark Editorial Poster Design",
     "year": "2026",
-    "image": "images/optimized/work2-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work2-1400.webp",
     "focus": "Editorial / mood",
     "summary": "A cinematic editorial artwork exploring visual tension and emotional atmosphere.",
     "number": "06",
     "gallery": [
-      "images/optimized/work2-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work2-1400.webp"
     ],
     "concept": "A darker editorial visual study driven by tension and atmosphere.",
     "direction": "A deliberately cinematic composition gives the poster emotional weight without relying on a dense layout.",
@@ -184,19 +184,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/work2-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work2-1400.webp"
   },
   {
     "slug": "the-queen",
     "title": "The Queen",
     "category": "Conceptual Character Poster",
     "year": "2026",
-    "image": "images/optimized/work4-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work4-1400.webp",
     "focus": "Character / presence",
     "summary": "A character-focused poster study built around silhouette, presence and composition.",
     "number": "07",
     "gallery": [
-      "images/optimized/work4-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work4-1400.webp"
     ],
     "concept": "A character portrait presented with the presence of a film-poster visual.",
     "direction": "The direction places character and silhouette at the heart of a restrained but dramatic composition.",
@@ -215,19 +215,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/work4-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/work4-1400.webp"
   },
   {
     "slug": "the-final-fall",
     "title": "The Final Fall",
     "category": "Dark Fantasy Poster Design",
     "year": "2026",
-    "image": "images/optimized/card8-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card8-1400.webp",
     "focus": "Fantasy / narrative",
     "summary": "A dark fantasy artwork presenting a dramatic visual scene and expressive tone.",
     "number": "08",
     "gallery": [
-      "images/optimized/card8-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card8-1400.webp"
     ],
     "concept": "A dark-fantasy image with the mood of a story at its turning point.",
     "direction": "The visual structure emphasizes drama, layered space and an expressive focal moment.",
@@ -246,19 +246,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/card8-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card8-1400.webp"
   },
   {
     "slug": "legends",
     "title": "Legends",
     "category": "Fantasy Typography Poster",
     "year": "2026",
-    "image": "images/optimized/card10-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card10-1400.webp",
     "focus": "Typography / fantasy",
     "summary": "An expressive fantasy typography study exploring the relationship between type and imagery.",
     "number": "09",
     "gallery": [
-      "images/optimized/card10-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card10-1400.webp"
     ],
     "concept": "An experiment in letting typography carry a fantasy world.",
     "direction": "Letterforms and visual imagery share the lead, creating a title treatment that feels illustrated.",
@@ -277,19 +277,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/card10-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card10-1400.webp"
   },
   {
     "slug": "nyctophile",
     "title": "Nyctophile",
     "category": "Dark Fantasy Poster Design",
     "year": "2025",
-    "image": "images/optimized/card11-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card11-1400.webp",
     "focus": "Night / atmosphere",
     "summary": "A night-inspired fantasy poster study defined by shadow, visual contrast and atmosphere.",
     "number": "10",
     "gallery": [
-      "images/optimized/card11-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card11-1400.webp"
     ],
     "concept": "A nocturnal visual exploration shaped by darkness, depth and atmosphere.",
     "direction": "The poster uses night-inspired contrast to create a quiet but striking identity.",
@@ -308,19 +308,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/card11-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card11-1400.webp"
   },
   {
     "slug": "warriors-break",
     "title": "Warrior's Break",
     "category": "Fantasy Character Poster Design",
     "year": "2026",
-    "image": "images/optimized/card12-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card12-1400.webp",
     "focus": "Character / fantasy",
     "summary": "A fantasy character study exploring pause, mood and dramatic visual identity.",
     "number": "11",
     "gallery": [
-      "images/optimized/card12-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card12-1400.webp"
     ],
     "concept": "A fantasy character study that gives stillness its own sense of power.",
     "direction": "Instead of leaning only on action, the composition emphasizes pause, presence and storytelling.",
@@ -339,19 +339,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/card12-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card12-1400.webp"
   },
   {
     "slug": "veiled-sorrow-surreal",
     "title": "Veiled Sorrow — Surreal Study",
     "category": "Surreal Art Poster Design",
     "year": "2026",
-    "image": "images/optimized/card9-1400.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card9-1400.webp",
     "focus": "Surrealism / emotion",
     "summary": "A separate surreal poster variation within the Veiled Sorrow visual theme.",
     "number": "12",
     "gallery": [
-      "images/optimized/card9-1400.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card9-1400.webp"
     ],
     "concept": "A more surreal variation of the Veiled Sorrow visual idea.",
     "direction": "An altered visual language gives familiar emotion a more dreamlike and conceptual direction.",
@@ -370,19 +370,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/optimized/card9-1400.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/card9-1400.webp"
   },
   {
     "slug": "silver-throne",
     "title": "Silver Throne",
     "category": "Premium Brand Visual",
     "year": "2026",
-    "image": "images/archive25.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/archive25.webp",
     "focus": "Identity / graphic form",
     "summary": "A premium experimental brand-visual exploration from the MASSYNE archive.",
     "number": "13",
     "gallery": [
-      "images/archive25.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/archive25.webp"
     ],
     "concept": "A premium graphic identity experiment focused on form and presence.",
     "direction": "Material-inspired styling and a restrained composition lend the mark an elevated, display-ready feel.",
@@ -401,19 +401,19 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/archive25.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/archive25.webp"
   },
   {
     "slug": "mssn-chrome",
     "title": "MSSN Chrome",
     "category": "Premium Brand Visual",
     "year": "2026",
-    "image": "images/archive26.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/archive26.webp",
     "focus": "Brand / metallic form",
     "summary": "An expressive visual-identity study exploring a refined chrome-inspired aesthetic.",
     "number": "14",
     "gallery": [
-      "images/archive26.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/archive26.webp"
     ],
     "concept": "An experimental self-branding visual built around a metallic-inspired identity.",
     "direction": "High-gloss graphic form and minimal surrounding detail give the piece a futuristic editorial tone.",
@@ -432,23 +432,23 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/archive26.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/archive26.webp"
   },
   {
     "slug": "gurzil-team",
     "title": "Gurzil Team",
     "category": "Brand Identity",
     "year": "2026",
-    "image": "images/gurzil/jersey-1536.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/jersey-1536.webp",
     "focus": "Brand system / gaming culture",
     "summary": "Gurzil Team is a creative identity influenced by streetwear, gaming culture and bold branding.",
     "number": "15",
     "gallery": [
-      "images/gurzil/jersey-1536.webp",
-      "images/gurzil/streetwear-1536.webp",
-      "images/gurzil/gaming-1536.webp",
-      "images/gurzil/member-kit-1536.webp",
-      "images/optimized/gurzil-logo-1000.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/jersey-1536.webp",
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/streetwear-1536.webp",
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/gaming-1536.webp",
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/member-kit-1536.webp",
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/gurzil-logo-1000.webp"
     ],
     "concept": "A visual identity world shaped by gaming culture, bold graphic form and streetwear energy.",
     "direction": "The collection brings a core symbol into several presentations, letting the identity live beyond a single mark.",
@@ -467,13 +467,13 @@ window.MASSYNE_PROJECTS = [
       }
     ],
     "staticPage": true,
-    "preview": "images/gurzil/jersey-1536.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/jersey-1536.webp"
   },
   {
     "slug": "glory",
     "title": "Glory",
     "category": "Cinematic Medieval Poster Design",
-    "image": "images/curated/design%20works80b.png",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works80b.png",
     "focus": "Resilience / golden-hour atmosphere",
     "summary": "A cinematic medieval poster capturing the quiet strength of a fallen warrior beneath a blazing sunset, where endurance matters more than triumph.",
     "concept": "Glory explores the moment after conflict: a lone knight in heavy armor sits among ruins, suggesting that strength can live in stillness as well as victory.",
@@ -495,16 +495,16 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "16",
     "gallery": [
-      "images/curated/design%20works80b.png"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works80b.png"
     ],
     "staticPage": true,
-    "preview": "images/curated/design%20works80b.png"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works80b.png"
   },
   {
     "slug": "nocturne-red-sun",
     "title": "Nocturne — Red Sun",
     "category": "Gothic Plague Doctor Poster",
-    "image": "images/curated/design%20works6.png",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works6.png",
     "focus": "Gothic character / red sun",
     "summary": "An arresting gothic character poster featuring a plague-doctor figure against a crimson sun, with distressed antique typography and archival details.",
     "concept": "Nocturne — Red Sun imagines a silent wanderer in a ruined world. The masked figure and circular red backdrop evoke mystery, survival and ritual.",
@@ -526,16 +526,16 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "17",
     "gallery": [
-      "images/curated/design%20works6.png"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works6.png"
     ],
     "staticPage": true,
-    "preview": "images/curated/design%20works6.png"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works6.png"
   },
   {
     "slug": "envy",
     "title": "Envy",
     "category": "Dark Fantasy Editorial Poster",
-    "image": "images/curated/design%20works80.png",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works80.png",
     "focus": "Emotion / sharp red-black hierarchy",
     "summary": "A fierce red-and-black editorial poster exploring envy through veiled eyes, thorned crown imagery and oversized distressed typography.",
     "concept": "Envy turns a difficult emotion into a visual persona: a veiled face, restrictive hands and thorn-like ornament create a haunting symbolic portrait.",
@@ -557,16 +557,16 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "18",
     "gallery": [
-      "images/curated/design%20works80.png"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works80.png"
     ],
     "staticPage": true,
-    "preview": "images/curated/design%20works80.png"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works80.png"
   },
   {
     "slug": "nocturne-dark-veil",
     "title": "Nocturne — Dark Veil",
     "category": "Monochrome Gothic Editorial Poster",
-    "image": "images/curated/design%20works87.png",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works87.png",
     "focus": "Monochrome / archival symbolism",
     "summary": "A monochrome gothic editorial study bringing intricate typographic systems and archival markings around a shadowed veiled portrait.",
     "concept": "Nocturne — Dark Veil treats darkness as an aesthetic atmosphere. A crown-like headdress and veiled portrait are framed by symbolic diagrams and coded notes.",
@@ -588,16 +588,16 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "19",
     "gallery": [
-      "images/curated/design%20works87.png"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works87.png"
     ],
     "staticPage": true,
-    "preview": "images/curated/design%20works87.png"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works87.png"
   },
   {
     "slug": "the-last-oath",
     "title": "The Last Oath",
     "category": "Cinematic Fantasy Key Art",
-    "image": "images/curated/design%20works8.png",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works8.png",
     "focus": "Knight / loyalty / sunset atmosphere",
     "summary": "A grand dark-fantasy key-art poster depicting an armored knight before a burning kingdom, built around sacrifice, loyalty and the weight of a final promise.",
     "concept": "The Last Oath follows a solitary knight who carries duty through the ruins of a fading kingdom, balancing heroic scale with an elegiac mood.",
@@ -619,35 +619,35 @@ window.MASSYNE_PROJECTS = [
     "year": "2026",
     "number": "20",
     "gallery": [
-      "images/curated/design%20works8.png"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works8.png"
     ],
     "staticPage": true,
-    "preview": "images/curated/design%20works8.png"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works8.png"
   },
   {
     "slug": "design-works8sw",
     "title": "Design Works 8SW",
     "category": "Graphic Artwork",
     "year": "2026",
-    "image": "images/curated/design%20works8sw.png",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works8sw.png",
     "focus": "Composition and visual exploration",
     "summary": "An original graphic artwork presented as part of MASSYNE's curated visual collection.",
     "number": "20",
     "gallery": [
-      "images/curated/design%20works8sw.png"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works8sw.png"
     ],
     "concept": "An independent graphic design exploration centred on the original composition.",
     "direction": "Presented in its original form, with the visual work kept as the primary focus.",
     "details": [],
     "staticPage": false,
-    "preview": "images/curated/design%20works8sw.png"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/design%20works8sw.png"
   },
   {
     "slug": "designs-works",
     "title": "Designs Works",
     "category": "Graphic Artwork",
     "year": "2026",
-    "image": "images/curated/designs%20works.png",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/designs%20works.png",
     "focus": "Experimental composition / graphic storytelling",
     "summary": "An independent editorial artwork exploring the relationship between imagery, composition, and visual expression in MASSYNE's curated collection.",
     "concept": "Developed as a standalone graphic piece, Designs Works treats the artwork itself as the message. The approach focuses on creating a distinct visual identity within a single frame, without depending on a wider campaign or brand system.",
@@ -668,17 +668,17 @@ window.MASSYNE_PROJECTS = [
     ],
     "number": "21",
     "gallery": [
-      "images/curated/designs%20works.png"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/designs%20works.png"
     ],
     "staticPage": false,
-    "preview": "images/curated/designs%20works.png"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/designs%20works.png"
   },
   {
     "slug": "designfd-works2",
     "title": "Designfd Works 2",
     "category": "Graphic Artwork",
     "year": "2026",
-    "image": "images/curated/designfd%20works2.png",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/designfd%20works2.png",
     "focus": "Art direction / independent visual study",
     "summary": "An original design exploration from MASSYNE's curated series, presented as a focused piece of visual art direction and personal creative practice.",
     "concept": "Designfd Works 2 continues an open-ended investigation into graphic expression. The project takes the form of a finished standalone composition, emphasizing experimentation and creative authorship over prescribed commercial requirements.",
@@ -699,10 +699,10 @@ window.MASSYNE_PROJECTS = [
     ],
     "number": "22",
     "gallery": [
-      "images/curated/designfd%20works2.png"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/designfd%20works2.png"
     ],
     "staticPage": false,
-    "preview": "images/curated/designfd%20works2.png"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/designfd%20works2.png"
   },
   {
     "slug": "suspended-tribal-tshirt",
@@ -740,7 +740,7 @@ window.MASSYNE_PROJECTS = [
     "title": "Velocity — Streetwear Mockup",
     "category": "T-Shirt Mockup",
     "year": "2026",
-    "image": "images/mockups/velocity-streetwear-full.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/velocity-streetwear-full.webp",
     "focus": "Motorsport / apparel / street photography",
     "summary": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car.",
     "concept": "The Velocity racing graphic on a washed-black T-shirt beside a red sports car. The composition presents the design in an everyday apparel context.",
@@ -761,17 +761,17 @@ window.MASSYNE_PROJECTS = [
     ],
     "number": "24",
     "gallery": [
-      "images/mockups/velocity-streetwear-full.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/velocity-streetwear-full.webp"
     ],
     "staticPage": false,
-    "preview": "images/mockups/velocity-streetwear-full.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/velocity-streetwear-full.webp"
   },
   {
     "slug": "veiled-sorrow-mountain",
     "title": "Veiled Sorrow — Mountain Mockup",
     "category": "T-Shirt Mockup",
     "year": "2026",
-    "image": "images/mockups/veiled-sorrow-mountain-full.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/veiled-sorrow-mountain-full.webp",
     "focus": "Apparel / outdoor presentation / cinematic artwork",
     "summary": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape.",
     "concept": "A black Veiled Sorrow graphic T-shirt hanging from a metal rack against a mountain landscape. The composition presents the design in an everyday apparel context.",
@@ -792,17 +792,17 @@ window.MASSYNE_PROJECTS = [
     ],
     "number": "25",
     "gallery": [
-      "images/mockups/veiled-sorrow-mountain-full.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/veiled-sorrow-mountain-full.webp"
     ],
     "staticPage": false,
-    "preview": "images/mockups/veiled-sorrow-mountain-full.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/veiled-sorrow-mountain-full.webp"
   },
   {
     "slug": "gothic-store-streetwear",
     "title": "Gothic — Streetwear Mockup",
     "category": "T-Shirt Mockup",
     "year": "2026",
-    "image": "images/mockups/gothic-store-streetwear-full.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/gothic-store-streetwear-full.webp",
     "focus": "Apparel / gothic typography / lifestyle presentation",
     "summary": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting.",
     "concept": "A red-and-black gothic back print on an oversized T-shirt in a convenience-store setting. The composition presents the design in an everyday apparel context.",
@@ -823,17 +823,17 @@ window.MASSYNE_PROJECTS = [
     ],
     "number": "26",
     "gallery": [
-      "images/mockups/gothic-store-streetwear-full.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/gothic-store-streetwear-full.webp"
     ],
     "staticPage": false,
-    "preview": "images/mockups/gothic-store-streetwear-full.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/gothic-store-streetwear-full.webp"
   },
   {
     "slug": "nocturne-flatlay",
     "title": "Nocturne — Flat Lay Mockup",
     "category": "T-Shirt Mockup",
     "year": "2026",
-    "image": "images/mockups/nocturne-flatlay-full.webp",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/nocturne-flatlay-full.webp",
     "focus": "Apparel / distressed graphics / flat lay",
     "summary": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay.",
     "concept": "A distressed black Nocturne T-shirt with a plague-doctor graphic, photographed as a floor flat lay. The composition presents the design in an everyday apparel context.",
@@ -854,25 +854,25 @@ window.MASSYNE_PROJECTS = [
     ],
     "number": "27",
     "gallery": [
-      "images/mockups/nocturne-flatlay-full.webp"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/nocturne-flatlay-full.webp"
     ],
     "staticPage": false,
-    "preview": "images/mockups/nocturne-flatlay-full.webp"
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/nocturne-flatlay-full.webp"
   },
   {
     "slug": "two-souls",
     "title": "Two Souls",
     "category": "New artwork",
     "year": "2026",
-    "image": "images/curated/two-souls.jpg",
-    "preview": "images/curated/two-souls.jpg",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/two-souls.jpg",
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/two-souls.jpg",
     "focus": "Original artwork",
     "summary": "Two Souls poster: a blindfolded couple beneath a white horse, surrounded by red roses",
     "concept": "A standalone artwork preserved from the existing selected-work gallery.",
     "direction": "Presented in its original form without adding production or client claims.",
     "number": "23",
     "gallery": [
-      "images/curated/two-souls.jpg"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/two-souls.jpg"
     ],
     "details": [],
     "staticPage": false
@@ -882,15 +882,15 @@ window.MASSYNE_PROJECTS = [
     "title": "Beauty in Pain",
     "category": "New artwork",
     "year": "2026",
-    "image": "images/curated/beauty-in-pain.jpg",
-    "preview": "images/curated/beauty-in-pain.jpg",
+    "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/beauty-in-pain.jpg",
+    "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/beauty-in-pain.jpg",
     "focus": "Original artwork",
     "summary": "Beauty in Pain poster: a rose covered in thorns and barbed wire against a blush background",
     "concept": "A standalone artwork preserved from the existing selected-work gallery.",
     "direction": "Presented in its original form without adding production or client claims.",
     "number": "24",
     "gallery": [
-      "images/curated/beauty-in-pain.jpg"
+      "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/curated/beauty-in-pain.jpg"
     ],
     "details": [],
     "staticPage": false
