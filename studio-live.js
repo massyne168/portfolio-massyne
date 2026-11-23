@@ -32,9 +32,9 @@
   if (heroTitle) {
     const parts = heroTitle.querySelectorAll(":scope > span, :scope > em");
     if (parts[0]) parts[0].textContent = site.name || "MASSYNE";
-    const tagline = splitLast(site.tagline || "Design with purpose.");
-    if (parts[1]) parts[1].textContent = tagline.front.toUpperCase();
-    if (parts[2]) parts[2].textContent = tagline.last.toUpperCase();
+    const tagline = splitLast(site.tagline || "STUDIO");
+    if (parts[1]) parts[1].textContent = tagline.front ? tagline.front.toUpperCase() : (tagline.last === "STUDIO" ? "STUDIO" : "");
+    if (parts[2]) parts[2].textContent = tagline.front ? tagline.last.toUpperCase() : (tagline.last === "STUDIO" ? "" : tagline.last.toUpperCase());
   }
   setText(".hero-v2-description", site.headline);
   const location = safeText(site.location || "Morocco — Worldwide");

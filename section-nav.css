@@ -16,8 +16,8 @@ body.section-view-ready .section-rail {
   opacity: 1;
   pointer-events: auto;
 }
-body.section-view-ready .site-header #nav,
-body.section-view-ready .site-header .menu {
+/* Rail is retired in favor of four-corner navigation and sticky site header */
+.section-rail {
   display: none !important;
 }
 .section-rail-menu {
@@ -334,20 +334,15 @@ body.section-view-ready #top {
   overflow: hidden;
 }
 body.section-view-ready #top > [data-panel-section] {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  inset: auto;
   width: 100%;
-  height: 100%;
+  height: auto;
   min-height: 0;
-  max-height: 100%;
+  max-height: none;
   margin: 0 auto;
   box-sizing: border-box;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible;
   padding-bottom: 24px;
 }
 body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
@@ -372,9 +367,9 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
   }
 }
 
-/* Keep inactive desktop panels out of view even when a section has its own display rule. */
-html body.section-view-ready:not(.mobile-scroll-flow) #top > [data-panel-section][aria-hidden="true"]:not(.section-panel-leaving) {
-  display: none !important;
+/* Desktop and mobile both scroll naturally through all sections */
+html body.section-view-ready #top > [data-panel-section] {
+  display: block;
 }
 
 /* Keep the touch dock in normal flow inside its fixed mobile anchor. */

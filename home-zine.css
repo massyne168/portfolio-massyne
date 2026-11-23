@@ -1,0 +1,679 @@
+/* ==========================================================================
+   MASSYNE — RAW STREETWEAR UNDERGROUND ZINE HERO (#home-panel)
+   Zero external dependencies • Hardware accelerated • Pure Dark-Only Lock
+   ========================================================================== */
+
+/* 1. Canvas & Foundation */
+#home-panel.zine-hero {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 0;
+  margin: 0;
+  background-color: #0e0e10;
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% 25%, rgba(143, 10, 23, 0.08) 0%, transparent 70%),
+    linear-gradient(180deg, #0e0e10 0%, #0c0c0e 65%, #050608 100%);
+  color: #ece9e1;
+  overflow-x: clip;
+  overflow-y: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  isolation: isolate;
+}
+
+/* Concrete / Film Grain SVG Overlay */
+.zine-grain-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+}
+
+/* 2. Four-Corner Micro Navigation & Edge Telemetry */
+.zine-corner {
+  position: absolute;
+  z-index: 20;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(0.68rem, 0.85vw, 0.78rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(236, 233, 225, 0.65);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+  user-select: none;
+}
+
+.zine-corner-tl {
+  top: clamp(16px, 2.5vw, 28px);
+  left: clamp(16px, 3.2vw, 42px);
+}
+
+.zine-beacon {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #b51222;
+  box-shadow: 0 0 8px rgba(181, 18, 34, 0.8);
+  animation: zineBeaconPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes zineBeaconPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+.zine-corner-tr {
+  top: clamp(16px, 2.5vw, 28px);
+  right: clamp(16px, 3.2vw, 42px);
+  gap: clamp(12px, 1.8vw, 24px);
+}
+
+.zine-corner-nav .zine-nav-link {
+  color: rgba(236, 233, 225, 0.72);
+  text-decoration: none;
+  position: relative;
+  padding: 8px 4px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.zine-corner-nav .zine-nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: #b51222;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.zine-corner-nav .zine-nav-link:hover,
+.zine-corner-nav .zine-nav-link.active,
+.zine-corner-nav .zine-nav-link[aria-current="location"] {
+  color: #ece9e1;
+}
+
+.zine-corner-nav .zine-nav-link:hover::after,
+.zine-corner-nav .zine-nav-link.active::after,
+.zine-corner-nav .zine-nav-link[aria-current="location"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.zine-corner-bl {
+  bottom: clamp(16px, 2.5vw, 28px);
+  left: clamp(16px, 3.2vw, 42px);
+}
+
+.zine-corner-br {
+  bottom: clamp(16px, 2.5vw, 28px);
+  right: clamp(16px, 3.2vw, 42px);
+}
+
+.zine-status-open {
+  color: #55c777;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Bottom Center Peeking Barcode */
+.zine-barcode-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.zine-barcode-svg {
+  width: 96px;
+  height: 24px;
+  fill: #ece9e1;
+}
+
+.zine-barcode-digits {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: rgba(236, 233, 225, 0.55);
+}
+
+/* Left Desktop Edge Barcodes */
+.zine-edge-left {
+  position: absolute;
+  left: clamp(8px, 1.2vw, 18px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.zine-edge-barcode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.zine-barcode-v {
+  width: 14px;
+  height: 64px;
+  fill: #ece9e1;
+}
+
+.zine-edge-barcode span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  color: #ece9e1;
+}
+
+/* Right Desktop Edge Telemetry & Gauge */
+.zine-edge-right {
+  position: absolute;
+  right: clamp(8px, 1.2vw, 18px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.zine-edge-gauge {
+  width: 4px;
+  height: 80px;
+  background: linear-gradient(180deg, #b51222 0%, rgba(236, 233, 225, 0.4) 60%, transparent 100%);
+  border-radius: 2px;
+}
+
+.zine-edge-telemetry {
+  writing-mode: vertical-rl;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: #ece9e1;
+}
+
+/* 3. Massive Edge-to-Edge Condensed Masthead */
+.zine-masthead-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin-top: clamp(60px, 7.5vw, 92px);
+  padding-inline: clamp(12px, 3vw, 40px);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.zine-masthead {
+  margin: 0;
+  padding: 0;
+  font-family: 'Anton', 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: clamp(3.2rem, 12.8vw, 15.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: #ece9e1;
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(12px, 2.5vw, 36px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.zine-masthead span,
+.zine-masthead em {
+  font-style: normal;
+  display: inline-block;
+  color: inherit;
+}
+
+/* 4. Overlapping 4-Poster Collage */
+.zine-collage-stage {
+  position: relative;
+  z-index: 5;
+  width: min(100%, 1440px);
+  margin: clamp(-30px, -4vw, -60px) auto clamp(40px, 5vw, 70px);
+  padding-inline: clamp(16px, 3.5vw, 48px);
+  box-sizing: border-box;
+  min-height: clamp(420px, 48vw, 680px);
+}
+
+/* Desktop Absolute Overlapping Layout */
+@media (min-width: 821px) {
+  .zine-collage-grid {
+    position: relative;
+    width: 100%;
+    height: clamp(440px, 48vw, 680px);
+  }
+
+  .zine-poster-card {
+    position: absolute;
+    box-sizing: border-box;
+    aspect-ratio: 3 / 4;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: #121214;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, z-index 0s;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Poster 1 — Lead Editorial Cover (MY PORTRAIT) */
+  .zine-poster-1 {
+    left: clamp(2%, 5vw, 8%);
+    top: 5%;
+    width: clamp(230px, 26vw, 360px);
+    transform: rotate(-3.5deg);
+    z-index: 4;
+    border: 1px solid rgba(236, 233, 225, 0.22);
+  }
+
+  /* Poster 2 — Cinematic 3D / Featured Project */
+  .zine-poster-2 {
+    left: clamp(24%, 28vw, 32%);
+    top: 14%;
+    width: clamp(210px, 24vw, 330px);
+    transform: rotate(2.8deg);
+    z-index: 2;
+    border: 1px solid rgba(236, 233, 225, 0.16);
+  }
+
+  /* Poster 3 — Curated Works / Visual Arts */
+  .zine-poster-3 {
+    left: clamp(48%, 51vw, 55%);
+    top: 9%;
+    width: clamp(210px, 23vw, 320px);
+    transform: rotate(-2.4deg);
+    z-index: 3;
+    border: 1px solid rgba(236, 233, 225, 0.16);
+  }
+
+  /* Poster 4 — Gurzil / Streetwear Mockup */
+  .zine-poster-4 {
+    left: clamp(68%, 72vw, 76%);
+    top: 2%;
+    width: clamp(220px, 25vw, 340px);
+    transform: rotate(5.2deg);
+    z-index: 2;
+    border: 1px solid rgba(236, 233, 225, 0.18);
+  }
+
+  /* Desktop Hover & Focus State */
+  .zine-poster-card:hover,
+  .zine-poster-card:focus-visible {
+    transform: translateY(-16px) scale(1.038) rotate(0deg) !important;
+    z-index: 12 !important;
+    box-shadow: 0 30px 64px rgba(0, 0, 0, 0.85), 0 0 0 1.5px rgba(236, 233, 225, 0.45);
+  }
+}
+
+/* Mobile & Tablet 2x2 Grid Layout (<= 820px) */
+@media (max-width: 820px) {
+  .zine-collage-stage {
+    margin: 18px auto 32px;
+    min-height: 0;
+    padding-inline: 16px;
+  }
+
+  .zine-collage-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    width: 100%;
+  }
+
+  .zine-poster-card {
+    position: relative;
+    box-sizing: border-box;
+    aspect-ratio: 3 / 4;
+    border-radius: 4px;
+    background-color: #121214;
+    border: 1px solid rgba(236, 233, 225, 0.18);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .zine-poster-1 { transform: rotate(-1.2deg); }
+  .zine-poster-2 { transform: rotate(1.2deg); }
+  .zine-poster-3 { transform: rotate(-0.8deg); }
+  .zine-poster-4 { transform: rotate(1deg); }
+
+  .zine-poster-card:hover,
+  .zine-poster-card:focus-visible {
+    transform: translateY(-6px) scale(1.02) rotate(0deg);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.75);
+    z-index: 6;
+  }
+}
+
+/* Poster Card Internal Structure */
+.zine-poster-media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #070709;
+}
+
+.zine-poster-media img,
+.zine-poster-media picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease;
+}
+
+.zine-poster-card:hover .zine-poster-media img {
+  transform: scale(1.05);
+}
+
+/* Poster 1 Special Grading — High-Contrast Monochrome Zine */
+.zine-portrait-img {
+  filter: grayscale(100%) contrast(1.22) brightness(0.95);
+}
+
+.zine-poster-1:hover .zine-portrait-img {
+  filter: grayscale(90%) contrast(1.25) brightness(0.98);
+}
+
+/* Paper Crease / Texture Overlay */
+.zine-paper-crease {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%, rgba(0, 0, 0, 0.35) 100%),
+    linear-gradient(180deg, transparent 85%, rgba(0, 0, 0, 0.6) 100%);
+  z-index: 3;
+}
+
+/* Captions & Micro Metadata */
+.zine-poster-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  padding: 8px 10px;
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 6, 8, 0.92) 80%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(0.58rem, 0.72vw, 0.68rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #ece9e1;
+  text-transform: uppercase;
+}
+
+.zine-poster-top-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 4;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: rgba(236, 233, 225, 0.85);
+  background: rgba(14, 14, 16, 0.78);
+  padding: 3px 6px;
+  border-radius: 2px;
+  backdrop-filter: blur(4px);
+}
+
+/* Distressed Crimson Rubber Stamps */
+.zine-stamp {
+  position: absolute;
+  z-index: 5;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(0.58rem, 0.7vw, 0.7rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #b51222;
+  border: 1.5px solid #b51222;
+  padding: 3px 7px;
+  border-radius: 2px;
+  background: rgba(181, 18, 34, 0.08);
+  box-shadow: inset 0 0 0 1px #b51222;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1.1;
+  mix-blend-mode: screen;
+}
+
+.zine-stamp-tl {
+  top: 10px;
+  left: 10px;
+  transform: rotate(-13deg);
+}
+
+.zine-stamp-tr {
+  top: 10px;
+  right: 10px;
+  transform: rotate(11deg);
+}
+
+.zine-stamp-br {
+  bottom: 28px;
+  right: 10px;
+  transform: rotate(8deg);
+}
+
+.zine-stamp-bl {
+  bottom: 28px;
+  left: 10px;
+  transform: rotate(-9deg);
+}
+
+/* 5. Center Bold CTA Cluster */
+.zine-cta-cluster {
+  position: relative;
+  z-index: 10;
+  margin: 0 auto clamp(24px, 3.5vw, 42px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.zine-cta-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 1.6vw, 18px) clamp(28px, 3.6vw, 48px);
+  background-color: #0d0d0f;
+  color: #ece9e1;
+  font-family: 'Anton', 'Outfit', sans-serif;
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2.5px solid #ece9e1;
+  border-radius: 2px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+  min-height: 48px;
+}
+
+.zine-cta-main:hover,
+.zine-cta-main:focus-visible {
+  transform: translateY(-3px) scale(1.02);
+  background-color: #8f0a17;
+  border-color: #b51222;
+  color: #ffffff;
+  box-shadow: 0 16px 40px rgba(181, 18, 34, 0.45);
+}
+
+.zine-cta-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(0.7rem, 0.82vw, 0.82rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.zine-sub-link {
+  color: rgba(236, 233, 225, 0.75);
+  text-decoration: none;
+  padding: 6px 4px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.zine-sub-link:hover,
+.zine-sub-link:focus-visible {
+  color: #ece9e1;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.zine-sub-sep {
+  color: rgba(236, 233, 225, 0.35);
+  user-select: none;
+}
+
+/* Screen-reader utility for SEO & studio-live compatibility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* 6. Systematic Overrides for Desktop Natural Scrolling & Rail Retirement */
+.section-rail,
+#section-rail {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.section-view-ready {
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100vh;
+}
+
+body.section-view-ready #top {
+  position: relative !important;
+  display: block !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+body.section-view-ready #top > [data-panel-section] {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  display: block !important;
+}
+
+html body.section-view-ready #top > [data-panel-section] {
+  display: block !important;
+}
+
+/* Header transition: hidden at top of hero, slides in when scrolled */
+.site-header {
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease !important;
+}
+
+body[data-active-panel="home"]:not(.is-scrolled-past-hero) .site-header {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+}
+
+body:not([data-active-panel="home"]) .site-header,
+body.is-scrolled-past-hero .site-header {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
+}
+
+/* 7. Reduced Motion Safe */
+@media (prefers-reduced-motion: reduce) {
+  .zine-beacon {
+    animation: none !important;
+  }
+  .zine-poster-card,
+  .zine-cta-main,
+  .zine-poster-media img {
+    transition: none !important;
+    transform: none !important;
+  }
+  .zine-poster-card:hover {
+    transform: none !important;
+  }
+}
