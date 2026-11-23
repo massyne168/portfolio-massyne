@@ -149,10 +149,12 @@ async function connectionStatus(res, token) {
     });
   }
   try {
+    const targetBranch = getStudioBranch();
     const repository = await githubRequest(token, "/repos/" + REPOSITORY);
     const connected = String(repository.full_name || "").toLowerCase() === REPOSITORY;
     return send(res, 200, {
       connected,
+      branch: targetBranch,
       message: connected
         ? "GitHub publishing is connected securely through Vercel."
         : "The Vercel token needs access to this repository with Contents: Read and write."

@@ -174,13 +174,17 @@
   function updateConnectionButton() {
     if (!githubConnectButton) return;
     githubConnectButton.innerHTML = githubConnected
-      ? '<span aria-hidden="true">✓</span> GitHub connected'
-      : '<span aria-hidden="true">⌘</span> Connect GitHub';
+      ? '<span aria-hidden="true">✓</span> Connected'
+      : '<span aria-hidden="true">⌘</span> Connect';
     githubConnectButton.classList.toggle("is-connected", githubConnected);
     githubConnectButton.setAttribute("aria-label", githubConnected ? "GitHub connected" : "Connect GitHub");
     githubConnectButton.title = githubConnected
       ? "Publishing is connected securely through Vercel."
       : "Configure the permanent GitHub token in Vercel.";
+    const ghPill = document.getElementById("console-gh-pill");
+    if (ghPill) {
+      ghPill.innerHTML = `<span class="pill-dot ${githubConnected ? "green" : ""}"></span><span>${githubConnected ? "GitHub" : "GitHub Off"}</span>`;
+    }
   }
 
   async function checkGitHubConnection() {
@@ -188,6 +192,12 @@
       const response = await fetch(githubApi, { cache: "no-store", credentials: "same-origin" });
       const result = await response.json().catch(() => ({}));
       githubConnected = response.ok && result.connected === true;
+      if (result.branch) {
+        const topBranch = document.getElementById("topbar-branch-label");
+        const railBranch = document.getElementById("rail-branch-name");
+        if (topBranch) topBranch.textContent = result.branch;
+        if (railBranch) railBranch.textContent = result.branch;
+      }
       githubStatusMessage = result.message || (githubConnected
         ? "GitHub is connected securely on the server."
         : "Add the fine-grained token to the Vercel Production environment, then redeploy.");
@@ -469,7 +479,7 @@
             <div class="site-background-media-fields" id="background-media-fields">
               <div class="field-grid">
                 ${field("backgroundPath", "Media path or HTTPS URL", background.src || "", { wide: true, help: "Upload a file here or enter an existing path such as images/studio-uploads/background.mp4." })}
-                ${fileUploadField("backgroundUpload", "Upload background media", "PNG, JPG, WEBP, GIF or MP4. Keep the selected file under 3 MB.", { accept: "image/png,image/jpeg,image/webp,image/gif,video/mp4" })}
+                ${fileUploadField("backgroundUpload", "Upload background media", "Cloudflare R2 direct upload: PNG, JPG, WEBP, GIF or MP4 (up to 25 MB).", { accept: "image/png,image/jpeg,image/webp,image/gif,video/mp4" })}
               </div>
               <div class="field-grid site-background-display-fields" id="background-display-fields">
                 ${field("backgroundFit", "Media fit", background.fit || "cover", { options: [
@@ -742,10 +752,14 @@
   const STUDIO_MEDIA_TYPES = new Set([...STUDIO_IMAGE_TYPES, ...STUDIO_VIDEO_TYPES]);
 
   const fileUploadField = (name, label, help, options = {}) => {
-    const { multiple = false, accept = "image/png,image/jpeg,image/webp,image/gif" } = options;
-    return `<div class="field wide media-upload-field">
+    const { multiple = false, accept = "image/png,image/jpeg,image/webp,image/avif,image/gif" } = options;
+    return `<div class="field wide media-upload-field" data-upload-dropzone>
       <label for="field-${name}">${escapeHtml(label)}</label>
-      <input id="field-${name}" name="${name}" type="file" accept="${accept}" ${multiple ? "multiple" : ""} data-studio-media-upload>
+      <div class="r2-dropzone-inner">
+        <span class="r2-cloud-icon" aria-hidden="true">☁</span>
+        <input id="field-${name}" name="${name}" type="file" accept="${accept}" ${multiple ? "multiple" : ""} data-studio-media-upload>
+        <span class="r2-dropzone-hint">Drag &amp; drop files here or browse · Cloudflare R2 Direct</span>
+      </div>
       <small class="field-help">${escapeHtml(help)}</small>
       <span class="media-upload-selection" data-upload-selection aria-live="polite">No file selected</span>
     </div>`;
@@ -861,14 +875,14 @@
           ${field("category", "Category", item.category || "")}
           ${field("year", "Year", item.year || "")}
           ${field("image", "Artwork path", item.image || "", { wide: true, help: "Paste an existing repository path or upload a new image below." })}
-          ${fileUploadField("imageUpload", "Upload cover image", "Optional. Upload a PNG, JPG, WEBP or GIF. All selected images must total 3 MB or less.")}
+          ${fileUploadField("imageUpload", "Upload cover image", "Cloudflare R2 direct upload: PNG, JPG, WEBP, AVIF or GIF (up to 10 MB).")}
           ${field("focus", "Creative focus", item.focus || "", { wide: true })}
           ${field("summary", "Summary", item.summary || "", { type: "textarea", wide: true, rows: 3 })}
           ${field("concept", "Concept", item.concept || "", { type: "textarea", wide: true, rows: 3 })}
           ${field("direction", "Visual direction", item.direction || "", { type: "textarea", wide: true, rows: 3 })}
           ${field("gallery", "Gallery artwork paths", gallery, { type: "textarea", wide: true, rows: 3, help: "One repository path per line. Use the controls below to change gallery order." })}
           <div class="field wide gallery-order-field"><label>Gallery order</label><div class="gallery-order-list" data-gallery-order></div></div>
-          ${fileUploadField("galleryUploads", "Upload gallery images", "Optional. Select one or more images to add to this project.", { multiple: true })}
+          ${fileUploadField("galleryUploads", "Upload gallery images", "Cloudflare R2 direct upload: Select up to 12 images (35 MB batch total).", { multiple: true })}
           ${field("details", "Design observations (JSON)", details, { type: "textarea", wide: true, rows: 6, cls: "extra-field", help: "Use an array of title and description pairs." })}
         </div>`;
     }
@@ -876,7 +890,7 @@
       ${field("title", "Artwork title", item.title || "", { wide: true })}
       ${field("category", "Category", item.category || "")}
       ${field("image", "Artwork path", item.image || "", { wide: true, help: "Paste an existing repository path or upload an image below." })}
-      ${fileUploadField("imageUpload", "Upload artwork", "Optional. Upload a PNG, JPG, WEBP or GIF. Files are added to the public portfolio repository.")}
+      ${fileUploadField("imageUpload", "Upload artwork", "Cloudflare R2 direct upload: PNG, JPG, WEBP, AVIF or GIF (up to 10 MB).")}
       ${field("alt", "Accessible image description", item.alt || "", { type: "textarea", wide: true, rows: 3 })}
     </div>`;
     if (page === "motion") return `<div class="field-grid">
@@ -884,7 +898,7 @@
       ${field("category", "Project label", item.category || "")}
       ${field("kind", "Media type", item.kind || "video", { options: [{ value: "video", label: "Video" }, { value: "gif", label: "Animated GIF" }] })}
       ${field("source", "Media source path", item.source || "", { wide: true, help: "Use a repository path for video, or upload an animated GIF below." })}
-      ${fileUploadField("mediaUpload", "Upload animated GIF", "Optional. Animated GIF only; MP4 video still uses an existing repository path.", { accept: "image/gif,.gif" })}
+      ${fileUploadField("mediaUpload", "Upload media", "Cloudflare R2 direct upload: MP4 video or animated GIF (up to 25 MB).", { accept: "image/gif,.gif,video/mp4,.mp4" })}
     </div>`;
     return `<div class="field-grid">
       ${field("title", "Service title", item.title || "", { wide: true })}
@@ -1271,6 +1285,31 @@
     contentRoot.querySelectorAll(".content-card.is-dragging, .content-card.is-drop-target").forEach(target => {
       target.classList.remove("is-dragging", "is-drop-target");
     });
+  });
+  editorBody.addEventListener("dragover", event => {
+    const field = event.target.closest(".media-upload-field");
+    if (field) {
+      event.preventDefault();
+      field.classList.add("is-dragover");
+    }
+  });
+  editorBody.addEventListener("dragleave", event => {
+    const field = event.target.closest(".media-upload-field");
+    if (field) {
+      field.classList.remove("is-dragover");
+    }
+  });
+  editorBody.addEventListener("drop", event => {
+    const field = event.target.closest(".media-upload-field");
+    if (field) {
+      event.preventDefault();
+      field.classList.remove("is-dragover");
+      const input = field.querySelector("input[type='file'][data-studio-media-upload]");
+      if (input && event.dataTransfer?.files?.length) {
+        input.files = event.dataTransfer.files;
+        updateUploadSelection(input);
+      }
+    }
   });
   editorBody.addEventListener("change", event => {
     if (event.target.matches("input[data-studio-media-upload]")) updateUploadSelection(event.target);
