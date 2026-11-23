@@ -74,3 +74,14 @@ The Gallery Frame and Textile Study views reuse original artwork and are labeled
 - Restored explicit compact top-left logo sizing across all pages.
 - Switched loader to first-entry-per-tab / F5-only behavior with session awareness and a 1.12-second progress sequence.
 - These source changes do not constitute a verified mobile Lighthouse score. No new image or video assets were downloaded for the redesigned gallery.
+
+
+## November 22, 2026 — R2 preparation and source-level hardening
+
+- Created an untouched Git backup branch `backup/pre-r2-performance-2026-11-22` and a separate working branch `feat/r2-performance-optimization` before edits.
+- Repository tree inspection: 330 tracked files, approximately 441,118,750 bytes of Git blobs, 167 raster image assets and 14 video assets. Three legacy design ZIP archives account for approximately 204 MB and remain excluded from Vercel CLI uploads; originals are preserved in Git.
+- Added a Vercel server-side presigned R2 upload endpoint. It requires the existing Studio session, validates same-origin HTTPS requests, MIME allowlist, file count and aggregate size, and returns five-minute URLs scoped to one object and content type. R2 credentials remain server-side.
+- Updated Studio to upload directly to R2 when all required environment variables are present, while retaining the existing GitHub uploader as a migration fallback.
+- Added a dry-run-first, dependency-free R2 media migration utility and owner setup documentation. Existing media references are not switched until the owner creates and verifies the bucket and public custom domain.
+- Tightened Full Access writes to enforce the existing text-extension allowlist and a 1 MB content cap. The API route itself and its read behavior remain intact.
+- No Lighthouse, Core Web Vitals, browser FPS, network waterfall, or before/after page-weight measurements were available through the repository source inspection. Do not interpret Git blob sizes as page transfer size or claim a measured FPS improvement. Browser and deployment verification remain pending.

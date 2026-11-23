@@ -781,6 +781,42 @@
       if (!task.file.size) throw new Error("That media file is empty.");
     }
 
+    const metadata = tasks.map(task => ({
+      name: task.file.name,
+      type: task.file.type,
+      size: task.file.size
+    }));
+    const r2Response = await fetch("/api/studio-r2-upload", {
+      method: "POST",
+      cache: "no-store",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ files: metadata })
+    });
+    const r2Result = await r2Response.json().catch(() => ({}));
+
+    if (r2Response.ok && r2Result.configured === true
+      && Array.isArray(r2Result.uploads) && r2Result.uploads.length === tasks.length) {
+      await Promise.all(tasks.map(async (task, index) => {
+        const target = r2Result.uploads[index];
+        const response = await fetch(target.uploadUrl, {
+          method: "PUT",
+          headers: {
+            "Content-Type": task.file.type,
+            "Cache-Control": "public, max-age=31536000, immutable"
+          },
+          body: task.file
+        });
+        if (!response.ok) throw new Error("Cloudflare R2 could not upload " + task.file.name + ".");
+      }));
+      return r2Result.uploads.map(item => ({ path: item.path }));
+    }
+    if (!r2Response.ok) {
+      throw new Error(r2Result.message || "Cloudflare R2 could not prepare this upload.");
+    }
+
+    // R2 is optional until the owner completes the Vercel setup; preserve the
+    // existing GitHub upload path as a safe fallback during migration.
     const files = await Promise.all(tasks.map(task => encodeStudioMediaFile(task.file)));
     const response = await fetch("/api/studio-media-upload", {
       method: "POST",
