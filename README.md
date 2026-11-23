@@ -49,6 +49,13 @@ A fast, responsive static creative portfolio with an editorial **Cinematic Red**
 - **Immersive artwork viewer** upgrades the existing native dialog with previous/next work, keyboard arrows, touch swipe, a zoom toggle and links to other real case studies. This shares the existing `case-study.js` and `case-study.css`.
 - **Integration:** PR #25 (Spotlight, filters, related projects) and PR #24 (LAB, breakdown, viewer) have both been merged into `main`. Source structure, 3D gallery, original work and introduction flow are retained; browser visual QA remains advisable after deployments.
 
+### Cloudflare R2 media storage
+
+- Vercel remains the primary host for the website and all `/api/*.mjs` endpoints. Cloudflare R2 is an external media object store; the project is not migrated to Cloudflare Pages.
+- Studio media uploads use `/api/studio-r2-upload` to obtain short-lived, per-object signed PUT URLs. The browser never receives R2 access keys. When R2 is not configured, the existing authenticated GitHub media upload route remains the fallback.
+- Configure `MASSYNE_R2_ACCOUNT_ID`, `MASSYNE_R2_ACCESS_KEY_ID`, `MASSYNE_R2_SECRET_ACCESS_KEY`, `MASSYNE_R2_BUCKET` and `MASSYNE_R2_PUBLIC_URL` as Vercel environment variables. See [R2_SETUP.md](R2_SETUP.md) for bucket, custom-domain, CORS, migration and rollback instructions.
+- `scripts/r2-sync.mjs` provides a dependency-free dry-run-first migration for image, video, font and SVG assets in `images/` and `assets/`. Existing GitHub media is deliberately retained until the owner verifies the R2 migration and switches references.
+
 ### MASSYNE STUDIO content dashboard
 
 - `studio.html` is a noindex content workspace for selected projects, archive artwork, motion projects, services, the public studio profile and **Site appearance**. The Appearance page controls the global red accent, warm-white color and background mode (theme, solid color, image, animated GIF or MP4), with fit, position and overlay settings. Studio publishes these settings for the homepage, project pages and resume.

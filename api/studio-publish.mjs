@@ -1,4 +1,5 @@
 import { isStudioSessionAuthenticated } from "./studio-access.mjs";
+import { getStudioBranch, assertStudioWriteAllowed } from "./_studio-branch.mjs";
 
 const REPOSITORY = "massyne168/portfolio-massyne";
 const GITHUB_API = "https://api.github.com";
@@ -53,27 +54,12 @@ function paletteStyles(colors) {
 :root {
   --site-accent: ${safeColor(colors.accent, DEFAULT_SITE_COLORS.accent)};
   --site-light: ${safeColor(colors.light, DEFAULT_SITE_COLORS.light)};
-  --site-background-color: var(--site-light);
+  --site-background-color: #050608;
   --site-background-overlay: 0;
   --site-background-fit: cover;
   --site-background-position: center;
 }
-:root[data-theme="light"] {
-  --ink: var(--site-light);
-  --ink-soft: color-mix(in srgb, var(--site-light) 92%, var(--site-accent));
-  --surface: color-mix(in srgb, var(--site-light) 90%, var(--site-accent));
-  --paper: var(--site-accent);
-  --muted: color-mix(in srgb, var(--site-accent) 64%, var(--site-light));
-  --red: var(--site-accent);
-  --red-bright: var(--site-accent);
-  --line: color-mix(in srgb, var(--site-accent) 16%, transparent);
-  --ui-stroke: color-mix(in srgb, var(--site-accent) 35%, transparent);
-  --ui-focus: var(--site-accent);
-  --theme-surface: var(--site-light);
-  --theme-text: var(--site-accent);
-  --theme-border: color-mix(in srgb, var(--site-accent) 18%, transparent);
-}
-:root[data-theme="dark"] {
+:root, :root[data-theme="dark"] {
   --paper: var(--site-light);
   --red: var(--site-accent);
   --red-bright: var(--site-accent);
@@ -81,15 +67,14 @@ function paletteStyles(colors) {
   --theme-border: color-mix(in srgb, var(--site-light) 18%, transparent);
   --ui-focus: var(--site-light);
 }
-html[data-theme] { background-color: var(--site-background-color, var(--site-light)) !important; }
-html[data-theme="dark"] { background-color: #050608 !important; }
+html, html[data-theme], html[data-theme="dark"] { background-color: #050608 !important; }
 html[data-theme] body { position: relative; isolation: isolate; background: transparent !important; }
 html[data-theme] body > main,
 html[data-theme] main > section,
 html[data-theme] main > article,
 html[data-theme] main > article > section,
 html[data-theme] body > .resume-shell { background-color: transparent !important; }
-#site-background-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background-color: var(--site-background-color, var(--site-light)); }
+#site-background-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background-color: #050608; }
 html[data-theme="dark"] #site-background-layer { background-color: #050608; }
 #site-background-layer .site-background-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: var(--site-background-fit, cover); object-position: var(--site-background-position, center); }
 #site-background-layer .site-background-overlay { position: absolute; inset: 0; background-color: rgba(0,0,0,var(--site-background-overlay, 0)); }
@@ -164,10 +149,12 @@ async function connectionStatus(res, token) {
     });
   }
   try {
+    const targetBranch = getStudioBranch();
     const repository = await githubRequest(token, "/repos/" + REPOSITORY);
     const connected = String(repository.full_name || "").toLowerCase() === REPOSITORY;
     return send(res, 200, {
       connected,
+      branch: targetBranch,
       message: connected
         ? "GitHub publishing is connected securely through Vercel."
         : "The Vercel token needs access to this repository with Contents: Read and write."
@@ -192,10 +179,10 @@ function validateContent(content) {
   return ["projects", "archive", "motion", "services"].every(key => Array.isArray(content[key]));
 }
 
-async function createCommit(token, files) {
-  const ref = await githubRequest(token, "/repos/" + REPOSITORY + "/git/ref/heads/main");
+async function createCommit(token, files, branch) {
+  const ref = await githubRequest(token, "/repos/" + REPOSITORY + "/git/ref/heads/" + branch);
   const parent = ref.object?.sha;
-  if (!parent) throw new Error("GitHub could not read the main branch.");
+  if (!parent) throw new Error("GitHub could not read the " + branch + " branch.");
   const current = await githubRequest(token, "/repos/" + REPOSITORY + "/git/commits/" + parent);
   const blobs = await Promise.all(files.map(async file => {
     const blob = await githubRequest(token, "/repos/" + REPOSITORY + "/git/blobs", {
@@ -216,7 +203,7 @@ async function createCommit(token, files) {
       parents: [parent]
     })
   });
-  await githubRequest(token, "/repos/" + REPOSITORY + "/git/refs/heads/main", {
+  await githubRequest(token, "/repos/" + REPOSITORY + "/git/refs/heads/" + branch, {
     method: "PATCH",
     body: JSON.stringify({ sha: commit.sha, force: false })
   });
@@ -245,6 +232,9 @@ export default async function handler(req, res) {
     return send(res, 503, { message: "GitHub publishing is not configured in Vercel yet." });
   }
 
+  const targetBranch = getStudioBranch();
+  assertStudioWriteAllowed(targetBranch);
+
   const body = readBody(req);
   const content = body.content;
   if (!validateContent(content)) {
@@ -256,11 +246,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const commit = await createCommit(token, buildFiles(content));
+    const commit = await createCommit(token, buildFiles(content), targetBranch);
     return send(res, 200, { ok: true, commit });
   } catch (error) {
     if (error.status === 409 || error.status === 422) {
-      return send(res, 409, { message: "The main branch changed while saving. Refresh Studio and try again." });
+      return send(res, 409, { message: `The ${targetBranch} branch changed while saving. Refresh Studio and try again.` });
     }
     if ([401, 403].includes(error.status)) {
       return send(res, 503, { message: "The Vercel GitHub token needs repository Contents: Read and write access." });

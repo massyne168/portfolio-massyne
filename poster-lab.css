@@ -14,21 +14,6 @@
   --canvas:#08090b;
   font-family:Manrope,Arial,sans-serif
 }
-html[data-theme=light]{
-  color-scheme:light;
-  --bg:var(--site-light, var(--site-light, #FCF6F5));
-  --panel:var(--site-light, var(--site-light, #FCF6F5));
-  --panel-raised:var(--site-light, var(--site-light, #FCF6F5));
-  --panel-hover:var(--site-light, var(--site-light, #FCF6F5));
-  --text:#202127;
-  --muted:#686a72;
-  --line:rgba(25,27,34,.12);
-  --line-strong:rgba(25,27,34,.2);
-  --accent:var(--site-accent, var(--site-accent, #990011));
-  --accent-bright:var(--site-accent, var(--site-accent, #990011));
-  --accent-soft:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 10%, transparent);
-  --canvas:#d9dadd
-}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
 body{min-height:100svh;overflow:hidden}
@@ -82,7 +67,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .preview{width:100%;height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:9px;padding:16px clamp(14px,2vw,28px) 10px}
 .preview-meta{display:flex;justify-content:space-between;font-size:8px}
 .canvas-stage{min-width:0;min-height:0;display:grid;place-items:center;overflow:auto;padding:12px;background:linear-gradient(145deg,color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 2.2%, transparent),color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 0%, transparent)),repeating-linear-gradient(135deg,color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 1.8%, transparent) 0 1px,transparent 1px 8px);border:1px solid var(--line);border-radius:12px}
-html[data-theme=light] .canvas-stage{background:linear-gradient(145deg,rgba(0,0,0,.025),transparent),repeating-linear-gradient(135deg,rgba(0,0,0,.025) 0 1px,transparent 1px 8px)}
 #poster-canvas{display:block;width:min(100%,520px,calc((100svh - 235px)*.78));height:auto;aspect-ratio:4/5;max-width:none;box-shadow:0 20px 60px rgba(0,0,0,.42);touch-action:none;cursor:default}
 #poster-canvas[data-tool=draw],#poster-canvas[data-tool=erase]{cursor:crosshair}
 .preview-foot{margin:0;text-align:center;font-size:8px;letter-spacing:.1em}

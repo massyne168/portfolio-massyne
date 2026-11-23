@@ -1,102 +1,212 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
+  <link rel="preconnect" href="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev" crossorigin>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#0b0b0e">
-  <title>MASSYNE STUDIO — Content Manager</title>
+  <meta name="theme-color" content="#050608">
+  <title>MASSYNE STUDIO — Pro Creative Console</title>
   <link rel="icon" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="studio.css">
 </head>
-<body>
+<body class="pro-console">
+  <!-- Authentication Access Screen -->
   <section class="studio-access-screen" id="studio-access-screen" aria-labelledby="studio-access-title">
     <div class="studio-access-glow" aria-hidden="true"></div>
     <div class="studio-access-card">
-      <a class="studio-access-logo" href="/" aria-label="MASSYNE portfolio home"><img src="images/optimized/logo-480.webp" alt="MASSYNE"></a>
-      <p class="eyebrow">PRIVATE WORKSPACE / 01</p>
-      <h1 id="studio-access-title">Your work,<br><em>well kept.</em></h1>
-      <p class="studio-access-copy">Enter your private access code to open MASSYNE Studio.</p>
+      <a class="studio-access-logo" href="/" aria-label="MASSYNE portfolio home">
+        <img src="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/logo-480.webp" alt="MASSYNE">
+      </a>
+      <p class="eyebrow">PRIVATE WORKSTATION / 01</p>
+      <h1 id="studio-access-title">Creative Control<br><em>at your fingertips.</em></h1>
+      <p class="studio-access-copy">Authenticate to enter the MASSYNE Pro Creative Console.</p>
       <form id="studio-access-form" class="studio-access-form">
-        <label for="studio-access-code">Private access code</label>
-        <input id="studio-access-code" name="code" type="password" autocomplete="current-password" required maxlength="256" placeholder="Enter your code">
-        <button class="button button-primary" type="submit">ENTER THE STUDIO</button>
+        <label for="studio-access-code">Security Access Code</label>
+        <input id="studio-access-code" name="code" type="password" autocomplete="current-password" required maxlength="256" placeholder="Enter private code">
+        <button class="button button-primary" type="submit">ENTER CONSOLE</button>
         <p id="studio-access-message" class="studio-access-message" role="status" aria-live="polite"></p>
       </form>
-      <a class="studio-access-back" href="/">← Back to the portfolio</a>
-      <span class="studio-access-index" aria-hidden="true">M / STUDIO</span>
+      <a class="studio-access-back" href="/">← Back to portfolio</a>
+      <span class="studio-access-index" aria-hidden="true">M / CONSOLE</span>
     </div>
   </section>
+
   <a class="skip-link" href="#studio-content">Skip to workspace</a>
+
+  <!-- Main Workstation Frame -->
   <div class="studio-frame" hidden>
+    <!-- Left Navigation Rail / Dock -->
     <aside class="studio-rail" aria-label="Studio navigation">
-      <a class="studio-brand" href="studio.html" aria-label="MASSYNE Studio home">
-        <img class="brand-logo" src="images/optimized/logo-480.webp" alt="MASSYNE">
-        <span class="brand-copy"><strong>STUDIO</strong><small>CONTENT / CONTROL</small></span>
+      <a class="studio-brand" href="studio.html" aria-label="MASSYNE Studio Console">
+        <img class="brand-logo" src="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/logo-480.webp" alt="MASSYNE">
+        <span class="brand-copy">
+          <strong>MASSYNE</strong>
+          <small>PRO CONSOLE · V2.0</small>
+        </span>
       </a>
       <div class="rail-divider"></div>
-      <p class="rail-label">WORKSPACE</p>
+      <p class="rail-label">WORKSPACES</p>
       <nav class="studio-nav" aria-label="Content sections">
         <button type="button" class="nav-item is-active" data-page="overview"><span class="nav-icon" aria-hidden="true">◫</span>Overview</button>
-        <button type="button" class="nav-item" data-page="projects"><span class="nav-icon" aria-hidden="true">▧</span>Selected work<span class="nav-count" data-count="projects">—</span></button>
+        <button type="button" class="nav-item" data-page="projects"><span class="nav-icon" aria-hidden="true">▧</span>Curated Works<span class="nav-count" data-count="projects">—</span></button>
         <button type="button" class="nav-item" data-page="archive"><span class="nav-icon" aria-hidden="true">▤</span>Archive<span class="nav-count" data-count="archive">—</span></button>
         <button type="button" class="nav-item" data-page="motion"><span class="nav-icon" aria-hidden="true">▷</span>Motion<span class="nav-count" data-count="motion">—</span></button>
         <button type="button" class="nav-item" data-page="services"><span class="nav-icon" aria-hidden="true">✳</span>Services<span class="nav-count" data-count="services">—</span></button>
-        <button type="button" class="nav-item" data-page="appearance"><span class="nav-icon" aria-hidden="true">◉</span>Site appearance</button>
-        <button type="button" class="nav-item" data-page="profile"><span class="nav-icon" aria-hidden="true">◎</span>Studio profile</button>
+        <button type="button" class="nav-item" data-page="appearance"><span class="nav-icon" aria-hidden="true">◉</span>Site / Appearance</button>
+        <button type="button" class="nav-item" data-page="full-access"><span class="nav-icon" aria-hidden="true">⌘</span>Full Access<span class="nav-count">ALL</span></button>
+        <button type="button" class="nav-item" data-page="profile"><span class="nav-icon" aria-hidden="true">◎</span>Studio Profile</button>
       </nav>
       <div class="rail-spacer"></div>
-      <div class="rail-status"><span class="status-led"></span><div><strong>GITHUB CONTENT DESK</strong><small>Save changes to main</small></div></div>
-      <a class="rail-site-link" href="index.html"><span aria-hidden="true">↗</span> View public portfolio</a>
-      <div class="rail-footer"><span>CONTENT WORKSPACE</span><span>V1.0 / 2026</span></div>
+
+      <!-- Live Infrastructure Badges -->
+      <div class="rail-status-group">
+        <div class="rail-status branch-status">
+          <span class="status-led led-branch"></span>
+          <div>
+            <strong>BRANCH TARGET</strong>
+            <small id="rail-branch-name">feat/r2-performance-optimization</small>
+          </div>
+        </div>
+        <div class="rail-status r2-status">
+          <span class="status-led led-r2"></span>
+          <div>
+            <strong>CLOUDFLARE R2</strong>
+            <small>Connected · CDN Active</small>
+          </div>
+        </div>
+      </div>
+
+      <a class="rail-site-link" href="index.html" target="_blank" rel="noopener noreferrer">
+        <span aria-hidden="true">↗</span> Preview Live Site
+      </a>
+      <div class="rail-footer">
+        <span>MASSYNE CONSOLE</span>
+        <span>2026</span>
+      </div>
     </aside>
+
+    <!-- Workstation Canvas & Header -->
     <div class="studio-main">
+      <!-- Pro Compact Top Command Bar -->
       <header class="studio-topbar">
-        <div class="topbar-context"><span class="topbar-kicker">MASSYNE / STUDIO</span><span class="topbar-divider">/</span><span id="page-title">Overview</span></div>
+        <div class="topbar-left">
+          <div class="topbar-context">
+            <span class="topbar-kicker">MASSYNE / CONSOLE</span>
+            <span class="topbar-divider">/</span>
+            <span id="page-title" class="page-title">Overview</span>
+          </div>
+
+          <!-- Segmented Workspace Navigation Tabs -->
+          <nav class="console-segmented-nav" aria-label="Quick workspaces">
+            <button type="button" class="console-tab nav-item is-active" data-page="overview" title="Console Overview">Overview</button>
+            <button type="button" class="console-tab nav-item" data-page="appearance" title="Theme & Visual Appearance">Appearance</button>
+            <button type="button" class="console-tab nav-item" data-page="projects" title="Curated Portfolio Works">Curated</button>
+            <button type="button" class="console-tab nav-item" data-page="archive" title="Artwork & Poster Archive">Archive</button>
+            <button type="button" class="console-tab nav-item" data-page="motion" title="Motion Studies & Video">Motion</button>
+            <button type="button" class="console-tab nav-item" data-page="services" title="Design Services">Services</button>
+            <button type="button" class="console-tab nav-item" data-page="full-access" title="Site-wide File & Code Editor">Full Access</button>
+          </nav>
+        </div>
+
+        <!-- Live Status Pills & Command Actions -->
         <div class="topbar-actions">
-          <span id="save-state" class="save-state"><i aria-hidden="true"></i><span>Loading portfolio…</span></span>
-          <button class="button button-quiet studio-lock-button" type="button" data-studio-logout><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 7V4.75a2.5 2.5 0 0 1 5 0V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Lock Studio</button>
-          <button id="github-connect-button" class="button button-quiet" type="button" data-action="connect-github"><span aria-hidden="true">⌘</span> Connect GitHub</button>
-          <label class="button button-quiet import-button" for="import-file">Import package</label>
+          <div class="console-pills">
+            <span class="console-pill pill-branch" title="Target Git Branch">
+              <span class="pill-dot"></span>
+              <span>git: <strong id="topbar-branch-label">feat/r2-performance-optimization</strong></span>
+            </span>
+            <span class="console-pill pill-r2" title="Cloudflare R2 Media Storage">
+              <span class="pill-dot green"></span>
+              <span>R2 Connected</span>
+            </span>
+            <span class="console-pill pill-gh" id="console-gh-pill" title="GitHub Content Integration">
+              <span class="pill-dot green"></span>
+              <span>GitHub</span>
+            </span>
+          </div>
+
+          <span id="save-state" class="save-state">
+            <i aria-hidden="true"></i>
+            <span>Checking portfolio…</span>
+          </span>
+
+          <label class="button button-quiet import-button" for="import-file" title="Import content package">
+            Import
+          </label>
           <input id="import-file" type="file" accept="application/json,.json" hidden>
-          <button class="button button-primary" type="button" data-action="export">Export content <span aria-hidden="true">↓</span></button>
+
+          <button id="github-connect-button" class="button button-quiet" type="button" data-action="connect-github" title="Inspect GitHub connection">
+            <span aria-hidden="true">⌘</span> Connect
+          </button>
+
+          <button class="button button-primary console-publish-btn" type="button" data-action="export" title="Save changes and publish">
+            <span class="publish-glow" aria-hidden="true"></span>
+            <span>Publish</span>
+            <span aria-hidden="true">↑</span>
+          </button>
+
+          <button class="button button-quiet studio-lock-button" type="button" data-studio-logout title="Lock private session">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M5.5 7V4.75a2.5 2.5 0 0 1 5 0V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <span>Lock</span>
+          </button>
         </div>
       </header>
+
+      <!-- Main Canvas Surface -->
       <main class="studio-content" id="studio-content" tabindex="-1"></main>
-      <footer class="studio-foot"><span>MASSYNE STUDIO / CONTENT MANAGEMENT</span><span>Private session / Lock Studio when you are done.</span></footer>
+
+      <footer class="studio-foot">
+        <span>MASSYNE PRO CONSOLE · DARK WORKSTATION</span>
+        <span>Preview Mode: Changes commit safely to <code>feat/r2-performance-optimization</code>.</span>
+      </footer>
     </div>
   </div>
+
+  <!-- Docked Property Inspector / Item Editor -->
   <dialog class="editor-dialog" id="editor-dialog" aria-labelledby="editor-title">
-    <form method="dialog" class="dialog-close-form"><button class="dialog-close" value="cancel" aria-label="Close editor">×</button></form>
+    <div class="editor-inspector-header">
+      <span class="inspector-badge">PROPERTY INSPECTOR</span>
+      <form method="dialog" class="dialog-close-form">
+        <button class="dialog-close" value="cancel" aria-label="Close inspector">×</button>
+      </form>
+    </div>
     <div id="editor-body"></div>
   </dialog>
+
+  <!-- GitHub Connection Modal -->
   <dialog class="github-dialog" id="github-dialog" aria-labelledby="github-dialog-title">
     <form method="dialog" class="dialog-close-form"><button class="dialog-close" value="cancel" aria-label="Close GitHub connection">×</button></form>
     <div class="editor-content">
-      <p class="eyebrow">PUBLISH / GITHUB</p>
-      <h2 id="github-dialog-title">Keep GitHub connected.</h2>
-      <p class="editor-description">Studio publishes through a private Vercel server connection. The GitHub token stays on the server and is never sent to this browser.</p>
+      <p class="eyebrow">INFRASTRUCTURE / GITHUB</p>
+      <h2 id="github-dialog-title">GitHub Portfolio Connection</h2>
+      <p class="editor-description">Studio publishes through the serverless runtime. Your GitHub token stays server-side in Vercel environment variables and is never exposed to the client.</p>
       <ol class="github-steps">
         <li>Create a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">fine-grained token on GitHub ↗</a>.</li>
-        <li>Limit it to <strong>Only select repositories → portfolio-massyne</strong>.</li>
-        <li>Grant <strong>Contents: Read and write</strong>. No other permissions are needed.</li>
-        <li>In Vercel, add it as a Production Secret named <strong>MASSYNE_STUDIO_GITHUB_TOKEN</strong>, then redeploy.</li>
+        <li>Scope to <strong>Only select repositories → portfolio-massyne</strong>.</li>
+        <li>Grant <strong>Contents: Read and write</strong>.</li>
+        <li>Set in Vercel as <strong>MASSYNE_STUDIO_GITHUB_TOKEN</strong>.</li>
       </ol>
-      <p id="github-status-message" class="field-help" role="status">Checking the permanent GitHub connection…</p>
+      <p id="github-status-message" class="field-help" role="status">Checking GitHub connection…</p>
       <div class="dialog-actions">
-        <a class="button button-quiet" href="https://vercel.com/massyne/portfolio-massyne/settings/environment-variables" target="_blank" rel="noopener noreferrer">Open Vercel settings ↗</a>
+        <a class="button button-quiet" href="https://vercel.com/massyne/portfolio-massyne/settings/environment-variables" target="_blank" rel="noopener noreferrer">Vercel Settings ↗</a>
         <button class="button button-primary" type="button" data-action="close-github">Close</button>
       </div>
     </div>
   </dialog>
+
+  <!-- Notification Toast -->
   <div class="studio-toast" id="studio-toast" role="status" aria-live="polite"></div>
+
+  <!-- Scripts -->
   <script src="studio-auth.js"></script>
   <script src="studio-full-access.js" defer></script>
   <script src="studio-themes.js" defer></script>
 </body>
 </html>
-
-

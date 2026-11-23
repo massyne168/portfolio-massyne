@@ -1,0 +1,91 @@
+name: Cloudflare R2 Media Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run mode (audit & check without uploading)'
+        type: boolean
+        required: true
+        default: true
+      include_pdfs:
+        description: 'Include PDF documents in sync'
+        type: boolean
+        required: false
+        default: false
+      confirm_apply:
+        description: "Type 'APPLY_R2_MIGRATION' to confirm live upload when dry_run is unchecked"
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  sync-media:
+    name: Sync Portfolio Media to Cloudflare R2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail-safe Branch Guard
+        if: github.ref_name == 'main'
+        run: |
+          echo "::error::R2 Media Sync is forbidden on 'main'. Run only on feature branches (e.g. feat/r2-performance-optimization)."
+          exit 1
+
+      - name: Validate Confirmation
+        if: ${{ !inputs.dry_run }}
+        run: |
+          if [ "${{ inputs.confirm_apply }}" != "APPLY_R2_MIGRATION" ]; then
+            echo "::error::To run live upload, confirm_apply must be exactly 'APPLY_R2_MIGRATION'."
+            exit 1
+          fi
+
+      - name: Check Out Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Execute R2 Sync
+        id: sync
+        env:
+          MASSYNE_R2_ACCOUNT_ID: ${{ secrets.MASSYNE_R2_ACCOUNT_ID }}
+          MASSYNE_R2_ACCESS_KEY_ID: ${{ secrets.MASSYNE_R2_ACCESS_KEY_ID }}
+          MASSYNE_R2_SECRET_ACCESS_KEY: ${{ secrets.MASSYNE_R2_SECRET_ACCESS_KEY }}
+          MASSYNE_R2_BUCKET: ${{ secrets.MASSYNE_R2_BUCKET }}
+          MASSYNE_R2_PUBLIC_URL: ${{ secrets.MASSYNE_R2_PUBLIC_URL }}
+        run: |
+          FLAGS=""
+          if [ "${{ inputs.dry_run }}" = "false" ]; then
+            FLAGS="$FLAGS --apply"
+          fi
+          FLAGS="$FLAGS --verify-urls"
+          if [ "${{ inputs.include_pdfs }}" = "true" ]; then
+            FLAGS="$FLAGS --include-pdfs"
+          fi
+
+          echo "Running: node scripts/r2-sync.mjs $FLAGS"
+          node scripts/r2-sync.mjs $FLAGS 2>&1 | tee sync_output.txt
+
+      - name: Generate Job Summary
+        if: always()
+        run: |
+          echo "## Cloudflare R2 Media Sync Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Parameter | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Branch** | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Dry Run** | \`${{ inputs.dry_run }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Include PDFs** | \`${{ inputs.include_pdfs }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Sync Log Output" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          if [ -f sync_output.txt ]; then
+            cat sync_output.txt >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No output generated." >> $GITHUB_STEP_SUMMARY
+          fi
+          echo '```' >> $GITHUB_STEP_SUMMARY

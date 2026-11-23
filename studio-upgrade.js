@@ -130,7 +130,7 @@
   const reel = document.getElementById("showreel-player");
   const open = document.getElementById("showreel-play");
   // Keep the clips independently of the original motion grid.
-  const clips = [...Array.from({length:6}, (_, i) => `images/optimized/motion${i + 1}.mp4`), 'images/motion/exotic-roleplay.mp4', 'images/motion/counter-assault-team.mp4'];
+  const clips = [...Array.from({length:6}, (_, i) => `images/optimized/motion${i + 1}.mp4`), 'https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/motion/exotic-roleplay.mp4', 'https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/motion/counter-assault-team.mp4'];
   // Site-wide statistic: count each curated/archive entry and each identity
   // project once; gallery detail images and repeated Spotlight cards are excluded.
   const portfolioTotal = document.querySelector('[data-portfolio-total]');

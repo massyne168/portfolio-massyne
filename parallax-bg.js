@@ -27,7 +27,7 @@
 
     const bgCfg = window.MASSYNE_STUDIO_CONTENT?.site?.background;
     const customBgSrc = bgCfg?.path || bgCfg?.src || bgCfg?.url;
-    const defaultBgSrc = "images/og-preview.jpg";
+    const defaultBgSrc = "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/og-preview.jpg";
     const bgSrc = customBgSrc || defaultBgSrc;
     const isVideoBg = bgCfg?.type === "video" || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(bgSrc);
     const img = document.createElement(isVideoBg ? "video" : "img");
