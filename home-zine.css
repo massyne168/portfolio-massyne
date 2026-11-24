@@ -75,9 +75,33 @@
 }
 
 .zine-corner-tr {
-  top: clamp(16px, 2.5vw, 28px);
-  right: clamp(16px, 3.2vw, 42px);
-  gap: clamp(12px, 1.8vw, 24px);
+  position: absolute !important;
+  top: clamp(16px, 2.5vw, 28px) !important;
+  right: clamp(16px, 3.2vw, 42px) !important;
+  left: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  gap: clamp(10px, 1.8vw, 24px);
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+@media (max-width: 640px) {
+  .zine-corner-tr {
+    gap: 8px;
+    top: 14px !important;
+    right: 14px !important;
+  }
+  .zine-corner-nav .zine-nav-link {
+    font-size: 0.6rem;
+    padding: 4px 2px;
+    min-height: 38px;
+  }
 }
 
 .zine-corner-nav .zine-nav-link {
