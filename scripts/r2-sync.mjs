@@ -38,6 +38,7 @@ const bucket = process.env.MASSYNE_R2_BUCKET || "";
 const publicUrl = (process.env.MASSYNE_R2_PUBLIC_URL || "").replace(/\/+$/, "");
 
 const apply = process.argv.includes("--apply");
+const force = process.argv.includes("--force");
 const verifyUrls = process.argv.includes("--verify-urls");
 const includePdfs = process.argv.includes("--include-pdfs");
 
@@ -393,17 +394,19 @@ async function main() {
       const bytes = await readFile(file);
       const sha256 = hash(bytes);
 
-      // Check idempotency via HEAD
+      // Check idempotency via HEAD (bypassed if --force)
       let shouldUpload = true;
-      try {
-        const headInfo = await headObject(relKey);
-        if (headInfo.exists) {
-          if (headInfo.sha256 === sha256 || headInfo.contentLength === size) {
-            shouldUpload = false;
+      if (!force) {
+        try {
+          const headInfo = await headObject(relKey);
+          if (headInfo.exists) {
+            if (headInfo.sha256 === sha256 || headInfo.contentLength === size) {
+              shouldUpload = false;
+            }
           }
+        } catch {
+          shouldUpload = true;
         }
-      } catch {
-        shouldUpload = true;
       }
 
       if (!shouldUpload) {

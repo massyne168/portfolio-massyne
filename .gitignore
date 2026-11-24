@@ -21,3 +21,4 @@ Thumbs.db
 *.key
 .vercel/
 node_modules/
+.env*

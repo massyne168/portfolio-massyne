@@ -400,6 +400,8 @@
     margin: 2px 0 0;
     border-radius: 20px;
     overflow: hidden;
+    background: #050608 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
 
   body.section-view-ready.mobile-scroll-flow #home-panel .hero-v2-portrait figcaption {

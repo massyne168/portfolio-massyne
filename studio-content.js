@@ -9,7 +9,7 @@ window.MASSYNE_STUDIO_CONTENT = {
     "aboutHeadline": "Different by design.",
     "aboutLead": "I'm MASSYNE. I turn ideas into expressive visuals that don't disappear into the scroll.",
     "aboutDescription": "My work brings together cinematic poster composition, graphic design, visual identity and motion. I'm drawn to strong concepts, considered typography and bold artistic direction.",
-    "portrait": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/assets/massyne-hero-portrait.png",
+    "portrait": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/assets/massyne-hero-portrait.jpg?v=20261124-dark",
     "availability": "inquiries",
     "availabilityDescription": "For projects, collaborations and visual ideas.",
     "email": "aazizimassine@gmail.com",
