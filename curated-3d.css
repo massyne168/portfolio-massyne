@@ -1,320 +1,531 @@
-/* Curated Works — cinematic 3D carousel inspired by the supplied motion reference.
-   Activated progressively by curated-3d.js; Grid stays the no-JS fallback. */
-.curated-stage{position:relative;min-width:0}
-.curated-stage.carousel-active{
-  margin-inline:calc(-1 * clamp(20px,4.3vw,72px));
-  overflow:hidden;
-  isolation:isolate;
-  background:#09090c;
-}
-.curated-stage.carousel-active::before{
-  /* A single, smooth bottom glow. No rings, textures or central haze. */
-  content:"";
-  position:absolute;z-index:0;left:50%;bottom:-120px;
-  width:min(1120px,115vw);height:clamp(220px,32vw,340px);
-  transform:translateX(-50%);
-  border:0;box-shadow:none;border-radius:50%;
-  background:radial-gradient(ellipse 55% 70% at 50% 52%,color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 19%, transparent),color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 6%, transparent) 55%,transparent 82%);
-  pointer-events:none;
-}
-.curated-stage.carousel-active::after{
-  content:"";position:absolute;z-index:31;inset:0;pointer-events:none;
-  background:linear-gradient(90deg,#09090c 0%,transparent 12%,transparent 88%,#09090c 100%)
-}
-.project-grid[data-view="3d"].carousel-ready{
-  --carousel-card-width:clamp(260px,31vw,425px);
-  position:relative;display:block;isolation:isolate;
-  height:clamp(470px,52vw,680px);min-width:0;
-  perspective:1400px;perspective-origin:50% 48%;
-  touch-action:pan-y;cursor:grab;user-select:none;
-  -webkit-user-select:none;overscroll-behavior-x:contain;
-}
-.project-grid[data-view="3d"].carousel-ready:active{cursor:grabbing}
-.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){
-  position:absolute;left:50%;top:50%;width:var(--carousel-card-width);
-  height:auto;min-width:0;margin:0;padding:7px;
-  grid-column:auto;display:block;
-  background:linear-gradient(155deg,#252024,#101014 58%);
-  border:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 10%, transparent);border-radius:15px;
-  box-shadow:0 17px 55px #0008,inset 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 4%, transparent);
-  transform-style:preserve-3d;backface-visibility:hidden;
-  transform:translate3d(calc(-50% + var(--carousel-x,0px)),-50%,var(--carousel-z,0px))
-    rotateY(var(--carousel-rotate,0deg)) scale(var(--carousel-scale,1));
-  opacity:var(--carousel-opacity,0);
-  filter:brightness(var(--carousel-brightness,1));
-  z-index:var(--carousel-layer,0);
-  transition:
-    transform 790ms cubic-bezier(.22,.78,.18,1),
-    opacity 550ms ease,
-    filter 550ms ease,
-    visibility 550ms ease;
-  -webkit-tap-highlight-color:transparent;
-}
-.project-grid[data-view="3d"].carousel-ready.is-dragging > .project{
-  transition:none;
-}
-.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside{
-  opacity:0;visibility:hidden;pointer-events:none
-}
-.project-grid[data-view="3d"].carousel-ready > .project:not(.is-carousel-active){
-  cursor:pointer
-}
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active{
-  border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 48%, transparent);
-  box-shadow:0 32px 80px rgba(0,0,0,.66),0 0 0 1px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 24%, transparent)
-}
-.project-grid[data-view="3d"].carousel-ready > .project img,
-.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n) img{
-  width:100%;height:auto;aspect-ratio:4/5;object-fit:contain;
-  border-radius:9px 9px 4px 4px;background:#141216;
-  transform:none;filter:none;
-  pointer-events:none;
-}
-.project-grid[data-view="3d"].carousel-ready > .project:hover img,
-.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n):hover img{
-  transform:none;filter:none
-}
-.project-grid[data-view="3d"].carousel-ready > .project > div{
-  display:flex;flex-direction:column;align-items:flex-start;gap:6px;
-  padding:14px 9px 10px;margin:0;border:0;
-  min-height:81px;
-}
-.project-grid[data-view="3d"].carousel-ready > .project h3{
-  order:1;grid-column:auto;grid-row:auto;margin:0;
-  font:600 clamp(1.02rem,1.5vw,1.35rem)/1.2 var(--display);
-  letter-spacing:-.04em;max-width:100%;
-}
-.project-grid[data-view="3d"].carousel-ready > .project span{
-  order:0;color:#aaa2a7;font-size:.52rem;letter-spacing:.07em
-}
-.project-grid[data-view="3d"].carousel-ready > .project b{
-  order:2;grid-column:auto;grid-row:auto;
-  align-self:flex-start;color:var(--red-bright);font-size:.55rem;
-}
-.project-grid[data-view="3d"].carousel-ready > .project::before{display:none}
-.project-grid[data-view="3d"].carousel-ready > .project::after{
-  top:16px;right:16px;z-index:4;display:grid;
-  opacity:0;transform:translateY(6px);
-}
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active:hover::after{
-  opacity:1;transform:translateY(0)
-}
-.project-grid[data-view="3d"].carousel-ready > .project.project-upcoming img,
-.project-grid[data-view="3d"].carousel-ready > .project.project-upcoming:hover img{
-  filter:grayscale(.2) brightness(.86)
-}
-.project-grid[data-view="3d"].carousel-ready > .project.project-upcoming::after{
-  display:none
-}
-.carousel-controls[hidden]{display:none!important}
-.carousel-controls{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:22px;margin-top:11px;padding:18px 0 23px;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line)
-}
-.carousel-context{
-  display:flex;flex-direction:column;gap:8px;min-width:0;
-}
-.carousel-kicker,.carousel-hint{
-  font:500 .59rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#9f999f
-}
-.carousel-position{color:var(--red-bright)}
-.carousel-current-name{
-  font:600 clamp(1.4rem,2.9vw,2.8rem)/1.05 var(--display);
-  letter-spacing:-.065em;color:var(--paper);
-  overflow-wrap:anywhere;
-}
-.carousel-hint{font-size:.55rem;letter-spacing:.12em}
-.carousel-hint span{color:var(--red-bright);font-size:.9rem}
-.carousel-actions{display:flex;gap:10px;align-items:center;flex:0 0 auto}
-.carousel-actions button{
-  color:var(--paper);border:1px solid var(--site-accent, var(--site-accent, #990011));background:#171418;
-  cursor:pointer;transition:background .24s,border-color .24s,transform .24s
-}
-.carousel-actions button:hover,.carousel-actions button:focus-visible{
-  background:var(--site-accent, var(--site-accent, #990011));border-color:var(--red-bright);
-}
-.carousel-arrow{
-  width:52px;height:52px;display:grid;place-items:center;
-  border-radius:50%;font:400 1.35rem var(--display);
-}
-.carousel-arrow:active{transform:scale(.94)}
-.carousel-autoplay{
-  padding:11px 15px;border-radius:40px;font:500 .61rem var(--mono);
-  text-transform:uppercase;letter-spacing:.06em;min-height:42px
-}
-.carousel-autoplay[aria-pressed="true"]{border-color:#666266;color:#b6b2b3}
-@media(max-width:850px){
-  .project-grid[data-view="3d"].carousel-ready{
-    --carousel-card-width:clamp(250px,44vw,350px);
-    height:clamp(470px,72vw,590px);
-  }
-  .curated-stage.carousel-active{margin-inline:calc(-1 * clamp(20px,4.3vw,72px))}
-}
-@media(max-width:550px){
-  .gallery-toolbar{flex-wrap:wrap}
-  .view-switch{margin-left:auto}
-  .view-switch button{padding:8px 9px;font-size:.56rem}
-  .project-grid[data-view="3d"].carousel-ready{
-    --carousel-card-width:clamp(240px,79vw,315px);
-    height:clamp(465px,143vw,565px)
-  }
-  .curated-stage.carousel-active::after{
-    background:linear-gradient(90deg,#09090c 0%,transparent 6%,transparent 94%,#09090c 100%)
-  }
-  .carousel-controls{margin-top:0;padding:15px 0;gap:12px;align-items:center}
-  .carousel-current-name{font-size:clamp(1.2rem,5.2vw,1.65rem)}
-  .carousel-kicker{font-size:.51rem}
-  .carousel-hint{font-size:.48rem}
-  .carousel-actions{gap:6px}
-  .carousel-arrow{width:39px;height:39px;font-size:1.12rem}
-  .carousel-autoplay{min-height:36px;padding:7px 8px;font-size:.51rem}
-}
-@media(prefers-reduced-motion:reduce){
-  .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){
-    transition:none
-  }
-  .carousel-actions button{transition:none}
+/* ==========================================================================
+   MASSYNE — DEEP 3D CURVED ORBITAL RING (#work)
+   Curated Works 3D Stage with Glass-Free Floating Artworks,
+   Animated Crimson Corner Reticles (┌ ┐ └ ┘), and Orbital Degree Scale
+   Zero external dependencies • Hardware accelerated • Pure Dark-Only Lock
+   ========================================================================== */
+
+/* 1. Stage Foundation: Generous breathing room, zero clipping, transparent obsidian */
+.curated-stage {
+  position: relative;
+  min-width: 0;
+  padding: 24px 0 42px;
+  overflow: visible !important;
+  background: transparent !important;
+  isolation: isolate;
 }
 
-
-/* MASSYNE / Curated Works — restrained orbiting edge light + gentle media motion.
-   Rotating light is painted only into a thin rim, never over the artwork.
-   The controller limits animated cards to nearby/in-viewport items. */
-@property --massyne-edge-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-@keyframes massyne-edge-orbit {
-  to { --massyne-edge-angle: 360deg; }
-}
-@keyframes massyne-media-breathe {
-  0%,100% { transform: translate3d(0,0,0); }
-  50% { transform: translate3d(0,-5px,0); }
+.curated-stage.carousel-active {
+  margin-inline: calc(-1 * clamp(16px, 3.8vw, 64px));
+  overflow: visible !important;
+  background: transparent !important;
+  isolation: isolate;
 }
 
-/* CSS edge mask: a single bright crimson-white segment travels along all four sides. */
-.project-grid > .project::before,
-.project-grid[data-view="3d"].carousel-ready > .project::before {
-  content:"";
-  display:block;
-  position:absolute;
-  inset:0;
-  width:auto;
-  height:auto;
-  aspect-ratio:auto;
-  border:0;
-  padding:2px;
-  border-radius:inherit;
-  z-index:4;
-  pointer-events:none;
-  opacity:0;
-  transform:none;
-  background:conic-gradient(
-    from var(--massyne-edge-angle),
-    transparent 0deg,
-    transparent 242deg,
-    color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 12%, transparent) 268deg,
-    color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 90%, transparent) 289deg,
-    var(--site-light, var(--site-light, #FCF6F5)) 305deg,
-    color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 75%, transparent) 324deg,
-    transparent 346deg
-  );
-  -webkit-mask:linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0) content-box,linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0);
-  -webkit-mask-composite:xor;
-  mask:linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0) content-box,linear-gradient(var(--site-light, var(--site-light, #FCF6F5)) 0 0);
-  mask-composite:exclude;
-  transition:opacity 250ms ease;
+.curated-stage.carousel-active::before,
+.curated-stage.carousel-active::after {
+  content: none !important;
+  display: none !important;
 }
 
-/* Only visible cards illuminate: nearby carousel cards + grid cards in the viewport. */
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near::before,
-.project-grid[data-view="grid"] > .project.is-in-viewport::before,
-.project-grid[data-view="index"] > .project:is(:hover,:focus-visible)::before {
-  opacity:.88;
-  animation:massyne-edge-orbit 7.8s linear infinite;
-  animation-delay:calc(var(--massyne-fx-order,0) * -.32s);
-}
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active::before,
-.project-grid[data-view="grid"] > .project:is(:hover,:focus-visible)::before {
-  opacity:1;
-  animation-duration:5.7s;
-}
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near img {
-  animation:massyne-media-breathe 7.2s ease-in-out infinite;
-  animation-delay:calc(var(--massyne-fx-order,0) * -.29s);
-}
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active img {
-  animation-duration:6.2s;
-}
-.project-grid[data-view="grid"] > .project.is-in-viewport img {
-  animation:massyne-media-breathe 9s ease-in-out infinite;
-  animation-delay:calc(var(--massyne-fx-order,0) * -.28s);
-}
-.project-grid[data-view="grid"] > .project:is(:hover,:focus-visible) img,
-.project-grid[data-view="3d"].carousel-ready > .project:hover img {
-  animation-play-state:paused;
+/* 2. Razor-Thin Curved Orbital Degree Scales (Top and Bottom) */
+.orbital-compass {
+  position: relative;
+  width: min(1040px, 94vw);
+  margin: 0 auto;
+  pointer-events: none;
+  user-select: none;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Pointer dragging, hidden tabs and reduced-motion should cost no animation frames. */
-.project-grid.is-dragging > .project::before,
-.project-grid.is-dragging > .project img,
-.project-grid.is-fx-hidden > .project::before,
-.project-grid.is-fx-hidden > .project img,
-.project-grid.is-fx-offscreen > .project::before,
-.project-grid.is-fx-offscreen > .project img {
-  animation-play-state:paused !important;
+.orbital-compass-top {
+  margin-bottom: -16px;
 }
-.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside::before,
-.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside img {
-  animation:none;
+
+.orbital-compass-bottom {
+  margin-top: -10px;
 }
-@media (max-width:550px) {
-  .project-grid > .project::before,
-  .project-grid[data-view="3d"].carousel-ready > .project::before {
-    padding:1.5px;
+
+.orbital-compass-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.reticle-center-ring circle {
+  animation: reticlePulse 2.8s ease-in-out infinite;
+}
+
+@keyframes reticlePulse {
+  0%, 100% {
+    opacity: 0.85;
+    stroke-width: 1.2;
   }
-  .project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near img {
-    animation-duration:8.5s;
-  }
-  .project-grid[data-view="grid"] > .project.is-in-viewport img {
-    animation:none;
+  50% {
+    opacity: 1;
+    stroke-width: 1.6;
+    filter: drop-shadow(0 0 6px #c81024);
   }
 }
-@media (prefers-reduced-motion:reduce) {
-  .project-grid > .project::before,
-  .project-grid[data-view="3d"].carousel-ready > .project::before,
-  .project-grid > .project img {
-    animation:none !important;
-    transition:none !important;
+
+/* 3. Deep 3D Orbital Perspective Stage */
+.project-grid[data-view="3d"].carousel-ready {
+  --carousel-card-width: clamp(240px, 28vw, 360px);
+  position: relative;
+  display: block;
+  isolation: isolate;
+  height: clamp(520px, 58vw, 700px);
+  min-width: 0;
+  perspective: 1050px;
+  perspective-origin: 50% 48%;
+  transform-style: preserve-3d;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior-x: contain;
+  overflow: visible;
+}
+
+.project-grid[data-view="3d"].carousel-ready:active,
+.project-grid[data-view="3d"].carousel-ready.is-dragging {
+  cursor: grabbing;
+}
+
+/* 4. Glass-Free Floating 3D Cards */
+#work .project-grid[data-view="3d"].carousel-ready > .project,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--carousel-card-width);
+  height: auto;
+  margin: 0;
+  padding: 0 !important;
+  grid-column: auto;
+  display: block;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Floating Artwork Image: Borderless 3:4 floating directly in 3D space */
+#work .project-grid[data-view="3d"].carousel-ready > .project img,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4 !important;
+  object-fit: cover !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.88), 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+  background: #09090c !important;
+  transform: translateZ(0);
+  pointer-events: none;
+  transition: box-shadow 0.4s ease;
+}
+
+#work .project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active img,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active img {
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.95), 0 0 1px rgba(236, 233, 225, 0.15) !important;
+}
+
+/* Soft Dark Floor Reflection Beneath */
+.orbital-floor-reflection {
+  position: absolute;
+  bottom: 50px;
+  left: 6%;
+  width: 88%;
+  height: 38px;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 0, 0, 0.8) 0%, transparent 75%);
+  filter: blur(6px);
+  transform: rotateX(85deg) translateZ(-12px);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.85;
+}
+
+/* 5. 4 Animated Crimson Corner Reticles (┌ ┐ └ ┘, #c81024) */
+.orbital-reticles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 3/4;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  z-index: 10;
+}
+
+.reticle {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border-color: #c81024;
+  border-style: solid;
+  transform: translate3d(0, 0, 10px);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.45s ease;
+  filter: drop-shadow(0 0 4px rgba(200, 16, 36, 0.5));
+}
+
+.reticle-tl { top: -4px; left: -4px; border-width: 2px 0 0 1.5px; }
+.reticle-tr { top: -4px; right: -4px; border-width: 2px 1.5px 0 0; }
+.reticle-bl { bottom: -4px; left: -4px; border-width: 0 0 1.5px 1.5px; }
+.reticle-br { bottom: -4px; right: -4px; border-width: 0 1.5px 1.5px 0; }
+
+/* Active center card reticle */
+.project.is-carousel-active .reticle {
+  filter: drop-shadow(0 0 7px rgba(200, 16, 36, 0.85));
+}
+
+/* Hover reticle pop-out: translate3d(±12px, ±12px, 86px) and expand to 24px */
+.project.is-hovered .reticle-tl,
+.project:hover .reticle-tl {
+  transform: translate3d(-12px, -12px, 86px);
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 12px rgba(200, 16, 36, 0.95)) drop-shadow(0 0 2px #ffffff);
+}
+.project.is-hovered .reticle-tr,
+.project:hover .reticle-tr {
+  transform: translate3d(12px, -12px, 86px);
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 12px rgba(200, 16, 36, 0.95)) drop-shadow(0 0 2px #ffffff);
+}
+.project.is-hovered .reticle-bl,
+.project:hover .reticle-bl {
+  transform: translate3d(-12px, 12px, 86px);
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 12px rgba(200, 16, 36, 0.95)) drop-shadow(0 0 2px #ffffff);
+}
+.project.is-hovered .reticle-br,
+.project:hover .reticle-br {
+  transform: translate3d(12px, 12px, 86px);
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 12px rgba(200, 16, 36, 0.95)) drop-shadow(0 0 2px #ffffff);
+}
+
+/* 6. Subtle Neutral White/Silver Sheen (NO Red Cursor Tint) */
+.orbital-card-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle 280px at var(--sheen-x, 50%) var(--sheen-y, 50%), rgba(255, 255, 255, 0.16) 0%, transparent 75%);
+  mix-blend-mode: overlay;
+  transition: opacity 0.35s ease;
+  z-index: 4;
+}
+
+.project.is-hovered .orbital-card-sheen,
+.project:hover .orbital-card-sheen {
+  opacity: 1;
+}
+
+/* 7. Minimal Monospace Metadata Below Artwork */
+#work .project-grid[data-view="3d"].carousel-ready > .project > div,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project > div {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 5px !important;
+  padding: 14px 4px 6px !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-height: 58px;
+}
+
+#work .project-grid[data-view="3d"].carousel-ready > .project h3,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project h3 {
+  order: 1 !important;
+  margin: 0 !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: clamp(0.72rem, 1.1vw, 0.88rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #ece9e1 !important;
+  line-height: 1.25 !important;
+}
+
+#work .project-grid[data-view="3d"].carousel-ready > .project h3 a,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project h3 a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+#work .project-grid[data-view="3d"].carousel-ready > .project span,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project span {
+  order: 0 !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 0.62rem !important;
+  letter-spacing: 0.14em !important;
+  color: rgba(236, 233, 225, 0.5) !important;
+  text-transform: uppercase !important;
+}
+
+#work .project-grid[data-view="3d"].carousel-ready > .project b,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project b {
+  order: 2 !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 0.62rem !important;
+  color: #c81024 !important;
+  letter-spacing: 0.08em !important;
+}
+
+#work .project-grid[data-view="3d"].carousel-ready > .project::before,
+#work .project-grid[data-view="3d"].carousel-ready > .project::after,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project::before,
+html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project::after {
+  display: none !important;
+  content: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* 8. Orbital Scrubber (Live progress with draggable thumb) */
+.orbital-scrubber {
+  position: relative;
+  width: min(440px, 86vw);
+  margin: 24px auto 0;
+  padding: 10px 0;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  z-index: 25;
+}
+
+.orbital-scrubber-track {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  background: rgba(236, 233, 225, 0.12);
+  border-radius: 2px;
+}
+
+.orbital-scrubber-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(200, 16, 36, 0.5), #c81024);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(200, 16, 36, 0.65);
+}
+
+.orbital-scrubber-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #0e0e10;
+  border: 1.5px solid #c81024;
+  box-shadow: 0 0 10px rgba(200, 16, 36, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.orbital-scrubber:hover .orbital-scrubber-thumb,
+.orbital-scrubber.is-dragging .orbital-scrubber-thumb {
+  transform: translate(-50%, -50%) scale(1.25);
+  box-shadow: 0 0 14px #c81024;
+}
+
+.orbital-scrubber-thumb .thumb-core {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ece9e1;
+}
+
+/* 9. Carousel Controls & Metadata */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(1040px, 94vw);
+  margin: 18px auto 0;
+  padding: 0 8px;
+  box-sizing: border-box;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.carousel-kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: rgba(236, 233, 225, 0.5);
+}
+
+.carousel-position {
+  color: #c81024;
+  font-weight: 600;
+}
+
+.carousel-current-name {
+  display: block;
+  font-size: clamp(0.92rem, 1.3vw, 1.15rem);
+  font-weight: 600;
+  color: #ece9e1;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+.carousel-hint {
+  display: block;
+  font-size: 0.62rem;
+  color: rgba(236, 233, 225, 0.38);
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+}
+
+.carousel-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.carousel-arrow,
+.carousel-autoplay {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(236, 233, 225, 0.15);
+  color: #ece9e1;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.carousel-arrow {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+}
+
+.carousel-autoplay {
+  height: 38px;
+  padding: 0 14px;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.carousel-arrow:hover,
+.carousel-autoplay:hover {
+  border-color: #c81024;
+  color: #fff;
+  background: rgba(200, 16, 36, 0.12);
+}
+
+/* 10. Responsive Mobile / Tablet Adjustments */
+@media (max-width: 850px) {
+  .curated-stage.carousel-active {
+    margin-inline: 0;
+    padding: 16px 0 32px;
   }
-  .project-grid > .project::before { opacity:0 !important; }
+  .project-grid[data-view="3d"].carousel-ready {
+    --carousel-card-width: clamp(230px, 68vw, 300px);
+    height: clamp(480px, 78vw, 560px);
+    perspective: 850px;
+  }
+  .orbital-compass {
+    width: 96vw;
+  }
+  .orbital-compass-top {
+    margin-bottom: -10px;
+  }
+  .orbital-compass-bottom {
+    margin-top: -6px;
+  }
+  .orbital-scrubber {
+    width: 88vw;
+    margin-top: 16px;
+  }
+  .carousel-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .carousel-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
+/* 11. Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .project-grid[data-view="3d"].carousel-ready > .project {
+    transition: none !important;
+  }
+  .reticle {
+    transition: none !important;
+  }
+  .reticle-center-ring circle {
+    animation: none !important;
+  }
+}
 
-/* Smooth curated 3D: compositor-friendly transform + opacity.
-   Real-time drag remains direct; release settles with gentle easing. */
-.project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){
- filter:none!important;
- transform:translate3d(calc(-50% + var(--carousel-x,0px)),-50%,var(--carousel-z,0px))
-   rotateY(var(--carousel-rotate,0deg)) scale(var(--carousel-scale,1));
- transition:
-   transform 620ms cubic-bezier(.17,.76,.22,1),
-   opacity 390ms cubic-bezier(.2,.66,.3,1),
-   visibility 390ms linear;
+/* 12. Fallback Grid Mode (data-view="grid" / "index") */
+.project-grid[data-view="grid"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 24px 0;
 }
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-near{will-change:transform,opacity}
-.project-grid[data-view="3d"].carousel-ready > .project.carousel-outside{will-change:auto}
-.project-grid[data-view="3d"].carousel-ready.is-dragging > .project:nth-child(n){transition:none!important}
-.project-grid[data-view="3d"].carousel-ready > .project::before,
-.project-grid[data-view="3d"].carousel-ready > .project img{
- animation:none!important; /* Avoid unnecessary continuous repaints during slide motion. */
+
+.project-grid[data-view="grid"] > .project {
+  position: relative;
+  display: block;
+  background: #0f0f13;
+  border: 1px solid rgba(236, 233, 225, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 10px;
 }
-.project-grid[data-view="3d"].carousel-ready > .project.is-carousel-active{border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 48%, transparent)}
-@media(max-width:550px){
- .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){transition-duration:500ms,340ms,340ms}
+
+.project-grid[data-view="grid"] > .project img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 4px;
 }
-@media(prefers-reduced-motion:reduce){
- .project-grid[data-view="3d"].carousel-ready > .project:nth-child(n){transition:none!important}
+
+.project-grid[data-view="grid"] > .project > div {
+  padding: 10px 4px 4px;
 }

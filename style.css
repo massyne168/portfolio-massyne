@@ -165,8 +165,8 @@ footer a:last-child{color:var(--red-bright)}
   .menu b::after{content:"";position:absolute;top:6px;left:0;width:19px;height:1px;background:var(--red-bright);transition:transform .25s,top .25s}
   .menu[aria-expanded=true] b{transform:rotate(45deg)}
   .menu[aria-expanded=true] b::after{top:0;transform:rotate(90deg)}
-  nav{display:none;position:absolute;top:65px;left:0;right:0;padding:24px clamp(20px,4.3vw,72px);flex-direction:column;align-items:stretch;gap:22px;background:#0d0d11;border-bottom:1px solid var(--line);box-shadow:0 25px 35px #0009}
-  nav.is-open{display:flex}
+  .site-header nav, .site-nav{display:none;position:absolute;top:65px;left:0;right:0;padding:24px clamp(20px,4.3vw,72px);flex-direction:column;align-items:stretch;gap:22px;background:#0d0d11;border-bottom:1px solid var(--line);box-shadow:0 25px 35px #0009}
+  .site-header nav.is-open, .site-nav.is-open{display:flex}
   nav a{font-size:.8rem}
   .hero{min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:26px;padding-top:34px}
   .hero-meta{grid-column:1/-1}
