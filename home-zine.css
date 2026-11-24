@@ -1,10 +1,11 @@
 /* ==========================================================================
-   MASSYNE — RAW STREETWEAR UNDERGROUND ZINE HERO (#home-panel)
+   MASSYNE — RAW STREETWEAR UNDERGROUND ZINE HERO (PC / Desktop min-width: 851px)
    Zero external dependencies • Hardware accelerated • Pure Dark-Only Lock
    ========================================================================== */
 
 /* 1. Canvas & Foundation */
-#home-panel.zine-hero {
+#desktop-zine-hero.zine-hero,
+.zine-hero-desktop {
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -23,6 +24,26 @@
   flex-direction: column;
   justify-content: space-between;
   isolation: isolate;
+}
+
+/* Visibility Switching: PC / Desktop vs Phone / Mobile */
+@media (min-width: 851px) {
+  #desktop-zine-hero,
+  .zine-hero-desktop {
+    display: flex !important;
+  }
+  .hero-classic-mobile,
+  #top > #home-panel.hero-classic-mobile,
+  #top > #home-panel.home-panel-shell {
+    display: none !important;
+  }
+}
+
+@media (max-width: 850px) {
+  #desktop-zine-hero,
+  .zine-hero-desktop {
+    display: none !important;
+  }
 }
 
 /* Concrete / Film Grain SVG Overlay */

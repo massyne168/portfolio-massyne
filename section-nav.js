@@ -4,6 +4,43 @@
   const main = document.querySelector("#top");
   if (!main) return;
 
+  const mobileFlowQuery = window.matchMedia("(max-width: 850px)");
+  const isMobile = mobileFlowQuery.matches;
+
+  // On Mobile (phone <= 850px): restore the exact 0b69e60 Home + Profile combination
+  if (isMobile) {
+    const heroPanel = main.querySelector("#home-panel");
+    const aboutPanel = main.querySelector("#about");
+    const profileContent = aboutPanel?.querySelector(".about-v2-content");
+    if (heroPanel && aboutPanel && profileContent) {
+      const aboutFlow = aboutPanel.previousElementSibling?.matches('.section-flow[data-flow-target="about"]')
+        ? aboutPanel.previousElementSibling
+        : null;
+      const homePanel = document.createElement("div");
+      homePanel.id = "home-panel";
+      homePanel.className = "home-panel-shell";
+      homePanel.setAttribute("role", "region");
+      homePanel.setAttribute("aria-label", "Home and designer profile");
+
+      const aboutEyebrow = aboutPanel.querySelector(":scope > .eyebrow");
+      if (aboutEyebrow) {
+        aboutEyebrow.textContent = "HOME / THE DESIGNER";
+        aboutEyebrow.classList.add("home-profile-eyebrow");
+        profileContent.prepend(aboutEyebrow);
+      }
+      profileContent.id = "about";
+      profileContent.classList.add("home-profile-details");
+      profileContent.setAttribute("role", "group");
+      profileContent.setAttribute("aria-label", "About MASSYNE");
+
+      heroPanel.removeAttribute("id");
+      heroPanel.before(homePanel);
+      homePanel.append(heroPanel, profileContent);
+      aboutFlow?.remove();
+      aboutPanel.remove();
+    }
+  }
+
   const menu = document.querySelector("#section-rail-menu");
   const sectionRail = document.querySelector("#section-rail");
 
@@ -13,7 +50,7 @@
   }
 
   const specs = [
-    { key: "home", id: "home-panel", hash: "#top" },
+    { key: "home", id: isMobile ? "home-panel" : "desktop-zine-hero", hash: "#top" },
     { key: "work", id: "work", hash: "#work" },
     { key: "process", id: "process", hash: "#process" },
     { key: "identity", id: "identity", hash: "#identity" },
@@ -21,7 +58,7 @@
     { key: "creative-lab", id: "creative-lab", hash: "#creative-lab" },
     { key: "archive", id: "archive", hash: "#archive" },
     { key: "services", id: "services", hash: "#services" },
-    { key: "about", id: "about", hash: "#about" },
+    ...(isMobile ? [] : [{ key: "about", id: "about", hash: "#about" }]),
     { key: "contact", id: "contact", hash: "#contact" }
   ];
 
@@ -46,7 +83,12 @@
     if (!hash || hash === "#") return null;
     let id = hash.slice(1);
     try { id = decodeURIComponent(id); } catch (_) {}
-    if (id === "top" || id === "home" || id === "home-panel") return { panel: byKey.get("home"), target: null };
+    if (id === "top" || id === "home" || id === "home-panel" || id === "desktop-zine-hero") {
+      return { panel: byKey.get("home"), target: null };
+    }
+    if (id === "about" && isMobile) {
+      return { panel: byKey.get("home"), target: document.getElementById("about") };
+    }
     if (byId.has(id)) return { panel: byId.get(id), target: byId.get(id).element };
     const target = document.getElementById(id);
     if (!target) return null;

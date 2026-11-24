@@ -36,6 +36,10 @@
     if (parts[1]) parts[1].textContent = tagline.front ? tagline.front.toUpperCase() : (tagline.last === "STUDIO" ? "STUDIO" : "");
     if (parts[2]) parts[2].textContent = tagline.front ? tagline.last.toUpperCase() : (tagline.last === "STUDIO" ? "" : tagline.last.toUpperCase());
   }
+  const zineTitle = document.querySelector(".zine-title");
+  if (zineTitle) zineTitle.textContent = site.name || "MASSYNE";
+  const zineTagline = document.querySelector(".zine-tagline");
+  if (zineTagline) zineTagline.textContent = site.tagline ? (site.tagline === "STUDIO" ? "VISUAL ARCHITECT & ART DIRECTOR" : site.tagline.toUpperCase()) : "VISUAL ARCHITECT & ART DIRECTOR";
   setText(".hero-v2-description", site.headline);
   const location = safeText(site.location || "Morocco — Worldwide");
   const heroMeta = document.querySelector(".hero-meta");
