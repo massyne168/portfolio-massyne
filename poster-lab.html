@@ -3,26 +3,21 @@
 <head>
   <meta charset="utf-8">
   <script src="theme-init.js"></script>
-  <meta name="description" content="MASSYNE Lab — Figma/Photoshop-grade dark-luxury creative studio. Design streetwear posters, apply analog paper/grain/chrome finishes, and test designs and artworks live on heavyweight hoodies, oversized tees, CD jewel cases, and gallery frames with 2x HD export.">
+  <meta name="description" content="MASSYNE Lab — Canva Edition. Professional dark-luxury 2D graphic design studio with multi-layer canvas, magnetic snap guides, Google Fonts typography, vector shapes, portfolio assets, and 2x HD export.">
   <link rel="canonical" href="https://portfolio-massyne.vercel.app/poster-lab.html">
   <link rel="icon" href="images/favicon.png">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#050608">
-  <title>MASSYNE Lab — Pro Creative Studio & Mockup Lab</title>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="poster-lab.css?v=20261124-pro">
+  <title>MASSYNE Lab — Canva Edition Graphic Design Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cinzel:wght@400;600;700;900&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Oswald:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="poster-lab.css?v=20261124-canva">
   <script src="project-data.js?v=20261124" defer></script>
-  <script src="poster-snap.js?v=20261124" defer></script>
   <script src="poster-fx.js?v=20261124" defer></script>
   <script src="poster-stickers.js?v=20261124" defer></script>
   <script src="poster-portfolio.js?v=20261124" defer></script>
-  <script src="poster-mockups.js?v=20261124" defer></script>
-  <script src="poster-text-layers.js?v=20261124" defer></script>
-  <script src="poster-image-layers.js?v=20261124" defer></script>
-  <script src="poster-shapes.js?v=20261124" defer></script>
-  <script src="poster-editor.js?v=20261124" defer></script>
-  <script src="poster-workspace.js?v=20261124" defer></script>
-  <script src="poster-lab.js?v=20261124" defer></script>
+  <script src="poster-lab.js?v=20261124-canva" defer></script>
   <script src="/theme-controls.js" defer></script>
 </head>
 <body>
@@ -33,486 +28,449 @@
         <span class="brand-monogram">M</span>
         <span class="brand-text">MASSYNE <em>/ LAB</em></span>
       </a>
+      <span class="studio-badge" aria-label="Studio Edition">CANVA EDITION</span>
       <span class="topbar-divider" aria-hidden="true"></span>
-      <!-- Mode Toggle: 2D Canvas vs Live Mockup -->
-      <div class="mode-switcher" role="group" aria-label="Studio View Mode">
-        <button id="mode-canvas" class="mode-tab-btn" type="button" aria-pressed="true">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-          <span>2D Canvas</span>
-        </button>
-        <button id="mode-mockup" class="mode-tab-btn" type="button" aria-pressed="false">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 0-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
-          <span>Live Mockup</span>
-        </button>
+      <div class="project-title-wrap">
+        <input id="project-title" class="project-title-input" type="text" value="Untitled Design" aria-label="Design Project Title" spellcheck="false">
       </div>
     </div>
 
-    <!-- Center Aspect Ratio Switcher (2D Mode) -->
-    <div class="topbar-center" id="ratio-selector-wrap">
-      <div class="ratio-selector" role="group" aria-label="Canvas Aspect Ratio">
-        <button type="button" data-ratio-option="4:5" class="ratio-btn" aria-pressed="true" title="Instagram Portrait (1080 × 1350)">
-          <span class="ratio-chip">4:5</span><span class="ratio-name">IG</span>
-        </button>
-        <button type="button" data-ratio-option="9:16" class="ratio-btn" aria-pressed="false" title="Story / Reel / TikTok (1080 × 1920)">
-          <span class="ratio-chip">9:16</span><span class="ratio-name">Story</span>
-        </button>
-        <button type="button" data-ratio-option="1:1" class="ratio-btn" aria-pressed="false" title="Cover / Avatar (1200 × 1200)">
-          <span class="ratio-chip">1:1</span><span class="ratio-name">Cover</span>
-        </button>
-        <button type="button" data-ratio-option="16:9" class="ratio-btn" aria-pressed="false" title="Landscape Banner (1920 × 1080)">
-          <span class="ratio-chip">16:9</span><span class="ratio-name">Banner</span>
-        </button>
+    <!-- Center Canvas Preset Selector -->
+    <div class="topbar-center">
+      <div class="canvas-preset-selector">
+        <label for="canvas-preset" class="visually-hidden">Canvas Format</label>
+        <select id="canvas-preset" class="preset-dropdown" aria-label="Select Canvas Format">
+          <option value="3:4" selected>Poster 3:4 (1080 × 1440)</option>
+          <option value="1:1">Instagram Post 1:1 (1080 × 1080)</option>
+          <option value="9:16">Story / Reel Cover 9:16 (1080 × 1920)</option>
+          <option value="16:9">YouTube / Banner 16:9 (1920 × 1080)</option>
+          <option value="4:5">Streetwear Print 4:5 (1200 × 1500)</option>
+          <option value="custom">Custom Dimensions…</option>
+        </select>
+        <span id="canvas-dim-pill" class="canvas-dim-pill">1080 × 1440</span>
       </div>
     </div>
 
-    <!-- Right Actions -->
+    <!-- Right Actions: Undo/Redo, Project JSON, Export -->
     <div class="top-actions">
       <div class="history-controls" role="group" aria-label="Edit history">
-        <button id="poster-undo" data-history="undo" type="button" aria-label="Undo" title="Undo (Ctrl+Z)" disabled>↶</button>
-        <button id="poster-redo" data-history="redo" type="button" aria-label="Redo" title="Redo (Ctrl+Y)" disabled>↷</button>
+        <button id="btn-undo" class="icon-btn" type="button" aria-label="Undo" title="Undo (Ctrl+Z)" disabled>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+        </button>
+        <button id="btn-redo" class="icon-btn" type="button" aria-label="Redo" title="Redo (Ctrl+Y)" disabled>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+        </button>
       </div>
-      <!-- Export 2D Canvas PNG Button -->
-      <button class="export-button" id="download-poster" type="button">
-        <span>Export PNG 2×</span>
-        <span class="export-arrow" aria-hidden="true">↗</span>
-      </button>
-      <!-- Export Mockup PNG Button (Visible in Mockup mode) -->
-      <button class="export-button export-button-mockup" id="export-mockup-topbar-btn" type="button" hidden>
-        <span>Export Mockup 2×</span>
-        <span class="export-arrow" aria-hidden="true">↗</span>
-      </button>
+
+      <span class="topbar-divider" aria-hidden="true"></span>
+
+      <div class="project-io-controls" role="group" aria-label="Project Save and Load">
+        <button id="btn-open-json" class="secondary-btn" type="button" title="Load project from .json file">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span>Open</span>
+        </button>
+        <button id="btn-save-json" class="secondary-btn" type="button" title="Save design project as .json file">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>Save</span>
+        </button>
+      </div>
+
+      <span class="topbar-divider" aria-hidden="true"></span>
+
+      <!-- Export Menu -->
+      <div class="export-menu-wrap">
+        <button id="btn-export-main" class="export-button" type="button" aria-haspopup="true" aria-expanded="false">
+          <span>Export</span>
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="export-dropdown" class="export-dropdown" hidden role="menu" aria-label="Export options">
+          <button id="export-png-2x" class="export-drop-item" type="button" role="menuitem">
+            <strong>PNG (2× HD)</strong>
+            <span>Ultra crisp poster resolution</span>
+          </button>
+          <button id="export-png-1x" class="export-drop-item" type="button" role="menuitem">
+            <strong>PNG (1× Standard)</strong>
+            <span>Web and social media ready</span>
+          </button>
+          <button id="export-jpg-2x" class="export-drop-item" type="button" role="menuitem">
+            <strong>JPG (2× High Quality)</strong>
+            <span>Compressed photographic export</span>
+          </button>
+          <div class="export-drop-divider"></div>
+          <label class="export-option-label" for="export-transparent-bg">
+            <input type="checkbox" id="export-transparent-bg">
+            <span>Transparent Background (PNG)</span>
+          </label>
+        </div>
+      </div>
     </div>
   </header>
 
+  <!-- Workspace Shell -->
   <main class="editor-main">
     <div class="workspace">
-      <!-- 1. Left Vertical Tool Rail -->
-      <aside class="tool-rail" role="toolbar" aria-label="Canvas tools">
-        <span class="rail-caption">TOOLS</span>
-        <button class="tool-button" id="tool-select" type="button" data-tool-target="select" aria-pressed="true" aria-label="Select tool" title="Select (V)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 3 12 10-5 .7-2.6 6.1-2.1-.9 2.6-6.1L6 3Z"/></svg><span>Select</span></button>
-        <button class="tool-button" id="tool-text" type="button" data-tool-command="add-text" aria-label="Add text" title="Add text (T)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6V4h16v2M12 4v16M8 20h8"/></svg><span>Text</span></button>
-        <button class="tool-button" id="tool-image" type="button" data-tool-command="upload-image" aria-label="Upload image" title="Upload image"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m5 17 5-5 3.2 3.2 2.2-2.2 3.6 4"/></svg><span>Image</span></button>
-        <button class="tool-button" id="tool-shape" type="button" data-tool-command="open-shapes" aria-label="Open shape controls" title="Shapes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5L12 3Z"/><path d="m19 16 .9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9L19 16Z"/></svg><span>Shapes</span></button>
-        <span class="rail-divider" aria-hidden="true"></span>
-        <button class="tool-button" id="tool-pen" type="button" data-tool-target="draw" aria-pressed="false" aria-label="Pen tool" title="Pen (P)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17.5 10-10 3.5 3.5-10 10H4v-3.5Z"/><path d="m12.5 9 3.5 3.5M14.5 7l2-2 3.5 3.5-2 2"/></svg><span>Pen</span></button>
-        <button class="tool-button" id="tool-eraser" type="button" data-tool-target="erase" aria-pressed="false" aria-label="Eraser tool" title="Eraser (E)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 14 8-9a2 2 0 0 1 2.8 0l5.2 5.2a2 2 0 0 1 0 2.8l-6 6H8l-4-4a2 2 0 0 1 0-1Z"/><path d="m9 9 7 7M8 19h13"/></svg><span>Eraser</span></button>
+      <!-- 1. Left Vertical Tool Rail (Canva Style) -->
+      <aside class="tool-rail" role="toolbar" aria-label="Studio tool navigation">
+        <button class="rail-item is-active" type="button" data-rail-tab="templates" aria-pressed="true" aria-label="Templates">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <span>Templates</span>
+        </button>
+        <button class="rail-item" type="button" data-rail-tab="text" aria-pressed="false" aria-label="Text">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7V4h16v3"/><path d="M12 4v16"/><path d="M8 20h8"/></svg>
+          <span>Text</span>
+        </button>
+        <button class="rail-item" type="button" data-rail-tab="elements" aria-pressed="false" aria-label="Elements &amp; Shapes">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="8" cy="8" r="5"/><rect x="11" y="11" width="10" height="10" rx="2"/></svg>
+          <span>Elements</span>
+        </button>
+        <button class="rail-item" type="button" data-rail-tab="uploads" aria-pressed="false" aria-label="Uploads &amp; Portfolio Artworks">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span>Uploads</span>
+        </button>
+        <button class="rail-item" type="button" data-rail-tab="textures" aria-pressed="false" aria-label="Textures &amp; Overlays">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+          <span>Textures</span>
+        </button>
+        <button class="rail-item" type="button" data-rail-tab="background" aria-pressed="false" aria-label="Background">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 16 5-5 4 4 5-5 4 4"/><circle cx="8" cy="8" r="1.5"/></svg>
+          <span>Backdrop</span>
+        </button>
       </aside>
 
-      <!-- 2. Left Docked Studio Panel (Layers, Templates & Stickers, Artworks) -->
-      <aside class="left-dock" id="left-dock" aria-label="Studio resources and layers">
-        <nav class="dock-tabs" role="tablist" aria-label="Left panel tabs">
-          <button id="left-tab-layers" class="dock-tab-btn" type="button" role="tab" aria-selected="true" aria-controls="left-panel-layers">
-            Layers <span id="layers-count" class="tab-count">01</span>
-          </button>
-          <button id="left-tab-templates" class="dock-tab-btn" type="button" role="tab" aria-selected="false" aria-controls="left-panel-templates">
-            Templates &amp; Stickers
-          </button>
-          <button id="left-tab-portfolio" class="dock-tab-btn" type="button" role="tab" aria-selected="false" aria-controls="left-panel-portfolio">
-            Artworks
-          </button>
-        </nav>
+      <!-- 2. Left Collapsible Drawer Panel -->
+      <aside class="left-drawer" id="left-drawer" aria-label="Studio Drawer">
+        <!-- Drawer Header -->
+        <div class="drawer-header">
+          <h2 id="drawer-title" class="drawer-title">Templates</h2>
+          <button id="btn-close-drawer" class="drawer-close-btn" type="button" aria-label="Close drawer">×</button>
+        </div>
 
-        <!-- Left Tab 1: Layers Stack -->
-        <section class="dock-panel" id="left-panel-layers" role="tabpanel" aria-labelledby="left-tab-layers">
-          <div class="dock-panel-header">
-            <div>
-              <p class="kicker">STRUCTURE / 01</p>
-              <h2>Layer Stack</h2>
-            </div>
-            <button class="small-add" type="button" data-editor-action="add-text">+ Text</button>
+        <div class="drawer-body">
+          <!-- Drawer Tab: Templates -->
+          <div id="drawer-pane-templates" class="drawer-pane">
+            <p class="drawer-desc">One-click editable dark-luxury starter designs that populate real layers.</p>
+            <div id="templates-grid" class="templates-grid"></div>
           </div>
-          <p class="dock-hint">Click a layer to edit. Drag on canvas to reposition with magnetic guides.</p>
-          <div id="layer-list" class="layer-list" role="list" aria-label="Design layers"></div>
-          <div class="layer-order-controls" role="group" aria-label="Reorder selected layer">
-            <button type="button" id="layer-send-back" disabled>Send Back</button>
-            <button type="button" id="layer-bring-front" disabled>Bring Front</button>
-          </div>
-        </section>
 
-        <!-- Left Tab 2: 1-Click Starter Templates & SVG Sticker Pack -->
-        <section class="dock-panel" id="left-panel-templates" role="tabpanel" aria-labelledby="left-tab-templates" hidden>
-          <div class="dock-panel-header">
-            <div>
-              <p class="kicker">GRAPHIC ASSETS / 02</p>
-              <h2>Templates &amp; Stickers</h2>
+          <!-- Drawer Tab: Text -->
+          <div id="drawer-pane-text" class="drawer-pane" hidden>
+            <button id="btn-add-text-box" class="primary-drawer-btn" type="button">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>Add a text box</span>
+            </button>
+            <div class="text-type-stack">
+              <span class="drawer-subhead">Default text styles</span>
+              <button class="text-type-item heading-item" type="button" data-add-text-type="heading">
+                <strong>Add a heading</strong>
+                <span>Bold display title</span>
+              </button>
+              <button class="text-type-item subheading-item" type="button" data-add-text-type="subheading">
+                <strong>Add a subheading</strong>
+                <span>Medium editorial copy</span>
+              </button>
+              <button class="text-type-item body-item" type="button" data-add-text-type="body">
+                <strong>Add little bit of body text</strong>
+                <span>Clean paragraph text</span>
+              </button>
+              <button class="text-type-item tech-item" type="button" data-add-text-type="tech">
+                <strong>Add tech / metadata tag</strong>
+                <span>Spaced monospace tag</span>
+              </button>
             </div>
-          </div>
-          <div class="dock-panel-scroll">
-            <div class="dock-section">
-              <h3 class="dock-section-title">1-Click Starter Templates</h3>
-              <p class="dock-section-desc">Instant editorial layouts with typography, background, and graphic badges.</p>
-              <div id="templates-grid" class="templates-grid"></div>
-            </div>
-            <div class="dock-section">
-              <h3 class="dock-section-title">SVG Vector Sticker Pack</h3>
-              <p class="dock-section-desc">Streetwear barcodes, rubber stamps, reticles, and MASSYNE emblems.</p>
-              <div id="stickers-grid" class="stickers-grid"></div>
-            </div>
-          </div>
-        </section>
 
-        <!-- Left Tab 3: Real Portfolio Artworks Browser -->
-        <section class="dock-panel" id="left-panel-portfolio" role="tabpanel" aria-labelledby="left-tab-portfolio" hidden>
-          <div class="dock-panel-header">
-            <div>
-              <p class="kicker">MASSYNE CATALOGUE / 03</p>
-              <h2>Portfolio Artworks</h2>
+            <div class="text-preset-stack">
+              <span class="drawer-subhead">Luxury &amp; Chrome Finishes</span>
+              <div class="preset-pill-grid">
+                <button type="button" class="preset-pill-btn" data-text-style-preset="liquid_chrome">Liquid Chrome</button>
+                <button type="button" class="preset-pill-btn" data-text-style-preset="brushed_silver">Brushed Silver</button>
+                <button type="button" class="preset-pill-btn" data-text-style-preset="crimson_glow">Crimson Glow</button>
+                <button type="button" class="preset-pill-btn" data-text-style-preset="brutalist_outline">Brutalist Outline</button>
+                <button type="button" class="preset-pill-btn" data-text-style-preset="pill_badge">Pill Badge</button>
+              </div>
             </div>
           </div>
-          <div class="portfolio-filter-row" role="group" aria-label="Filter portfolio categories">
-            <button type="button" data-portfolio-filter="all" class="filter-pill" aria-pressed="true">All</button>
-            <button type="button" data-portfolio-filter="posters" class="filter-pill" aria-pressed="false">Posters</button>
-            <button type="button" data-portfolio-filter="logos" class="filter-pill" aria-pressed="false">Logos</button>
-            <button type="button" data-portfolio-filter="curated" class="filter-pill" aria-pressed="false">Curated</button>
+
+          <!-- Drawer Tab: Elements & Shapes -->
+          <div id="drawer-pane-elements" class="drawer-pane" hidden>
+            <span class="drawer-subhead">Geometric Shapes</span>
+            <div class="elements-grid">
+              <button type="button" class="element-grid-item" data-create-shape="rectangle">
+                <svg viewBox="0 0 40 40"><rect x="6" y="10" width="28" height="20" fill="currentColor"/></svg>
+                <span>Rectangle</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="rounded_card">
+                <svg viewBox="0 0 40 40"><rect x="6" y="8" width="28" height="24" rx="6" fill="currentColor"/></svg>
+                <span>Rounded Card</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="circle">
+                <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="currentColor"/></svg>
+                <span>Circle</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="pill">
+                <svg viewBox="0 0 40 40"><rect x="6" y="12" width="28" height="16" rx="8" fill="currentColor"/></svg>
+                <span>Pill</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="line">
+                <svg viewBox="0 0 40 40"><line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="3"/></svg>
+                <span>Line</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="arrow">
+                <svg viewBox="0 0 40 40"><line x1="6" y1="20" x2="30" y2="20" stroke="currentColor" stroke-width="3"/><polyline points="24 14 30 20 24 26" fill="none" stroke="currentColor" stroke-width="3"/></svg>
+                <span>Arrow</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="starburst">
+                <svg viewBox="0 0 40 40"><path d="M20 4 L23 15 L34 11 L26 20 L34 29 L23 25 L20 36 L17 25 L6 29 L14 20 L6 11 L17 15 Z" fill="currentColor"/></svg>
+                <span>Starburst</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="reticle">
+                <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14 V7 H14 M26 7 H33 V14 M33 26 V33 H26 M14 33 H7 V26"/></svg>
+                <span>Tech Reticle</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="barcode">
+                <svg viewBox="0 0 40 40" fill="currentColor"><rect x="6" y="10" width="3" height="20"/><rect x="11" y="10" width="5" height="20"/><rect x="18" y="10" width="2" height="20"/><rect x="22" y="10" width="6" height="20"/><rect x="30" y="10" width="4" height="20"/></svg>
+                <span>Barcode</span>
+              </button>
+              <button type="button" class="element-grid-item" data-create-shape="glow_orb">
+                <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#c81024" opacity="0.8"/></svg>
+                <span>Glow Orb</span>
+              </button>
+            </div>
+
+            <span class="drawer-subhead">Vector Stickers &amp; Badges</span>
+            <div id="stickers-grid" class="stickers-grid"></div>
           </div>
-          <div class="dock-panel-scroll">
+
+          <!-- Drawer Tab: Uploads & Portfolio Artworks -->
+          <div id="drawer-pane-uploads" class="drawer-pane" hidden>
+            <div class="upload-action-box">
+              <label for="image-upload-input" class="upload-dropzone">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span>Upload image file</span>
+                <small>PNG, JPG, WEBP, SVG</small>
+              </label>
+              <input id="image-upload-input" type="file" accept="image/*" class="visually-hidden">
+            </div>
+
+            <span class="drawer-subhead">MASSYNE Portfolio Artworks</span>
+            <div class="portfolio-filter-row" role="group" aria-label="Portfolio Category Filter">
+              <button type="button" data-portfolio-filter="all" class="filter-pill is-active" aria-pressed="true">All</button>
+              <button type="button" data-portfolio-filter="posters" class="filter-pill" aria-pressed="false">Posters</button>
+              <button type="button" data-portfolio-filter="logos" class="filter-pill" aria-pressed="false">Logos</button>
+              <button type="button" data-portfolio-filter="curated" class="filter-pill" aria-pressed="false">Curated</button>
+            </div>
             <div id="portfolio-artworks-grid" class="portfolio-artworks-grid"></div>
           </div>
-        </section>
+
+          <!-- Drawer Tab: Textures & Overlays -->
+          <div id="drawer-pane-textures" class="drawer-pane" hidden>
+            <p class="drawer-desc">Toggle procedural analog textures applied over the live canvas and baked into export.</p>
+            <div class="overlay-toggles-stack">
+              <!-- Film Grain -->
+              <div class="overlay-card">
+                <div class="overlay-toggle-row">
+                  <label class="switch" for="overlay-grain-toggle">
+                    <input type="checkbox" id="overlay-grain-toggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="overlay-label">35mm Film Grain</span>
+                </div>
+                <div class="overlay-slider-wrap">
+                  <input id="overlay-grain-slider" type="range" min="10" max="100" value="45" aria-label="Grain density">
+                </div>
+              </div>
+              <!-- Paper Creases -->
+              <div class="overlay-card">
+                <div class="overlay-toggle-row">
+                  <label class="switch" for="overlay-creases-toggle">
+                    <input type="checkbox" id="overlay-creases-toggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="overlay-label">Folded Paper Creases</span>
+                </div>
+                <div class="overlay-slider-wrap">
+                  <input id="overlay-creases-slider" type="range" min="10" max="100" value="65" aria-label="Creases intensity">
+                </div>
+              </div>
+              <!-- Halftone -->
+              <div class="overlay-card">
+                <div class="overlay-toggle-row">
+                  <label class="switch" for="overlay-halftone-toggle">
+                    <input type="checkbox" id="overlay-halftone-toggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="overlay-label">Xerox Halftone Dots</span>
+                </div>
+                <div class="overlay-slider-wrap">
+                  <input id="overlay-halftone-slider" type="range" min="10" max="100" value="50" aria-label="Halftone contrast">
+                </div>
+              </div>
+              <!-- Plastic Gloss -->
+              <div class="overlay-card">
+                <div class="overlay-toggle-row">
+                  <label class="switch" for="overlay-gloss-toggle">
+                    <input type="checkbox" id="overlay-gloss-toggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="overlay-label">Plastic / CD Wrap Gloss</span>
+                </div>
+                <div class="overlay-slider-wrap">
+                  <input id="overlay-gloss-slider" type="range" min="10" max="100" value="60" aria-label="Gloss sheen">
+                </div>
+              </div>
+              <!-- Scanlines -->
+              <div class="overlay-card">
+                <div class="overlay-toggle-row">
+                  <label class="switch" for="overlay-scanlines-toggle">
+                    <input type="checkbox" id="overlay-scanlines-toggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="overlay-label">CRT Scanlines</span>
+                </div>
+                <div class="overlay-slider-wrap">
+                  <input id="overlay-scanlines-slider" type="range" min="10" max="100" value="35" aria-label="Scanlines opacity">
+                </div>
+              </div>
+              <!-- Vignette -->
+              <div class="overlay-card">
+                <div class="overlay-toggle-row">
+                  <label class="switch" for="overlay-vignette-toggle">
+                    <input type="checkbox" id="overlay-vignette-toggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="overlay-label">Dark Radial Vignette</span>
+                </div>
+                <div class="overlay-slider-wrap">
+                  <input id="overlay-vignette-slider" type="range" min="10" max="100" value="50" aria-label="Vignette intensity">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Drawer Tab: Background -->
+          <div id="drawer-pane-background" class="drawer-pane" hidden>
+            <span class="drawer-subhead">Canvas Color</span>
+            <div class="color-picker-row">
+              <label for="bg-color-input" class="color-swatch-label">
+                <input type="color" id="bg-color-input" value="#050608">
+                <span>Custom Color</span>
+              </label>
+              <div class="preset-colors">
+                <button type="button" class="swatch-btn" data-color="#050608" style="background:#050608" title="Obsidian"></button>
+                <button type="button" class="swatch-btn" data-color="#0b0c10" style="background:#0b0c10" title="Dark Graphite"></button>
+                <button type="button" class="swatch-btn" data-color="#12151d" style="background:#12151d" title="Deep Navy"></button>
+                <button type="button" class="swatch-btn" data-color="#680c16" style="background:#680c16" title="Crimson Ink"></button>
+                <button type="button" class="swatch-btn" data-color="#e4e1d7" style="background:#e4e1d7" title="Bone Paper"></button>
+                <button type="button" class="swatch-btn" data-color="#fcf6f5" style="background:#fcf6f5" title="Pure White"></button>
+              </div>
+            </div>
+
+            <span class="drawer-subhead">Luxury Gradients</span>
+            <div class="gradient-preset-grid">
+              <button type="button" class="gradient-btn" data-bg-gradient="obsidian_noir" style="background: radial-gradient(circle at 50% 30%, #151821 0%, #050608 100%);">Noir</button>
+              <button type="button" class="gradient-btn" data-bg-gradient="crimson_eclipse" style="background: linear-gradient(145deg, #180306 0%, #050608 65%, #680c16 100%);">Eclipse</button>
+              <button type="button" class="gradient-btn" data-bg-gradient="chrome_horizon" style="background: linear-gradient(180deg, #101217 0%, #282d38 50%, #08090c 100%);">Chrome</button>
+              <button type="button" class="gradient-btn" data-bg-gradient="blood_moon" style="background: radial-gradient(circle at 50% 80%, #7d0e1b 0%, #050608 70%);">Blood Moon</button>
+            </div>
+
+            <span class="drawer-subhead">Background Pattern</span>
+            <div class="pattern-pill-grid">
+              <button type="button" class="pattern-btn is-active" data-bg-pattern="none">None</button>
+              <button type="button" class="pattern-btn" data-bg-pattern="dots">Dot Grid</button>
+              <button type="button" class="pattern-btn" data-bg-pattern="grid">Tech Grid</button>
+              <button type="button" class="pattern-btn" data-bg-pattern="iso">Blueprint</button>
+            </div>
+          </div>
+        </div>
       </aside>
 
-      <!-- 3. Center Workspace Stage (2D Canvas Desk or Live Mockup Stage) -->
-      <section class="canvas-desk" aria-label="Design canvas workspace">
-        <!-- Canvas Status & Zoom Toolbar -->
-        <div class="canvas-toolbar">
-          <div class="canvas-label">
-            <span class="canvas-live-dot" aria-hidden="true"></span>
-            <span id="canvas-status-badge">CANVAS</span>
-            <span class="toolbar-separator">/</span>
-            <span id="canvas-dim-label">1080 × 1350</span>
-          </div>
-          <div class="zoom-controls" role="group" aria-label="Canvas zoom">
-            <button id="canvas-zoom-out" type="button" aria-label="Zoom out">−</button>
-            <output id="canvas-zoom-value" for="canvas-zoom-out canvas-zoom-in">100%</output>
-            <button id="canvas-zoom-in" type="button" aria-label="Zoom in">+</button>
-            <button id="canvas-fit" type="button" title="Fit canvas">Fit</button>
+      <!-- 3. Center Workspace Stage (Interactive Canvas Desk) -->
+      <section class="canvas-desk" id="canvas-desk" aria-label="Interactive design workspace">
+        <!-- Zoom Floating Island -->
+        <div class="zoom-floating-island" role="group" aria-label="Zoom controls">
+          <button id="btn-zoom-out" type="button" aria-label="Zoom out">−</button>
+          <button id="btn-zoom-reset" type="button" title="Reset zoom">
+            <span id="zoom-label">100%</span>
+          </button>
+          <button id="btn-zoom-in" type="button" aria-label="Zoom in">+</button>
+          <button id="btn-zoom-fit" type="button" title="Fit to Screen">Fit</button>
+        </div>
+
+        <!-- Canvas Stage Viewport (with Pan & Zoom transform container) -->
+        <div class="canvas-viewport" id="canvas-viewport">
+          <div class="canvas-stage-wrapper" id="canvas-stage-wrapper">
+            <canvas id="poster-canvas" width="1080" height="1440" tabindex="0" role="img" aria-label="MASSYNE interactive graphic canvas"></canvas>
+            <!-- Overlay Canvas for Crisp Snap Guides and Selection Bounding Box -->
+            <canvas id="overlay-canvas" width="1080" height="1440" aria-hidden="true"></canvas>
           </div>
         </div>
 
-        <!-- 2D Canvas Workarea -->
-        <div class="canvas-workarea" id="canvas-workarea">
-          <section class="preview" aria-label="Live design canvas">
-            <div class="preview-meta">
-              <span>LIVE EDITABLE STAGE</span>
-              <span id="canvas-meta-ratio">4 : 5</span>
-            </div>
-            <div class="canvas-stage">
-              <canvas id="poster-canvas" tabindex="0" width="1080" height="1350" role="img" aria-label="MASSYNE personalized poster canvas"></canvas>
-            </div>
-            <p class="preview-foot">Drag layers freely. Magnetic crimson guides snap to center and margins.</p>
-          </section>
-        </div>
-
-        <!-- Live Mockup Studio Workarea (Hidden by default, shown in Live Mockup mode) -->
-        <div class="mockup-workarea" id="mockup-workarea" hidden>
-          <div class="mockup-controls-bar">
-            <!-- Model Switcher -->
-            <div class="mockup-control-group">
-              <span class="control-label">Model</span>
-              <div class="mockup-pills" role="group" aria-label="Mockup Model">
-                <button type="button" data-mockup-model="hoodie" class="mockup-pill-btn" aria-pressed="true">Hoodie</button>
-                <button type="button" data-mockup-model="tshirt" class="mockup-pill-btn" aria-pressed="false">T-Shirt</button>
-                <button type="button" data-mockup-model="cd" class="mockup-pill-btn" aria-pressed="false">CD Case</button>
-                <button type="button" data-mockup-model="frame" class="mockup-pill-btn" aria-pressed="false">Wall Frame</button>
-              </div>
-            </div>
-
-            <!-- Colorway Switcher (Hoodie / T-Shirt) -->
-            <div class="mockup-control-group" id="mockup-colorway-group">
-              <span class="control-label">Colorway</span>
-              <div class="mockup-swatches" role="group" aria-label="Apparel Colorway">
-                <button type="button" data-mockup-colorway="obsidian" class="swatch-btn obsidian" aria-pressed="true" title="Obsidian Black"></button>
-                <button type="button" data-mockup-colorway="charcoal" class="swatch-btn charcoal" aria-pressed="false" title="Washed Charcoal"></button>
-                <button type="button" data-mockup-colorway="bone" class="swatch-btn bone" aria-pressed="false" title="Bone White"></button>
-                <button type="button" data-mockup-colorway="crimson" class="swatch-btn crimson" aria-pressed="false" title="Deep Crimson"></button>
-              </div>
-            </div>
-
-            <!-- Scale & Placement Sliders -->
-            <div class="mockup-control-group">
-              <label for="mockup-scale">Scale <output id="mockup-scale-value" for="mockup-scale">75%</output></label>
-              <input id="mockup-scale" type="range" min="30" max="120" value="75">
-            </div>
-            <div class="mockup-control-group">
-              <label for="mockup-placement-y">Position Y <output id="mockup-placement-y-value" for="mockup-placement-y">0%</output></label>
-              <input id="mockup-placement-y" type="range" min="-50" max="50" value="0">
-            </div>
-
-            <!-- Blend Mode -->
-            <div class="mockup-control-group">
-              <label for="mockup-blend-mode">Print Blend</label>
-              <select id="mockup-blend-mode">
-                <option value="normal" selected>Normal</option>
-                <option value="multiply">Multiply (Ink)</option>
-                <option value="screen">Screen (Light)</option>
-              </select>
-            </div>
-
-            <!-- Source Indicator & Reset -->
-            <div class="mockup-source-status">
-              <span class="source-tag">SOURCE:</span>
-              <strong id="mockup-source-indicator">Live 2D Canvas</strong>
-              <button type="button" id="mockup-reset-source" class="source-reset-btn" hidden title="Reset back to Live 2D Canvas">↩ Canvas</button>
-            </div>
-
-            <!-- Export Button -->
-            <button type="button" id="export-mockup-btn" class="export-button export-button-mockup">
-              Export 2400px ↗
-            </button>
-          </div>
-
-          <!-- Mockup Canvas Viewport -->
-          <div class="mockup-stage-container">
-            <canvas id="mockup-canvas" width="1600" height="1600" role="img" aria-label="MASSYNE Streetwear & Product Live Mockup"></canvas>
-          </div>
+        <!-- Canvas Quick Status Footer -->
+        <div class="canvas-status-footer">
+          <span class="status-indicator"></span>
+          <span id="status-text">Ready. Click any element to select.</span>
+          <span class="shortcut-tip">Tip: Hold Shift to resize proportionally • Drag handles to rotate</span>
         </div>
       </section>
 
-      <!-- 4. Right Docked Inspector Panel (Properties, FX & Textures) -->
-      <aside class="controls" id="right-panel" aria-label="Design tools & inspector">
-        <nav class="inspector-tabs" role="tablist" aria-label="Editor panels">
-          <button id="right-tab-properties" type="button" role="tab" aria-selected="true" aria-controls="right-panel-properties">Properties</button>
-          <button id="right-tab-fx" type="button" role="tab" aria-selected="false" aria-controls="right-panel-fx">FX &amp; Textures</button>
+      <!-- 4. Right Docked Inspector & Layers Panel -->
+      <aside class="right-inspector" id="right-inspector" aria-label="Inspector and layers">
+        <nav class="inspector-tabs" role="tablist">
+          <button id="tab-properties" class="inspector-tab-btn is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-properties">
+            Properties
+          </button>
+          <button id="tab-layers" class="inspector-tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-layers">
+            Layers <span id="layers-badge" class="layers-count-badge">0</span>
+          </button>
         </nav>
 
-        <!-- Right Panel 1: Properties (Canvas, Typography, Shapes, Layers) -->
-        <section class="inspector-panel" id="right-panel-properties" role="tabpanel" aria-labelledby="right-tab-properties">
-          <div class="inspector-heading">
-            <div>
-              <p class="kicker">INSPECTOR / 01</p>
-              <h2>Properties</h2>
-            </div>
-          </div>
-
-          <div class="inspector-scroll">
-            <!-- Canvas Page Background -->
-            <fieldset>
-              <legend>Canvas Page</legend>
-              <label for="page-background">Background color<input id="page-background" type="color" value="#050608"></label>
-              <p class="hint">Obsidian dark page active. Customize with any luxury tone.</p>
-            </fieldset>
-
-            <!-- Quick Text Editor -->
-            <fieldset class="text-editor">
-              <legend>Lead Typography</legend>
-              <label class="field-label" for="poster-name">Type to add lead text</label>
-              <input class="title-input" id="poster-name" type="text" maxlength="120" placeholder="MASSYNE ARCHIVE…" value="" autocomplete="off" spellcheck="false">
-              
-              <!-- 1-Click Text Style Presets -->
-              <div class="text-preset-group">
-                <span class="field-label">Chrome &amp; Streetwear Finish</span>
-                <div class="options preset-options" role="group" aria-label="Text Style Presets">
-                  <button type="button" class="preset-btn" data-text-preset="liquid_chrome" aria-pressed="false">Liquid Chrome</button>
-                  <button type="button" class="preset-btn" data-text-preset="brushed_silver" aria-pressed="false">Brushed Silver</button>
-                  <button type="button" class="preset-btn" data-text-preset="crimson_glow" aria-pressed="false">Crimson Glow</button>
-                  <button type="button" class="preset-btn" data-text-preset="brutalist_outline" aria-pressed="false">Brutalist Outline</button>
-                  <button type="button" class="preset-btn" data-text-preset="condensed_streetwear" aria-pressed="false">Condensed Street</button>
-                </div>
-              </div>
-
-              <div class="shape-fields title-properties">
-                <label for="text-scale">Size <output id="text-scale-value" for="text-scale">100%</output><input id="text-scale" type="range" min="40" max="150" value="100"></label>
-                <label for="text-angle">Rotation <output id="text-angle-value" for="text-angle">0°</output><input id="text-angle" type="range" min="-90" max="90" value="0"></label>
-                <label for="text-x">Horizontal position <output id="text-x-value" for="text-x">50%</output><input id="text-x" type="range" min="-400" max="400" value="0"></label>
-                <label for="text-y">Vertical position <output id="text-y-value" for="text-y">50%</output><input id="text-y" type="range" min="-400" max="400" value="0"></label>
-              </div>
-              <div class="shape-fields text-finishing">
-                <label for="title-color">Text color<input id="title-color" type="color" value="#FCF6F5"></label>
-                <label for="title-weight">Weight<select id="title-weight"><option value="400">Regular</option><option value="600">Medium</option><option value="700" selected>Bold</option><option value="900">Black</option></select></label>
-              </div>
-            </fieldset>
-
-            <!-- Quick Text Typeface Selector -->
-            <fieldset>
-              <legend>Typeface Stack</legend>
-              <div class="font-options options" role="group" aria-label="Quick text typeface">
-                <button type="button" data-font="Sora" aria-pressed="true">Sora</button>
-                <button type="button" data-font="Anton" aria-pressed="false">Anton</button>
-                <button type="button" data-font="Bebas Neue" aria-pressed="false">Bebas</button>
-                <button type="button" data-font="Space Grotesk" aria-pressed="false">Space</button>
-                <button type="button" data-font="DM Serif Display" aria-pressed="false">DM Serif</button>
-                <button type="button" data-font="Oswald" aria-pressed="false">Oswald</button>
-                <button type="button" data-font="Orbitron" aria-pressed="false">Orbitron</button>
-                <button type="button" data-font="Montserrat" aria-pressed="false">Montserrat</button>
-                <button type="button" data-font="Manrope" aria-pressed="false">Manrope</button>
-                <button type="button" data-font="Playfair Display" aria-pressed="false">Playfair</button>
-              </div>
-            </fieldset>
-
-            <!-- Selected Extra Text Layer Properties (When text layer selected) -->
-            <fieldset id="text-layer-properties" class="extra-text-properties" hidden>
-              <legend>Text Layer Properties</legend>
-              <label class="field-label" for="extra-text-content">Copy</label>
-              <textarea id="extra-text-content" rows="2" maxlength="120" placeholder="Write something…"></textarea>
-              <div class="shape-fields">
-                <label for="extra-text-font">Typeface<select id="extra-text-font"><option>Sora</option><option>Anton</option><option>Bebas Neue</option><option>Space Grotesk</option><option>DM Serif Display</option><option>Oswald</option><option>Orbitron</option><option>Montserrat</option><option>Manrope</option><option>Playfair Display</option></select></label>
-                <label for="extra-text-weight">Weight<select id="extra-text-weight"><option value="400">Regular</option><option value="600">Medium</option><option value="700" selected>Bold</option><option value="900">Black</option></select></label>
-                <label for="extra-text-color">Color<input id="extra-text-color" type="color" value="#FCF6F5"></label>
-                <label for="extra-text-align">Align<select id="extra-text-align"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select></label>
-                <label for="extra-text-size">Size<output id="extra-text-size-value" for="extra-text-size">96 px</output><input id="extra-text-size" type="range" min="20" max="260" value="96"></label>
-                <label for="extra-text-angle">Rotation<output id="extra-text-angle-value" for="extra-text-angle">0°</output><input id="extra-text-angle" type="range" min="-180" max="180" value="0"></label>
-                <label for="extra-text-x">Horizontal position<input id="extra-text-x" type="range" min="0" max="100" value="50"></label>
-                <label for="extra-text-y">Vertical position<input id="extra-text-y" type="range" min="0" max="100" value="55"></label>
-              </div>
-              <button type="button" id="delete-text-layer" class="danger-button">Delete Text Layer</button>
-            </fieldset>
-
-            <!-- Selected Image Layer Properties (When image layer selected) -->
-            <fieldset id="image-layer-properties" class="extra-text-properties image-layer-properties" hidden>
-              <legend>Image Layer Properties</legend>
-              <div class="shape-fields">
-                <label for="image-layer-width">Width <output id="image-layer-width-value" for="image-layer-width">480 px</output><input id="image-layer-width" type="range" min="60" max="1200" value="480"></label>
-                <label for="image-layer-angle">Rotation <output id="image-layer-angle-value" for="image-layer-angle">0°</output><input id="image-layer-angle" type="range" min="-180" max="180" value="0"></label>
-                <label for="image-layer-x">Horizontal position<input id="image-layer-x" type="range" min="0" max="100" value="50"></label>
-                <label for="image-layer-y">Vertical position<input id="image-layer-y" type="range" min="0" max="100" value="50"></label>
-                <label for="image-layer-opacity">Opacity <output id="image-layer-opacity-value" for="image-layer-opacity">100%</output><input id="image-layer-opacity" type="range" min="5" max="100" value="100"></label>
-              </div>
-              <button type="button" id="delete-image-layer" class="danger-button">Delete Image Layer</button>
-            </fieldset>
-
-            <!-- Geometric Shapes Tool -->
-            <fieldset class="y2k-shapes">
-              <legend>Vector Shapes</legend>
-              <div class="options">
-                <button type="button" data-add-shape="Rectangle">▰ Rectangle +</button>
-                <button type="button" data-add-shape="Square">◼ Square +</button>
-                <button type="button" data-add-shape="Circle">● Circle +</button>
-                <button type="button" data-add-shape="Triangle">▲ Triangle +</button>
-                <button type="button" data-add-shape="Diamond">◆ Diamond +</button>
-                <button type="button" data-add-shape="Line">／ Line +</button>
-                <button type="button" data-add-shape="Arrow">➜ Arrow +</button>
-                <button type="button" data-add-shape="Heart">♥ Heart +</button>
-                <button type="button" data-add-shape="Star">✳ Star +</button>
-                <button type="button" data-add-shape="Spark">✦ Spark +</button>
-                <button type="button" data-add-shape="Orbit">◎ Orbit +</button>
-                <button type="button" data-add-shape="Checker">▦ Checker +</button>
-              </div>
-              <label class="field-label" for="shape-layer">Selected shape <span id="shape-count">0 / 50</span></label>
-              <select id="shape-layer" aria-label="Selected shape"></select>
-              <div class="shape-fields">
-                <label for="shape-size">Size<output id="shape-size-value" for="shape-size">180 px</output><input id="shape-size" type="range" min="50" max="480" value="180" disabled></label>
-                <label for="shape-angle">Rotation<output id="shape-angle-value" for="shape-angle">0°</output><input id="shape-angle" type="range" min="-180" max="180" value="0" disabled></label>
-                <label for="shape-x">Horizontal position<input id="shape-x" type="range" min="0" max="100" value="50" disabled></label>
-                <label for="shape-y">Vertical position<input id="shape-y" type="range" min="0" max="100" value="50" disabled></label>
-                <label for="shape-opacity">Opacity<output id="shape-opacity-value" for="shape-opacity">100%</output><input id="shape-opacity" type="range" min="10" max="100" value="100" disabled></label>
-                <label for="shape-finish">Finish<select id="shape-finish" disabled><option value="chrome">Liquid Chrome</option><option value="solid" selected>Solid color</option></select></label>
-                <label for="shape-color">Color<input id="shape-color" type="color" value="#c81024" disabled></label>
-              </div>
-              <div class="options">
-                <button type="button" id="remove-shape" disabled>Remove</button>
-                <button type="button" id="clear-shapes">Clear shapes</button>
-              </div>
-            </fieldset>
-
-            <!-- Freehand Drawing Controls -->
-            <fieldset class="freehand-controls">
-              <legend>Freehand Drawing</legend>
-              <div class="options" role="group" aria-label="Canvas tool">
-                <button type="button" data-draw-tool="select" aria-pressed="true">Select</button>
-                <button type="button" data-draw-tool="draw" aria-pressed="false">Pen</button>
-                <button type="button" data-draw-tool="erase" aria-pressed="false">Eraser</button>
-              </div>
-              <div class="shape-fields draw-fields">
-                <label for="draw-color">Pen color<input id="draw-color" type="color" value="#c81024"></label>
-                <label for="draw-size">Brush size <output id="draw-size-value" for="draw-size">16 px</output><input id="draw-size" type="range" min="2" max="120" value="16"></label>
-              </div>
-              <div class="options"><button type="button" id="clear-drawing">Clear drawing</button></div>
-            </fieldset>
-
-            <div class="export-row">
-              <button type="button" id="reset-poster" class="reset">Reset design</button>
-              <p id="lab-status" role="status" aria-live="polite">Studio ready.</p>
-            </div>
-          </div>
+        <!-- Right Tab 1: Context Properties Panel -->
+        <section class="inspector-content" id="panel-properties" role="tabpanel" aria-labelledby="tab-properties">
+          <!-- Populated dynamically based on selection: Text, Image, Shape, or Canvas -->
+          <div id="context-inspector-body"></div>
         </section>
 
-        <!-- Right Panel 2: FX & Procedural Textures Shaders -->
-        <section class="inspector-panel" id="right-panel-fx" role="tabpanel" aria-labelledby="right-tab-fx" hidden>
-          <div class="inspector-heading">
-            <div>
-              <p class="kicker">SHADERS / 02</p>
-              <h2>FX &amp; Textures</h2>
+        <!-- Right Tab 2: Layers Manager Stack -->
+        <section class="inspector-content" id="panel-layers" role="tabpanel" aria-labelledby="tab-layers" hidden>
+          <div class="layers-manager-header">
+            <span class="layers-header-title">Layer Order</span>
+            <div class="layers-quick-order">
+              <button id="btn-layer-up" type="button" title="Bring forward" disabled>↑</button>
+              <button id="btn-layer-down" type="button" title="Send backward" disabled>↓</button>
+              <button id="btn-layer-top" type="button" title="Bring to front" disabled>⤒</button>
+              <button id="btn-layer-bottom" type="button" title="Send to back" disabled>⤓</button>
             </div>
           </div>
-          <div class="inspector-scroll">
-            <p class="dock-hint">Procedural analog textures applied in real-time and baked into 2× HD PNG export.</p>
-
-            <!-- Folded Paper Creases -->
-            <fieldset class="fx-card">
-              <legend>Folded Paper Creases</legend>
-              <div class="fx-toggle-row">
-                <label class="fx-switch" for="fx-folded-paper">
-                  <input id="fx-folded-paper" type="checkbox">
-                  <span class="fx-switch-slider"></span>
-                  <span class="fx-switch-label">Enable Creases</span>
-                </label>
-              </div>
-              <div class="shape-fields">
-                <label for="fx-folded-paper-intensity">Intensity<input id="fx-folded-paper-intensity" type="range" min="10" max="100" value="65"></label>
-              </div>
-              <p class="hint">Authentic zine &amp; folded street poster cross-creases with highlights and shadows.</p>
-            </fieldset>
-
-            <!-- Analog Film Grain -->
-            <fieldset class="fx-card">
-              <legend>Analog Film Grain</legend>
-              <div class="fx-toggle-row">
-                <label class="fx-switch" for="fx-film-grain">
-                  <input id="fx-film-grain" type="checkbox">
-                  <span class="fx-switch-slider"></span>
-                  <span class="fx-switch-label">Enable Film Grain</span>
-                </label>
-              </div>
-              <div class="shape-fields">
-                <label for="fx-film-grain-intensity">Grain Density<input id="fx-film-grain-intensity" type="range" min="10" max="100" value="45"></label>
-              </div>
-              <p class="hint">High-frequency monochrome 35mm film grit shader.</p>
-            </fieldset>
-
-            <!-- Xerox Halftone -->
-            <fieldset class="fx-card">
-              <legend>Xerox Halftone</legend>
-              <div class="fx-toggle-row">
-                <label class="fx-switch" for="fx-halftone">
-                  <input id="fx-halftone" type="checkbox">
-                  <span class="fx-switch-slider"></span>
-                  <span class="fx-switch-label">Enable Halftone Screen</span>
-                </label>
-              </div>
-              <div class="shape-fields">
-                <label for="fx-halftone-intensity">Screen Contrast<input id="fx-halftone-intensity" type="range" min="10" max="100" value="50"></label>
-              </div>
-              <p class="hint">Underground punk zine dot-matrix printing effect.</p>
-            </fieldset>
-
-            <!-- Plastic / CD Gloss -->
-            <fieldset class="fx-card">
-              <legend>Plastic / CD Gloss Sheen</legend>
-              <div class="fx-toggle-row">
-                <label class="fx-switch" for="fx-plastic-gloss">
-                  <input id="fx-plastic-gloss" type="checkbox">
-                  <span class="fx-switch-slider"></span>
-                  <span class="fx-switch-label">Enable Gloss Sheen</span>
-                </label>
-              </div>
-              <div class="shape-fields">
-                <label for="fx-plastic-gloss-intensity">Gloss Opacity<input id="fx-plastic-gloss-intensity" type="range" min="10" max="100" value="60"></label>
-              </div>
-              <p class="hint">Diagonal studio light reflection mimicking cellophane wrap and acrylic sleeve.</p>
-            </fieldset>
-          </div>
+          <div id="layers-stack-list" class="layers-stack-list" role="list" aria-label="Canvas layers"></div>
         </section>
-
-        <!-- Inspector Bottom Bar -->
-        <div class="inspector-bottom">
-          <span id="workspace-status" role="status" aria-live="polite">Studio ready</span>
-          <a href="index.html#creative-lab">Back to portfolio ↗</a>
-        </div>
       </aside>
     </div>
   </main>
 
-  <!-- Hidden native file input for custom image uploads -->
-  <input id="image-upload" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/webp" aria-label="Choose an image file to add to the canvas">
+  <!-- Custom Dimensions Modal -->
+  <dialog id="custom-size-modal" class="custom-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Custom Canvas Size</h3>
+        <button id="btn-close-modal" class="modal-close-btn" type="button">×</button>
+      </div>
+      <form id="custom-size-form" class="modal-form">
+        <div class="modal-fields">
+          <label for="custom-w">Width (px)
+            <input id="custom-w" type="number" min="300" max="3840" value="1080" required>
+          </label>
+          <label for="custom-h">Height (px)
+            <input id="custom-h" type="number" min="300" max="3840" value="1080" required>
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="btn-cancel-custom" class="modal-cancel">Cancel</button>
+          <button type="submit" class="modal-apply">Apply Size</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Hidden native file input for JSON project import -->
+  <input id="project-json-input" type="file" accept=".json" class="visually-hidden">
 </body>
 </html>
