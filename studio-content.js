@@ -3,7 +3,7 @@ window.MASSYNE_STUDIO_CONTENT = {
   "schemaVersion": 1,
   "site": {
     "name": "MASSYNE",
-    "tagline": "STUDIO",
+    "tagline": "Design with purpose.",
     "headline": "I create cinematic visuals, bold identities and distinctive digital stories — designed to leave an impression.",
     "location": "Morocco — Worldwide",
     "aboutHeadline": "Different by design.",

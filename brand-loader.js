@@ -4,8 +4,8 @@
    Keep this lightweight, accessible, interruptible and reduced-motion safe. */
 (() => {
   "use strict";
-  // Crisp <= 900ms first-visit studio intro; respects prefers-reduced-motion.
-  const INTRO_ENABLED = true;
+  // Temporarily disabled; set true when the user asks to restore the intro.
+  const INTRO_ENABLED = false;
   if (!INTRO_ENABLED) return;
   const overlay=document.querySelector(".site-preloader");
   if(!overlay)return;
@@ -65,7 +65,7 @@
   const skip=overlay.querySelector(".loader-skip");
   const previousInert=blocked.map(node=>!!node.inert);
   const originalFocus=document.activeElement;
-  const duration=850,fade=220;
+  const duration=5000,fade=340;
   let raf=0,watchdog=0,exitTimer=0,finished=false,lastNumber=-1;
 
   const render=value=>{
