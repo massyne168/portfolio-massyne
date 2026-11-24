@@ -558,14 +558,8 @@
     animationId = window.requestAnimationFrame(physicsLoop);
   }
 
-  // Live Category Filtering Integration
+  // Live Category Filtering Integration (All Artwork & Mockups)
   const filterButtons = [...document.querySelectorAll("#work [data-discover-category]")];
-
-  const catalog = {
-    posters: new Set(["veiled-sorrow", "ghost-protocol", "power-speaks", "velocity", "ashes-of-innocence", "glory", "envy", "nocturne-dark-veil", "nocturne-red-sun"]),
-    identity: new Set(["silver-throne", "mssn-chrome"]),
-    fantasy: new Set(["the-cursed-crown", "the-final-fall", "legends", "nyctophile", "warriors-break", "the-queen", "the-last-oath"])
-  };
 
   const isMockupCard = card => {
     const cats = (card.dataset.discoverCategories || "").toLowerCase();
@@ -576,19 +570,8 @@
     const isMockupsCat = category === "mockups";
 
     allCards.forEach(card => {
-      const slug = card.dataset.caseStudy || "";
       const isMock = isMockupCard(card);
-      let show = false;
-
-      if (isMockupsCat) {
-        show = isMock;
-      } else if (category === "all") {
-        show = !isMock;
-      } else if (catalog[category]) {
-        show = !isMock && catalog[category].has(slug);
-      } else {
-        show = !isMock;
-      }
+      const show = isMockupsCat ? isMock : !isMock;
 
       card.hidden = !show;
       if (!show) {
