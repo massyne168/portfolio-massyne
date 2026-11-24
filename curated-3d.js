@@ -153,6 +153,8 @@
     if (!count) {
       if (positionLabel) positionLabel.textContent = "00 / 00";
       if (currentName) currentName.textContent = "No matching projects";
+      if (countLabel) countLabel.textContent = "CURATED WORKS — 00 WORKS";
+      if (discoverCount) discoverCount.textContent = "0 original works";
       return;
     }
     const safeIdx = ((activeIndex % count) + count) % count;
@@ -166,25 +168,42 @@
       if (currentName.textContent !== value) currentName.textContent = value;
     }
     if (countLabel) {
-      countLabel.textContent = `CURATED WORKS — ${String(count).padStart(2, "0")} WORKS`;
+      const isMock = cards.some(c => (c.dataset.discoverCategories || "").includes("mockups"));
+      countLabel.textContent = `${isMock ? "MOCKUP STUDIO" : "CURATED WORKS"} — ${String(count).padStart(2, "0")} WORKS`;
     }
     if (discoverCount) {
-      discoverCount.textContent = `${count} original works`;
+      const isMock = cards.some(c => (c.dataset.discoverCategories || "").includes("mockups"));
+      discoverCount.textContent = `${count} ${isMock ? "mockups" : "original works"}`;
     }
     if (discoverSearch) {
-      discoverSearch.placeholder = `Search ${count} works…`;
+      const isMock = cards.some(c => (c.dataset.discoverCategories || "").includes("mockups"));
+      discoverSearch.placeholder = `Search ${count} ${isMock ? "mockups" : "works"}…`;
     }
   };
 
   // Update live progress scrubber bar
   const updateScrubber = (pos, total) => {
-    if (!scrubberProgress || !scrubberThumb || !total || total <= 1) return;
+    if (!scrubberProgress || !scrubberThumb) return;
+    if (!total || total <= 1) {
+      scrubberProgress.style.width = "100%";
+      scrubberThumb.style.left = "100%";
+      if (scrubber) {
+        scrubber.setAttribute("aria-valuemin", "1");
+        scrubber.setAttribute("aria-valuemax", "1");
+        scrubber.setAttribute("aria-valuenow", "1");
+      }
+      return;
+    }
     const norm = (((pos % total) + total) % total) / (total - 1);
     const clamped = Math.max(0, Math.min(1, norm));
     const pct = `${(clamped * 100).toFixed(2)}%`;
     scrubberProgress.style.width = pct;
     scrubberThumb.style.left = pct;
-    if (scrubber) scrubber.setAttribute("aria-valuenow", String(Math.round(clamped * (total - 1)) + 1));
+    if (scrubber) {
+      scrubber.setAttribute("aria-valuemin", "1");
+      scrubber.setAttribute("aria-valuemax", String(total));
+      scrubber.setAttribute("aria-valuenow", String(Math.round(clamped * (total - 1)) + 1));
+    }
   };
 
   // 60fps Deep 3D Curved Orbital Physics Loop
@@ -539,7 +558,76 @@
     animationId = window.requestAnimationFrame(physicsLoop);
   }
 
-  // Live Category Filtering Integration (from spotlight-discovery.js)
+  // Live Category Filtering Integration
+  const filterButtons = [...document.querySelectorAll("#work [data-discover-category]")];
+
+  const catalog = {
+    posters: new Set(["veiled-sorrow", "ghost-protocol", "power-speaks", "velocity", "ashes-of-innocence", "glory", "envy", "nocturne-dark-veil", "nocturne-red-sun"]),
+    identity: new Set(["silver-throne", "mssn-chrome"]),
+    fantasy: new Set(["the-cursed-crown", "the-final-fall", "legends", "nyctophile", "warriors-break", "the-queen", "the-last-oath"])
+  };
+
+  const isMockupCard = card => {
+    const cats = (card.dataset.discoverCategories || "").toLowerCase();
+    return cats.includes("mockups");
+  };
+
+  function applyCategoryFilter(category) {
+    const isMockupsCat = category === "mockups";
+
+    allCards.forEach(card => {
+      const slug = card.dataset.caseStudy || "";
+      const isMock = isMockupCard(card);
+      let show = false;
+
+      if (isMockupsCat) {
+        show = isMock;
+      } else if (category === "all") {
+        show = !isMock;
+      } else if (catalog[category]) {
+        show = !isMock && catalog[category].has(slug);
+      } else {
+        show = !isMock;
+      }
+
+      card.hidden = !show;
+      if (!show) {
+        card.classList.remove("is-carousel-active", "is-carousel-near", "is-hovered");
+        card.setAttribute("aria-hidden", "true");
+        card.style.opacity = "0";
+        card.style.visibility = "hidden";
+        card.style.pointerEvents = "none";
+        card.tabIndex = -1;
+      } else {
+        card.style.visibility = "";
+      }
+    });
+
+    filterButtons.forEach(btn => {
+      btn.setAttribute("aria-pressed", String(btn.dataset.discoverCategory === category));
+    });
+
+    cards = allCards.filter(card => !card.hidden);
+    count = cards.length;
+    targetPos = 0;
+    currentPos = 0;
+    active = 0;
+    drag = null;
+    grid.classList.remove("is-dragging");
+
+    updateLabels(0);
+    updateScrubber(0, count);
+    updatePlayback();
+  }
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      userAction();
+      const cat = btn.dataset.discoverCategory || "all";
+      applyCategoryFilter(cat);
+    });
+  });
+
   grid.addEventListener("discoverychange", () => {
     cards = allCards.filter(card => !card.hidden);
     count = cards.length;
@@ -549,6 +637,7 @@
     drag = null;
     grid.classList.remove("is-dragging");
     updateLabels(0);
+    updateScrubber(0, count);
     updatePlayback();
   });
 
