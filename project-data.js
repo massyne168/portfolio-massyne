@@ -860,6 +860,161 @@ window.MASSYNE_PROJECTS = [
     "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/mockups/nocturne-flatlay-full.webp"
   },
   {
+    "slug": "brown-bucket-hat-mockup",
+    "title": "Brown Bucket Hat Mockup",
+    "category": "Apparel Mockup",
+    "year": "2026",
+    "image": "images/mockups/96cdb22a-ba61-4b20-8b7b-c63046875ee1.webp",
+    "focus": "Streetwear / corduroy bucket hat / graphic patch",
+    "summary": "A brown corduroy bucket hat with a signature MASSYNE graphic patch on a model in shadow.",
+    "concept": "A brown corduroy bucket hat featuring an intricate MASSYNE emblem patch. The deep chiaroscuro portrait emphasizes texture, form, and streetwear aesthetic.",
+    "direction": "The supplied mockup is presented in full, preserving its corduroy fabric texture, embroidered patch detail, and cinematic lighting.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "A high-density MASSYNE graphic patch centered on the crown of a brown corduroy bucket hat."
+      },
+      {
+        "title": "Context and composition",
+        "description": "A dramatic portrait with deep shadows across the eyes brings editorial focus to the headwear."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "Preserves the ridged corduroy texture, stitch lines, and tactile patch construction."
+      }
+    ],
+    "number": "28",
+    "gallery": [
+      "images/mockups/96cdb22a-ba61-4b20-8b7b-c63046875ee1.webp"
+    ],
+    "staticPage": true,
+    "preview": "images/mockups/96cdb22a-ba61-4b20-8b7b-c63046875ee1.webp"
+  },
+  {
+    "slug": "washed-dusty-rose-hoodie",
+    "title": "Washed Dusty-Rose Zip-Up Hoodie Mockup",
+    "category": "Apparel Mockup",
+    "year": "2026",
+    "image": "images/mockups/9f71dbb7-c9ed-46f4-a73a-b9b17d70ff69.webp",
+    "focus": "Streetwear / zip-up hoodie / front & back graphics",
+    "summary": "Washed dusty-rose vintage zip-up hoodie with dual front chest graphic and back typographic panel on an industrial pipe.",
+    "concept": "Dual-sided presentation of a washed dusty-rose zip-up hoodie featuring blackletter metal chest typography and a complex back print layout.",
+    "direction": "The supplied mockup is presented in full, capturing vintage wash distress, metal zipper details, and balanced front-and-back artwork execution.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "Aggressive blackletter chest hit paired with an editorial typographic back panel with crimson halftone accents."
+      },
+      {
+        "title": "Context and composition",
+        "description": "Hanging from a weathered industrial pipe against concrete walls for an authentic lookbook aesthetic."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "Retains the vintage sun-faded wash, ribbing texture, and distressed fabric edges."
+      }
+    ],
+    "number": "29",
+    "gallery": [
+      "images/mockups/9f71dbb7-c9ed-46f4-a73a-b9b17d70ff69.webp"
+    ],
+    "staticPage": true,
+    "preview": "images/mockups/9f71dbb7-c9ed-46f4-a73a-b9b17d70ff69.webp"
+  },
+  {
+    "slug": "black-oversized-tshirt-flatlay",
+    "title": "Black Oversized T-Shirt — Flat Lay Mockup",
+    "category": "T-Shirt Mockup",
+    "year": "2026",
+    "image": "images/mockups/6b85c136-2d31-475c-93f2-3dfbef43a203.webp",
+    "focus": "Streetwear / oversized flat lay / technical typography",
+    "summary": "A heavyweight black oversized graphic T-shirt laid flat on an architectural hexagonal metal tile floor.",
+    "concept": "A techwear-inspired graphic layout featuring intricate calligraffiti, cybernetic grid reticles, and crimson banner blocks on a dropped-shoulder heavyweight T-shirt.",
+    "direction": "The supplied mockup is presented in full, highlighting the clean drape, technical print placement, and geometric reflections of the backdrop.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "Multi-layered graphic composition combining crimson solid banners, halftone portraits, and tech reticles."
+      },
+      {
+        "title": "Context and composition",
+        "description": "Flat lay on brushed industrial hexagonal plates with directional overhead studio lighting."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "Emphasizes the heavyweight cotton jersey texture, ribbed collar, and crisp screenprint edges."
+      }
+    ],
+    "number": "30",
+    "gallery": [
+      "images/mockups/6b85c136-2d31-475c-93f2-3dfbef43a203.webp"
+    ],
+    "staticPage": true,
+    "preview": "images/mockups/6b85c136-2d31-475c-93f2-3dfbef43a203.webp"
+  },
+  {
+    "slug": "white-floating-distressed-tshirt",
+    "title": "White Floating Distressed T-Shirt Mockup",
+    "category": "T-Shirt Mockup",
+    "year": "2026",
+    "image": "images/mockups/0feeb0cf-7193-4aff-8648-90271cfd794f.webp",
+    "focus": "Apparel / floating garment / distressed aesthetic",
+    "summary": "A white distressed graphic T-shirt with frayed raw hems floating weightlessly against a cinematic gradient background.",
+    "concept": "A weightless floating composition capturing dynamic folds and motion of a customized white streetwear tee with tribal flame typography and crimson geometric blocking.",
+    "direction": "The supplied mockup is presented in full, preserving the raw torn hem textures, floating silhouette, and subtle sky-to-slate backdrop gradient.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "Aggressive gothic tribal flame typography over a halftone crimson box with metadata barcoding."
+      },
+      {
+        "title": "Context and composition",
+        "description": "Dynamic levitating silhouette conveying lightness, movement, and dimensional garment drape."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "Captures individual frayed threads, natural cotton ripple shadows, and tactile screenprint ink."
+      }
+    ],
+    "number": "31",
+    "gallery": [
+      "images/mockups/0feeb0cf-7193-4aff-8648-90271cfd794f.webp"
+    ],
+    "staticPage": true,
+    "preview": "images/mockups/0feeb0cf-7193-4aff-8648-90271cfd794f.webp"
+  },
+  {
+    "slug": "born-in-shadows-mockup",
+    "title": "Born in Shadows Mockup",
+    "category": "Apparel Mockup",
+    "year": "2026",
+    "image": "images/mockups/cf490964-a41a-4d71-899e-047b9696bb6a.webp",
+    "focus": "Luxury outerwear / leather puffer / chrome typography",
+    "summary": "A black leather hooded puffer jacket featuring an embossed chrome MASSYNE flame back logo under an overhead cone of light.",
+    "concept": "High-fashion dark-luxury outerwear mockup capturing a hooded leather puffer with metallic MASSYNE flame typography emerging from obsidian shadows.",
+    "direction": "The supplied mockup is presented in full, maintaining the specular leather sheen, voluminous baffle quilting, and cinematic top-down spotlighting.",
+    "details": [
+      {
+        "title": "Graphic application",
+        "description": "Embossed brushed chrome MASSYNE tribal flame insignia spanning the upper back baffle."
+      },
+      {
+        "title": "Context and composition",
+        "description": "Cinematic single-source top lighting with deep moody shadows in an atmospheric concrete vault."
+      },
+      {
+        "title": "Fabric and detail",
+        "description": "Showcases rich leather grain, deep pillowed quilting, and soft light falloff on matte fabric trims."
+      }
+    ],
+    "number": "32",
+    "gallery": [
+      "images/mockups/cf490964-a41a-4d71-899e-047b9696bb6a.webp"
+    ],
+    "staticPage": true,
+    "preview": "images/mockups/cf490964-a41a-4d71-899e-047b9696bb6a.webp"
+  },
+  {
     "slug": "two-souls",
     "title": "Two Souls",
     "category": "New artwork",
