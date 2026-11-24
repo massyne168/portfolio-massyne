@@ -3,59 +3,184 @@
 <head>
   <meta charset="utf-8">
   <script src="theme-init.js"></script>
-  <meta name="description" content="Create a poster in MASSYNE Lab. Build with type, color, shapes and freehand tools, then export your design as a high-resolution PNG.">
+  <meta name="description" content="MASSYNE Lab — Figma/Photoshop-grade dark-luxury creative studio. Design streetwear posters, apply analog paper/grain/chrome finishes, and test designs and artworks live on heavyweight hoodies, oversized tees, CD jewel cases, and gallery frames with 2x HD export.">
   <link rel="canonical" href="https://portfolio-massyne.vercel.app/poster-lab.html">
   <link rel="icon" href="images/favicon.png">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0d0e11">
-  <title>MASSYNE Lab — Creative Studio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Sora:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="poster-lab.css?v=20261110-canvas">
-  <script src="poster-lab.js?v=20261110-canvas" defer></script>
-  <script src="poster-text-layers.js?v=20261107-pro" defer></script>
-  <script src="poster-image-layers.js" defer></script>
-  <script src="poster-shapes.js?v=20261110-tools" defer></script>
-  <script src="poster-editor.js" defer></script>
-  <script src="poster-workspace.js" defer></script>
+  <meta name="theme-color" content="#050608">
+  <title>MASSYNE Lab — Pro Creative Studio & Mockup Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="poster-lab.css?v=20261124-pro">
+  <script src="project-data.js?v=20261124" defer></script>
+  <script src="poster-snap.js?v=20261124" defer></script>
+  <script src="poster-fx.js?v=20261124" defer></script>
+  <script src="poster-stickers.js?v=20261124" defer></script>
+  <script src="poster-portfolio.js?v=20261124" defer></script>
+  <script src="poster-mockups.js?v=20261124" defer></script>
+  <script src="poster-text-layers.js?v=20261124" defer></script>
+  <script src="poster-image-layers.js?v=20261124" defer></script>
+  <script src="poster-shapes.js?v=20261124" defer></script>
+  <script src="poster-editor.js?v=20261124" defer></script>
+  <script src="poster-workspace.js?v=20261124" defer></script>
+  <script src="poster-lab.js?v=20261124" defer></script>
   <script src="/theme-controls.js" defer></script>
 </head>
 <body>
+  <!-- Top Command Bar -->
   <header class="topbar">
-    <a class="brand" href="index.html#creative-lab" aria-label="Return to MASSYNE portfolio">MASSYNE <span>/ LAB</span></a>
-    <div class="document-title"><span>CREATIVE LAB / 001</span><strong>Untitled design</strong></div>
+    <div class="topbar-left">
+      <a class="brand" href="index.html#creative-lab" aria-label="Return to MASSYNE portfolio">
+        <span class="brand-monogram">M</span>
+        <span class="brand-text">MASSYNE <em>/ LAB</em></span>
+      </a>
+      <span class="topbar-divider" aria-hidden="true"></span>
+      <!-- Mode Toggle: 2D Canvas vs Live Mockup -->
+      <div class="mode-switcher" role="group" aria-label="Studio View Mode">
+        <button id="mode-canvas" class="mode-tab-btn" type="button" aria-pressed="true">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>2D Canvas</span>
+        </button>
+        <button id="mode-mockup" class="mode-tab-btn" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 0-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
+          <span>Live Mockup</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Center Aspect Ratio Switcher (2D Mode) -->
+    <div class="topbar-center" id="ratio-selector-wrap">
+      <div class="ratio-selector" role="group" aria-label="Canvas Aspect Ratio">
+        <button type="button" data-ratio-option="4:5" class="ratio-btn" aria-pressed="true" title="Instagram Portrait (1080 × 1350)">
+          <span class="ratio-chip">4:5</span><span class="ratio-name">IG</span>
+        </button>
+        <button type="button" data-ratio-option="9:16" class="ratio-btn" aria-pressed="false" title="Story / Reel / TikTok (1080 × 1920)">
+          <span class="ratio-chip">9:16</span><span class="ratio-name">Story</span>
+        </button>
+        <button type="button" data-ratio-option="1:1" class="ratio-btn" aria-pressed="false" title="Cover / Avatar (1200 × 1200)">
+          <span class="ratio-chip">1:1</span><span class="ratio-name">Cover</span>
+        </button>
+        <button type="button" data-ratio-option="16:9" class="ratio-btn" aria-pressed="false" title="Landscape Banner (1920 × 1080)">
+          <span class="ratio-chip">16:9</span><span class="ratio-name">Banner</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Actions -->
     <div class="top-actions">
       <div class="history-controls" role="group" aria-label="Edit history">
-        <button id="poster-undo" data-history="undo" type="button" aria-label="Undo" title="Undo" disabled>↶</button>
-        <button id="poster-redo" data-history="redo" type="button" aria-label="Redo" title="Redo" disabled>↷</button>
+        <button id="poster-undo" data-history="undo" type="button" aria-label="Undo" title="Undo (Ctrl+Z)" disabled>↶</button>
+        <button id="poster-redo" data-history="redo" type="button" aria-label="Redo" title="Redo (Ctrl+Y)" disabled>↷</button>
       </div>
-      <div class="theme-switch" role="group" aria-label="Interface theme" style="display:none!important;">
-        <button type="button" data-theme="dark" aria-pressed="true">Dark</button>
-      </div>
-      <button class="export-button" id="download-poster" type="button">Export PNG <span aria-hidden="true">↗</span></button>
+      <!-- Export 2D Canvas PNG Button -->
+      <button class="export-button" id="download-poster" type="button">
+        <span>Export PNG 2×</span>
+        <span class="export-arrow" aria-hidden="true">↗</span>
+      </button>
+      <!-- Export Mockup PNG Button (Visible in Mockup mode) -->
+      <button class="export-button export-button-mockup" id="export-mockup-topbar-btn" type="button" hidden>
+        <span>Export Mockup 2×</span>
+        <span class="export-arrow" aria-hidden="true">↗</span>
+      </button>
     </div>
   </header>
 
   <main class="editor-main">
-    <div class="editor-heading">
-      <div><p class="kicker">MASSYNE LAB / CREATIVE TOOL</p><h1>Design canvas<span>.</span></h1></div>
-      <p>Start with a blank white canvas. Add text, images and shapes, or draw freely.</p>
-    </div>
-
     <div class="workspace">
+      <!-- 1. Left Vertical Tool Rail -->
       <aside class="tool-rail" role="toolbar" aria-label="Canvas tools">
         <span class="rail-caption">TOOLS</span>
-        <button class="tool-button" id="tool-select" type="button" data-tool-target="select" aria-pressed="true" aria-label="Select tool" title="Select"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 3 12 10-5 .7-2.6 6.1-2.1-.9 2.6-6.1L6 3Z"/></svg><span>Select</span></button>
-        <button class="tool-button" id="tool-text" type="button" data-tool-command="add-text" aria-label="Add text" title="Add text"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6V4h16v2M12 4v16M8 20h8"/></svg><span>Text</span></button>
+        <button class="tool-button" id="tool-select" type="button" data-tool-target="select" aria-pressed="true" aria-label="Select tool" title="Select (V)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 3 12 10-5 .7-2.6 6.1-2.1-.9 2.6-6.1L6 3Z"/></svg><span>Select</span></button>
+        <button class="tool-button" id="tool-text" type="button" data-tool-command="add-text" aria-label="Add text" title="Add text (T)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6V4h16v2M12 4v16M8 20h8"/></svg><span>Text</span></button>
         <button class="tool-button" id="tool-image" type="button" data-tool-command="upload-image" aria-label="Upload image" title="Upload image"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m5 17 5-5 3.2 3.2 2.2-2.2 3.6 4"/></svg><span>Image</span></button>
         <button class="tool-button" id="tool-shape" type="button" data-tool-command="open-shapes" aria-label="Open shape controls" title="Shapes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5L12 3Z"/><path d="m19 16 .9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9L19 16Z"/></svg><span>Shapes</span></button>
         <span class="rail-divider" aria-hidden="true"></span>
-        <button class="tool-button" id="tool-pen" type="button" data-tool-target="draw" aria-pressed="false" aria-label="Pen tool" title="Pen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17.5 10-10 3.5 3.5-10 10H4v-3.5Z"/><path d="m12.5 9 3.5 3.5M14.5 7l2-2 3.5 3.5-2 2"/></svg><span>Pen</span></button>
-        <button class="tool-button" id="tool-eraser" type="button" data-tool-target="erase" aria-pressed="false" aria-label="Eraser tool" title="Eraser"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 14 8-9a2 2 0 0 1 2.8 0l5.2 5.2a2 2 0 0 1 0 2.8l-6 6H8l-4-4a2 2 0 0 1 0-1Z"/><path d="m9 9 7 7M8 19h13"/></svg><span>Eraser</span></button>
+        <button class="tool-button" id="tool-pen" type="button" data-tool-target="draw" aria-pressed="false" aria-label="Pen tool" title="Pen (P)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17.5 10-10 3.5 3.5-10 10H4v-3.5Z"/><path d="m12.5 9 3.5 3.5M14.5 7l2-2 3.5 3.5-2 2"/></svg><span>Pen</span></button>
+        <button class="tool-button" id="tool-eraser" type="button" data-tool-target="erase" aria-pressed="false" aria-label="Eraser tool" title="Eraser (E)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 14 8-9a2 2 0 0 1 2.8 0l5.2 5.2a2 2 0 0 1 0 2.8l-6 6H8l-4-4a2 2 0 0 1 0-1Z"/><path d="m9 9 7 7M8 19h13"/></svg><span>Eraser</span></button>
       </aside>
 
+      <!-- 2. Left Docked Studio Panel (Layers, Templates & Stickers, Artworks) -->
+      <aside class="left-dock" id="left-dock" aria-label="Studio resources and layers">
+        <nav class="dock-tabs" role="tablist" aria-label="Left panel tabs">
+          <button id="left-tab-layers" class="dock-tab-btn" type="button" role="tab" aria-selected="true" aria-controls="left-panel-layers">
+            Layers <span id="layers-count" class="tab-count">01</span>
+          </button>
+          <button id="left-tab-templates" class="dock-tab-btn" type="button" role="tab" aria-selected="false" aria-controls="left-panel-templates">
+            Templates &amp; Stickers
+          </button>
+          <button id="left-tab-portfolio" class="dock-tab-btn" type="button" role="tab" aria-selected="false" aria-controls="left-panel-portfolio">
+            Artworks
+          </button>
+        </nav>
+
+        <!-- Left Tab 1: Layers Stack -->
+        <section class="dock-panel" id="left-panel-layers" role="tabpanel" aria-labelledby="left-tab-layers">
+          <div class="dock-panel-header">
+            <div>
+              <p class="kicker">STRUCTURE / 01</p>
+              <h2>Layer Stack</h2>
+            </div>
+            <button class="small-add" type="button" data-editor-action="add-text">+ Text</button>
+          </div>
+          <p class="dock-hint">Click a layer to edit. Drag on canvas to reposition with magnetic guides.</p>
+          <div id="layer-list" class="layer-list" role="list" aria-label="Design layers"></div>
+          <div class="layer-order-controls" role="group" aria-label="Reorder selected layer">
+            <button type="button" id="layer-send-back" disabled>Send Back</button>
+            <button type="button" id="layer-bring-front" disabled>Bring Front</button>
+          </div>
+        </section>
+
+        <!-- Left Tab 2: 1-Click Starter Templates & SVG Sticker Pack -->
+        <section class="dock-panel" id="left-panel-templates" role="tabpanel" aria-labelledby="left-tab-templates" hidden>
+          <div class="dock-panel-header">
+            <div>
+              <p class="kicker">GRAPHIC ASSETS / 02</p>
+              <h2>Templates &amp; Stickers</h2>
+            </div>
+          </div>
+          <div class="dock-panel-scroll">
+            <div class="dock-section">
+              <h3 class="dock-section-title">1-Click Starter Templates</h3>
+              <p class="dock-section-desc">Instant editorial layouts with typography, background, and graphic badges.</p>
+              <div id="templates-grid" class="templates-grid"></div>
+            </div>
+            <div class="dock-section">
+              <h3 class="dock-section-title">SVG Vector Sticker Pack</h3>
+              <p class="dock-section-desc">Streetwear barcodes, rubber stamps, reticles, and MASSYNE emblems.</p>
+              <div id="stickers-grid" class="stickers-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Left Tab 3: Real Portfolio Artworks Browser -->
+        <section class="dock-panel" id="left-panel-portfolio" role="tabpanel" aria-labelledby="left-tab-portfolio" hidden>
+          <div class="dock-panel-header">
+            <div>
+              <p class="kicker">MASSYNE CATALOGUE / 03</p>
+              <h2>Portfolio Artworks</h2>
+            </div>
+          </div>
+          <div class="portfolio-filter-row" role="group" aria-label="Filter portfolio categories">
+            <button type="button" data-portfolio-filter="all" class="filter-pill" aria-pressed="true">All</button>
+            <button type="button" data-portfolio-filter="posters" class="filter-pill" aria-pressed="false">Posters</button>
+            <button type="button" data-portfolio-filter="logos" class="filter-pill" aria-pressed="false">Logos</button>
+            <button type="button" data-portfolio-filter="curated" class="filter-pill" aria-pressed="false">Curated</button>
+          </div>
+          <div class="dock-panel-scroll">
+            <div id="portfolio-artworks-grid" class="portfolio-artworks-grid"></div>
+          </div>
+        </section>
+      </aside>
+
+      <!-- 3. Center Workspace Stage (2D Canvas Desk or Live Mockup Stage) -->
       <section class="canvas-desk" aria-label="Design canvas workspace">
+        <!-- Canvas Status & Zoom Toolbar -->
         <div class="canvas-toolbar">
-          <div class="canvas-label"><span class="canvas-live-dot" aria-hidden="true"></span><span>PAGE 01</span><span class="toolbar-separator">/</span><span>1080 × 1350</span></div>
+          <div class="canvas-label">
+            <span class="canvas-live-dot" aria-hidden="true"></span>
+            <span id="canvas-status-badge">CANVAS</span>
+            <span class="toolbar-separator">/</span>
+            <span id="canvas-dim-label">1080 × 1350</span>
+          </div>
           <div class="zoom-controls" role="group" aria-label="Canvas zoom">
             <button id="canvas-zoom-out" type="button" aria-label="Zoom out">−</button>
             <output id="canvas-zoom-value" for="canvas-zoom-out canvas-zoom-in">100%</output>
@@ -63,36 +188,128 @@
             <button id="canvas-fit" type="button" title="Fit canvas">Fit</button>
           </div>
         </div>
-        <div class="canvas-workarea">
+
+        <!-- 2D Canvas Workarea -->
+        <div class="canvas-workarea" id="canvas-workarea">
           <section class="preview" aria-label="Live design canvas">
-            <div class="preview-meta"><span>LIVE CANVAS</span><span>4 : 5</span></div>
-            <div class="canvas-stage">
-              <canvas id="poster-canvas" tabindex="0" width="1080" height="1350" role="img" aria-label="MASSYNE personalized poster"></canvas>
+            <div class="preview-meta">
+              <span>LIVE EDITABLE STAGE</span>
+              <span id="canvas-meta-ratio">4 : 5</span>
             </div>
-            <p class="preview-foot">Drag any layer to move it. Choose Pen or Eraser to draw.</p>
+            <div class="canvas-stage">
+              <canvas id="poster-canvas" tabindex="0" width="1080" height="1350" role="img" aria-label="MASSYNE personalized poster canvas"></canvas>
+            </div>
+            <p class="preview-foot">Drag layers freely. Magnetic crimson guides snap to center and margins.</p>
           </section>
+        </div>
+
+        <!-- Live Mockup Studio Workarea (Hidden by default, shown in Live Mockup mode) -->
+        <div class="mockup-workarea" id="mockup-workarea" hidden>
+          <div class="mockup-controls-bar">
+            <!-- Model Switcher -->
+            <div class="mockup-control-group">
+              <span class="control-label">Model</span>
+              <div class="mockup-pills" role="group" aria-label="Mockup Model">
+                <button type="button" data-mockup-model="hoodie" class="mockup-pill-btn" aria-pressed="true">Hoodie</button>
+                <button type="button" data-mockup-model="tshirt" class="mockup-pill-btn" aria-pressed="false">T-Shirt</button>
+                <button type="button" data-mockup-model="cd" class="mockup-pill-btn" aria-pressed="false">CD Case</button>
+                <button type="button" data-mockup-model="frame" class="mockup-pill-btn" aria-pressed="false">Wall Frame</button>
+              </div>
+            </div>
+
+            <!-- Colorway Switcher (Hoodie / T-Shirt) -->
+            <div class="mockup-control-group" id="mockup-colorway-group">
+              <span class="control-label">Colorway</span>
+              <div class="mockup-swatches" role="group" aria-label="Apparel Colorway">
+                <button type="button" data-mockup-colorway="obsidian" class="swatch-btn obsidian" aria-pressed="true" title="Obsidian Black"></button>
+                <button type="button" data-mockup-colorway="charcoal" class="swatch-btn charcoal" aria-pressed="false" title="Washed Charcoal"></button>
+                <button type="button" data-mockup-colorway="bone" class="swatch-btn bone" aria-pressed="false" title="Bone White"></button>
+                <button type="button" data-mockup-colorway="crimson" class="swatch-btn crimson" aria-pressed="false" title="Deep Crimson"></button>
+              </div>
+            </div>
+
+            <!-- Scale & Placement Sliders -->
+            <div class="mockup-control-group">
+              <label for="mockup-scale">Scale <output id="mockup-scale-value" for="mockup-scale">75%</output></label>
+              <input id="mockup-scale" type="range" min="30" max="120" value="75">
+            </div>
+            <div class="mockup-control-group">
+              <label for="mockup-placement-y">Position Y <output id="mockup-placement-y-value" for="mockup-placement-y">0%</output></label>
+              <input id="mockup-placement-y" type="range" min="-50" max="50" value="0">
+            </div>
+
+            <!-- Blend Mode -->
+            <div class="mockup-control-group">
+              <label for="mockup-blend-mode">Print Blend</label>
+              <select id="mockup-blend-mode">
+                <option value="normal" selected>Normal</option>
+                <option value="multiply">Multiply (Ink)</option>
+                <option value="screen">Screen (Light)</option>
+              </select>
+            </div>
+
+            <!-- Source Indicator & Reset -->
+            <div class="mockup-source-status">
+              <span class="source-tag">SOURCE:</span>
+              <strong id="mockup-source-indicator">Live 2D Canvas</strong>
+              <button type="button" id="mockup-reset-source" class="source-reset-btn" hidden title="Reset back to Live 2D Canvas">↩ Canvas</button>
+            </div>
+
+            <!-- Export Button -->
+            <button type="button" id="export-mockup-btn" class="export-button export-button-mockup">
+              Export 2400px ↗
+            </button>
+          </div>
+
+          <!-- Mockup Canvas Viewport -->
+          <div class="mockup-stage-container">
+            <canvas id="mockup-canvas" width="1600" height="1600" role="img" aria-label="MASSYNE Streetwear & Product Live Mockup"></canvas>
+          </div>
         </div>
       </section>
 
-      <aside class="controls" aria-label="Design tools">
-        <div class="inspector-tabs" role="tablist" aria-label="Editor panels">
-          <button id="design-tab" type="button" role="tab" aria-selected="true" aria-controls="design-panel">Design</button>
-          <button id="layers-tab" type="button" role="tab" aria-selected="false" aria-controls="layers-panel">Layers <span id="layers-count">01</span></button>
-        </div>
-        <section class="inspector-panel" id="design-panel" role="tabpanel" aria-labelledby="design-tab">
-          <div class="inspector-heading"><div><p class="kicker">DESIGN / 01</p><h2>Properties</h2></div></div>
+      <!-- 4. Right Docked Inspector Panel (Properties, FX & Textures) -->
+      <aside class="controls" id="right-panel" aria-label="Design tools & inspector">
+        <nav class="inspector-tabs" role="tablist" aria-label="Editor panels">
+          <button id="right-tab-properties" type="button" role="tab" aria-selected="true" aria-controls="right-panel-properties">Properties</button>
+          <button id="right-tab-fx" type="button" role="tab" aria-selected="false" aria-controls="right-panel-fx">FX &amp; Textures</button>
+        </nav>
+
+        <!-- Right Panel 1: Properties (Canvas, Typography, Shapes, Layers) -->
+        <section class="inspector-panel" id="right-panel-properties" role="tabpanel" aria-labelledby="right-tab-properties">
+          <div class="inspector-heading">
+            <div>
+              <p class="kicker">INSPECTOR / 01</p>
+              <h2>Properties</h2>
+            </div>
+          </div>
+
           <div class="inspector-scroll">
+            <!-- Canvas Page Background -->
             <fieldset>
-              <legend>Page</legend>
-              <label for="page-background">Background color<input id="page-background" type="color" value="#ffffff"></label>
-              <p class="hint">A clean white page is ready. Pick any background color you like.</p>
+              <legend>Canvas Page</legend>
+              <label for="page-background">Background color<input id="page-background" type="color" value="#050608"></label>
+              <p class="hint">Obsidian dark page active. Customize with any luxury tone.</p>
             </fieldset>
 
+            <!-- Quick Text Editor -->
             <fieldset class="text-editor">
-              <legend>Quick text</legend>
-              <label class="field-label" for="poster-name">Type to add text</label>
-              <input class="title-input" id="poster-name" type="text" maxlength="120" placeholder="Write something…" value="" autocomplete="off" spellcheck="false">
-              <p class="hint">Use this quick text or add as many separate text layers as you need.</p>
+              <legend>Lead Typography</legend>
+              <label class="field-label" for="poster-name">Type to add lead text</label>
+              <input class="title-input" id="poster-name" type="text" maxlength="120" placeholder="MASSYNE ARCHIVE…" value="" autocomplete="off" spellcheck="false">
+              
+              <!-- 1-Click Text Style Presets -->
+              <div class="text-preset-group">
+                <span class="field-label">Chrome &amp; Streetwear Finish</span>
+                <div class="options preset-options" role="group" aria-label="Text Style Presets">
+                  <button type="button" class="preset-btn" data-text-preset="liquid_chrome" aria-pressed="false">Liquid Chrome</button>
+                  <button type="button" class="preset-btn" data-text-preset="brushed_silver" aria-pressed="false">Brushed Silver</button>
+                  <button type="button" class="preset-btn" data-text-preset="crimson_glow" aria-pressed="false">Crimson Glow</button>
+                  <button type="button" class="preset-btn" data-text-preset="brutalist_outline" aria-pressed="false">Brutalist Outline</button>
+                  <button type="button" class="preset-btn" data-text-preset="condensed_streetwear" aria-pressed="false">Condensed Street</button>
+                </div>
+              </div>
+
               <div class="shape-fields title-properties">
                 <label for="text-scale">Size <output id="text-scale-value" for="text-scale">100%</output><input id="text-scale" type="range" min="40" max="150" value="100"></label>
                 <label for="text-angle">Rotation <output id="text-angle-value" for="text-angle">0°</output><input id="text-angle" type="range" min="-90" max="90" value="0"></label>
@@ -100,29 +317,62 @@
                 <label for="text-y">Vertical position <output id="text-y-value" for="text-y">50%</output><input id="text-y" type="range" min="-400" max="400" value="0"></label>
               </div>
               <div class="shape-fields text-finishing">
-                <label for="title-color">Text color<input id="title-color" type="color" value="#171719"></label>
-                <label for="title-weight">Weight<select id="title-weight"><option value="400">Regular</option><option value="600">Medium</option><option value="700" selected>Bold</option></select></label>
+                <label for="title-color">Text color<input id="title-color" type="color" value="#FCF6F5"></label>
+                <label for="title-weight">Weight<select id="title-weight"><option value="400">Regular</option><option value="600">Medium</option><option value="700" selected>Bold</option><option value="900">Black</option></select></label>
               </div>
             </fieldset>
 
+            <!-- Quick Text Typeface Selector -->
             <fieldset>
-              <legend>Quick text typeface</legend>
+              <legend>Typeface Stack</legend>
               <div class="font-options options" role="group" aria-label="Quick text typeface">
                 <button type="button" data-font="Sora" aria-pressed="true">Sora</button>
-                <button type="button" data-font="Manrope" aria-pressed="false">Manrope</button>
-                <button type="button" data-font="DM Serif Display" aria-pressed="false">DM Serif</button>
-                <button type="button" data-font="Bebas Neue" aria-pressed="false">Bebas Neue</button>
                 <button type="button" data-font="Anton" aria-pressed="false">Anton</button>
-                <button type="button" data-font="Space Grotesk" aria-pressed="false">Space Grotesk</button>
+                <button type="button" data-font="Bebas Neue" aria-pressed="false">Bebas</button>
+                <button type="button" data-font="Space Grotesk" aria-pressed="false">Space</button>
+                <button type="button" data-font="DM Serif Display" aria-pressed="false">DM Serif</button>
                 <button type="button" data-font="Oswald" aria-pressed="false">Oswald</button>
-                <button type="button" data-font="Playfair Display" aria-pressed="false">Playfair</button>
-                <button type="button" data-font="Montserrat" aria-pressed="false">Montserrat</button>
                 <button type="button" data-font="Orbitron" aria-pressed="false">Orbitron</button>
+                <button type="button" data-font="Montserrat" aria-pressed="false">Montserrat</button>
+                <button type="button" data-font="Manrope" aria-pressed="false">Manrope</button>
+                <button type="button" data-font="Playfair Display" aria-pressed="false">Playfair</button>
               </div>
             </fieldset>
 
+            <!-- Selected Extra Text Layer Properties (When text layer selected) -->
+            <fieldset id="text-layer-properties" class="extra-text-properties" hidden>
+              <legend>Text Layer Properties</legend>
+              <label class="field-label" for="extra-text-content">Copy</label>
+              <textarea id="extra-text-content" rows="2" maxlength="120" placeholder="Write something…"></textarea>
+              <div class="shape-fields">
+                <label for="extra-text-font">Typeface<select id="extra-text-font"><option>Sora</option><option>Anton</option><option>Bebas Neue</option><option>Space Grotesk</option><option>DM Serif Display</option><option>Oswald</option><option>Orbitron</option><option>Montserrat</option><option>Manrope</option><option>Playfair Display</option></select></label>
+                <label for="extra-text-weight">Weight<select id="extra-text-weight"><option value="400">Regular</option><option value="600">Medium</option><option value="700" selected>Bold</option><option value="900">Black</option></select></label>
+                <label for="extra-text-color">Color<input id="extra-text-color" type="color" value="#FCF6F5"></label>
+                <label for="extra-text-align">Align<select id="extra-text-align"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select></label>
+                <label for="extra-text-size">Size<output id="extra-text-size-value" for="extra-text-size">96 px</output><input id="extra-text-size" type="range" min="20" max="260" value="96"></label>
+                <label for="extra-text-angle">Rotation<output id="extra-text-angle-value" for="extra-text-angle">0°</output><input id="extra-text-angle" type="range" min="-180" max="180" value="0"></label>
+                <label for="extra-text-x">Horizontal position<input id="extra-text-x" type="range" min="0" max="100" value="50"></label>
+                <label for="extra-text-y">Vertical position<input id="extra-text-y" type="range" min="0" max="100" value="55"></label>
+              </div>
+              <button type="button" id="delete-text-layer" class="danger-button">Delete Text Layer</button>
+            </fieldset>
+
+            <!-- Selected Image Layer Properties (When image layer selected) -->
+            <fieldset id="image-layer-properties" class="extra-text-properties image-layer-properties" hidden>
+              <legend>Image Layer Properties</legend>
+              <div class="shape-fields">
+                <label for="image-layer-width">Width <output id="image-layer-width-value" for="image-layer-width">480 px</output><input id="image-layer-width" type="range" min="60" max="1200" value="480"></label>
+                <label for="image-layer-angle">Rotation <output id="image-layer-angle-value" for="image-layer-angle">0°</output><input id="image-layer-angle" type="range" min="-180" max="180" value="0"></label>
+                <label for="image-layer-x">Horizontal position<input id="image-layer-x" type="range" min="0" max="100" value="50"></label>
+                <label for="image-layer-y">Vertical position<input id="image-layer-y" type="range" min="0" max="100" value="50"></label>
+                <label for="image-layer-opacity">Opacity <output id="image-layer-opacity-value" for="image-layer-opacity">100%</output><input id="image-layer-opacity" type="range" min="5" max="100" value="100"></label>
+              </div>
+              <button type="button" id="delete-image-layer" class="danger-button">Delete Image Layer</button>
+            </fieldset>
+
+            <!-- Geometric Shapes Tool -->
             <fieldset class="y2k-shapes">
-              <legend>Shapes</legend>
+              <legend>Vector Shapes</legend>
               <div class="options">
                 <button type="button" data-add-shape="Rectangle">▰ Rectangle +</button>
                 <button type="button" data-add-shape="Square">◼ Square +</button>
@@ -137,85 +387,132 @@
                 <button type="button" data-add-shape="Orbit">◎ Orbit +</button>
                 <button type="button" data-add-shape="Checker">▦ Checker +</button>
               </div>
-              <p class="hint">Add, drag, rotate, recolor, and resize shapes on the page.</p>
               <label class="field-label" for="shape-layer">Selected shape <span id="shape-count">0 / 50</span></label>
               <select id="shape-layer" aria-label="Selected shape"></select>
               <div class="shape-fields">
-                <label for="shape-size">Size<output id="shape-size-value" for="shape-size">180 px</output><input id="shape-size" type="range" min="50" max="360" value="180" disabled></label>
+                <label for="shape-size">Size<output id="shape-size-value" for="shape-size">180 px</output><input id="shape-size" type="range" min="50" max="480" value="180" disabled></label>
                 <label for="shape-angle">Rotation<output id="shape-angle-value" for="shape-angle">0°</output><input id="shape-angle" type="range" min="-180" max="180" value="0" disabled></label>
                 <label for="shape-x">Horizontal position<input id="shape-x" type="range" min="0" max="100" value="50" disabled></label>
                 <label for="shape-y">Vertical position<input id="shape-y" type="range" min="0" max="100" value="50" disabled></label>
                 <label for="shape-opacity">Opacity<output id="shape-opacity-value" for="shape-opacity">100%</output><input id="shape-opacity" type="range" min="10" max="100" value="100" disabled></label>
-                <label for="shape-finish">Finish<select id="shape-finish" disabled><option value="chrome">Chrome</option><option value="solid">Solid color</option></select></label>
-                <label for="shape-color">Color<input id="shape-color" type="color" value="#f8faed" disabled></label>
+                <label for="shape-finish">Finish<select id="shape-finish" disabled><option value="chrome">Liquid Chrome</option><option value="solid" selected>Solid color</option></select></label>
+                <label for="shape-color">Color<input id="shape-color" type="color" value="#c81024" disabled></label>
               </div>
-              <div class="options"><button type="button" id="remove-shape" disabled>Remove</button><button type="button" id="clear-shapes">Clear shapes</button></div>
+              <div class="options">
+                <button type="button" id="remove-shape" disabled>Remove</button>
+                <button type="button" id="clear-shapes">Clear shapes</button>
+              </div>
             </fieldset>
 
+            <!-- Freehand Drawing Controls -->
             <fieldset class="freehand-controls">
-              <legend>Freehand drawing</legend>
+              <legend>Freehand Drawing</legend>
               <div class="options" role="group" aria-label="Canvas tool">
                 <button type="button" data-draw-tool="select" aria-pressed="true">Select</button>
                 <button type="button" data-draw-tool="draw" aria-pressed="false">Pen</button>
                 <button type="button" data-draw-tool="erase" aria-pressed="false">Eraser</button>
               </div>
               <div class="shape-fields draw-fields">
-                <label for="draw-color">Pen color<input id="draw-color" type="color" value="#171719"></label>
+                <label for="draw-color">Pen color<input id="draw-color" type="color" value="#c81024"></label>
                 <label for="draw-size">Brush size <output id="draw-size-value" for="draw-size">16 px</output><input id="draw-size" type="range" min="2" max="120" value="16"></label>
               </div>
               <div class="options"><button type="button" id="clear-drawing">Clear drawing</button></div>
-              <p class="hint">Draw or erase with a mouse, touch screen, or stylus. Undo restores your strokes.</p>
             </fieldset>
+
             <div class="export-row">
               <button type="button" id="reset-poster" class="reset">Reset design</button>
-              <p>PNG / 1080 × 1350 px. Export to save your design.</p>
-              <p id="lab-status" role="status" aria-live="polite"></p>
+              <p id="lab-status" role="status" aria-live="polite">Studio ready.</p>
             </div>
           </div>
         </section>
 
-        <section class="inspector-panel layers-panel" id="layers-panel" role="tabpanel" aria-labelledby="layers-tab" hidden>
-          <div class="inspector-heading layers-heading"><div><p class="kicker">STRUCTURE / 02</p><h2>Layers</h2></div><button class="small-add" type="button" data-editor-action="add-text">+ Text</button></div>
-          <p class="layers-hint">Select a layer to edit or move it on the canvas.</p>
-          <div id="layer-list" class="layer-list" role="list" aria-label="Design layers"></div>
-          <div class="layer-order-controls" role="group" aria-label="Reorder selected layer">
-            <button type="button" id="layer-send-back">Send backward</button>
-            <button type="button" id="layer-bring-front">Bring forward</button>
+        <!-- Right Panel 2: FX & Procedural Textures Shaders -->
+        <section class="inspector-panel" id="right-panel-fx" role="tabpanel" aria-labelledby="right-tab-fx" hidden>
+          <div class="inspector-heading">
+            <div>
+              <p class="kicker">SHADERS / 02</p>
+              <h2>FX &amp; Textures</h2>
+            </div>
           </div>
-          <fieldset id="image-layer-properties" class="extra-text-properties image-layer-properties" hidden>
-            <legend>Image layer</legend>
-            <p class="hint">Move and size this image using the controls, or drag it on the canvas.</p>
-            <div class="shape-fields">
-              <label for="image-layer-width">Width <output id="image-layer-width-value" for="image-layer-width">480 px</output><input id="image-layer-width" type="range" min="60" max="1000" value="480"></label>
-              <label for="image-layer-angle">Rotation <output id="image-layer-angle-value" for="image-layer-angle">0°</output><input id="image-layer-angle" type="range" min="-180" max="180" value="0"></label>
-              <label for="image-layer-x">Horizontal position<input id="image-layer-x" type="range" min="0" max="100" value="50"></label>
-              <label for="image-layer-y">Vertical position<input id="image-layer-y" type="range" min="0" max="100" value="50"></label>
-              <label for="image-layer-opacity">Opacity <output id="image-layer-opacity-value" for="image-layer-opacity">100%</output><input id="image-layer-opacity" type="range" min="5" max="100" value="100"></label>
-            </div>
-            <button type="button" id="delete-image-layer" class="danger-button">Delete image layer</button>
-          </fieldset>
-          <fieldset id="text-layer-properties" class="extra-text-properties" hidden>
-            <legend>Text layer</legend>
-            <label class="field-label" for="extra-text-content">Copy</label>
-            <textarea id="extra-text-content" rows="2" maxlength="120" placeholder="Write something"></textarea>
-            <div class="shape-fields">
-              <label for="extra-text-font">Typeface<select id="extra-text-font"><option>Sora</option><option>Manrope</option><option>DM Serif Display</option><option>Bebas Neue</option><option>Anton</option><option>Space Grotesk</option><option>Oswald</option><option>Playfair Display</option><option>Montserrat</option><option>Orbitron</option></select></label>
-              <label for="extra-text-weight">Weight<select id="extra-text-weight"><option value="400">Regular</option><option value="600">Medium</option><option value="700" selected>Bold</option></select></label>
-              <label for="extra-text-color">Color<input id="extra-text-color" type="color" value="#f8faed"></label>
-              <label for="extra-text-align">Align<select id="extra-text-align"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select></label>
-              <label for="extra-text-size">Size<output id="extra-text-size-value" for="extra-text-size">96 px</output><input id="extra-text-size" type="range" min="20" max="260" value="96"></label>
-              <label for="extra-text-angle">Rotation<output id="extra-text-angle-value" for="extra-text-angle">0°</output><input id="extra-text-angle" type="range" min="-180" max="180" value="0"></label>
-              <label for="extra-text-x">Horizontal position<input id="extra-text-x" type="range" min="0" max="100" value="50"></label>
-              <label for="extra-text-y">Vertical position<input id="extra-text-y" type="range" min="0" max="100" value="55"></label>
-            </div>
-            <button type="button" id="delete-text-layer" class="danger-button">Delete text layer</button>
-          </fieldset>
+          <div class="inspector-scroll">
+            <p class="dock-hint">Procedural analog textures applied in real-time and baked into 2× HD PNG export.</p>
+
+            <!-- Folded Paper Creases -->
+            <fieldset class="fx-card">
+              <legend>Folded Paper Creases</legend>
+              <div class="fx-toggle-row">
+                <label class="fx-switch" for="fx-folded-paper">
+                  <input id="fx-folded-paper" type="checkbox">
+                  <span class="fx-switch-slider"></span>
+                  <span class="fx-switch-label">Enable Creases</span>
+                </label>
+              </div>
+              <div class="shape-fields">
+                <label for="fx-folded-paper-intensity">Intensity<input id="fx-folded-paper-intensity" type="range" min="10" max="100" value="65"></label>
+              </div>
+              <p class="hint">Authentic zine &amp; folded street poster cross-creases with highlights and shadows.</p>
+            </fieldset>
+
+            <!-- Analog Film Grain -->
+            <fieldset class="fx-card">
+              <legend>Analog Film Grain</legend>
+              <div class="fx-toggle-row">
+                <label class="fx-switch" for="fx-film-grain">
+                  <input id="fx-film-grain" type="checkbox">
+                  <span class="fx-switch-slider"></span>
+                  <span class="fx-switch-label">Enable Film Grain</span>
+                </label>
+              </div>
+              <div class="shape-fields">
+                <label for="fx-film-grain-intensity">Grain Density<input id="fx-film-grain-intensity" type="range" min="10" max="100" value="45"></label>
+              </div>
+              <p class="hint">High-frequency monochrome 35mm film grit shader.</p>
+            </fieldset>
+
+            <!-- Xerox Halftone -->
+            <fieldset class="fx-card">
+              <legend>Xerox Halftone</legend>
+              <div class="fx-toggle-row">
+                <label class="fx-switch" for="fx-halftone">
+                  <input id="fx-halftone" type="checkbox">
+                  <span class="fx-switch-slider"></span>
+                  <span class="fx-switch-label">Enable Halftone Screen</span>
+                </label>
+              </div>
+              <div class="shape-fields">
+                <label for="fx-halftone-intensity">Screen Contrast<input id="fx-halftone-intensity" type="range" min="10" max="100" value="50"></label>
+              </div>
+              <p class="hint">Underground punk zine dot-matrix printing effect.</p>
+            </fieldset>
+
+            <!-- Plastic / CD Gloss -->
+            <fieldset class="fx-card">
+              <legend>Plastic / CD Gloss Sheen</legend>
+              <div class="fx-toggle-row">
+                <label class="fx-switch" for="fx-plastic-gloss">
+                  <input id="fx-plastic-gloss" type="checkbox">
+                  <span class="fx-switch-slider"></span>
+                  <span class="fx-switch-label">Enable Gloss Sheen</span>
+                </label>
+              </div>
+              <div class="shape-fields">
+                <label for="fx-plastic-gloss-intensity">Gloss Opacity<input id="fx-plastic-gloss-intensity" type="range" min="10" max="100" value="60"></label>
+              </div>
+              <p class="hint">Diagonal studio light reflection mimicking cellophane wrap and acrylic sleeve.</p>
+            </fieldset>
+          </div>
         </section>
 
-        <div class="inspector-bottom"><span id="workspace-status" role="status" aria-live="polite">Ready to create</span><a href="index.html#creative-lab">Back to portfolio ↗</a></div>
+        <!-- Inspector Bottom Bar -->
+        <div class="inspector-bottom">
+          <span id="workspace-status" role="status" aria-live="polite">Studio ready</span>
+          <a href="index.html#creative-lab">Back to portfolio ↗</a>
+        </div>
       </aside>
     </div>
   </main>
+
+  <!-- Hidden native file input for custom image uploads -->
   <input id="image-upload" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/webp" aria-label="Choose an image file to add to the canvas">
 </body>
 </html>
