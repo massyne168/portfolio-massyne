@@ -372,12 +372,12 @@
       ctx.globalAlpha = Math.max(0, Math.min(1, layer.opacity ?? 1));
       ctx.globalCompositeOperation = layer.blendMode || "source-over";
 
-      const halfW = layer.width / 2;
-      const halfH = layer.height / 2;
+      const halfW = Number.isFinite(layer.width) && layer.width > 0 ? layer.width / 2 : 50;
+      const halfH = Number.isFinite(layer.height) && layer.height > 0 ? layer.height / 2 : 25;
 
       // TEXT LAYER
       if (layer.type === "text") {
-        drawTextLayer(ctx, layer, halfW, halfH);
+        drawTextLayer(ctx, layer);
       }
       // IMAGE LAYER
       else if (layer.type === "image") {
@@ -403,9 +403,9 @@
   }
 
   // Draw Text Layer
-  function drawTextLayer(tctx, layer, halfW, halfH) {
+  function drawTextLayer(tctx, layer) {
     const text = layer.text || "";
-    const fontSize = layer.fontSize || 48;
+    const fontSize = Number(layer.fontSize) || 48;
     const fontFamily = layer.fontFamily || "Sora";
     const fontWeight = layer.fontWeight || "700";
 
@@ -415,10 +415,13 @@
 
     // Measure text to dynamically fit bounding box if needed
     const metrics = tctx.measureText(text);
-    const measuredW = metrics.width + 20;
-    const measuredH = fontSize * (layer.lineHeight || 1.15);
-    layer.width = Math.max(layer.width, measuredW);
-    layer.height = Math.max(layer.height, measuredH);
+    const measuredW = Math.max(30, (metrics.width || 0) + 24);
+    const measuredH = Math.max(20, fontSize * (layer.lineHeight || 1.15));
+    layer.width = Math.max(Number(layer.width) || 0, measuredW);
+    layer.height = Math.max(Number(layer.height) || 0, measuredH);
+
+    const halfW = Math.max(15, layer.width / 2);
+    const halfH = Math.max(10, layer.height / 2);
 
     // Pill Badge Background
     if (layer.badgeEnabled) {
@@ -527,8 +530,10 @@
   }
 
   // Draw Shape Layer
-  function drawShapeLayer(sctx, layer, halfW, halfH) {
+  function drawShapeLayer(sctx, layer, rawHalfW, rawHalfH) {
     sctx.save();
+    const halfW = Number.isFinite(rawHalfW) && rawHalfW > 0 ? rawHalfW : Math.max(10, (layer.width || 100) / 2);
+    const halfH = Number.isFinite(rawHalfH) && rawHalfH > 0 ? rawHalfH : Math.max(10, (layer.height || 100) / 2);
     const st = layer.shapeType || "rectangle";
     const r = layer.borderRadius || 0;
 
@@ -2018,6 +2023,15 @@
         blendMode: "normal",
         ...l
       };
+      if (copy.type === "text") {
+        const fs = Number(copy.fontSize) || 48;
+        if (!Number.isFinite(copy.width) || copy.width <= 0) {
+          copy.width = Math.max(120, (copy.text ? copy.text.length * fs * 0.65 : 200) + 40);
+        }
+        if (!Number.isFinite(copy.height) || copy.height <= 0) {
+          copy.height = Math.max(40, fs * 1.3);
+        }
+      }
       if (copy.type === "image" && copy.src) {
         const img = new Image();
         img.crossOrigin = "anonymous";
@@ -2169,10 +2183,10 @@
       ectx.globalAlpha = Math.max(0, Math.min(1, layer.opacity ?? 1));
       ectx.globalCompositeOperation = layer.blendMode || "source-over";
 
-      const halfW = layer.width / 2;
-      const halfH = layer.height / 2;
+      const halfW = Number.isFinite(layer.width) && layer.width > 0 ? layer.width / 2 : 50;
+      const halfH = Number.isFinite(layer.height) && layer.height > 0 ? layer.height / 2 : 25;
 
-      if (layer.type === "text") drawTextLayer(ectx, layer, halfW, halfH);
+      if (layer.type === "text") drawTextLayer(ectx, layer);
       else if (layer.type === "image") drawImageLayer(ectx, layer, halfW, halfH);
       else if (layer.type === "shape") drawShapeLayer(ectx, layer, halfW, halfH);
       else if (layer.type === "sticker") drawStickerLayer(ectx, layer, halfW, halfH);

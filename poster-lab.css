@@ -1600,6 +1600,30 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 768px) {
+  .topbar {
+    padding: 0 10px;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .topbar .studio-badge,
+  .topbar .topbar-center,
+  .topbar .project-title-wrap {
+    display: none;
+  }
+  .topbar .topbar-divider {
+    margin: 0 2px;
+  }
+  .topbar .secondary-btn span {
+    display: none;
+  }
+  .topbar .secondary-btn {
+    padding: 6px 8px;
+  }
+  .topbar .export-button {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
   .workspace {
     grid-template-columns: var(--rail-width) 1fr;
   }
