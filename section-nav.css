@@ -16,8 +16,8 @@ body.section-view-ready .section-rail {
   opacity: 1;
   pointer-events: auto;
 }
-/* Rail is retired in favor of four-corner navigation and sticky site header */
-.section-rail {
+body.section-view-ready .site-header #nav,
+body.section-view-ready .site-header .menu {
   display: none !important;
 }
 .section-rail-menu {
@@ -307,48 +307,47 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   .section-panel-leaving { animation: none !important; }
 }
 
-/* Natural vertical scrolling across all sections on desktop and mobile */
-html.section-view-ready,
-html {
-  height: auto;
-  min-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior-y: auto;
+/* Keep section navigation inside a viewport-sized frame. Long sections stay fully reachable in their own panel. */
+html.section-view-ready {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
-body.section-view-ready,
-body {
+body.section-view-ready {
   zoom: 1;
-  height: auto;
-  min-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  display: block;
-  overscroll-behavior-y: auto;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior: none;
 }
 body.section-view-ready .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 60;
-  width: 100%;
+  flex: 0 0 76px;
 }
 body.section-view-ready #top {
   position: relative;
-  height: auto;
-  min-height: 100%;
-  padding-bottom: 0;
-  overflow: visible;
-}
-body.section-view-ready #top > [data-panel-section] {
-  position: relative;
-  inset: auto;
-  width: 100%;
+  flex: 1 1 auto;
   height: auto;
   min-height: 0;
-  max-height: none;
+  padding-bottom: 0;
+  overflow: hidden;
+}
+body.section-view-ready #top > [data-panel-section] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
   padding-bottom: 24px;
 }
 body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
@@ -358,17 +357,14 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
   body.section-view-ready .site-header {
     flex-basis: 66px;
   }
-  body.section-view-ready #top {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom));
-  }
   body.section-view-ready #top > [data-panel-section] {
     width: 100%;
-    padding-bottom: 24px;
-    scroll-padding-bottom: 24px;
+    padding-bottom: calc(128px + env(safe-area-inset-bottom));
+    scroll-padding-bottom: calc(128px + env(safe-area-inset-bottom));
   }
 }
 @supports not (height: 100dvh) {
-  body.section-view-ready { min-height: 100vh; }
+  body.section-view-ready { height: 100vh; }
 }
 @media (prefers-reduced-motion: reduce) {
   body.section-view-ready #top > [data-panel-section] {
@@ -376,9 +372,9 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
   }
 }
 
-/* Desktop and mobile both scroll naturally through all sections */
-html body.section-view-ready #top > [data-panel-section] {
-  display: block;
+/* Keep inactive desktop panels out of view even when a section has its own display rule. */
+html body.section-view-ready:not(.mobile-scroll-flow) #top > [data-panel-section][aria-hidden="true"]:not(.section-panel-leaving) {
+  display: none !important;
 }
 
 /* Keep the touch dock in normal flow inside its fixed mobile anchor. */

@@ -6,6 +6,16 @@
    ========================================================================== */
 
 /* 1. Stage Foundation: Generous breathing room, zero clipping, transparent obsidian */
+@media (min-width: 851px) {
+  body.section-view-ready #top > #work {
+    padding-left: clamp(68px, 6vw, 96px) !important;
+    padding-right: clamp(24px, 4vw, 48px) !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+}
+
 .curated-stage {
   position: relative;
   min-width: 0;

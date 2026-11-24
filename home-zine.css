@@ -26,19 +26,7 @@
   isolation: isolate;
 }
 
-/* Visibility Switching: PC / Desktop vs Phone / Mobile */
-@media (min-width: 851px) {
-  #desktop-zine-hero,
-  .zine-hero-desktop {
-    display: flex !important;
-  }
-  .hero-classic-mobile,
-  #top > #home-panel.hero-classic-mobile,
-  #top > #home-panel.home-panel-shell {
-    display: none !important;
-  }
-}
-
+/* Visibility Switching: Phone / Mobile */
 @media (max-width: 850px) {
   #desktop-zine-hero,
   .zine-hero-desktop {
@@ -77,7 +65,7 @@
 
 .zine-corner-tl {
   top: clamp(16px, 2.5vw, 28px);
-  left: clamp(16px, 3.2vw, 42px);
+  left: clamp(64px, 5.5vw, 88px);
 }
 
 .zine-beacon {
@@ -164,7 +152,7 @@
 
 .zine-corner-bl {
   bottom: clamp(16px, 2.5vw, 28px);
-  left: clamp(16px, 3.2vw, 42px);
+  left: clamp(64px, 5.5vw, 88px);
 }
 
 .zine-corner-br {
@@ -209,18 +197,9 @@
   color: rgba(236, 233, 225, 0.55);
 }
 
-/* Left Desktop Edge Barcodes */
+/* Left Desktop Edge Barcodes (Hidden to let section rail dock breathe cleanly) */
 .zine-edge-left {
-  position: absolute;
-  left: clamp(8px, 1.2vw, 18px);
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  opacity: 0.38;
-  pointer-events: none;
+  display: none !important;
 }
 
 .zine-edge-barcode {
@@ -651,71 +630,37 @@
   border: 0 !important;
 }
 
-/* 6. Systematic Overrides for Desktop Natural Scrolling & Rail Retirement */
-.section-rail,
-#section-rail {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
+/* 6. Desktop Panel Navigation Scoping for #home-panel */
+@media (min-width: 851px) {
+  body.section-view-ready #top > #home-panel.home-panel-shell,
+  body.section-view-ready #top > #home-panel,
+  #top > #home-panel {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    background: #0e0e10 !important;
+  }
 
-html.section-view-ready,
-html {
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  height: auto !important;
-  min-height: 100vh;
-}
+  /* Desktop shows the Zine Hero with left clearance for the section rail */
+  #home-panel #desktop-zine-hero,
+  #home-panel .zine-hero-desktop {
+    display: flex !important;
+    min-height: 100%;
+    padding-left: clamp(64px, 6vw, 96px);
+    box-sizing: border-box;
+  }
 
-body.section-view-ready,
-body {
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  height: auto !important;
-  min-height: 100vh;
-  display: block !important;
-}
-
-body.section-view-ready #top {
-  position: relative !important;
-  display: block !important;
-  height: auto !important;
-  min-height: 0 !important;
-  overflow: visible !important;
-}
-
-body.section-view-ready #top > [data-panel-section] {
-  position: relative !important;
-  inset: auto !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  overflow: visible !important;
-  display: block !important;
-}
-
-html body.section-view-ready #top > [data-panel-section] {
-  display: block !important;
-}
-
-/* Header transition: hidden at top of hero, slides in when scrolled */
-.site-header {
-  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease !important;
-}
-
-body[data-active-panel="home"]:not(.is-scrolled-past-hero) .site-header {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-8px);
-}
-
-body:not([data-active-panel="home"]) .site-header,
-body.is-scrolled-past-hero .site-header {
-  opacity: 1 !important;
-  pointer-events: auto !important;
-  transform: translateY(0) !important;
+  /* In desktop panel view, hide classic mobile hero elements and profile details */
+  #home-panel .hero-ambient,
+  #home-panel > .hero.hero-v2 > .hero-meta,
+  #home-panel .hero-v2-content,
+  #home-panel .hero-v2-portrait,
+  #home-panel .hero-v2-scroll,
+  #home-panel #about.home-profile-details {
+    display: none !important;
+  }
 }
 
 /* 7. Reduced Motion Safe */
