@@ -52,7 +52,33 @@
   // Card per-instance physics state for spring-lerp hover tilt
   const cardState = new WeakMap();
 
+  function applyCardAspect(card) {
+    const img = card.querySelector("img");
+    if (!img) return;
+
+    const update = () => {
+      if (img.naturalWidth && img.naturalHeight) {
+        const nw = img.naturalWidth;
+        const nh = img.naturalHeight;
+        const ratio = nw / nh;
+        card.style.setProperty("--item-aspect", `${nw} / ${nh}`);
+        card.style.setProperty("--item-ratio", ratio.toFixed(4));
+        card.style.setProperty("--item-natural-w", `${nw}px`);
+        card.style.setProperty("--item-natural-h", `${nh}px`);
+      }
+    };
+
+    if (img.complete && img.naturalWidth) {
+      update();
+    } else {
+      img.addEventListener("load", update, { once: true });
+    }
+  }
+
   function initCardElements(card) {
+    // 0. Ensure card respects intrinsic natural dimensions & aspect ratio
+    applyCardAspect(card);
+
     // 1. Remove old SVG edge tracers
     card.querySelector(".carousel-edge-light")?.remove();
 

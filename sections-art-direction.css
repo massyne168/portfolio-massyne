@@ -144,7 +144,7 @@ body.section-view-ready #top > #work {
 #work .project-grid[data-view="3d"].carousel-ready > .project img {
   border-radius: 4px;
   border: none !important;
-  aspect-ratio: 3/4;
+  aspect-ratio: var(--item-aspect, auto);
 }
 #work .project-grid[data-view="grid"] {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -159,8 +159,8 @@ body.section-view-ready #top > #work {
   box-shadow: 0 12px 32px color-mix(in srgb, var(--ink) 14%, transparent);
 }
 #work .project-grid[data-view="grid"] > .project > img {
-  aspect-ratio: 4 / 4.7;
-  object-fit: cover;
+  aspect-ratio: var(--item-aspect, auto);
+  object-fit: contain;
   transition: transform .5s cubic-bezier(.22,1,.36,1), filter .35s ease;
 }
 #work .project-grid[data-view="grid"] > .project > div { padding: 14px 15px 16px; }

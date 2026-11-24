@@ -247,14 +247,14 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project:n
   transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-/* Floating Artwork Image: Borderless 3:4 floating directly in 3D space */
+/* Floating Artwork Image: Strictly respects intrinsic natural dimensions & aspect-ratio */
 #work .project-grid[data-view="3d"].carousel-ready > .project img,
 html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 3/4 !important;
-  object-fit: cover !important;
+  aspect-ratio: var(--item-aspect, auto) !important;
+  object-fit: contain !important;
   border: none !important;
   border-radius: 4px !important;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.88), 0 4px 16px rgba(0, 0, 0, 0.6) !important;
@@ -272,13 +272,13 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project.i
 /* Soft Dark Floor Reflection Beneath */
 .orbital-floor-reflection {
   position: absolute;
-  bottom: 50px;
+  top: calc(var(--carousel-card-width) / var(--item-ratio, 0.75));
   left: 6%;
   width: 88%;
   height: 38px;
   background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 0, 0, 0.8) 0%, transparent 75%);
   filter: blur(6px);
-  transform: rotateX(85deg) translateZ(-12px);
+  transform: translateY(-8px) rotateX(85deg) translateZ(-12px);
   pointer-events: none;
   z-index: -1;
   opacity: 0.85;
@@ -290,7 +290,7 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project.i
   top: 0;
   left: 0;
   width: 100%;
-  aspect-ratio: 3/4;
+  aspect-ratio: var(--item-aspect, 3/4);
   pointer-events: none;
   transform-style: preserve-3d;
   z-index: 15;
@@ -358,7 +358,7 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project.i
   top: 0;
   left: 0;
   width: 100%;
-  aspect-ratio: 3/4;
+  aspect-ratio: var(--item-aspect, 3/4);
   border-radius: 4px;
   pointer-events: none;
   opacity: 0;
@@ -653,8 +653,8 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project::
 .project-grid[data-view="grid"] > .project img {
   width: 100%;
   height: auto;
-  aspect-ratio: 3/4;
-  object-fit: cover;
+  aspect-ratio: var(--item-aspect, auto);
+  object-fit: contain;
   border-radius: 4px;
 }
 
