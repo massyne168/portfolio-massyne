@@ -208,9 +208,9 @@
       // Deep 3D Horizontal Arc Parameters
       const isMobile = window.innerWidth <= 850;
       const radius = isMobile
-        ? Math.min(window.innerWidth * 0.48, 320)
-        : Math.min(window.innerWidth * 0.54, 620);
-      const stepAngle = isMobile ? 32 : 25; // deg
+        ? Math.min(520, window.innerWidth * 0.78)
+        : Math.min(920, Math.max(460, window.innerWidth * 0.56));
+      const stepAngle = isMobile ? 32 : 28; // deg
       const isReduced = motion.matches;
 
       let closestIdx = 0;
@@ -448,7 +448,7 @@
     }
 
     if (drag.moving) {
-      const slideStep = window.innerWidth <= 850 ? 190 : 270;
+      const slideStep = window.innerWidth <= 850 ? 210 : 320;
       targetPos = drag.startPos - (dx / slideStep);
       if (event.cancelable) event.preventDefault();
     }

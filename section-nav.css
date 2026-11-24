@@ -307,31 +307,37 @@ body.section-view-ready .footer-reveal-shell[hidden] {
   .section-panel-leaving { animation: none !important; }
 }
 
-/* Keep section navigation inside a viewport-sized frame. Long sections stay fully reachable in their own panel. */
-html.section-view-ready {
-  height: 100%;
-  overflow: hidden;
-  overscroll-behavior: none;
+/* Natural vertical scrolling across all sections on desktop and mobile */
+html.section-view-ready,
+html {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
 }
-body.section-view-ready {
+body.section-view-ready,
+body {
   zoom: 1;
-  height: 100dvh;
-  min-height: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  overscroll-behavior: none;
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: block;
+  overscroll-behavior-y: auto;
 }
 body.section-view-ready .site-header {
-  flex: 0 0 76px;
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  width: 100%;
 }
 body.section-view-ready #top {
   position: relative;
-  flex: 1 1 auto;
   height: auto;
-  min-height: 0;
+  min-height: 100%;
   padding-bottom: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 body.section-view-ready #top > [data-panel-section] {
   position: relative;
@@ -352,14 +358,17 @@ body.section-view-ready #top > [data-panel-section]::-webkit-scrollbar {
   body.section-view-ready .site-header {
     flex-basis: 66px;
   }
+  body.section-view-ready #top {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
   body.section-view-ready #top > [data-panel-section] {
     width: 100%;
-    padding-bottom: calc(128px + env(safe-area-inset-bottom));
-    scroll-padding-bottom: calc(128px + env(safe-area-inset-bottom));
+    padding-bottom: 24px;
+    scroll-padding-bottom: 24px;
   }
 }
 @supports not (height: 100dvh) {
-  body.section-view-ready { height: 100vh; }
+  body.section-view-ready { min-height: 100vh; }
 }
 @media (prefers-reduced-motion: reduce) {
   body.section-view-ready #top > [data-panel-section] {

@@ -46,7 +46,8 @@
 }
 
 .orbital-compass-bottom {
-  margin-top: -10px;
+  margin-top: 14px;
+  margin-bottom: 8px;
 }
 
 .orbital-compass-svg {
@@ -72,14 +73,16 @@
 }
 
 /* 3. Deep 3D Orbital Perspective Stage */
+#work .project-grid[data-view="3d"].carousel-ready,
 .project-grid[data-view="3d"].carousel-ready {
-  --carousel-card-width: clamp(240px, 28vw, 360px);
+  --carousel-card-width: clamp(210px, 19vw, 275px);
   position: relative;
   display: block;
   isolation: isolate;
-  height: clamp(520px, 58vw, 700px);
+  height: clamp(520px, 58vw, 700px) !important;
+  min-height: 520px !important;
   min-width: 0;
-  perspective: 1050px;
+  perspective: 1100px;
   perspective-origin: 50% 48%;
   transform-style: preserve-3d;
   touch-action: pan-y;
@@ -87,7 +90,7 @@
   user-select: none;
   -webkit-user-select: none;
   overscroll-behavior-x: contain;
-  overflow: visible;
+  overflow: visible !important;
 }
 
 .project-grid[data-view="3d"].carousel-ready:active,
@@ -167,62 +170,63 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project.i
   aspect-ratio: 3/4;
   pointer-events: none;
   transform-style: preserve-3d;
-  z-index: 10;
+  z-index: 15;
 }
 
 .reticle {
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   box-sizing: border-box;
   border-color: #c81024;
   border-style: solid;
   transform: translate3d(0, 0, 10px);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.45s ease;
-  filter: drop-shadow(0 0 4px rgba(200, 16, 36, 0.5));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.4s ease;
+  filter: drop-shadow(0 0 6px rgba(200, 16, 36, 0.75));
 }
 
-.reticle-tl { top: -4px; left: -4px; border-width: 2px 0 0 1.5px; }
-.reticle-tr { top: -4px; right: -4px; border-width: 2px 1.5px 0 0; }
-.reticle-bl { bottom: -4px; left: -4px; border-width: 0 0 1.5px 1.5px; }
-.reticle-br { bottom: -4px; right: -4px; border-width: 0 1.5px 1.5px 0; }
+.reticle-tl { top: -6px; left: -6px; border-width: 2px 0 0 2px; }
+.reticle-tr { top: -6px; right: -6px; border-width: 2px 2px 0 0; }
+.reticle-bl { bottom: -6px; left: -6px; border-width: 0 0 2px 2px; }
+.reticle-br { bottom: -6px; right: -6px; border-width: 0 2px 2px 0; }
 
 /* Active center card reticle */
 .project.is-carousel-active .reticle {
-  filter: drop-shadow(0 0 7px rgba(200, 16, 36, 0.85));
+  filter: drop-shadow(0 0 8px rgba(200, 16, 36, 0.95));
+  border-color: #e0142c;
 }
 
-/* Hover reticle pop-out: translate3d(±12px, ±12px, 86px) and expand to 24px */
+/* Hover reticle pop-out: translate3d(±14px, ±14px, 86px) and expand to 26px */
 .project.is-hovered .reticle-tl,
 .project:hover .reticle-tl {
-  transform: translate3d(-12px, -12px, 86px);
-  width: 24px;
-  height: 24px;
-  filter: drop-shadow(0 0 12px rgba(200, 16, 36, 0.95)) drop-shadow(0 0 2px #ffffff);
+  transform: translate3d(-14px, -14px, 86px);
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 0 14px rgba(200, 16, 36, 1)) drop-shadow(0 0 3px #ffffff);
 }
 .project.is-hovered .reticle-tr,
 .project:hover .reticle-tr {
-  transform: translate3d(12px, -12px, 86px);
-  width: 24px;
-  height: 24px;
-  filter: drop-shadow(0 0 12px rgba(200, 16, 36, 0.95)) drop-shadow(0 0 2px #ffffff);
+  transform: translate3d(14px, -14px, 86px);
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 0 14px rgba(200, 16, 36, 1)) drop-shadow(0 0 3px #ffffff);
 }
 .project.is-hovered .reticle-bl,
 .project:hover .reticle-bl {
-  transform: translate3d(-12px, 12px, 86px);
-  width: 24px;
-  height: 24px;
-  filter: drop-shadow(0 0 12px rgba(200, 16, 36, 0.95)) drop-shadow(0 0 2px #ffffff);
+  transform: translate3d(-14px, 14px, 86px);
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 0 14px rgba(200, 16, 36, 1)) drop-shadow(0 0 3px #ffffff);
 }
 .project.is-hovered .reticle-br,
 .project:hover .reticle-br {
-  transform: translate3d(12px, 12px, 86px);
-  width: 24px;
-  height: 24px;
-  filter: drop-shadow(0 0 12px rgba(200, 16, 36, 0.95)) drop-shadow(0 0 2px #ffffff);
+  transform: translate3d(14px, 14px, 86px);
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 0 14px rgba(200, 16, 36, 1)) drop-shadow(0 0 3px #ffffff);
 }
 
 /* 6. Subtle Neutral White/Silver Sheen (NO Red Cursor Tint) */
@@ -235,7 +239,7 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project.i
   border-radius: 4px;
   pointer-events: none;
   opacity: 0;
-  background: radial-gradient(circle 280px at var(--sheen-x, 50%) var(--sheen-y, 50%), rgba(255, 255, 255, 0.16) 0%, transparent 75%);
+  background: radial-gradient(circle 280px at var(--sheen-x, 50%) var(--sheen-y, 50%), rgba(255, 255, 255, 0.22) 0%, rgba(200, 200, 210, 0.08) 50%, transparent 75%);
   mix-blend-mode: overlay;
   transition: opacity 0.35s ease;
   z-index: 4;
@@ -374,14 +378,16 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project::
 
 /* 9. Carousel Controls & Metadata */
 .carousel-controls {
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: space-between;
   width: min(1040px, 94vw);
-  margin: 18px auto 0;
+  margin: 20px auto 0;
   padding: 0 8px;
   box-sizing: border-box;
   font-family: 'IBM Plex Mono', monospace;
+  position: relative;
+  z-index: 30;
 }
 
 .carousel-kicker {
@@ -407,7 +413,7 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project::
 .carousel-hint {
   display: block;
   font-size: 0.62rem;
-  color: rgba(236, 233, 225, 0.38);
+  color: rgba(236, 233, 225, 0.5);
   letter-spacing: 0.12em;
   margin-top: 2px;
 }
@@ -458,9 +464,11 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project::
     margin-inline: 0;
     padding: 16px 0 32px;
   }
+  #work .project-grid[data-view="3d"].carousel-ready,
   .project-grid[data-view="3d"].carousel-ready {
-    --carousel-card-width: clamp(230px, 68vw, 300px);
-    height: clamp(480px, 78vw, 560px);
+    --carousel-card-width: clamp(200px, 64vw, 250px);
+    height: clamp(480px, 78vw, 560px) !important;
+    min-height: 480px !important;
     perspective: 850px;
   }
   .orbital-compass {
@@ -470,7 +478,8 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project::
     margin-bottom: -10px;
   }
   .orbital-compass-bottom {
-    margin-top: -6px;
+    margin-top: 10px;
+    margin-bottom: 6px;
   }
   .orbital-scrubber {
     width: 88vw;
