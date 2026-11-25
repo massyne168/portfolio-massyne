@@ -1,13 +1,13 @@
 ﻿/* MASSYNE 2.0 â€” editorial art direction for the sections after the intro.
    Content, links, project data, filters, forms and playback controls remain intact. */
 
-body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #contact) {
+body.section-view-ready #top :is(#work, #process, #identity, #motion, #archive, #services, #contact) {
   box-sizing: border-box;
   color: var(--paper);
   scrollbar-gutter: stable;
 }
 
-body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #contact) .eyebrow {
+body.section-view-ready #top :is(#work, #process, #identity, #motion, #archive, #services, #contact) .eyebrow {
   color: var(--red-bright);
 }
 
@@ -373,7 +373,6 @@ html body.section-view-ready #top > #motion .studio-showreel:not(:fullscreen) .s
 #motion .showreel-state { color: var(--muted); }
 
 /* 05 â€” CREATIVE LAB / a poster-like invitation */
-body.section-view-ready #top > #creative-lab {
   display: grid;
   grid-template-columns: minmax(260px, .85fr) minmax(0, 1.15fr);
   align-items: center;
@@ -384,7 +383,6 @@ body.section-view-ready #top > #creative-lab {
     radial-gradient(ellipse at 18% 50%, color-mix(in srgb, var(--red) 19%, transparent), transparent 42%),
     var(--ink-soft);
 }
-#creative-lab .lab-entry-art {
   position: relative;
   width: min(100%, 350px);
   aspect-ratio: .82;
@@ -398,30 +396,23 @@ body.section-view-ready #top > #creative-lab {
   box-shadow: 22px 28px 0 color-mix(in srgb, var(--ink) 16%, transparent), 0 28px 62px color-mix(in srgb, var(--ink) 28%, transparent);
   transform: rotate(-4deg);
 }
-#creative-lab .lab-entry-art::after {
   content: "";
   position: absolute;
   inset: 9px;
   border: 1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 30%, transparent);
   pointer-events: none;
 }
-#creative-lab .lab-entry-art strong {
   font-size: clamp(3rem, 6.5vw, 5.8rem);
   line-height: .82;
 }
-#creative-lab .lab-entry-copy { max-width: 650px; }
-#creative-lab .lab-entry-copy h2 {
   margin: 15px 0 14px;
   font: 700 clamp(2.8rem, 5.7vw, 5.5rem)/.9 var(--display);
   letter-spacing: -.085em;
 }
-#creative-lab .lab-entry-copy h2 span { color: var(--red-bright) !important; }
-#creative-lab .lab-entry-copy > p:not(.eyebrow) {
   max-width: 460px;
   color: var(--muted);
   font: 400 .94rem/1.8 var(--body);
 }
-#creative-lab .lab-entry-link {
   min-height: 48px;
   margin-top: 15px;
   padding: 0 18px;
@@ -430,7 +421,6 @@ body.section-view-ready #top > #creative-lab {
   background: var(--surface);
   transition: transform .25s ease, border-color .25s ease;
 }
-#creative-lab .lab-entry-link:hover { transform: translateY(-2px); border-color: var(--red-bright); }
 
 /* 06 â€” ARCHIVE / an open visual index */
 body.section-view-ready #top > #archive {
@@ -627,7 +617,7 @@ body.section-view-ready #top > #contact {
 #contact .brief-note { color: var(--muted); }
 
 /* Shared detail states and keyboard focus */
-body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #contact) :is(a, button, input, select, textarea):focus-visible {
+body.section-view-ready #top :is(#work, #process, #identity, #motion, #archive, #services, #contact) :is(a, button, input, select, textarea):focus-visible {
   outline: 2px solid var(--ui-focus, var(--red-bright));
   outline-offset: 3px;
 }
@@ -640,7 +630,6 @@ body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-
   #work .project-grid[data-view="grid"] > .project > img,
   #archive .archive-item img,
   #identity .gb-discover,
-  #creative-lab .lab-entry-link,
   #services .service-item { transition: none !important; }
 }
 
@@ -667,14 +656,12 @@ body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-
     min-height: 330px;
   }
   #motion .showreel-side { padding: 20px; }
-  body.section-view-ready #top > #creative-lab { gap: 30px; padding-inline: clamp(22px, 5vw, 48px); }
-  #creative-lab .lab-entry-art { width: min(100%, 290px); }
   #archive .section-head.split { grid-template-columns: 1fr; gap: 18px; }
   #archive .filters { justify-content: start; }
   #archive .archive-grid { columns: 2; }
   #services .studio-services-header { grid-template-columns: 1fr .8fr; gap: 20px; }#contact > h2 { font-size: clamp(2.8rem, 8vw, 4.6rem); }
 }
-@media (max-width: 600px) {body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #contact) {
+@media (max-width: 600px) {body.section-view-ready #top :is(#work, #process, #identity, #motion, #archive, #services, #contact) {
     padding: 26px 18px 28px;
   }
   #work .section-head {
@@ -718,8 +705,6 @@ body.section-view-ready #top :is(#work, #process, #identity, #motion, #creative-
     padding: 18px;
   }
   #motion .showreel-side h3 { font-size: 2.35rem; }
-  body.section-view-ready #top > #creative-lab { grid-template-columns: 1fr; gap: 30px; }
-  #creative-lab .lab-entry-art { width: min(70vw, 285px); }
   #archive .archive-grid { columns: 2; column-gap: 9px; }
   #archive .archive-item { margin-bottom: 9px; border-radius: 10px; }
   #archive .archive-item figcaption { padding: 8px; font-size: .52rem; }
@@ -1780,10 +1765,8 @@ body.section-view-ready #top > #home-panel.home-panel-shell {
 
 
 /* MASSYNE Lab â€” a small, art-directed studio preview */
-body.section-view-ready #top > #creative-lab {
   grid-template-columns: minmax(0, .96fr) minmax(0, 1.04fr);
 }
-#creative-lab .lab-entry-art {
   display: grid;
   grid-template-rows: 40px minmax(0, 1fr) 42px;
   width: min(100%, 540px);
@@ -1798,9 +1781,6 @@ body.section-view-ready #top > #creative-lab {
   transform: none;
   transition: transform .45s cubic-bezier(.2,.75,.25,1), border-color .35s ease, box-shadow .35s ease;
 }
-#creative-lab .lab-entry-art::after { content: none; }
-#creative-lab .lab-art-top,
-#creative-lab .lab-art-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1811,8 +1791,6 @@ body.section-view-ready #top > #creative-lab {
   font: 500 8px/1 'IBM Plex Mono', monospace;
   letter-spacing: .08em;
 }
-#creative-lab .lab-art-top { border-bottom: 1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8%, transparent); }
-#creative-lab .lab-art-window-mark {
   display: grid;
   place-items: center;
   flex: 0 0 22px;
@@ -1824,9 +1802,6 @@ body.section-view-ready #top > #creative-lab {
   font: 700 11px/1 var(--display), sans-serif;
   letter-spacing: -.08em;
 }
-#creative-lab .lab-art-doc { margin-right: auto; }
-#creative-lab .lab-art-dim { color: #77767a !important; }
-#creative-lab .lab-art-workspace {
   display: grid;
   grid-template-columns: 48px minmax(0, 1fr);
   align-items: stretch;
@@ -1837,7 +1812,6 @@ body.section-view-ready #top > #creative-lab {
     radial-gradient(ellipse at 78% 16%, color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 12%, transparent), transparent 38%),
     linear-gradient(145deg, #1d1d21, #17171a);
 }
-#creative-lab .lab-art-tools {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1847,7 +1821,6 @@ body.section-view-ready #top > #creative-lab {
   border-radius: 10px;
   background: color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 2.5%, transparent);
 }
-#creative-lab .lab-art-tools span {
   display: grid;
   place-items: center;
   width: 28px;
@@ -1857,12 +1830,10 @@ body.section-view-ready #top > #creative-lab {
   color: #bcb9b4 !important;
   font: 500 12px/1 var(--display), sans-serif;
 }
-#creative-lab .lab-art-tools .is-active {
   border-color: color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 30%, transparent);
   background: color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 25%, transparent);
   color: var(--site-accent, var(--site-accent, #990011)) !important;
 }
-#creative-lab .lab-art-canvas {
   position: relative;
   isolation: isolate;
   display: flex;
@@ -1884,10 +1855,6 @@ body.section-view-ready #top > #creative-lab {
   box-shadow: 0 12px 30px rgba(0,0,0,.2);
   transition: transform .45s cubic-bezier(.2,.75,.25,1), box-shadow .45s ease;
 }
-#creative-lab .lab-art-canvas.is-blank { background:var(--site-light, var(--site-light, #FCF6F5)); box-shadow:0 12px 30px rgba(0,0,0,.2); }
-#creative-lab .lab-art-canvas.is-blank::before,
-#creative-lab .lab-art-canvas.is-blank::after { content:none!important; }
-#creative-lab .lab-art-canvas::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -1899,7 +1866,6 @@ body.section-view-ready #top > #creative-lab {
   background: radial-gradient(circle at 34% 30%, var(--site-accent, var(--site-accent, #990011)) 0, var(--site-accent, var(--site-accent, #990011)) 48%, var(--site-accent, var(--site-accent, #990011)) 78%);
   box-shadow: 0 12px 35px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 20%, transparent);
 }
-#creative-lab .lab-art-canvas::after {
   content: "";
   position: absolute;
   top: 18%;
@@ -1911,27 +1877,19 @@ body.section-view-ready #top > #creative-lab {
   box-shadow: 0 0 0 8px color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 7%, transparent), 0 0 0 18px rgba(24,24,23,.035);
   pointer-events: none;
 }
-#creative-lab .lab-art-canvas > * { position: relative; z-index: 1; }
-#creative-lab .lab-art-kicker,
-#creative-lab .lab-art-canvas small {
   color: #4e4a45 !important;
   font: 500 7px/1.4 'IBM Plex Mono', monospace;
   letter-spacing: .1em;
 }
-#creative-lab .lab-art-canvas strong {
   align-self: flex-start;
   color: #171716 !important;
   font: 700 clamp(2.8rem, 5.4vw, 4rem)/.78 var(--display), sans-serif;
   letter-spacing: -.085em;
 }
-#creative-lab .lab-art-canvas strong em {
   color: var(--site-accent, var(--site-accent, #990011)) !important;
   font: italic 400 1.02em/.8 'DM Serif Display', serif;
   letter-spacing: -.07em;
 }
-#creative-lab .lab-art-dot { color: var(--site-accent, var(--site-accent, #990011)) !important; }
-#creative-lab .lab-art-canvas small b { color: var(--site-accent, var(--site-accent, #990011)) !important; font-weight: 500; }
-#creative-lab .lab-art-orb {
   position: absolute !important;
   z-index: 0 !important;
   top: 15%;
@@ -1943,84 +1901,46 @@ body.section-view-ready #top > #creative-lab {
   background: radial-gradient(circle at 30% 28%, #f1b5a3 0 8%, var(--site-accent, var(--site-accent, #990011)) 28%, var(--site-accent, var(--site-accent, #990011)) 70%, var(--site-accent, var(--site-accent, #990011)) 100%);
   box-shadow: 0 8px 18px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 20%, transparent), inset -7px -8px 14px rgba(45,16,22,.2);
 }
-#creative-lab .lab-art-footer { border-top: 1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8%, transparent); }
-#creative-lab .lab-art-palette { display: flex; align-items: center; gap: 5px; }
-#creative-lab .lab-art-palette i {
   display: block;
   width: 9px;
   height: 9px;
   border-radius: 50%;
   background: #eeeae0;
 }
-#creative-lab .lab-art-palette i:nth-child(2) { background: var(--site-accent, var(--site-accent, #990011)); }
-#creative-lab .lab-art-palette i:nth-child(3) { background: var(--site-accent, var(--site-accent, #990011)); }
-#creative-lab .lab-art-palette i:nth-child(4) { background: #29282a; }
-#creative-lab .lab-art-palette span { margin-left: 5px; color: #8e8b89 !important; }
-#creative-lab .lab-art-status { display: flex; align-items: center; gap: 6px; color: #aaa7a4 !important; }
-#creative-lab .lab-art-status i {
   width: 5px;
   height: 5px;
   border-radius: 50%;
   background: #8cbb91;
   box-shadow: 0 0 8px rgba(140,187,145,.45);
 }
-#creative-lab .lab-entry-copy { max-width: 650px; }
-#creative-lab .lab-entry-link {
   gap: 42px;
   padding-inline: 21px;
 }
-#creative-lab .lab-entry-link span { transition: transform .25s ease; }
-#creative-lab .lab-entry-link:hover span { transform: translate(2px,-2px); }
 @media (hover:hover) and (min-width:701px) {
-  #creative-lab:hover .lab-entry-art {
     transform: translateY(-4px);
     border-color: color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 40%, transparent);
     box-shadow: 0 38px 92px rgba(0,0,0,.38), 0 1px 0 color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8%, transparent) inset;
   }
-  #creative-lab:hover .lab-art-canvas { transform: translateY(-2px); }
 }
 @media (max-width:900px) {
-  #creative-lab .lab-entry-art { width: min(100%, 500px); }
 }
 @media (max-width:700px) {
-  body.section-view-ready #top > #creative-lab {
     grid-template-columns: minmax(0,1fr);
     gap: 27px;
     padding: 30px clamp(18px,5vw,26px);
   }
-  #creative-lab .lab-entry-art {
     width: min(100%, 520px);
     margin-inline: auto;
     aspect-ratio: 1.04;
     grid-template-rows: 36px minmax(0,1fr) 38px;
     border-radius: 12px;
   }
-  #creative-lab .lab-art-workspace { grid-template-columns: 38px minmax(0,1fr); gap: 9px; padding: 10px; }
-  #creative-lab .lab-art-tools { gap: 5px; padding-block: 6px; }
-  #creative-lab .lab-art-tools span { width: 25px; height: 25px; font-size: 11px; }
-  #creative-lab .lab-art-canvas { width: min(78%, 240px); padding: 14px; }
-  #creative-lab .lab-art-canvas strong { font-size: clamp(2rem, 9vw, 3rem); }
-  #creative-lab .lab-art-orb { width: 34px; }
-  #creative-lab .lab-art-top, #creative-lab .lab-art-footer { padding-inline: 10px; font-size: 7px; }
-  #creative-lab .lab-art-window-mark { width: 20px; height: 20px; flex-basis: 20px; }
-  #creative-lab .lab-art-palette { gap: 4px; }
-  #creative-lab .lab-art-palette i { width: 7px; height: 7px; }
-  #creative-lab .lab-art-palette span { display: none; }
-  #creative-lab .lab-art-status { font-size: 6px; }
-  #creative-lab .lab-entry-copy { text-align: center; margin-inline: auto; }
-  #creative-lab .lab-entry-copy > p:not(.eyebrow) { margin-inline: auto; }
 }
 @media (prefers-reduced-motion:reduce) {
-  #creative-lab .lab-entry-art, #creative-lab .lab-art-canvas, #creative-lab .lab-entry-link span { transition: none; }
 }
 
 /* Keep the poster centered in the full studio workspace. */
-#creative-lab .lab-entry-art { grid-template-columns: minmax(0,1fr); }
-#creative-lab .lab-art-canvas::before { top: 8%; right: -4%; width: 35%; }
-#creative-lab .lab-art-canvas::after { top: 13%; right: 14%; width: 27%; }
-#creative-lab .lab-art-orb { top: 10%; right: 18%; width: 40px; }
 @media (max-width:700px) {
-  #creative-lab .lab-art-orb { width: 32px; }
 }
 
 

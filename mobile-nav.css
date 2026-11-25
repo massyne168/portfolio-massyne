@@ -186,7 +186,7 @@
     flex-basis: 44px;
   }
 
-  body.mobile-bottom-nav-active :is(#work, #process, #identity, #motion, #creative-lab, #archive, #services, #contact) {
+  body.mobile-bottom-nav-active :is(#work, #process, #identity, #motion, #archive, #services, #contact) {
     scroll-margin-top: 78px;
   }
 }

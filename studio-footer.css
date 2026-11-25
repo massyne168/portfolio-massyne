@@ -17,6 +17,51 @@
   align-items: center;
   justify-content: space-between;
   gap: clamp(16px, 2vw, 32px);
+  text-align: center;
+}
+
+/* 3-column layout on desktop: MASSYNE® | © 2026 MASSYNE | BACK TO TOP ↑ */
+@media (min-width: 361px) {
+  .footer-inner {
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  .footer-left {
+    flex: 0 0 auto;
+  }
+
+  .footer-center {
+    flex: 0 0 auto;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .footer-right {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    flex: 0 0 auto;
+  }
+}
+
+.footer-arrow {
+  font-size: 0.75em;
+  line-height: 1;
+  vertical-align: top;
+  margin-left: 4px;
+  opacity: 0.85;
 }
 
 .footer-wordmark {
@@ -78,27 +123,6 @@
 .footer-top-btn:hover .footer-reticle {
   opacity: 1;
   transform: translateX(0);
-}
-
-@media (max-width: 640px) {
-  .footer-inner {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-  }
-
-  .footer-wordmark {
-    justify-self: center;
-  }
-
-  .footer-copyright {
-    order: 3;
-  }
-
-  .footer-top-btn {
-    justify-content: center;
-    order: 2;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -34,8 +34,8 @@ and 768 px before reporting a task complete.
 
 ## 4. The Section Panel System Must Be Preserved
 
-The 9 sections of the MASSYNE portfolio (`home-panel`, `work`, `process`,
-`identity`, `motion`, `creative-lab`, `archive`, `services`, `contact`) must:
+The 8 sections of the MASSYNE portfolio (`home-panel`, `work`, `process`,
+`identity`, `motion`, `archive`, `services`, `contact`) must:
 - Always appear in their original order.
 - Never be renamed, removed, or reordered without explicit owner approval.
 - Always use the `data-panel-section` attribute as the JS/CSS hook.

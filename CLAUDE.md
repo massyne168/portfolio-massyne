@@ -62,7 +62,7 @@ This file contains the project rules and context for AI assistants working on th
 
 - Edit files locally first so changes can be previewed on Live Server.
 - Only run `git commit` & `git push origin main` when explicitly instructed to "push" or "deploy".
-- The project uses a 9-section panel system: home-panel, work, process, identity, motion, creative-lab, archive, services, contact.
+- The project uses an 8-section panel system: home-panel, work, process, identity, motion, archive, services, contact.
 - `mobile-nav.css` must be linked in `index.html` (critical for mobile navigation).
 - Aesthetic: Cinematic Black (`#0a0a0a`), Crimson Red (`#C0392B`), Silver (`#C0C0C0`).
 - Font roles: Serif display (Space Grotesk, DM Serif Display, Instrument Serif), sans-serif body (Manrope, Outfit, Sora), mono labels (IBM Plex Mono).

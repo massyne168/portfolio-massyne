@@ -7,11 +7,7 @@
   if (!main || !menu || !sectionRail) return;
   const mobileFlowQuery = window.matchMedia("(max-width: 850px)");
 
-  const labDescription = main.querySelector("#creative-lab .lab-entry-copy > p:not(.eyebrow)");
-  if (labDescription) {
-    labDescription.textContent = "Draw freely on a blank canvas, or build a poster with type, color and shapes. Save your design as a high-resolution PNG.";
-  }
-
+  
   // Keep #project-brief directly inline inside #contact (no modal popup / no "Write a project brief" button).
 
   const specs = [
@@ -20,7 +16,6 @@
     { key: "process", id: "process", hash: "#process" },
     { key: "identity", id: "identity", hash: "#identity" },
     { key: "motion", id: "motion", hash: "#motion" },
-    { key: "creative-lab", id: "creative-lab", hash: "#creative-lab" },
     { key: "archive", id: "archive", hash: "#archive" },
     { key: "services", id: "services", hash: "#services" },
     { key: "contact", id: "contact", hash: "#contact" }
