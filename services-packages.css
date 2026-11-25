@@ -24,7 +24,7 @@ html[data-theme] body #services .studio-packages-head .eyebrow {
 
 html[data-theme] body #services .studio-packages-head h3 {
   margin: 0;
-  font: 600 clamp(2rem, 3.6vw, 3.4rem)/0.98 'Sora', var(--display, sans-serif);
+  font: 600 clamp(2rem, 3.6vw, 3.4rem)/0.98 'Syne', var(--display, sans-serif);
   letter-spacing: -0.055em;
   color: #F5EBD0 !important;
   text-wrap: balance;
@@ -180,7 +180,7 @@ html[data-theme] body #services .package-badge {
 
 html[data-theme] body #services .package-head h4 {
   margin: 2px 0 0;
-  font: 600 clamp(1.35rem, 1.9vw, 1.75rem)/1.12 'Sora', var(--display, sans-serif);
+  font: 600 clamp(1.35rem, 1.9vw, 1.75rem)/1.12 'Syne', var(--display, sans-serif);
   letter-spacing: -0.04em;
   color: #FFFFFF !important;
 }
@@ -203,7 +203,7 @@ html[data-theme] body #services .package-price {
 }
 
 html[data-theme] body #services .package-amount {
-  font: 700 clamp(1.45rem, 2.2vw, 1.95rem)/1.05 'Sora', var(--display, sans-serif);
+  font: 700 clamp(1.45rem, 2.2vw, 1.95rem)/1.05 'Syne', var(--display, sans-serif);
   letter-spacing: -0.04em;
   color: #F5EBD0 !important;
 }

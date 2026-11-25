@@ -3,7 +3,7 @@
    Aesthetic: Figma / Cinema 4D Dark Workstation
    Palette: Deep Matte Obsidian (#050608), Charcoal (#0A0C10, #11141C),
             Metallic Hairline Borders (rgba(255,255,255,0.08)), Crimson (#990011)
-   Typography: Sora / Manrope / IBM Plex Mono
+   Typography: Syne / Unbounded / Space Grotesk / Plus Jakarta Sans / Manrope / JetBrains Mono / IBM Plex Mono
    Locked Dark-Only Mode
    ========================================================================== */
 
@@ -26,7 +26,7 @@
   --studio-amber: #f59e0b;
   --studio-cyan: #06b6d4;
 
-  --studio-font-display: "Sora", "Space Grotesk", sans-serif;
+  --studio-font-display: "Syne", "Unbounded", "Space Grotesk", sans-serif;
   --studio-font-body: "Manrope", sans-serif;
   --studio-font-mono: "IBM Plex Mono", monospace;
 

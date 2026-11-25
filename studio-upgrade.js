@@ -112,8 +112,8 @@
     }
   });
 
-  // Run the portrait exposures only while the About portrait is visible.
-  document.querySelectorAll(".about-v2-image,.hero-v2-portrait").forEach(portrait => {
+  // Run the portrait exposures only while the hero portrait is visible.
+  document.querySelectorAll(".hero-v2-portrait").forEach(portrait => {
   if ("IntersectionObserver" in window) {
     const syncPortrait = () => portrait.classList.toggle("echo-visible", portrait.dataset.inView === "true" && !document.hidden);
     const portraitObserver = new IntersectionObserver(entries => {

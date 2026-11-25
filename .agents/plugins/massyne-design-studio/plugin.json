@@ -1,0 +1,22 @@
+{
+  "id": "massyne-design-studio",
+  "name": "massyne-design-studio",
+  "displayName": "MASSYNE Design Studio",
+  "version": "1.0.0",
+  "description": "Specialist AI design studio for the MASSYNE portfolio. Provides premium UI/UX, mobile-first responsive design, cinematic aesthetic enforcement, typography, gallery presentation, smooth motion, accessibility, and performance expertise — all scoped to the MASSYNE codebase.",
+  "author": {
+    "name": "MASSYNE",
+    "url": "https://portfolio-massyne.vercel.app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/massyne168/portfolio-massyne"
+  },
+  "logo": "assets/logo.svg",
+  "skills": ["./skills"],
+  "suggestedPrompts": [
+    "Audit the mobile layout and give me a prioritized repair plan",
+    "Review the current typography and visual hierarchy across all sections",
+    "Propose motion and interaction improvements for the MASSYNE portfolio"
+  ]
+}

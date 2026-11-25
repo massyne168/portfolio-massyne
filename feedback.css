@@ -65,7 +65,7 @@
 .feedback-head { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 13px; border-bottom: 1px solid #ffffff18; }
 .feedback-head span { color: #ed8296; font: 500 .58rem/1.5 var(--mono, "IBM Plex Mono", monospace); letter-spacing: .08em; }
 .feedback-head span:last-child { color: #b4a1aa; text-align: right; }
-.feedback-popover h2 { margin: 20px 0 9px; color: #faf4f1; font: 700 clamp(2rem, 5vw, 2.8rem)/.98 var(--display, Sora, sans-serif); letter-spacing: -.07em; }
+.feedback-popover h2 { margin: 20px 0 9px; color: #faf4f1; font: 700 clamp(2rem, 5vw, 2.8rem)/.98 var(--display), sans-serif); letter-spacing: -.07em; }
 .feedback-popover h2 em { color: #ed7387; font-family: var(--serif, "DM Serif Display", serif); font-weight: 400; }
 .feedback-intro { margin: 0 0 21px; color: #c8b7bf; font-size: .87rem; line-height: 1.6; }
 .feedback-rating { min-width: 0; margin: 0 0 21px; padding: 0; border: 0; }

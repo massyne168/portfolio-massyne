@@ -90,12 +90,7 @@ html[data-theme="dark"] :is(.hero-v2-portrait figcaption){color:var(--site-light
 html[data-theme="dark"] :is(.hero-portrait-stamp){color:var(--site-light, var(--site-light, #FCF6F5));background:var(--site-accent, var(--site-accent, #990011));background-color:var(--site-accent, var(--site-accent, #990011));}
 html[data-theme="dark"] :is(.project-grid[data-view="grid"] > .project[data-case-study]::after){color:var(--site-light, var(--site-light, #FCF6F5));background:var(--site-accent, var(--site-accent, #990011));background-color:var(--site-accent, var(--site-accent, #990011));}
 html[data-theme="dark"] :is(.project-grid[data-view="index"] > .project[data-case-study]:is(:hover, :focus-visible) h3){color:var(--site-accent, var(--site-accent, #990011));}
-html[data-theme="dark"] :is(.about-v2-image){background:var(--site-light, var(--site-light, #FCF6F5));background-color:var(--site-light, var(--site-light, #FCF6F5));}
 html[data-theme="dark"] :is(.about-image-label){color:var(--site-light, var(--site-light, #FCF6F5));}
-html[data-theme="dark"] :is(.about-v2-mini){color:var(--site-accent, var(--site-accent, #990011))!important;}
-html[data-theme="dark"] :is(.about-v2-lead){color:var(--site-light, var(--site-light, #FCF6F5))!important;}
-html[data-theme="dark"] :is(.about-v2-link){border-bottom:1px solid var(--site-accent, var(--site-accent, #990011));}
-html[data-theme="dark"] :is(.about-v2-link:hover){color:var(--site-accent, var(--site-accent, #990011));}
 html[data-theme="dark"] :is(.contact.contact-v2){background:radial-gradient(78% 48% at 50% 110%, color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 18%, transparent), transparent 80%), rgb(20, 13, 18);border-top:1px solid var(--site-accent, var(--site-accent, #990011));}
 html[data-theme="dark"] :is(.contact-v2-heading .eyebrow){color:var(--site-accent, var(--site-accent, #990011));}
 html[data-theme="dark"] :is(.contact-v2-button){color:var(--site-light, var(--site-light, #FCF6F5));background:var(--site-accent, var(--site-accent, #990011));background-color:var(--site-accent, var(--site-accent, #990011));border:1px solid var(--site-accent, var(--site-accent, #990011));border-color:var(--site-accent, var(--site-accent, #990011));border-top:1px solid var(--site-accent, var(--site-accent, #990011));border-bottom:1px solid var(--site-accent, var(--site-accent, #990011));border-left:1px solid var(--site-accent, var(--site-accent, #990011));border-right:1px solid var(--site-accent, var(--site-accent, #990011));}
@@ -103,7 +98,6 @@ html[data-theme="dark"] :is(.contact-v2-button:hover){background:var(--site-acce
 html[data-theme="dark"] :is(.hero.hero-v2){background:radial-gradient(68% 30% at 50% 110%, color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 17%, transparent), color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 4.3%, transparent) 56%, transparent 85%), rgb(9, 9, 12);}
 html[data-theme="dark"] :is(.hero-v2-portrait){background:#050608 !important;border:1px solid rgba(255,255,255,0.08) !important;box-shadow:0 30px 90px rgba(0,0,0,0.55) !important;}
 html[data-theme="dark"] :is(.hero-v2-portrait::after){display:none !important;}
-html[data-theme="dark"] :is(.about-v2-image){background:radial-gradient(at 75% 22%, color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 22%, transparent), transparent 54%), linear-gradient(150deg, rgba(116, 89, 116, 0.2), rgba(24, 21, 32, 0.92));border:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 23%, transparent);border-color:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 23%, transparent);border-top:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 23%, transparent);border-bottom:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 23%, transparent);border-left:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 23%, transparent);border-right:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 23%, transparent);box-shadow:rgba(0, 0, 0, 0.43) 0px 23px 65px, color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 24%, transparent) 0px 1px inset;}
 html[data-theme="dark"] :is(.contact.contact-v2){border-top:1px solid color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 48%, transparent);}
 html[data-theme="dark"] :is(.contact-v2-heading){border-bottom:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 13%, transparent);}
 html[data-theme="dark"] :is(.contact-v2-bottom){border-top:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 13%, transparent);}
@@ -112,12 +106,6 @@ html[data-theme="dark"] :is(.contact-v2 .contact-links){border-bottom:1px solid 
 html[data-theme="dark"] :is(.contact-v2 .brief-field :is(input, select, textarea):focus-visible){outline:var(--site-accent, var(--site-accent, #990011)) solid 2px;outline-color:var(--site-accent, var(--site-accent, #990011));}
 html[data-theme="dark"] :is(body .tool-stack .tool-item){background:linear-gradient(135deg, color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 2.4%, transparent), color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 0.4%, transparent));border:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8.2%, transparent);border-color:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8.2%, transparent);border-top:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8.2%, transparent);border-bottom:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8.2%, transparent);border-left:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8.2%, transparent);border-right:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8.2%, transparent);}
 html[data-theme="dark"] :is(.tool-item strong){color:var(--site-light, var(--site-light, #FCF6F5));}
-html[data-theme="dark"] :is(body .about-actions .about-resume){color:var(--site-light, var(--site-light, #FCF6F5));background:linear-gradient(130deg, var(--site-accent, var(--site-accent, #990011)), var(--site-accent, var(--site-accent, #990011)));border-color:var(--site-accent, var(--site-accent, #990011));}
-html[data-theme="dark"] :is(body .about-actions .about-download){background:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 1.6%, transparent);background-color:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 1.6%, transparent);}
-html[data-theme="dark"] :is(body .about-actions .about-collaborate){background:radial-gradient(at 100% 100%, color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 20%, transparent), transparent 70%), rgb(20, 16, 22);border-color:var(--site-accent, var(--site-accent, #990011));}
-html[data-theme="dark"] :is(.about-collaborate small){color:var(--site-accent, var(--site-accent, #990011));}
-html[data-theme="dark"] :is(.about-collaborate strong){color:var(--site-light, var(--site-light, #FCF6F5));}
-html[data-theme="dark"] :is(body .about-collaborate > i){border:1px solid var(--site-accent, var(--site-accent, #990011));border-color:var(--site-accent, var(--site-accent, #990011));border-top:1px solid var(--site-accent, var(--site-accent, #990011));border-bottom:1px solid var(--site-accent, var(--site-accent, #990011));border-left:1px solid var(--site-accent, var(--site-accent, #990011));border-right:1px solid var(--site-accent, var(--site-accent, #990011));}
 html[data-theme="dark"] :is(body .project-brief){background:radial-gradient(at 0px 0px, color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 16%, transparent), transparent 55%), linear-gradient(145deg, rgb(25, 18, 25), rgb(16, 14, 19) 65%);border:1px solid var(--site-accent, var(--site-accent, #990011));border-color:var(--site-accent, var(--site-accent, #990011));border-top:1px solid var(--site-accent, var(--site-accent, #990011));border-bottom:1px solid var(--site-accent, var(--site-accent, #990011));border-left:1px solid var(--site-accent, var(--site-accent, #990011));border-right:1px solid var(--site-accent, var(--site-accent, #990011));box-shadow:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 7%, transparent) 0px 1px 0px inset, rgba(0, 0, 0, 0.2) 0px 25px 80px;}
 html[data-theme="dark"] :is(body .project-brief::before){background:linear-gradient(90deg, transparent, var(--site-accent, var(--site-accent, #990011)), transparent);}
 html[data-theme="dark"] :is(body .project-brief .project-brief-head){border-bottom:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 8.6%, transparent);}
@@ -338,7 +326,12 @@ html[data-theme="dark"] :is(.case-gallery-open){color:var(--site-accent, var(--s
 html[data-theme="dark"] :is(.case-immersive button:focus-visible, .case-immersive a:focus-visible, .case-gallery-open:focus-visible){outline:var(--site-accent, var(--site-accent, #990011)) solid 2px;outline-color:var(--site-accent, var(--site-accent, #990011));}
 
 /* Typography trial: restore clear light/dark hierarchy with restrained oxblood accents. */
-:root{--display:"Sora",Arial,sans-serif;--serif:"DM Serif Display",Georgia,serif}
+:root{
+  --display:"Syne", "Unbounded", "Space Grotesk", Arial, sans-serif;
+  --serif:"DM Serif Display", Georgia, serif;
+  --body:"Space Grotesk", "Plus Jakarta Sans", "Manrope", Arial, sans-serif;
+  --mono:"JetBrains Mono", "IBM Plex Mono", monospace;
+}
 html body .hero-v2-title{letter-spacing:-.075em;line-height:.96}
 html body .hero-v2-title span:nth-child(1){font-size:1.12em;line-height:.9;letter-spacing:-.085em;margin-bottom:clamp(22px,3vw,37px)}
 html body .hero-v2-title span:nth-child(2){font-size:.49em;letter-spacing:-.055em;line-height:1.2}
@@ -346,24 +339,24 @@ html body .hero-v2-title em{font-size:.87em;line-height:1.1;letter-spacing:-.055
 html body :is(.section-head h2,.spotlight-head h2,.identity-top h2,.studio-services-header h2,.contact-v2 h2,.case-intro h1){letter-spacing:-.06em}
 html[data-theme=dark] body :is(h1,h2,h3,h4,h1 span,h2 span,h3 span,h4 span,.hero-v2-title span,.email,.tool-item strong,.case-related-info strong){color:var(--site-light, var(--site-light, #FCF6F5))}
 html[data-theme=dark] body :is(h1 em,h2 em,h3 em,h4 em,.hero-v2-title em){color:var(--site-accent, var(--site-accent, #990011))}
-html[data-theme=dark] body :is(p,label,.case-story-copy p,.case-insight p,.hero-v2-description,.about-v2-text,.brief-note,.gurzil-lead p,.studio-services-header>p,.service-item p){color:#d4d1c5}
-html[data-theme=dark] body :is(.eyebrow,.hero-kicker,.index,.case-step,.carousel-kicker,.discover-footer,.project-count-label,.contact-v2-heading>span,.project-brief-head span,.about-v2-mini,.case-category,.spotlight-card-head,.spotlight-card-head span){color:#c8bdad}
+html[data-theme=dark] body :is(p,label,.case-story-copy p,.case-insight p,.hero-v2-description,.brief-note,.gurzil-lead p,.studio-services-header>p,.service-item p){color:#d4d1c5}
+html[data-theme=dark] body :is(.eyebrow,.hero-kicker,.index,.case-step,.carousel-kicker,.discover-footer,.project-count-label,.contact-v2-heading>span,.project-brief-head span,.case-category,.spotlight-card-head,.spotlight-card-head span){color:#c8bdad}
 html[data-theme=dark] body :is(.hero-button-quiet,.case-gallery-open,.case-expand,.case-contact-link,.brief-copy,.resume-cta>a,.gurzil-lead a,.carousel-actions button,.view-switch button,.filters button,.discover-categories button,.discover-reset,.contact-links a){color:var(--site-light, var(--site-light, #FCF6F5))}
 html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type){color:var(--site-light, var(--site-light, #FCF6F5))}
 html[data-theme=dark] body :is(.hero-button-primary,.contact-v2-button,.brief-submit,.about-actions .about-resume,.gurzil-lead a:first-of-type) :is(span,strong,i){color:inherit}
 
 /* Header logo: dark flame metal logo */
 body .site-header .brand-logo-light{display:none!important}
-/* About portrait: transparent, frameless double exposure. */
-html[data-theme] :is(.about-v2-image,.hero-v2-portrait){background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;isolation:isolate}
-html[data-theme] :is(.about-v2-image,.hero-v2-portrait)::after{display:none}
-:is(.about-v2-image,.hero-v2-portrait) picture{isolation:isolate}
-:is(.about-v2-image,.hero-v2-portrait) picture .about-portrait-echo{position:absolute;inset:0;pointer-events:none;opacity:0;mix-blend-mode:screen;animation:about-exposure-right 5s ease-in-out infinite;animation-play-state:paused;filter:none}
-:is(.about-v2-image,.hero-v2-portrait) picture .echo-2{animation-name:about-exposure-left;filter:sepia(.65) saturate(1.4)}
-:is(.about-v2-image,.hero-v2-portrait).echo-visible picture .about-portrait-echo{animation-play-state:running}
+/* Hero portrait: transparent, frameless double exposure. */
+html[data-theme] .hero-v2-portrait{background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;isolation:isolate}
+html[data-theme] .hero-v2-portrait::after{display:none}
+.hero-v2-portrait picture{isolation:isolate}
+.hero-v2-portrait picture .about-portrait-echo{position:absolute;inset:0;pointer-events:none;opacity:0;mix-blend-mode:screen;animation:about-exposure-right 5s ease-in-out infinite;animation-play-state:paused;filter:none}
+.hero-v2-portrait picture .echo-2{animation-name:about-exposure-left;filter:sepia(.65) saturate(1.4)}
+.hero-v2-portrait.echo-visible picture .about-portrait-echo{animation-play-state:running}
 @keyframes about-exposure-right{0%,15%,100%{opacity:0;transform:translateX(0)}35%,55%{opacity:.27;transform:translateX(24px) rotate(1deg)}80%{opacity:0;transform:translateX(0)}}
 @keyframes about-exposure-left{0%,15%,100%{opacity:0;transform:translateX(0)}35%,55%{opacity:.15;transform:translateX(-19px) rotate(-1deg)}80%{opacity:0;transform:translateX(0)}}
-@media(prefers-reduced-motion:reduce){:is(.about-v2-image,.hero-v2-portrait) picture .about-portrait-echo{display:none;animation:none!important}}
+@media(prefers-reduced-motion:reduce){.hero-v2-portrait picture .about-portrait-echo{display:none;animation:none!important}}
 
 .hero-v2-portrait .hero-portrait-halo{display:none}
 html[data-theme] .hero-v2-portrait{box-shadow:none!important}

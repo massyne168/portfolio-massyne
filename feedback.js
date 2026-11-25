@@ -8,7 +8,7 @@
   const submit = form?.querySelector("button[type='submit']");
   const contact = document.getElementById("contact");
   const main = document.getElementById("top");
-  const footer = document.querySelector(".footer-reveal-shell");
+  const footer = document.querySelector(".site-footer");
   const mobileQuery = window.matchMedia("(max-width: 850px)");
   const recipient = "aazizimassine@gmail.com";
   const railOpeners = [...document.querySelectorAll("[data-feedback-open]")];

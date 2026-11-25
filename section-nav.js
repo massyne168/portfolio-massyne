@@ -7,38 +7,6 @@
   if (!main || !menu || !sectionRail) return;
   const mobileFlowQuery = window.matchMedia("(max-width: 850px)");
 
-  // Combine the introduction and profile into one balanced Home composition.
-  const heroPanel = main.querySelector("#home-panel");
-  const aboutPanel = main.querySelector("#about");
-  const profileContent = aboutPanel?.querySelector(".about-v2-content");
-  if (heroPanel?.parentElement === main && aboutPanel?.parentElement === main && profileContent) {
-    const aboutFlow = aboutPanel.previousElementSibling?.matches('.section-flow[data-flow-target="about"]')
-      ? aboutPanel.previousElementSibling
-      : null;
-    const homePanel = document.createElement("div");
-    homePanel.id = "home-panel";
-    homePanel.className = "home-panel-shell";
-    homePanel.setAttribute("role", "region");
-    homePanel.setAttribute("aria-label", "Home and designer profile");
-
-    const aboutEyebrow = aboutPanel.querySelector(":scope > .eyebrow");
-    if (aboutEyebrow) {
-      aboutEyebrow.textContent = "HOME / THE DESIGNER";
-      aboutEyebrow.classList.add("home-profile-eyebrow");
-      profileContent.prepend(aboutEyebrow);
-    }
-    profileContent.id = "about";
-    profileContent.classList.add("home-profile-details");
-    profileContent.setAttribute("role", "group");
-    profileContent.setAttribute("aria-label", "About MASSYNE");
-
-    heroPanel.removeAttribute("id");
-    heroPanel.before(homePanel);
-    homePanel.append(heroPanel, profileContent);
-    aboutFlow?.remove();
-    aboutPanel.remove();
-  }
-
   const labDescription = main.querySelector("#creative-lab .lab-entry-copy > p:not(.eyebrow)");
   if (labDescription) {
     labDescription.textContent = "Draw freely on a blank canvas, or build a poster with type, color and shapes. Save your design as a high-resolution PNG.";
@@ -67,7 +35,7 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const railDockQuery = window.matchMedia("(min-width: 851px) and (hover: hover) and (pointer: fine)");
   const dockPreset = Object.freeze({ position: "left", smoothness: 0.5, magnification: 0.3, hoverRange: 130, iconSize: 42 });
-  const footer = document.querySelector(".footer-reveal-shell");
+  const footer = document.querySelector(".site-footer");
   const contactPanel = byKey.get("contact");
   if (footer && contactPanel && !contactPanel.element.contains(footer)) contactPanel.element.append(footer);
   const setInert = (element, value) => {
@@ -79,7 +47,6 @@
     let id = hash.slice(1);
     try { id = decodeURIComponent(id); } catch (_) {}
     if (id === "top") return { panel: byKey.get("home"), target: null };
-    if (id === "about") return { panel: byKey.get("home"), target: mobileFlowQuery.matches ? document.getElementById("about") : null };
     if (byId.has(id)) return { panel: byId.get(id), target: byId.get(id).element };
     const target = document.getElementById(id);
     if (!target) return null;

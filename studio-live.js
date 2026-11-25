@@ -40,24 +40,6 @@
   const location = safeText(site.location || "Morocco — Worldwide");
   const heroMeta = document.querySelector(".hero-meta");
   if (heroMeta?.lastElementChild) heroMeta.lastElementChild.textContent = location.toUpperCase();
-  const aboutLabel = document.querySelector(".about-image-label");
-  if (aboutLabel) aboutLabel.textContent = `${site.name || "MASSYNE"} / ${location.toUpperCase()}`;
-  const aboutHeading = document.querySelector(".about-v2-content h2");
-  if (aboutHeading && site.aboutHeadline) {
-    const parts = splitLast(site.aboutHeadline);
-    aboutHeading.replaceChildren(document.createTextNode(parts.front));
-    if (parts.last) {
-      aboutHeading.append(document.createElement("br"));
-      const emphasis = document.createElement("em");
-      emphasis.textContent = parts.last;
-      aboutHeading.append(emphasis);
-    }
-  }
-  setText(".about-v2-lead", site.aboutLead);
-  setText(".about-v2-text", site.aboutDescription);
-  document.querySelectorAll(".about-v2-image img").forEach(image => {
-    if (site.portrait) image.src = site.portrait;
-  });
   document.title = `${site.name || "MASSYNE"} — Graphic & Motion Designer`;
   document.querySelector('meta[name="description"]')?.setAttribute("content", site.headline || "");
   document.querySelector('meta[property="og:title"]')?.setAttribute("content", `${site.name || "MASSYNE"} — Graphic & Motion Designer`);
@@ -94,7 +76,7 @@
 
   const portrait = site.portrait;
   if (portrait) {
-    document.querySelectorAll(".about-v2-image img").forEach(image => {
+    document.querySelectorAll(".hero-v2-portrait img").forEach(image => {
       image.src = portrait;
     });
   }
@@ -280,7 +262,7 @@
     const css = [
       `:root { --accent: ${combo.color1}; --accent-color: ${combo.color1}; --light: ${combo.color2}; --bg: ${combo.background}; --background: ${combo.background}; --btn-bg: ${combo.button}; }`,
       `html, body { background-color: ${combo.background} !important; }`,
-      `main, section, footer, #work, #archive, #motion, #about, #services, #contact, .hero, .section { background-color: transparent !important; background-image: none !important; }`,
+      `main, section, footer, #work, #archive, #motion, #services, #contact, .hero, .section { background-color: transparent !important; background-image: none !important; }`,
       `.button-primary, .btn-primary, .hero-cta-primary, a[href*="studio.html"] { background-color: ${combo.button} !important; border-color: ${combo.button} !important; }`
     ].join("\n");
 

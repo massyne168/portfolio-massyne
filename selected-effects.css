@@ -9,9 +9,3 @@
 /* 18 — dark sections blend into the approved red; light mode retains contrast. */
 html[data-theme=dark] body #process.process-comparison,html[data-theme=dark] body #services.studio-services{background:color-mix(in srgb,#09090c calc((1 - var(--chapter-progress,1))*100%),var(--site-accent, var(--site-accent, #990011)))!important}
 html body #services .service-item,html body #services .services-list{background:transparent!important}
-/* 20 — the final strip is revealed from below, with no extra images. */
-.footer-reveal-shell.footer-reveal-ready{height:var(--footer-height,180px);position:relative;clip-path:inset(0)}
-.footer-reveal-shell.footer-reveal-ready>footer{position:fixed;inset:auto 0 0;width:100%;min-height:180px;margin:0;display:flex;align-items:center;justify-content:space-between;gap:25px;padding:45px max(clamp(20px,4.3vw,72px),calc((100% - 1416px)/2));background:var(--site-accent, var(--site-accent, #990011))!important;border-top:1px solid color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 25.1%, transparent)}
-html body .footer-reveal-shell footer,html body .footer-reveal-shell footer :is(a,span){color:var(--site-light, var(--site-light, #FCF6F5))!important}
-@media(max-width:600px){.footer-reveal-shell.footer-reveal-ready>footer{flex-wrap:wrap;gap:18px;padding:30px 5vw}.footer-reveal-shell footer .wordmark{font-size:22px}}
-@media(prefers-reduced-motion:reduce){.hero-v2-bottom .discipline-strip{transition:none}.spotlight-card.selected-tilt{transform:none!important}.footer-reveal-shell.footer-reveal-ready{height:auto;clip-path:none}.footer-reveal-shell.footer-reveal-ready>footer{position:static}}

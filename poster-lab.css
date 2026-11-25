@@ -19,7 +19,7 @@
   --text-muted: #8e95a5;
   --text-dim: #5c6270;
   --font-mono: 'IBM Plex Mono', monospace;
-  --font-display: 'Sora', sans-serif;
+  --font-display: var(--display), sans-serif;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
@@ -655,7 +655,7 @@ html, body {
   background: rgba(255, 255, 255, 0.06);
 }
 
-.heading-item strong { font-size: 1.15rem; font-weight: 800; font-family: 'Sora', sans-serif; }
+.heading-item strong { font-size: 1.15rem; font-weight: 800; font-family: var(--display), sans-serif; }
 .subheading-item strong { font-size: 0.92rem; font-weight: 600; }
 .body-item strong { font-size: 0.78rem; font-weight: 400; }
 .tech-item strong { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; color: var(--accent-red-bright); }

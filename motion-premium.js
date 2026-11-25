@@ -5,7 +5,7 @@
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   if (reduced.matches) return;
 
-  const revealSelector = 'main > section, .section-flow, .project-grid > .project, .spotlight-card, .service-item, .about-v2-stats > div, .tools > li, .case-related-card, .case-chapter-link';
+  const revealSelector = 'main > section, .section-flow, .project-grid > .project, .spotlight-card, .service-item, .tools > li, .case-related-card, .case-chapter-link';
   const revealTargets = [...document.querySelectorAll(revealSelector)]
     .filter(el => !el.closest('dialog,.site-preloader,[hidden]'));
 

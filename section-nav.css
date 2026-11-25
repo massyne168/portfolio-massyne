@@ -181,7 +181,7 @@ body.section-view-ready .site-header .menu {
 .section-panel-leaving { animation: sectionPanelLeave .24s cubic-bezier(.4, 0, 1, 1) both; pointer-events: none; }
 body.section-view-ready #top > [data-panel-section][hidden],
 body.section-view-ready #top > [hidden],
-body.section-view-ready .footer-reveal-shell[hidden] {
+body.section-view-ready .site-footer[hidden] {
   display: none !important;
 }
 @keyframes sectionPanelRise {

@@ -1,74 +1,109 @@
-.footer-reveal-shell footer { flex-wrap: wrap; gap: 14px 24px; }
-.footer-dashboard-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 42px;
-  padding: 0 14px;
-  border: 1px solid #c6293d80;
-  border-radius: 999px;
-  color: #f2e8e9;
-  font: 500 10px/1 "IBM Plex Mono", monospace;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  transition: color .22s ease, background .22s ease, border-color .22s ease, transform .22s ease;
-}
-.footer-dashboard-link:hover { transform: translateY(-2px); border-color: #ef5265; background: #c6293d1c; color: #fff; }
-.footer-dashboard-lock { width: 13px; height: 13px; color: #ef5265; }
-@media (max-width: 600px) {
-  .footer-reveal-shell footer { align-items: center; }
-  .footer-dashboard-link { min-height: 38px; padding-inline: 11px; font-size: 9px; }
+/* MASSYNE — Minimalist Dark Footer
+   #000000 background, 1px solid rgba(153,0,17,0.35) top border
+   Cream #F5EBD0 text, #990011 hover reticle on BACK TO TOP */
+
+.site-footer {
+  position: relative;
+  background: #000000;
+  border-top: 1px solid rgba(153, 0, 17, 0.35);
+  padding: clamp(28px, 3.5vw, 44px) clamp(24px, 4vw, 60px);
 }
 
-.footer-dashboard-link {
-  border-color: #ef5265;
-  background: #c6293d;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 2vw, 32px);
 }
-.footer-dashboard-link:hover {
-  border-color: #ff8290;
-  background: #dc354a;
-  color: #fff;
+
+.footer-wordmark {
+  font: 700 clamp(1.1rem, 1.8vw, 1.5rem)/1 'Syne', var(--display, sans-serif);
+  letter-spacing: -0.04em;
+  color: #F5EBD0;
+  text-decoration: none;
 }
-.dashboard-shortcut {
-  position: fixed;
-  z-index: 1200;
-  right: clamp(14px, 2.5vw, 30px);
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+
+.footer-wordmark span {
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.footer-copyright {
+  font: 400 0.75rem/1 'Space Grotesk', var(--body, sans-serif);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 208, 0.45);
+  white-space: nowrap;
+}
+
+.footer-top-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 9px;
-  min-height: 48px;
-  padding: 0 18px;
-  border: 1px solid #ff8290;
-  border-radius: 999px;
-  background: #c6293d;
-  box-shadow: 0 12px 32px #0009;
-  color: #fff;
-  font: 600 11px/1 "IBM Plex Mono", monospace;
-  letter-spacing: .12em;
-  text-decoration: none;
+  gap: 10px;
+  padding: 10px 16px;
+  font: 500 0.68rem/1 'JetBrains Mono', var(--mono, monospace);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: background-color .22s ease, box-shadow .22s ease, transform .22s ease;
+  color: #F5EBD0;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid rgba(245, 235, 208, 0.15);
+  border-radius: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
-.dashboard-shortcut:hover {
-  transform: translateY(-3px);
-  background: #dc354a;
-  box-shadow: 0 16px 38px #000a;
+
+.footer-top-btn:hover {
+  color: #FFFFFF;
+  border-color: #990011;
+  background: rgba(153, 0, 17, 0.12);
 }
-.dashboard-shortcut:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 4px;
+
+.footer-top-btn:active {
+  transform: scale(0.98);
+  transition: transform 0.05s ease;
 }
-@media (max-width: 600px) {
-  .dashboard-shortcut {
-    right: 14px;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);
-    min-height: 46px;
-    padding-inline: 15px;
-    font-size: 10px;
+
+.footer-reticle {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footer-top-btn:hover .footer-reticle {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 640px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .footer-wordmark {
+    justify-self: center;
+  }
+
+  .footer-copyright {
+    order: 3;
+  }
+
+  .footer-top-btn {
+    justify-content: center;
+    order: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-top-btn,
+  .footer-reticle {
+    transition: none;
   }
 }

@@ -2,10 +2,10 @@
 :root{
   --ink:#09090c;--ink-soft:#111115;--surface:#17171c;--paper:var(--site-light, var(--site-light, #FCF6F5));
   --muted:#aaa6a6;--red:var(--site-accent, var(--site-accent, #990011));--red-bright:var(--site-accent, var(--site-accent, #990011));--line:color-mix(in srgb, var(--site-light, var(--site-light, #FCF6F5)) 17%, transparent);
-  --display:"Space Grotesk",Arial,sans-serif;
-  --serif:"Instrument Serif",Georgia,serif;
-  --body:"Manrope",Arial,sans-serif;
-  --mono:"IBM Plex Mono",monospace;
+  --display:"Syne", "Unbounded", "Space Grotesk", Arial, sans-serif;
+  --serif:"DM Serif Display", Georgia, serif;
+  --body:"Space Grotesk", "Plus Jakarta Sans", "Manrope", Arial, sans-serif;
+  --mono:"JetBrains Mono", "IBM Plex Mono", monospace;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:85px}
