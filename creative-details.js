@@ -9,7 +9,7 @@
   const origin=event=>{const box=link.getBoundingClientRect();link.style.setProperty('--fx-link-origin',event.clientX<box.left+box.width/2?'left':'right');};
   link.addEventListener('pointerenter',origin,{passive:true});link.addEventListener('pointerleave',origin,{passive:true});
  });
- const magnetic=[...document.querySelectorAll('.gb-discover,.lab-entry-link,.brief-submit,#director-open,.case-contact-link')].filter(el=>!el.hasAttribute('data-magnetic'));
+ const magnetic=[...document.querySelectorAll('.gb-discover,.brief-submit,#director-open,.case-contact-link')].filter(el=>!el.hasAttribute('data-magnetic'));
  magnetic.forEach(el=>{
   el.classList.add('fx-magnetic');let frame=0,dx=0,dy=0;
   const reset=()=>{cancelAnimationFrame(frame);frame=0;el.style.removeProperty('translate');};
