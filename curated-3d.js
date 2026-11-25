@@ -175,7 +175,8 @@
   };
 
   // Update dynamic counts and labels
-  const updateLabels = activeIndex => {
+  // activeCategory: "all" | "mockups" — determines label wording
+  const updateLabels = (activeIndex, activeCategory = "all") => {
     if (!count) {
       if (positionLabel) positionLabel.textContent = "00 / 00";
       if (currentName) currentName.textContent = "No matching projects";
@@ -193,17 +194,15 @@
       const value = labelFor(selected) + suffix;
       if (currentName.textContent !== value) currentName.textContent = value;
     }
+    const isMockupsView = activeCategory === "mockups";
     if (countLabel) {
-      const isMock = cards.some(c => (c.dataset.discoverCategories || "").includes("mockups"));
-      countLabel.textContent = `${isMock ? "MOCKUP STUDIO" : "CURATED WORKS"} — ${String(count).padStart(2, "0")} WORKS`;
+      countLabel.textContent = `${isMockupsView ? "MOCKUP STUDIO" : "CURATED WORKS"} — ${String(count).padStart(2, "0")} WORKS`;
     }
     if (discoverCount) {
-      const isMock = cards.some(c => (c.dataset.discoverCategories || "").includes("mockups"));
-      discoverCount.textContent = `${count} ${isMock ? "mockups" : "original works"}`;
+      discoverCount.textContent = `${count} ${isMockupsView ? "mockups" : "original works"}`;
     }
     if (discoverSearch) {
-      const isMock = cards.some(c => (c.dataset.discoverCategories || "").includes("mockups"));
-      discoverSearch.placeholder = `Search ${count} ${isMock ? "mockups" : "works"}…`;
+      discoverSearch.placeholder = `Search ${count} ${isMockupsView ? "mockups" : "works"}…`;
     }
   };
 
@@ -321,7 +320,7 @@
 
       if (closestIdx !== active) {
         active = closestIdx;
-        updateLabels(active);
+        updateLabels(active, currentFilterCategory);
       }
     }
 
@@ -390,7 +389,7 @@
     });
 
     if (is3D) {
-      updateLabels(active);
+      updateLabels(active, currentFilterCategory);
       if (!animationId) animationId = window.requestAnimationFrame(physicsLoop);
     } else {
       cards.forEach(card => {
@@ -586,6 +585,7 @@
 
   // Live Category Filtering Integration (All Artwork & Mockups)
   const filterButtons = [...document.querySelectorAll("#work [data-discover-category]")];
+  let currentFilterCategory = "all"; // Track active filter for label wording
 
   const isMockupCard = card => {
     const cats = (card.dataset.discoverCategories || "").toLowerCase();
@@ -594,6 +594,7 @@
 
   function applyCategoryFilter(category) {
     const isMockupsCat = category === "mockups";
+    currentFilterCategory = category; // Track for label wording
 
     allCards.forEach(card => {
       const isMock = isMockupCard(card);
@@ -624,7 +625,7 @@
     drag = null;
     grid.classList.remove("is-dragging");
 
-    updateLabels(0);
+    updateLabels(0, currentFilterCategory);
     updateScrubber(0, count);
     updatePlayback();
   }
@@ -645,7 +646,7 @@
     active = 0;
     drag = null;
     grid.classList.remove("is-dragging");
-    updateLabels(0);
+    updateLabels(0, currentFilterCategory);
     updateScrubber(0, count);
     updatePlayback();
   });
@@ -663,5 +664,5 @@
 
   // Activate 3D Orbital Ring layout
   setView("3d");
-  updateLabels(0);
+  updateLabels(0, currentFilterCategory);
 })();
