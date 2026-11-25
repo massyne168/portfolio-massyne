@@ -1,0 +1,399 @@
+/* MASSYNE — Services Packages & Scope Tiers.
+   Dark Obsidian / Crimson #990011 / Liquid Glass aesthetic.
+   Mobile-first with 850px desktop breakpoint aligned with section-nav.js. */
+
+html[data-theme] body #services .studio-packages {
+  margin-top: clamp(32px, 4.5vw, 56px);
+  padding-top: clamp(26px, 3.6vw, 44px);
+  border-top: 1px solid rgba(153, 0, 17, 0.3);
+}
+
+html[data-theme] body #services .studio-packages-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.85fr);
+  align-items: end;
+  gap: 16px clamp(20px, 4vw, 56px);
+  margin-bottom: clamp(22px, 3vw, 34px);
+}
+
+/* Override !important color rules from brand-sections.css & scroll-chapters.css */
+html[data-theme] body #services .studio-packages-head .eyebrow {
+  margin: 0 0 10px;
+  color: #990011 !important;
+}
+
+html[data-theme] body #services .studio-packages-head h3 {
+  margin: 0;
+  font: 600 clamp(2rem, 3.6vw, 3.4rem)/0.98 'Sora', var(--display, sans-serif);
+  letter-spacing: -0.055em;
+  color: #F5EBD0 !important;
+  text-wrap: balance;
+}
+
+html[data-theme] body #services .studio-packages-head h3 em {
+  font: italic 400 1.06em/1 'DM Serif Display', var(--serif, serif) !important;
+  letter-spacing: -0.02em;
+  color: #990011 !important;
+}
+
+html[data-theme] body #services .studio-packages-note {
+  margin: 0;
+  max-width: 440px;
+  justify-self: end;
+  font: 400 0.9rem/1.65 'Manrope', var(--body, sans-serif);
+  color: rgba(245, 235, 208, 0.62) !important;
+}
+
+/* Grid + Subgrid so all 3 package cards align across header, price, deliverables, and CTA */
+html[data-theme] body #services .packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto 1fr auto;
+  gap: clamp(14px, 1.8vw, 22px);
+  align-items: stretch;
+}
+
+/* Card base — Dark Obsidian with Liquid Glass surface */
+html[data-theme] body #services .package-card {
+  position: relative;
+  min-width: 0;
+  min-inline-size: 0;
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: subgrid;
+  row-gap: 16px;
+  padding: clamp(22px, 2.4vw, 30px);
+  border-radius: 22px;
+  background: #0d0d0f;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(5px) saturate(165%) brightness(1.06);
+  backdrop-filter: blur(5px) saturate(165%) brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 24px 56px rgba(0, 0, 0, 0.55);
+  transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Corner reticles - default hidden, show on hover/active */
+html[data-theme] body #services .package-card::before,
+html[data-theme] body #services .package-card::after,
+html[data-theme] body #services .package-card .reticle::before,
+html[data-theme] body #services .package-card .reticle::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #990011;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+html[data-theme] body #services .package-card::before { top: 1px; left: 1px; border-right: none; border-bottom: none; }
+html[data-theme] body #services .package-card::after { top: 1px; right: 1px; border-left: none; border-bottom: none; }
+html[data-theme] body #services .package-card .reticle::before { bottom: 1px; left: 1px; border-right: none; border-top: none; }
+html[data-theme] body #services .package-card .reticle::after { bottom: 1px; right: 1px; border-left: none; border-top: none; }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-theme] body #services .package-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(153, 0, 17, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+      0 28px 64px rgba(153, 0, 17, 0.18),
+      0 0 0 1px rgba(153, 0, 17, 0.15);
+  }
+
+  html[data-theme] body #services .package-card:hover::before,
+  html[data-theme] body #services .package-card:hover::after,
+  html[data-theme] body #services .package-card:hover .reticle::before,
+  html[data-theme] body #services .package-card:hover .reticle::after {
+    opacity: 1;
+  }
+
+  html[data-theme] body #services .package-card:active {
+    transform: translateY(-1px) scale(0.995);
+    transition: transform 0.05s ease, border-color 0.1s ease, box-shadow 0.1s ease;
+  }
+}
+
+/* Featured card — Crimson tint */
+html[data-theme] body #services .package-card.is-featured {
+  background: linear-gradient(160deg, #0d0d0f 0%, #1a0508 50%, #0d0d0f 100%);
+  border-color: rgba(153, 0, 17, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(153, 0, 17, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 28px 64px rgba(153, 0, 17, 0.22);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-theme] body #services .package-card.is-featured:hover {
+    border-color: rgba(153, 0, 17, 0.8);
+    box-shadow:
+      inset 0 1px 0 rgba(153, 0, 17, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+      0 32px 72px rgba(153, 0, 17, 0.28),
+      0 0 0 1px rgba(153, 0, 17, 0.25);
+  }
+}
+
+html[data-theme] body #services .package-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+html[data-theme] body #services .package-kicker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+html[data-theme] body #services .package-index {
+  font: 500 0.68rem/1.2 'IBM Plex Mono', var(--mono, monospace);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #990011 !important;
+}
+
+html[data-theme] body #services .package-card.is-featured .package-index {
+  color: #cc1122 !important;
+}
+
+html[data-theme] body #services .package-badge {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(153, 0, 17, 0.9);
+  border: 1px solid rgba(204, 17, 34, 0.5);
+  font: 600 0.58rem/1 'IBM Plex Mono', var(--mono, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #FFFFFF !important;
+}
+
+html[data-theme] body #services .package-head h4 {
+  margin: 2px 0 0;
+  font: 600 clamp(1.35rem, 1.9vw, 1.75rem)/1.12 'Sora', var(--display, sans-serif);
+  letter-spacing: -0.04em;
+  color: #FFFFFF !important;
+}
+
+html[data-theme] body #services .package-summary {
+  margin: 0;
+  font: 400 0.86rem/1.55 'Manrope', var(--body, sans-serif);
+  color: rgba(245, 235, 208, 0.68) !important;
+}
+
+html[data-theme] body #services .package-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme] body #services .package-amount {
+  font: 700 clamp(1.45rem, 2.2vw, 1.95rem)/1.05 'Sora', var(--display, sans-serif);
+  letter-spacing: -0.04em;
+  color: #F5EBD0 !important;
+}
+
+html[data-theme] body #services .package-card.is-featured .package-amount {
+  color: #FFFFFF !important;
+}
+
+html[data-theme] body #services .package-timeline {
+  font: 500 0.65rem/1.2 'IBM Plex Mono', var(--mono, monospace);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 208, 0.52) !important;
+}
+
+html[data-theme] body #services .package-features {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-self: start;
+}
+
+html[data-theme] body #services .package-features li {
+  position: relative;
+  padding-left: 18px;
+  font: 400 0.85rem/1.5 'Manrope', var(--body, sans-serif);
+  color: rgba(245, 235, 208, 0.82) !important;
+}
+
+html[data-theme] body #services .package-features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.48em;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  background: #990011;
+}
+
+html[data-theme] body #services .package-card.is-featured .package-features li::before {
+  background: #cc1122;
+}
+
+html[data-theme] body #services .package-foot {
+  padding-top: 6px;
+  align-self: end;
+}
+
+/* CTA Button - Liquid Glass Pill with Crimson accent */
+html[data-theme] body #services .package-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 18px !important;
+  font: 600 0.68rem/1.1 'IBM Plex Mono', var(--mono, monospace) !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #FFFFFF !important;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(6px) saturate(160%);
+  backdrop-filter: blur(6px) saturate(160%);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+html[data-theme] body #services .package-cta:hover {
+  background: linear-gradient(145deg, rgba(153, 0, 17, 0.18) 0%, rgba(153, 0, 17, 0.08) 100%);
+  border-color: rgba(153, 0, 17, 0.4);
+  box-shadow: 0 0 0 1px rgba(153, 0, 17, 0.15), 0 8px 24px rgba(153, 0, 17, 0.12);
+}
+
+html[data-theme] body #services .package-cta:active {
+  transform: scale(0.98);
+  transition: transform 0.05s ease;
+}
+
+html[data-theme] body #services .package-cta:focus-visible {
+  outline: 2px solid #990011;
+  outline-offset: 3px;
+}
+
+/* Primary CTA (featured card) */
+html[data-theme] body #services .package-cta.is-primary {
+  background: linear-gradient(145deg, rgba(153, 0, 17, 0.28) 0%, rgba(153, 0, 17, 0.14) 100%);
+  border-color: rgba(153, 0, 17, 0.5);
+  box-shadow: 0 0 0 1px rgba(153, 0, 17, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme] body #services .package-cta.is-primary:hover {
+  background: linear-gradient(145deg, rgba(153, 0, 17, 0.38) 0%, rgba(153, 0, 17, 0.2) 100%);
+  border-color: rgba(153, 0, 17, 0.7);
+  box-shadow: 0 0 0 1px rgba(153, 0, 17, 0.25), 0 8px 28px rgba(153, 0, 17, 0.18);
+}
+
+html[data-theme] body #services .package-cta span:last-child {
+  font-size: 0.85em;
+  opacity: 0.8;
+  transition: transform 0.15s ease;
+}
+
+html[data-theme] body #services .package-cta:hover span:last-child {
+  transform: translateX(3px);
+}
+
+/* Custom-quote footnote under packages */
+html[data-theme] body #services .packages-custom-note {
+  margin: 16px 0 0;
+  font: 400 0.82rem/1.6 'Manrope', var(--body, sans-serif);
+  color: rgba(245, 235, 208, 0.52) !important;
+}
+
+html[data-theme] body #services .packages-custom-note a {
+  color: #990011 !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.15s ease;
+}
+
+html[data-theme] body #services .packages-custom-note a:hover {
+  color: #cc1122 !important;
+}
+
+/* Highlight #project-brief gently when pre-filled from a package card */
+@keyframes briefPrefillPulse {
+  0% { box-shadow: 0 0 0 0 rgba(153, 0, 17, 0.55); }
+  100% { box-shadow: 0 0 0 14px rgba(153, 0, 17, 0); }
+}
+
+#contact #project-brief.is-prefilled {
+  animation: briefPrefillPulse 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Tablet & Mobile breakpoints aligned with section-nav.js (850px threshold) */
+@media (max-width: 1040px) {
+  html[data-theme] body #services .packages-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  html[data-theme] body #services .package-card {
+    grid-row: auto;
+    grid-template-rows: auto;
+    row-gap: 14px;
+  }
+}
+
+@media (max-width: 850px) {
+  html[data-theme] body #services .studio-packages-head {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  html[data-theme] body #services .studio-packages-note {
+    justify-self: start;
+    max-width: none;
+  }
+
+  html[data-theme] body #services .package-card {
+    padding: 20px 18px;
+    border-radius: 18px;
+  }
+
+  html[data-theme] body #services .package-cta {
+    min-height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme] body #services .package-card,
+  #contact #project-brief.is-prefilled {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  html[data-theme] body #services .package-card::before,
+  html[data-theme] body #services .package-card::after,
+  html[data-theme] body #services .package-card .reticle::before,
+  html[data-theme] body #services .package-card .reticle::after {
+    display: none;
+  }
+}
