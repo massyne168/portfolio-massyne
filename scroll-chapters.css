@@ -14,11 +14,11 @@
 #contact::before{background:radial-gradient(ellipse at 76% 12%,color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 12.5%, transparent),transparent 46%)}
 #process .comparison{box-shadow:0 28px 90px #09090c35}
 #motion .showreel-screen{border-color:color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 40%, transparent);box-shadow:0 24px 80px #0005}
-#archive .archive-item{transition:transform .55s cubic-bezier(.2,.7,.2,1),box-shadow .45s,border-color .35s}
 #archive .archive-item:hover{transform:translateY(-8px);box-shadow:0 24px 58px #0007}
 #contact .project-brief{border-top:1px solid color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 33.3%, transparent)}
 
 @media(prefers-reduced-motion:no-preference){
+ #archive .archive-item{transition:transform .55s cubic-bezier(.2,.7,.2,1),box-shadow .45s,border-color .35s}
  .flow-enabled .flow-section.is-visible{transition:opacity .8s ease,translate .8s cubic-bezier(.18,.72,.2,1)}
  .flow-enabled #work .section-head,.flow-enabled #work .gallery-toolbar,.flow-enabled #work .discover-tools,.flow-enabled #work .discover-footer,.flow-enabled #work .curated-stage,
  .flow-enabled #archive .section-head,.flow-enabled #archive .archive-item,
@@ -41,21 +41,18 @@
  .flow-enabled #archive .archive-item:nth-child(3n+1){transition-delay:.04s}.flow-enabled #archive .archive-item:nth-child(3n+2){transition-delay:.12s}.flow-enabled #archive .archive-item:nth-child(3n){transition-delay:.2s}
  .flow-enabled #services .service-item:nth-child(2){transition-delay:.08s}.flow-enabled #services .service-item:nth-child(3){transition-delay:.16s}.flow-enabled #services .service-item:nth-child(4){transition-delay:.24s}
  .flow-enabled #contact>h2{transition-delay:.08s}.flow-enabled #contact .availability-block{transition-delay:.14s}.flow-enabled #contact .contact-v2-bottom{transition-delay:.2s}.flow-enabled #contact .project-brief{transition-delay:.26s}
- .flow-enabled .section-flow-line{transform:scaleY(.08);transition:transform .75s cubic-bezier(.2,.6,.3,1)}
- .flow-enabled .section-flow-diamond{opacity:1;animation:crimsonPulse 2.5s ease-in-out infinite}
+ .flow-enabled .section-flow-line{transform:scaleY(1);transition:transform .75s cubic-bezier(.2,.6,.3,1)}
+ .flow-enabled .section-flow-diamond{opacity:1;animation:sectionFlowPulse 2.5s ease-in-out infinite}
  .flow-enabled .section-flow.is-visible .section-flow-line{transform:scaleY(1)}
  .flow-enabled .section-flow.is-visible .section-flow-diamond{opacity:1}
 }
-@keyframes chapter-line-flow{to{background-position:220% 0}}
-@media(prefers-reduced-motion:reduce){#archive .archive-item{transition:none}}
+@media(prefers-reduced-motion:reduce){
+ #archive .archive-item{transition:none}
+ .flow-enabled #archive .archive-item{opacity:1!important;translate:none!important}
+}
 @media(max-width:700px){.section-flow{padding-block:16px 8px}#identity .gb-teaser-logo{max-width:100%}}
-/* Editorial headline system: one strong face, one expressive accent, one quiet index. */
-:root{--chapter-display:"Space Grotesk",sans-serif;--chapter-serif:"Instrument Serif",serif;--chapter-index:"IBM Plex Mono",monospace}
-#work .section-head h2,#process h2,#identity h2,#motion h2,#archive h2,#services h2,#contact>h2{font-family:var(--chapter-display);font-weight:600;letter-spacing:-.065em;text-wrap:balance}
-#work .section-head h2 em,#process h2 em,#motion h2 em,#archive h2 em,#services h2 em,#contact>h2 em{font-family:var(--chapter-serif);font-style:italic;font-weight:400;letter-spacing:-.02em}
-#identity h2{letter-spacing:.025em}
-#work .eyebrow,#process .eyebrow,#identity .eyebrow,#motion .eyebrow,#archive .eyebrow,#services .eyebrow,#contact .eyebrow{font-family:var(--chapter-index);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}
-
+/* Eyebrow typography - preserved from editorial system */
+#work .eyebrow,#process .eyebrow,#identity .eyebrow,#motion .eyebrow,#archive .eyebrow,#services .eyebrow,#contact .eyebrow{font-family:var(--mono, 'IBM Plex Mono',monospace);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase}
 
 /* Theme-aware section canvases and chapter banners. */
 html[data-theme="dark"]{--chapter-canvas:#09090c;--chapter-ink:var(--site-light, var(--site-light, #FCF6F5));--chapter-soft:#171419;--chapter-accent:var(--site-accent, var(--site-accent, #990011));--chapter-muted:#d4d1c5}
