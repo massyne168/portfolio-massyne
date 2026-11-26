@@ -26,12 +26,12 @@
 
 /* Body hidden until unlocked */
 body.m-gate-hidden {
-  visibility: hidden;
+  visibility: hidden !important;
 }
 
-/* Body visible when unlocked */
+/* Body visible when unlocked - !important overrides inline <style>body { visibility: hidden; }</style> */
 body.m-gate-unlocked {
-  visibility: visible;
+  visibility: visible !important;
 }
 
 /* Overlay is always visible when lock is active */
