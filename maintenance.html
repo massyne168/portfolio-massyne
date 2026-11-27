@@ -5,57 +5,37 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#050608">
-  <title>MASSYNE — Maintenance Mode</title>
+  <title>MASSYNE — Creative Portfolio</title>
   <link rel="icon" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"></noscript>
   <style>
-    /* ===== CSS Custom Properties ===== */
     :root {
       --ink: #050608;
-      --ink-soft: #0a0b0f;
-      --surface: #0f1014;
       --paper: #f5ebd0;
       --muted: #8a8487;
       --red: #c81024;
       --red-bright: #e84d5a;
       --red-dim: #7f011f;
-      --silver: #c0c0c0;
-      --silver-dim: #9a9598;
-      --glass-bg: rgba(20, 20, 28, 0.55);
-      --glass-border: rgba(245, 235, 208, 0.14);
-      --glass-border-bright: rgba(255, 255, 255, 0.22);
-      --glass-shadow: 0 0 80px rgba(125, 1, 31, 0.35), 0 0 120px rgba(200, 16, 36, 0.18), 0 24px 60px rgba(0, 0, 0, 0.5);
-      --glass-shadow-hover: 0 0 100px rgba(125, 1, 31, 0.45), 0 0 160px rgba(200, 16, 36, 0.25), 0 32px 80px rgba(0, 0, 0, 0.6);
-      --focus: #ff6b7a;
+      --glass-blur: 10px;
+      --glass-radius: 36px;
+      --glass-tint: 0.01;
+      --glass-border: rgba(255, 255, 255, 0.16);
+      --glass-border-bright: rgba(255, 255, 255, 0.28);
+      --glass-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.62),
+        0 0 90px rgba(127, 1, 31, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06);
       --font-display: "Syne", "Space Grotesk", Arial, sans-serif;
       --font-serif: "DM Serif Display", Georgia, serif;
       --font-body: "Manrope", "Space Grotesk", Arial, sans-serif;
-      --font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
-      /* Shader R parameters */
-      --shader-scale: 1.65;
-      --shader-distortion: 1.8;
-      --shader-grain: 0.4;
-      --shader-contrast: 1.45;
-      --shader-speed: 0.4;
-      --shader-color-a: #1f0000;
-      --shader-color-b: #101010;
-      --shader-color-c: #8a0000;
+      --font-mono: "JetBrains Mono", monospace;
     }
 
-    /* ===== Reset & Base ===== */
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
 
     body {
       margin: 0;
@@ -74,10 +54,6 @@
     }
 
     ::selection { background: var(--red); color: var(--paper); }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; cursor: pointer; border: none; background: none; }
-    input { font: inherit; color: inherit; }
-    :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 
     /* ===== Shader R WebGL Background ===== */
     #shader-canvas {
@@ -90,129 +66,86 @@
       pointer-events: none;
     }
 
-    /* Fallback CSS background for non-WebGL browsers */
     .bg-fallback {
       position: fixed;
       inset: 0;
       z-index: -1;
       pointer-events: none;
       background:
-        radial-gradient(ellipse 60% 50% at 50% 20%, rgba(138, 0, 0, 0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 80% 60% at 80% 80%, rgba(31, 0, 0, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 10% 90%, rgba(16, 16, 16, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 65% 55% at 50% 25%, rgba(138, 0, 0, 0.24) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 60% at 80% 80%, rgba(127, 1, 31, 0.16) 0%, transparent 60%),
         var(--ink);
-      animation: bg-shift 20s ease-in-out infinite alternate;
     }
 
-    @keyframes bg-shift {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
-      50% { transform: translate(-2%, 1%) scale(1.02); opacity: 1; }
-      100% { transform: translate(2%, -1%) scale(0.98); opacity: 0.8; }
-    }
-
-    .bg-grid-fallback {
+    .grain-overlay {
       position: fixed;
       inset: 0;
-      z-index: -1;
+      z-index: 1;
       pointer-events: none;
-      background-image:
-        linear-gradient(rgba(192, 192, 192, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(192, 192, 192, 0.015) 1px, transparent 1px);
-      background-size: 80px 80px;
-      animation: grid-drift 60s linear infinite;
-      opacity: 0;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    @keyframes grid-drift {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(80px, 80px); }
-    }
-
-    .bg-scanline-fallback {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.02) 2px,
-        rgba(0,0,0,0.02) 4px
-      );
-      animation: scanline 8s linear infinite;
-      opacity: 0;
-    }
-
-    @keyframes scanline {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
-    }
-
-    /* ===== Main Container ===== */
+    /* ===== Main Shell ===== */
     .maintenance-shell {
       position: relative;
       z-index: 10;
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px);
     }
 
-    /* ===== Liquid Glass Card ===== */
+    /* ===== Liquid Glass Card (blur: 10px | radius: 36px | tint: 1%) ===== */
     .glass-card {
+      --mx: 50%;
+      --my: 25%;
       position: relative;
-      width: min(100%, 520px);
-      max-width: 92vw;
-      background: var(--glass-bg);
-      backdrop-filter: blur(32px) saturate(180%);
-      -webkit-backdrop-filter: blur(32px) saturate(180%);
+      width: min(100%, 540px);
+      background: rgba(255, 255, 255, var(--glass-tint));
+      backdrop-filter: blur(var(--glass-blur)) saturate(185%) brightness(1.08);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(185%) brightness(1.08);
       border: 1px solid var(--glass-border);
-      border-radius: 28px;
+      border-radius: var(--glass-radius);
       box-shadow: var(--glass-shadow);
-      padding: clamp(40px, 6vw, 64px) clamp(32px, 5vw, 56px);
+      padding: clamp(44px, 6vw, 68px) clamp(28px, 5vw, 56px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: clamp(28px, 4vw, 44px);
+      gap: clamp(24px, 3.5vw, 34px);
       text-align: center;
       overflow: hidden;
-      transition: box-shadow 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
     .glass-card::before {
       content: "";
       position: absolute;
       inset: 0;
-      border-radius: 28px;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.06) 0%,
-        rgba(255, 255, 255, 0.015) 40%,
-        rgba(255, 255, 255, 0) 60%,
-        rgba(255, 255, 255, 0.01) 100%
+      border-radius: inherit;
+      background: radial-gradient(
+        420px circle at var(--mx) var(--my),
+        rgba(255, 255, 255, 0.14),
+        rgba(255, 255, 255, 0.02) 45%,
+        transparent 75%
       );
       pointer-events: none;
-      opacity: 0.6;
     }
 
     .glass-card::after {
       content: "";
       position: absolute;
       top: 0;
-      left: 0;
-      right: 0;
+      left: 12%;
+      right: 12%;
       height: 1px;
-      border-radius: 28px 28px 0 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.48), transparent);
       pointer-events: none;
     }
 
     .glass-card:hover {
-      box-shadow: var(--glass-shadow-hover);
       border-color: var(--glass-border-bright);
     }
 
@@ -221,29 +154,28 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: clamp(12px, 2vw, 20px);
-      margin-bottom: clamp(8px, 1.5vw, 16px);
+      gap: 14px;
     }
 
     .logo-img {
-      width: clamp(100px, 18vw, 140px);
+      width: clamp(96px, 16vw, 132px);
       height: auto;
-      filter: drop-shadow(0 0 40px rgba(200, 16, 36, 0.4));
+      filter: drop-shadow(0 0 36px rgba(200, 16, 36, 0.42));
       animation: logo-pulse 5s ease-in-out infinite;
     }
 
     @keyframes logo-pulse {
-      0%, 100% { filter: drop-shadow(0 0 30px rgba(200, 16, 36, 0.35)); }
-      50% { filter: drop-shadow(0 0 50px rgba(200, 16, 36, 0.55)); }
+      0%, 100% { filter: drop-shadow(0 0 28px rgba(200, 16, 36, 0.35)); }
+      50% { filter: drop-shadow(0 0 48px rgba(200, 16, 36, 0.58)); }
     }
 
     .wordmark {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      font-size: clamp(1.9rem, 4.2vw, 2.6rem);
       letter-spacing: -0.07em;
+      line-height: 1;
       color: var(--paper);
-      text-shadow: 0 2px 20px rgba(200, 16, 36, 0.2);
     }
 
     .wordmark span {
@@ -254,569 +186,121 @@
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: clamp(10px, 1.5vw, 14px);
-      padding: clamp(12px, 2vw, 16px) clamp(20px, 3vw, 32px);
-      background: linear-gradient(135deg, rgba(200, 16, 36, 0.35), rgba(125, 1, 31, 0.45), rgba(153, 0, 17, 0.38));
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      gap: 10px;
+      padding: 10px 22px;
+      background: rgba(127, 1, 31, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 100px;
-      backdrop-filter: blur(16px) saturate(200%);
-      -webkit-backdrop-filter: blur(16px) saturate(200%);
-      font: 600 clamp(0.8rem, 1.8vw, 1rem) var(--font-mono);
+      font: 600 clamp(0.72rem, 1.4vw, 0.82rem) var(--font-mono);
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--paper);
-      cursor: default;
-      animation: badge-glow 3s ease-in-out infinite;
-    }
-
-    @keyframes badge-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(200, 16, 36, 0.2), inset 0 1px 0 rgba(255,255,255,0.1); }
-      50% { box-shadow: 0 0 35px rgba(200, 16, 36, 0.35), inset 0 1px 0 rgba(255,255,255,0.15); }
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
     }
 
     .status-dot {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--red-bright);
-      box-shadow: 0 0 16px var(--red-bright), 0 0 32px var(--red);
-      animation: dot-pulse 1.5s ease-in-out infinite;
+      box-shadow: 0 0 14px var(--red-bright), 0 0 28px var(--red);
+      animation: dot-pulse 1.8s ease-in-out infinite;
       flex-shrink: 0;
     }
 
     @keyframes dot-pulse {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.7; }
+      50% { transform: scale(1.25); opacity: 0.65; }
     }
 
-    /* ===== Typography ===== */
+    /* ===== Editorial Copy ===== */
     .headline {
       font-family: var(--font-display);
-      font-weight: 600;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      line-height: 1.05;
+      font-weight: 700;
+      font-size: clamp(1.75rem, 3.8vw, 2.45rem);
+      line-height: 1.08;
       letter-spacing: -0.04em;
+      text-transform: uppercase;
       color: var(--paper);
       margin: 0;
-      margin-top: clamp(8px, 1.5vw, 16px);
     }
 
     .headline em {
+      display: block;
       font-family: var(--font-serif);
       font-style: italic;
       font-weight: 400;
+      text-transform: none;
       color: var(--red-bright);
       letter-spacing: -0.02em;
+      margin-top: 4px;
     }
 
     .subtext {
-      font-family: var(--font-body);
+      font-family: var(--font-mono);
       font-weight: 400;
-      font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-      line-height: 1.6;
-      color: rgba(245, 235, 208, 0.65);
+      font-size: clamp(0.76rem, 1.35vw, 0.86rem);
+      line-height: 1.7;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245, 235, 208, 0.72);
       margin: 0;
-      max-width: 420px;
-      letter-spacing: 0.01em;
-    }
-
-    /* ===== Progress Indicator ===== */
-    .progress-wrap {
-      width: 100%;
-      max-width: 360px;
-      margin-top: clamp(4px, 1vw, 8px);
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 100px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-track::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      animation: progress-shine 2s ease-in-out infinite;
-    }
-
-    @keyframes progress-shine {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 100px;
-      background: linear-gradient(90deg, var(--red-dim), var(--red), var(--red-bright), var(--red));
-      background-size: 200% 100%;
-      box-shadow: 0 0 20px rgba(200, 16, 36, 0.5), 0 0 40px rgba(200, 16, 36, 0.3);
-      animation: progress-grow 3s ease-in-out infinite, progress-flow 2s linear infinite;
-      transform-origin: left;
-    }
-
-    @keyframes progress-grow {
-      0%, 100% { width: 0%; }
-      50% { width: 100%; }
-    }
-
-    @keyframes progress-flow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
-    }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      font: 500 clamp(0.7rem, 1.2vw, 0.8rem) var(--font-mono);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .progress-label span:last-child {
-      color: var(--red-bright);
-    }
-
-    /* ===== Form ===== */
-    .auth-form {
-      width: 100%;
-      max-width: 360px;
-      margin-top: clamp(8px, 1.5vw, 16px);
-      display: flex;
-      flex-direction: column;
-      gap: clamp(16px, 2.5vw, 22px);
-    }
-
-    .form-label {
-      display: block;
-      font: 500 clamp(0.7rem, 1.2vw, 0.8rem) var(--font-mono);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(245, 235, 208, 0.7);
-      margin-bottom: 10px;
-      text-align: left;
-    }
-
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .pass-input {
-      flex: 1;
-      width: 100%;
-      padding: clamp(16px, 2.5vw, 18px) clamp(20px, 3vw, 24px);
-      padding-right: 60px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--paper);
-      font: 500 clamp(1rem, 1.8vw, 1.15rem) var(--font-body);
-      text-align: center;
-      letter-spacing: 0.2em;
-      outline: none;
-      transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-    }
-
-    .pass-input::placeholder {
-      color: rgba(245, 235, 208, 0.35);
-      letter-spacing: 0.15em;
-    }
-
-    .pass-input:hover {
-      border-color: rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .pass-input:focus {
-      border-color: var(--red-bright);
-      background: rgba(255, 255, 255, 0.07);
-      box-shadow: 0 0 0 3px rgba(200, 16, 36, 0.2), 0 0 30px rgba(200, 16, 36, 0.15);
-    }
-
-    .pass-input[aria-invalid="true"] {
-      border-color: #ff4d5a;
-      box-shadow: 0 0 0 3px rgba(255, 77, 90, 0.2);
-    }
-
-    .toggle-btn {
-      position: absolute;
-      right: clamp(12px, 2vw, 16px);
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.2s ease;
-    }
-
-    .toggle-btn:hover {
-      color: var(--paper);
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .toggle-btn:focus-visible {
-      outline: 2px solid var(--focus);
-      outline-offset: 2px;
-    }
-
-    .toggle-btn svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-    }
-
-    /* ===== Shatter Halo Drift Button ===== */
-    .shatter-btn {
-      position: relative;
-      width: 100%;
-      padding: clamp(18px, 3vw, 22px) clamp(28px, 4vw, 36px);
-      margin-top: clamp(4px, 1vw, 8px);
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--red) 0%, var(--red-dim) 50%, #990011 100%);
-      color: var(--paper);
-      font: 600 clamp(0.9rem, 1.6vw, 1rem) var(--font-mono);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      transition: transform 0.18s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-      backdrop-filter: blur(12px) saturate(160%);
-      -webkit-backdrop-filter: blur(12px) saturate(160%);
-      box-shadow:
-        0 8px 30px rgba(125, 1, 31, 0.45),
-        0 0 0 1px rgba(255, 255, 255, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .shatter-btn::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 50%);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      z-index: -1;
-    }
-
-    .shatter-btn:hover {
-      transform: translateY(-2px) scale(1.015);
-      background: linear-gradient(135deg, var(--red-bright) 0%, var(--red) 50%, var(--red-dim) 100%);
-      box-shadow:
-        0 14px 40px rgba(200, 16, 36, 0.55),
-        0 0 0 1px rgba(255, 255, 255, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    }
-
-    .shatter-btn:hover::before {
-      opacity: 1;
-    }
-
-    .shatter-btn:active {
-      transform: translateY(0) scale(0.98);
-    }
-
-    .shatter-btn:focus-visible {
-      outline: 2px solid var(--focus);
-      outline-offset: 3px;
-    }
-
-    .shatter-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .shatter-btn .btn-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .shatter-btn .btn-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    .shatter-btn .spinner {
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(255, 255, 255, 0.25);
-      border-top-color: var(--paper);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      display: none;
-    }
-
-    .shatter-btn.loading .spinner {
-      display: block;
-    }
-
-    .shatter-btn.loading .btn-label {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Shatter Halo ASCII particles */
-    .shatter-particles {
-      position: absolute;
-      inset: -4px;
-      pointer-events: none;
-      overflow: visible;
-      z-index: 2;
-    }
-
-    .shatter-particle {
-      position: absolute;
-      font: 500 11px var(--font-mono);
-      color: var(--paper);
-      text-shadow: 0 0 8px var(--red-bright), 0 0 16px var(--red);
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.5);
-      white-space: nowrap;
-      pointer-events: none;
-      will-change: transform, opacity;
-    }
-
-    .shatter-btn.shattering .shatter-particle {
-      animation: shatter-burst 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    @keyframes shatter-burst {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotate(0deg);
-      }
-      30% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.1) rotate(var(--rotate));
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--tx), var(--ty)) scale(0.3) rotate(calc(var(--rotate) * 2));
-      }
-    }
-
-    /* Halo ring effect */
-    .shatter-halo {
-      position: absolute;
-      inset: -2px;
-      border-radius: 18px;
-      border: 1px solid transparent;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .shatter-btn:hover .shatter-halo {
-      animation: halo-pulse 1.5s ease-out forwards;
-    }
-
-    @keyframes halo-pulse {
-      0% {
-        border-color: rgba(200, 16, 36, 0.6);
-        box-shadow: 0 0 0 0 rgba(200, 16, 36, 0.4), inset 0 0 0 0 rgba(200, 16, 36, 0.2);
-        opacity: 1;
-      }
-      100% {
-        border-color: transparent;
-        box-shadow: 0 0 30px 10px rgba(200, 16, 36, 0), inset 0 0 40px 15px rgba(200, 16, 36, 0);
-        opacity: 0;
-      }
-    }
-
-    /* ===== Error Message ===== */
-    .error-msg {
-      min-height: 24px;
-      font: 500 clamp(0.75rem, 1.3vw, 0.85rem) var(--font-mono);
-      letter-spacing: 0.1em;
-      text-align: center;
-      color: #ff6b6b;
-      opacity: 0;
-      transform: translateY(-4px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-    }
-
-    .error-msg.visible {
-      opacity: 1;
-      transform: translateY(0);
+      max-width: 400px;
     }
 
     /* ===== Footer ===== */
     .footer-note {
-      margin-top: clamp(16px, 3vw, 24px);
-      padding-top: clamp(20px, 3vw, 28px);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .footer-text {
-      font: 400 clamp(0.75rem, 1.2vw, 0.85rem) var(--font-body);
-      color: var(--muted);
-      letter-spacing: 0.02em;
-    }
-
-    .footer-link {
-      font: 500 clamp(0.7rem, 1.2vw, 0.8rem) var(--font-mono);
-      letter-spacing: 0.12em;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font: 500 clamp(0.68rem, 1.2vw, 0.78rem) var(--font-mono);
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--red-bright);
-      transition: color 0.2s ease, text-shadow 0.2s ease;
+      color: rgba(245, 235, 208, 0.48);
     }
 
-    .footer-link:hover {
-      color: var(--paper);
-      text-shadow: 0 0 20px rgba(200, 16, 36, 0.5);
-    }
-
-    /* ===== Shake Animation ===== */
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
-      20%, 40%, 60%, 80% { transform: translateX(8px); }
-    }
-
-    .shake {
-      animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
-    }
-
-    /* ===== Unlock Transition ===== */
-    .unlocking .glass-card {
-      animation: unlock-exit 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
-
-    @keyframes unlock-exit {
-      0% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-      60% { opacity: 0.8; transform: scale(1.02) translateY(-20px); filter: blur(4px); }
-      100% { opacity: 0; transform: scale(1.1) translateY(-60px); filter: blur(20px); }
-    }
-
-    .unlocking .bg-fallback,
-    .unlocking #shader-canvas {
-      animation: bg-exit 0.8s ease-out forwards;
-    }
-
-    @keyframes bg-exit {
-      0% { opacity: 1; filter: blur(0); }
-      100% { opacity: 0; filter: blur(60px); }
-    }
-
-    /* ===== Entrance Animations ===== */
-    .logo-wrap, .status-badge, .headline, .subtext, .progress-wrap, .auth-form, .footer-note {
+    /* ===== Entrance ===== */
+    .logo-wrap, .status-badge, .headline, .subtext, .footer-note {
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(22px);
       animation: entrance 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
     }
 
-    .logo-wrap { animation-delay: 0.1s; }
-    .status-badge { animation-delay: 0.2s; }
-    .headline { animation-delay: 0.3s; }
-    .subtext { animation-delay: 0.4s; }
-    .progress-wrap { animation-delay: 0.5s; }
-    .auth-form { animation-delay: 0.6s; }
-    .footer-note { animation-delay: 0.7s; }
+    .logo-wrap { animation-delay: 0.08s; }
+    .status-badge { animation-delay: 0.18s; }
+    .headline { animation-delay: 0.28s; }
+    .subtext { animation-delay: 0.38s; }
+    .footer-note { animation-delay: 0.48s; }
 
     @keyframes entrance {
       to { opacity: 1; transform: translateY(0); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .logo-wrap, .status-badge, .headline, .subtext, .progress-wrap, .auth-form, .footer-note {
+      .logo-wrap, .status-badge, .headline, .subtext, .footer-note {
         animation: none;
         opacity: 1;
         transform: none;
       }
-      .logo-img { animation: none; }
-      .status-dot { animation: none; }
-      .status-badge { animation: none; }
-      .progress-fill { animation: progress-grow 3s ease-in-out infinite; }
-      .bg-fallback { animation: none; }
-      .bg-grid-fallback { animation: none; }
-      .bg-scanline-fallback { animation: none; }
-      .shatter-btn .shatter-particle { animation: none !important; display: none !important; }
-      .shatter-halo { animation: none !important; }
+      .logo-img, .status-dot { animation: none; }
       #shader-canvas { display: none !important; }
-      .bg-fallback { display: block !important; }
-      .bg-grid-fallback { display: block !important; opacity: 1 !important; }
-      .bg-scanline-fallback { display: block !important; opacity: 1 !important; }
     }
 
-    /* ===== Responsive ===== */
-    @media (max-width: 480px) {
+    @media (max-width: 420px) {
       .glass-card {
-        border-radius: 24px;
-        padding: clamp(32px, 7vw, 48px) clamp(24px, 5vw, 36px);
+        padding: 36px 22px;
+        gap: 22px;
       }
-      .glass-card::before { border-radius: 24px; }
-      .glass-card::after { border-radius: 24px 24px 0 0; }
-      .pass-input { letter-spacing: 0.15em; }
-      .shatter-btn { letter-spacing: 0.14em; }
-    }
-
-    @media (max-width: 360px) {
-      .maintenance-shell { padding: 16px; }
-      .glass-card { padding: 28px 20px; gap: 24px; }
-      .logo-img { width: 90px; }
-      .wordmark { font-size: 1.8rem; }
-      .headline { font-size: 1.5rem; }
-      .subtext { font-size: 0.9rem; }
-    }
-
-    /* ===== High Contrast Mode ===== */
-    @media (prefers-contrast: high) {
-      :root {
-        --glass-border: rgba(255, 255, 255, 0.4);
-        --glass-border-bright: rgba(255, 255, 255, 0.6);
-        --muted: #ccc;
-      }
-      .pass-input { border-width: 2px; }
-      .shatter-btn { border: 2px solid var(--paper); }
     }
   </style>
 </head>
 <body>
-  <!-- Shader R WebGL Canvas -->
   <canvas id="shader-canvas" aria-hidden="true"></canvas>
-
-  <!-- CSS Fallback Background (for non-WebGL / reduced motion) -->
   <div class="bg-fallback" aria-hidden="true"></div>
-  <div class="bg-grid-fallback" aria-hidden="true"></div>
-  <div class="bg-scanline-fallback" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
 
-  <!-- Maintenance Shell -->
   <main class="maintenance-shell" role="main">
     <article class="glass-card" id="glassCard">
-      <!-- Logo -->
       <div class="logo-wrap">
         <img
           class="logo-img"
@@ -828,83 +312,50 @@
         <div class="wordmark">MASSYNE<span>.</span></div>
       </div>
 
-      <!-- Status Badge -->
       <div class="status-badge" aria-label="Maintenance mode active">
         <span class="status-dot" aria-hidden="true"></span>
         SYSTEM MAINTENANCE
       </div>
 
-      <!-- Headline -->
-      <h1 class="headline">Something Beautiful<em> Is Being Built.</em></h1>
+      <h1 class="headline">SOMETHING NEW<em>is coming.</em></h1>
 
-      <!-- Subtext -->
-      <p class="subtext">I'm currently upgrading my digital space. I'll be back soon with something special.</p>
+      <p class="subtext">WE'RE CURRENTLY CRAFTING A NEW EXPERIENCE.</p>
 
-      <!-- Progress Indicator -->
-      <div class="progress-wrap" aria-label="Upgrade progress">
-        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-        <div class="progress-label">
-          <span>INITIALIZING</span>
-          <span id="progressPercent">0%</span>
-        </div>
-      </div>
-
-      <!-- Authentication Form -->
-      <form class="auth-form" id="authForm" novalidate>
-        <label class="form-label" for="password">ENTER PASSCODE</label>
-
-        <div class="input-wrapper">
-          <input
-            type="password"
-            class="pass-input"
-            id="password"
-            name="password"
-            autocomplete="off"
-            spellcheck="false"
-            maxlength="20"
-            placeholder="ENTER PASSCODE"
-            aria-describedby="errorMsg"
-            aria-invalid="false"
-          >
-          <button
-            type="button"
-            class="toggle-btn"
-            id="toggleBtn"
-            aria-label="Show password"
-            aria-pressed="false"
-          >
-            <svg class="eye-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            <svg class="eye-closed" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-          </button>
-        </div>
-
-        <!-- Shatter Halo Drift Button -->
-        <button type="submit" class="shatter-btn" id="submitBtn">
-          <div class="shatter-halo" aria-hidden="true"></div>
-          <div class="shatter-particles" id="shatterParticles" aria-hidden="true"></div>
-          <div class="btn-content">
-            <span class="btn-text">
-              <span class="btn-label">UNLOCK</span>
-              <span class="spinner" aria-hidden="true"></span>
-            </span>
-          </div>
-        </button>
-
-        <div class="error-msg" id="errorMsg" role="alert" aria-live="polite"></div>
-      </form>
-
-      <!-- Footer -->
-      <footer class="footer-note">
-        <p class="footer-text">This is a private preview. Access is restricted.</p>
-        <a href="#" class="footer-link" id="relockLink" style="display: none;">RE-LOCK</a>
-      </footer>
+      <footer class="footer-note">MASSYNE — CREATIVE PORTFOLIO</footer>
     </article>
   </main>
 
   <script>
-    // ===== Shader R WebGL Background =====
+    // Liquid Glass cursor sheen
+    (() => {
+      const card = document.getElementById('glassCard');
+      if (!card) return;
+      card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mx', x.toFixed(1) + '%');
+        card.style.setProperty('--my', y.toFixed(1) + '%');
+      });
+    })();
+
+    // Redirect back to portfolio if maintenance mode is off or owner is already authenticated
+    (() => {
+      fetch('/api/maintenance-auth', {
+        method: 'GET',
+        credentials: 'same-origin',
+        cache: 'no-store'
+      })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data && (!data.maintenance || data.authenticated)) {
+            window.location.replace('/');
+          }
+        })
+        .catch(() => {});
+    })();
+
+    // Shader R WebGL Background
     (() => {
       const canvas = document.getElementById('shader-canvas');
       const gl = canvas.getContext('webgl', {
@@ -915,40 +366,12 @@
         powerPreference: 'high-performance'
       });
 
-      if (!gl) {
-        // WebGL not supported - fallback CSS will show
-        canvas.style.display = 'none';
-        document.querySelector('.bg-fallback').style.display = 'block';
-        document.querySelector('.bg-grid-fallback').style.display = 'block';
-        document.querySelector('.bg-scanline-fallback').style.display = 'block';
-        document.querySelector('.bg-grid-fallback').style.opacity = '1';
-        document.querySelector('.bg-scanline-fallback').style.opacity = '1';
-        return;
-      }
-
-      // Respect prefers-reduced-motion
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reducedMotion) {
+      if (!gl || reducedMotion) {
         canvas.style.display = 'none';
-        document.querySelector('.bg-fallback').style.display = 'block';
-        document.querySelector('.bg-grid-fallback').style.display = 'block';
-        document.querySelector('.bg-scanline-fallback').style.display = 'block';
-        document.querySelector('.bg-grid-fallback').style.opacity = '1';
-        document.querySelector('.bg-scanline-fallback').style.opacity = '1';
         return;
       }
 
-      // Shader R parameters from CSS custom properties
-      const SCALE = 1.65;
-      const DISTORTION = 1.8;
-      const GRAIN = 0.4;
-      const CONTRAST = 1.45;
-      const SPEED = 0.4;
-      const COLOR_A = [31/255, 0, 0];      // #1f0000
-      const COLOR_B = [16/255, 16/255, 16/255]; // #101010
-      const COLOR_C = [138/255, 0, 0];     // #8a0000
-
-      // Vertex shader - fullscreen quad
       const vertexShaderSource = `
         attribute vec2 a_position;
         varying vec2 v_uv;
@@ -958,7 +381,6 @@
         }
       `;
 
-      // Fragment shader - Shader R implementation
       const fragmentShaderSource = `
         precision highp float;
         varying vec2 v_uv;
@@ -974,12 +396,10 @@
         uniform vec3 u_colorB;
         uniform vec3 u_colorC;
 
-        // Hash function for noise
         float hash(vec2 p) {
           return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
         }
 
-        // Value noise
         float noise(vec2 p) {
           vec2 i = floor(p);
           vec2 f = fract(p);
@@ -991,7 +411,6 @@
           return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
         }
 
-        // FBM noise
         float fbm(vec2 p) {
           float value = 0.0;
           float amplitude = 0.5;
@@ -1003,7 +422,6 @@
           return value;
         }
 
-        // Domain distortion
         vec2 distort(vec2 p, float time) {
           float n1 = fbm(p * 0.5 + time * 0.1);
           float n2 = fbm(p * 0.7 + time * 0.13 + 100.0);
@@ -1012,7 +430,6 @@
           return p + d;
         }
 
-        // Grain
         float grain(vec2 p) {
           return hash(p) * 2.0 - 1.0;
         }
@@ -1021,468 +438,3 @@
           vec2 uv = v_uv;
           vec2 center = vec2(0.5);
           vec2 p = (uv - center) * u_scale + center;
-
-          // Time with speed control
-          float t = u_time * u_speed;
-
-          // Domain distortion
-          p = distort(p, t);
-
-          // Distance from center for radial effects
-          float dist = length(p - center);
-
-          // Layered noise fields
-          float n1 = fbm(p * 1.5 + t * 0.3);
-          float n2 = fbm(p * 2.5 - t * 0.2 + 50.0);
-          float n3 = fbm(p * 4.0 + t * 0.15 + 150.0);
-
-          // Combine noise layers
-          float field = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
-
-          // Radial modulation
-          float radial = smoothstep(0.8, 0.0, dist) * 0.5 + 0.5;
-          field = mix(field, field * radial, 0.6);
-
-          // Color mixing between three colors
-          vec3 col = mix(u_colorB, u_colorA, smoothstep(0.3, 0.7, field));
-          col = mix(col, u_colorC, smoothstep(0.6, 0.9, field) * radial);
-
-          // Add grain
-          float g = grain(v_uv * u_resolution * 0.5) * u_grain;
-          col += vec3(g);
-
-          // Contrast
-          col = pow(col, vec3(u_contrast));
-
-          // Vignette
-          float vig = smoothstep(1.2, 0.3, dist);
-          col *= vig;
-
-          gl_FragColor = vec4(col, 1.0);
-        }
-      `;
-
-      function compileShader(source, type) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-          console.error('Shader compile error:', gl.getShaderInfoLog(shader));
-          gl.deleteShader(shader);
-          return null;
-        }
-        return shader;
-      }
-
-      const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
-      const fragmentShader = compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
-
-      if (!vertexShader || !fragmentShader) {
-        canvas.style.display = 'none';
-        return;
-      }
-
-      const program = gl.createProgram();
-      gl.attachShader(program, vertexShader);
-      gl.attachShader(program, fragmentShader);
-      gl.linkProgram(program);
-
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error('Program link error:', gl.getProgramInfoLog(program));
-        canvas.style.display = 'none';
-        return;
-      }
-
-      // Quad geometry
-      const positions = new Float32Array([
-        -1, -1,
-         1, -1,
-        -1,  1,
-         1,  1
-      ]);
-      const buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-
-      const positionLoc = gl.getAttribLocation(program, 'a_position');
-      gl.enableVertexAttribArray(positionLoc);
-      gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
-
-      // Uniform locations
-      const timeLoc = gl.getUniformLocation(program, 'u_time');
-      const resLoc = gl.getUniformLocation(program, 'u_resolution');
-      const scaleLoc = gl.getUniformLocation(program, 'u_scale');
-      const distortionLoc = gl.getUniformLocation(program, 'u_distortion');
-      const grainLoc = gl.getUniformLocation(program, 'u_grain');
-      const contrastLoc = gl.getUniformLocation(program, 'u_contrast');
-      const speedLoc = gl.getUniformLocation(program, 'u_speed');
-      const colorALoc = gl.getUniformLocation(program, 'u_colorA');
-      const colorBLoc = gl.getUniformLocation(program, 'u_colorB');
-      const colorCLoc = gl.getUniformLocation(program, 'u_colorC');
-
-      gl.useProgram(program);
-      gl.uniform1f(scaleLoc, SCALE);
-      gl.uniform1f(distortionLoc, DISTORTION);
-      gl.uniform1f(grainLoc, GRAIN);
-      gl.uniform1f(contrastLoc, CONTRAST);
-      gl.uniform1f(speedLoc, SPEED);
-      gl.uniform3fv(colorALoc, COLOR_A);
-      gl.uniform3fv(colorBLoc, COLOR_B);
-      gl.uniform3fv(colorCLoc, COLOR_C);
-
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
-      let startTime = null;
-      let animationId = 0;
-      let disposed = false;
-
-      function resize() {
-        if (disposed) return;
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        const width = Math.max(1, Math.round(window.innerWidth * dpr));
-        const height = Math.max(1, Math.round(window.innerHeight * dpr));
-        if (canvas.width !== width || canvas.height !== height) {
-          canvas.width = width;
-          canvas.height = height;
-          canvas.style.width = '100%';
-          canvas.style.height = '100%';
-          gl.viewport(0, 0, width, height);
-          gl.uniform2f(resLoc, width, height);
-        }
-      }
-
-      function draw(timestamp) {
-        if (disposed || gl.isContextLost()) return;
-        if (startTime === null) startTime = timestamp;
-        const elapsed = (timestamp - startTime) * 0.001;
-
-        gl.useProgram(program);
-        gl.uniform1f(timeLoc, elapsed);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      }
-
-      function render(timestamp) {
-        if (disposed) return;
-        draw(timestamp);
-        animationId = requestAnimationFrame(render);
-      }
-
-      function start() {
-        if (animationId) return;
-        animationId = requestAnimationFrame(render);
-      }
-
-      function stop() {
-        if (animationId) {
-          cancelAnimationFrame(animationId);
-          animationId = 0;
-        }
-      }
-
-      resize();
-      start();
-
-      window.addEventListener('resize', resize);
-      window.addEventListener('pagehide', () => {
-        disposed = true;
-        stop();
-        gl.deleteBuffer(buffer);
-        gl.deleteProgram(program);
-        gl.deleteShader(vertexShader);
-        gl.deleteShader(fragmentShader);
-      }, { once: true });
-    })();
-
-    // ===== Configuration =====
-    const CONFIG = {
-      password: 'SALMA', // This is only for client-side UX feedback; real validation is server-side
-      apiEndpoint: '/api/maintenance-auth',
-      sessionCookieName: 'massyne_maintenance_session'
-    };
-
-    // ===== DOM Elements =====
-    const glassCard = document.getElementById('glassCard');
-    const authForm = document.getElementById('authForm');
-    const passwordInput = document.getElementById('password');
-    const toggleBtn = document.getElementById('toggleBtn');
-    const submitBtn = document.getElementById('submitBtn');
-    const errorMsg = document.getElementById('errorMsg');
-    const progressFill = document.getElementById('progressFill');
-    const progressPercent = document.getElementById('progressPercent');
-    const relockLink = document.getElementById('relockLink');
-    const eyeOpen = toggleBtn.querySelector('.eye-open');
-    const eyeClosed = toggleBtn.querySelector('.eye-closed');
-    const shatterParticles = document.getElementById('shatterParticles');
-
-    // ===== State =====
-    let isUnlocking = false;
-    let progressInterval = null;
-    let progressValue = 0;
-    let shatterAnimationId = null;
-
-    // ===== ASCII Characters for Shatter Effect =====
-    const SHATTER_CHARS = ['▲', '◆', '●', '■', '▼', '◆', '▲', '●', '◇', '■', '▲', '◆'];
-
-    // ===== Utility Functions =====
-    function setError(message) {
-      errorMsg.textContent = message;
-      errorMsg.classList.add('visible');
-      passwordInput.setAttribute('aria-invalid', 'true');
-      glassCard.classList.add('shake');
-      passwordInput.value = '';
-      passwordInput.focus();
-
-      setTimeout(() => {
-        glassCard.classList.remove('shake');
-      }, 500);
-    }
-
-    function clearError() {
-      errorMsg.classList.remove('visible');
-      errorMsg.textContent = '';
-      passwordInput.removeAttribute('aria-invalid');
-    }
-
-    function setLoading(loading) {
-      submitBtn.disabled = loading;
-      submitBtn.classList.toggle('loading', loading);
-      passwordInput.disabled = loading;
-      toggleBtn.disabled = loading;
-    }
-
-    function togglePasswordVisibility() {
-      const isPassword = passwordInput.type === 'password';
-      passwordInput.type = isPassword ? 'text' : 'password';
-      toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
-      toggleBtn.setAttribute('aria-pressed', String(isPassword));
-      eyeOpen.style.display = isPassword ? 'none' : 'block';
-      eyeClosed.style.display = isPassword ? 'block' : 'none';
-      passwordInput.focus();
-    }
-
-    // ===== Shatter Halo Drift Particle Generation =====
-    function createShatterParticles() {
-      // Respect reduced motion
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return;
-      }
-
-      const rect = submitBtn.getBoundingClientRect();
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const particleCount = 12;
-
-      shatterParticles.innerHTML = '';
-
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('span');
-        particle.className = 'shatter-particle';
-        particle.textContent = SHATTER_CHARS[i % SHATTER_CHARS.length];
-        particle.style.left = centerX + 'px';
-        particle.style.top = centerY + 'px';
-
-        // Random angle and distance for burst
-        const angle = (i / particleCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
-        const distance = 60 + Math.random() * 80;
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance;
-        const rotate = (Math.random() - 0.5) * 720; // -360 to 360 degrees
-
-        particle.style.setProperty('--tx', tx + 'px');
-        particle.style.setProperty('--ty', ty + 'px');
-        particle.style.setProperty('--rotate', rotate + 'deg');
-
-        // Staggered delay
-        particle.style.animationDelay = (Math.random() * 0.1) + 's';
-
-        shatterParticles.appendChild(particle);
-      }
-    }
-
-    function triggerShatter() {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return;
-      }
-      createShatterParticles();
-      submitBtn.classList.add('shattering');
-      setTimeout(() => {
-        submitBtn.classList.remove('shattering');
-      }, 900);
-    }
-
-    // ===== Progress Animation =====
-    function startProgressAnimation() {
-      const labels = ['INITIALIZING', 'PREPARING', 'OPTIMIZING', 'FINALIZING', 'READY'];
-      let labelIndex = 0;
-
-      progressInterval = setInterval(() => {
-        progressValue += Math.random() * 15 + 5;
-        if (progressValue > 100) progressValue = 100;
-
-        progressFill.style.width = progressValue + '%';
-        progressPercent.textContent = Math.round(progressValue) + '%';
-
-        if (progressValue >= 25 * (labelIndex + 1) && labelIndex < labels.length - 1) {
-          labelIndex++;
-          progressPercent.parentElement.querySelector('span:first-child').textContent = labels[labelIndex];
-        }
-
-        if (progressValue >= 100) {
-          clearInterval(progressInterval);
-        }
-      }, 300);
-    }
-
-    // ===== Session Check =====
-    async function checkSession() {
-      try {
-        const res = await fetch(CONFIG.apiEndpoint, {
-          method: 'GET',
-          credentials: 'same-origin',
-          cache: 'no-store'
-        });
-        const data = await res.json();
-        return data;
-      } catch (e) {
-        console.error('Session check failed:', e);
-        return { maintenance: true, authenticated: false, requiresAuth: true };
-      }
-    }
-
-    // ===== Unlock Flow =====
-    async function unlock(password) {
-      if (isUnlocking) return;
-      isUnlocking = true;
-      setLoading(true);
-      clearError();
-
-      // Trigger shatter effect on submit
-      triggerShatter();
-
-      try {
-        const res = await fetch(CONFIG.apiEndpoint, {
-          method: 'POST',
-          credentials: 'same-origin',
-          cache: 'no-store',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password })
-        });
-
-        const data = await res.json();
-
-        if (!res.ok || !data.authenticated) {
-          throw new Error(data.message || 'Authentication failed');
-        }
-
-        // Success - trigger unlock animation
-        glassCard.classList.add('unlocking');
-        document.body.classList.add('unlocking');
-
-        // Wait for animation then redirect
-        setTimeout(() => {
-          window.location.reload();
-        }, 800);
-
-      } catch (err) {
-        isUnlocking = false;
-        setLoading(false);
-        setError(err.message || 'ACCESS DENIED');
-      }
-    }
-
-    // ===== Lock/Logout Flow =====
-    async function relock() {
-      try {
-        await fetch(CONFIG.apiEndpoint, {
-          method: 'POST',
-          credentials: 'same-origin',
-          cache: 'no-store',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'logout' })
-        });
-        window.location.reload();
-      } catch (e) {
-        console.error('Relock failed:', e);
-        window.location.reload();
-      }
-    }
-
-    // ===== Event Listeners =====
-    authForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const password = passwordInput.value.trim();
-      if (!password) {
-        setError('ENTER PASSCODE');
-        return;
-      }
-      await unlock(password);
-    });
-
-    toggleBtn.addEventListener('click', togglePasswordVisibility);
-
-    passwordInput.addEventListener('input', clearError);
-
-    passwordInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        authForm.dispatchEvent(new Event('submit'));
-      }
-    });
-
-    relockLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      relock();
-    });
-
-    // Hover effect on shatter button - regenerate particles
-    submitBtn.addEventListener('mouseenter', () => {
-      if (!submitBtn.classList.contains('loading') && !isUnlocking) {
-        createShatterParticles();
-      }
-    });
-
-    // ===== Initialize =====
-    async function init() {
-      startProgressAnimation();
-
-      const session = await checkSession();
-
-      if (!session.maintenance) {
-        // Maintenance mode disabled - redirect to portfolio
-        window.location.href = '/';
-        return;
-      }
-
-      if (session.authenticated) {
-        // Already unlocked - redirect to portfolio
-        window.location.href = '/';
-        return;
-      }
-
-      // Show maintenance page (already visible)
-      passwordInput.focus();
-    }
-
-    // Handle page visibility change to pause/resume animations
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        if (progressInterval) clearInterval(progressInterval);
-      } else if (!isUnlocking && progressValue < 100) {
-        startProgressAnimation();
-      }
-    });
-
-    // Keyboard shortcut: Escape to clear error
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        clearError();
-        passwordInput.blur();
-      }
-    });
-
-    init();
-  </script>
-</body>
-</html>
