@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#050608">
+  <title>MASSYNE — Private Preview Access</title>
+  <link rel="icon" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"></noscript>
+  <style>
+    :root {
+      --ink: #050608;
+      --paper: #f5ebd0;
+      --muted: #8a8487;
+      --red: #c81024;
+      --red-bright: #e84d5a;
+      --red-dim: #7f011f;
+      --glass-blur: 10px;
+      --glass-radius: 36px;
+      --glass-tint: 0.01;
+      --glass-border: rgba(255, 255, 255, 0.16);
+      --glass-border-bright: rgba(255, 255, 255, 0.28);
+      --glass-shadow:
+        0 28px 80px rgba(0, 0, 0, 0.62),
+        0 0 90px rgba(127, 1, 31, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+      --focus: #ff6b7a;
+      --font-display: "Syne", "Space Grotesk", Arial, sans-serif;
+      --font-serif: "DM Serif Display", Georgia, serif;
+      --font-body: "Manrope", "Space Grotesk", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+    }
+
+    ::selection { background: var(--red); color: var(--paper); }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
+    input { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+    /* ===== Shader R WebGL Background ===== */
+    #shader-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
+
+    .bg-fallback {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 55% at 50% 25%, rgba(138, 0, 0, 0.24) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 60% at 80% 80%, rgba(127, 1, 31, 0.16) 0%, transparent 60%),
+        var(--ink);
+    }
+
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ===== Main Shell ===== */
+    .preview-shell {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px);
+    }
+
+    /* ===== Liquid Glass Card (blur: 10px | radius: 36px | tint: 1%) ===== */
+    .glass-card {
+      --mx: 50%;
+      --my: 25%;
+      position: relative;
+      width: min(100%, 480px);
+      background: rgba(255, 255, 255, var(--glass-tint));
+      backdrop-filter: blur(var(--glass-blur)) saturate(185%) brightness(1.08);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(185%) brightness(1.08);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--glass-radius);
+      box-shadow: var(--glass-shadow);
+      padding: clamp(40px, 5.5vw, 56px) clamp(26px, 4.5vw, 48px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(20px, 3vw, 28px);
+      text-align: center;
+      overflow: hidden;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        420px circle at var(--mx) var(--my),
+        rgba(255, 255, 255, 0.14),
+        rgba(255, 255, 255, 0.02) 45%,
+        transparent 75%
+      );
+      pointer-events: none;
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.48), transparent);
+      pointer-events: none;
+    }
+
+    .glass-card:hover {
+      border-color: var(--glass-border-bright);
+    }
+
+    /* ===== Logo ===== */
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: clamp(88px, 14vw, 118px);
+      height: auto;
+      filter: drop-shadow(0 0 36px rgba(200, 16, 36, 0.42));
+    }
+
+    .wordmark {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.75rem, 3.8vw, 2.3rem);
+      letter-spacing: -0.07em;
+      line-height: 1;
+      color: var(--paper);
+    }
+
+    .wordmark span {
+      color: var(--red-bright);
+    }
+
+    /* ===== Status Badge ===== */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      background: rgba(127, 1, 31, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 100px;
+      font: 600 clamp(0.7rem, 1.3vw, 0.78rem) var(--font-mono);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--paper);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red-bright);
+      box-shadow: 0 0 14px var(--red-bright), 0 0 28px var(--red);
+      animation: dot-pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes dot-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.65; }
+    }
+
+    .headline {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.45rem, 3.2vw, 1.95rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--paper);
+      margin: 0;
+    }
+
+    .headline em {
+      display: block;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      color: var(--red-bright);
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+
+    /* ===== Form ===== */
+    .auth-form {
+      width: 100%;
+      max-width: 324px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .pass-input {
+      width: 100%;
+      height: 54px;
+      padding: 0 50px 0 22px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--paper);
+      font: 500 0.95rem var(--font-mono);
+      text-align: center;
+      letter-spacing: 0.22em;
+      outline: none;
+      transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .pass-input::placeholder {
+      color: rgba(245, 235, 208, 0.36);
+      letter-spacing: 0.16em;
+      font-size: 0.8rem;
+    }
+
+    .pass-input:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .pass-input:focus {
+      border-color: var(--red-bright);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 0 3px rgba(200, 16, 36, 0.22), 0 0 28px rgba(200, 16, 36, 0.18);
+    }
+
+    .pass-input[aria-invalid="true"] {
+      border-color: #ff4d5a;
+      box-shadow: 0 0 0 3px rgba(255, 77, 90, 0.24);
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: 12px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .toggle-btn:hover {
+      color: var(--paper);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .toggle-btn svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* ===== Shatter Halo Drift Button (324px High-DPI Canvas Pill) ===== */
+    .shatter-halo-btn {
+      position: relative;
+      width: min(100%, 324px);
+      height: 58px;
+      border-radius: 999px;
+      background: radial-gradient(120% 140% at 50% 0%, rgba(232, 77, 90, 0.35), rgba(127, 1, 31, 0.55) 55%, rgba(20, 4, 8, 0.9) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      box-shadow:
+        0 0 28px rgba(200, 16, 36, 0.42),
+        0 10px 30px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+      overflow: hidden;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.22s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+
+    .shatter-halo-btn::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(232, 77, 90, 0.75) 70deg,
+        rgba(245, 235, 208, 0.65) 110deg,
+        transparent 180deg,
+        rgba(200, 16, 36, 0.6) 270deg,
+        transparent 360deg
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      animation: halo-spin 3.6s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .shatter-halo-btn::after {
+      content: "";
+      position: absolute;
+      inset: 1.5px;
+      border-radius: inherit;
+      background: radial-gradient(120% 140% at 50% 0%, rgba(165, 14, 34, 0.65), rgba(32, 4, 10, 0.94) 75%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes halo-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .shatter-halo-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow:
+        0 0 42px rgba(232, 77, 90, 0.62),
+        0 14px 36px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.42);
+    }
+
+    .shatter-halo-btn:hover::before {
+      opacity: 1;
+    }
+
+    .shatter-halo-btn:active {
+      transform: scale(0.985);
+    }
+
+    .shatter-halo-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    #shatterCanvas {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    /* ===== Error & Footer ===== */
+    .error-msg {
+      min-height: 20px;
+      font: 500 0.76rem var(--font-mono);
+      letter-spacing: 0.1em;
+      text-align: center;
+      color: #ff6b6b;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .error-msg.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .footer-note {
+      width: 100%;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font: 500 clamp(0.68rem, 1.2vw, 0.76rem) var(--font-mono);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245, 235, 208, 0.48);
+    }
+
+    /* ===== Shake & Unlock Animations ===== */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      15%, 45%, 75% { transform: translateX(-8px); }
+      30%, 60%, 90% { transform: translateX(8px); }
+    }
+
+    .shake {
+      animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+
+    .unlocking .glass-card {
+      animation: unlock-exit 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes unlock-exit {
+      0% { opacity: 1; transform: scale(1); filter: blur(0); }
+      100% { opacity: 0; transform: scale(1.06) translateY(-24px); filter: blur(14px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .status-dot, .shatter-halo-btn::before { animation: none !important; }
+      #shader-canvas { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="shader-canvas" aria-hidden="true"></canvas>
+  <div class="bg-fallback" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <main class="preview-shell" role="main">
+    <article class="glass-card" id="glassCard">
+      <div class="logo-wrap">
+        <img
+          class="logo-img"
+          src="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/flame-metal-logo-480.webp"
+          alt="MASSYNE logo"
+          width="112"
+          height="56"
+        >
+        <div class="wordmark">MASSYNE<span>.</span></div>
+      </div>
+
+      <div class="status-badge">
+        <span class="status-dot" aria-hidden="true"></span>
+        PRIVATE PREVIEW
+      </div>
+
+      <h1 class="headline">OWNER ACCESS<em>Authentication Required.</em></h1>
+
+      <form class="auth-form" id="authForm" novalidate>
+        <div class="input-wrapper">
+          <input
+            type="password"
+            class="pass-input"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            spellcheck="false"
+            maxlength="128"
+            placeholder="ENTER ACCESS CODE"
+            aria-label="Access code"
+            aria-describedby="errorMsg"
+            aria-invalid="false"
+          >
+          <button
+            type="button"
+            class="toggle-btn"
+            id="toggleBtn"
+            aria-label="Show password"
+            aria-pressed="false"
+          >
+            <svg class="eye-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-closed" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+
+        <button type="submit" class="shatter-halo-btn" id="submitBtn">
+          <canvas id="shatterCanvas" aria-hidden="true"></canvas>
+          <span class="sr-only" id="btnSrLabel">UNLOCK</span>
+        </button>
+
+        <div class="error-msg" id="errorMsg" role="alert" aria-live="polite"></div>
+      </form>
+
+      <footer class="footer-note">MASSYNE — CREATIVE PORTFOLIO</footer>
+    </article>
+  </main>
+
+  <script>
+    // Liquid Glass cursor sheen
+    (() => {
+      const card = document.getElementById('glassCard');
+      if (!card) return;
+      card.addEventListener('pointermove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mx', x.toFixed(1) + '%');
+        card.style.setProperty('--my', y.toFixed(1) + '%');
+      });
+    })();
+
+    // High-DPI Shatter Halo Drift Button (ASCII particle shatter & reassembly)
+    const shatterButton = (() => {
+      const btn = document.getElementById('submitBtn');
+      const canvas = document.getElementById('shatterCanvas');
+      const srLabel = document.getElementById('btnSrLabel');
+      const ctx = canvas.getContext('2d');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const ASCII_POOL = ['@', '#', '%', '&', '*', '+', '=', ':', '.', '0', '1', 'M', 'X', '▲', '◆'];
+
+      let label = 'UNLOCK';
+      let hovered = false;
+      let progress = 0; // 0 = clean crisp label, 1 = shattered ASCII art reassembled
+      let particles = [];
+      let width = 324;
+      let height = 58;
+      let dpr = 1;
+
+      function buildParticles() {
+        const off = document.createElement('canvas');
+        off.width = width;
+        off.height = height;
+        const octx = off.getContext('2d');
+        octx.clearRect(0, 0, width, height);
+        octx.fillStyle = '#ffffff';
+        octx.font = '700 15px "JetBrains Mono", monospace';
+        octx.textAlign = 'center';
+        octx.textBaseline = 'middle';
+        octx.fillText(label.split('').join(' '), width / 2, height / 2 + 1);
+
+        const img = octx.getImageData(0, 0, width, height).data;
+        const next = [];
+        const step = 3;
+        for (let y = 0; y < height; y += step) {
+          for (let x = 0; x < width; x += step) {
+            const alpha = img[(y * width + x) * 4 + 3];
+            if (alpha > 110) {
+              const angle = Math.random() * Math.PI * 2;
+              const radius = 16 + Math.random() * 44;
+              next.push({
+                hx: x,
+                hy: y,
+                dx: Math.cos(angle) * radius,
+                dy: Math.sin(angle) * radius * 0.55,
+                char: ASCII_POOL[(x + y) % ASCII_POOL.length],
+                phase: Math.random() * Math.PI * 2
+              });
+            }
+          }
+        }
+        particles = next;
+      }
+
+      function resize() {
+        const rect = btn.getBoundingClientRect();
+        width = Math.max(180, Math.round(rect.width || 324));
+        height = Math.max(44, Math.round(rect.height || 58));
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        buildParticles();
+        draw(0);
+      }
+
+      function draw(time) {
+        ctx.clearRect(0, 0, width, height);
+
+        if (reducedMotion || progress <= 0.01) {
+          ctx.fillStyle = '#f5ebd0';
+          ctx.font = '700 14px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label.split('').join(' '), width / 2, height / 2 + 1);
+          return;
+        }
+
+        // Peak shatter happens at progress = 0.5, then reassembles into crisp ASCII art of itself at 1.0
+        const scatter = Math.sin(progress * Math.PI);
+        const textAlpha = Math.max(0, 1 - progress * 2.2);
+
+        if (textAlpha > 0.01) {
+          ctx.save();
+          ctx.globalAlpha = textAlpha;
+          ctx.fillStyle = '#f5ebd0';
+          ctx.font = '700 14px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label.split('').join(' '), width / 2, height / 2 + 1);
+          ctx.restore();
+        }
+
+        ctx.font = '700 8px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          const driftX = Math.cos(time * 0.004 + p.phase) * 1.4 * progress;
+          const driftY = Math.sin(time * 0.004 + p.phase) * 1.1 * progress;
+          const px = p.hx + p.dx * scatter + driftX;
+          const py = p.hy + p.dy * scatter + driftY;
+
+          ctx.fillStyle = scatter > 0.35
+            ? 'rgba(232, 77, 90, ' + (0.55 + progress * 0.45) + ')'
+            : 'rgba(245, 235, 208, ' + Math.min(1, progress * 1.3) + ')';
+
+          const glyph = scatter > 0.25 && Math.random() < 0.08
+            ? ASCII_POOL[Math.floor(Math.random() * ASCII_POOL.length)]
+            : p.char;
+          ctx.fillText(glyph, px, py);
+        }
+      }
+
+      function tick(now) {
+        const target = hovered ? 1 : 0;
+        progress += (target - progress) * 0.12;
+        if (Math.abs(target - progress) < 0.005) progress = target;
+        draw(now);
+        requestAnimationFrame(tick);
+      }
+
+      btn.addEventListener('pointerenter', () => { hovered = true; });
+      btn.addEventListener('pointerleave', () => { hovered = false; });
+      btn.addEventListener('focus', () => { hovered = true; });
+      btn.addEventListener('blur', () => { hovered = false; });
+      window.addEventListener('resize', resize);
+
+      resize();
+      if (!reducedMotion) {
+        requestAnimationFrame(tick);
+      }
+
+      return {
+        setLabel(nextLabel) {
+          label = nextLabel;
+          srLabel.textContent = nextLabel;
+          buildParticles();
+          draw(0);
+        }
+      };
+    })();
+
+    // Authentication Flow
+    (() => {
+      const API_ENDPOINT = '/api/maintenance-auth';
+      const glassCard = document.getElementById('glassCard');
+      const authForm = document.getElementById('authForm');
+      const passwordInput = document.getElementById('password');
+      const toggleBtn = document.getElementById('toggleBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      const errorMsg = document.getElementById('errorMsg');
+      const eyeOpen = toggleBtn.querySelector('.eye-open');
+      const eyeClosed = toggleBtn.querySelector('.eye-closed');
+      let submitting = false;
+
+      function setError(msg) {
+        errorMsg.textContent = msg;
+        errorMsg.classList.add('visible');
+        passwordInput.setAttribute('aria-invalid', 'true');
+        glassCard.classList.add('shake');
+        passwordInput.value = '';
+        passwordInput.focus();
+        setTimeout(() => glassCard.classList.remove('shake'), 460);
+      }
+
+      function clearError() {
+        errorMsg.classList.remove('visible');
+        errorMsg.textContent = '';
+        passwordInput.removeAttribute('aria-invalid');
+      }
+
+      function setLoading(loading) {
+        submitting = loading;
+        submitBtn.disabled = loading;
+        passwordInput.disabled = loading;
+        toggleBtn.
