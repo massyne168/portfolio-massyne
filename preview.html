@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#050608">
-  <title>MASSYNE — Private Preview Access</title>
+  <title>MASSYNE — Owner Access</title>
   <link rel="icon" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,16 +19,15 @@
       --red: #c81024;
       --red-bright: #e84d5a;
       --red-dim: #7f011f;
-      --glass-blur: 10px;
-      --glass-radius: 36px;
-      --glass-tint: 0.01;
+      --glass-blur: 12px;
+      --glass-radius: 34px;
       --glass-border: rgba(255, 255, 255, 0.16);
       --glass-border-bright: rgba(255, 255, 255, 0.28);
       --glass-shadow:
-        0 28px 80px rgba(0, 0, 0, 0.62),
-        0 0 90px rgba(127, 1, 31, 0.34),
-        inset 0 1px 0 rgba(255, 255, 255, 0.28),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+        0 28px 80px rgba(0, 0, 0, 0.68),
+        0 0 85px rgba(127, 1, 31, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
       --focus: #ff6b7a;
       --font-display: "Syne", "Space Grotesk", Arial, sans-serif;
       --font-serif: "DM Serif Display", Georgia, serif;
@@ -49,7 +48,7 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      overflow: hidden;
+      overflow-x: hidden;
       position: relative;
       isolation: isolate;
     }
@@ -72,23 +71,23 @@
 
     .glass-card {
       --mx: 50%;
-      --my: 25%;
+      --my: 20%;
       position: relative;
-      width: min(100%, 480px);
-      background: rgba(255, 255, 255, var(--glass-tint));
-      backdrop-filter: blur(var(--glass-blur)) saturate(185%) brightness(1.08);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(185%) brightness(1.08);
+      width: min(100%, 470px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.015) 100%);
+      backdrop-filter: blur(var(--glass-blur)) saturate(165%);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(165%);
       border: 1px solid var(--glass-border);
       border-radius: var(--glass-radius);
       box-shadow: var(--glass-shadow);
-      padding: clamp(40px, 5.5vw, 56px) clamp(26px, 4.5vw, 48px);
+      padding: clamp(38px, 5vw, 52px) clamp(24px, 4vw, 44px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: clamp(20px, 3vw, 28px);
+      gap: 22px;
       text-align: center;
       overflow: hidden;
-      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+      transition: border-color 0.35s ease;
     }
 
     .glass-card::before {
@@ -97,10 +96,10 @@
       inset: 0;
       border-radius: inherit;
       background: radial-gradient(
-        420px circle at var(--mx) var(--my),
-        rgba(255, 255, 255, 0.14),
-        rgba(255, 255, 255, 0.02) 45%,
-        transparent 75%
+        380px circle at var(--mx) var(--my),
+        rgba(232, 77, 90, 0.14),
+        rgba(255, 255, 255, 0.02) 48%,
+        transparent 76%
       );
       pointer-events: none;
     }
@@ -109,10 +108,10 @@
       content: "";
       position: absolute;
       top: 0;
-      left: 12%;
-      right: 12%;
+      left: 14%;
+      right: 14%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.48), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
       pointer-events: none;
     }
 
@@ -124,19 +123,19 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .logo-img {
-      width: clamp(88px, 14vw, 118px);
+      width: clamp(86px, 14vw, 114px);
       height: auto;
-      filter: drop-shadow(0 0 36px rgba(200, 16, 36, 0.42));
+      filter: drop-shadow(0 0 32px rgba(200, 16, 36, 0.38));
     }
 
     .wordmark {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: clamp(1.75rem, 3.8vw, 2.3rem);
+      font-size: clamp(1.7rem, 3.6vw, 2.2rem);
       letter-spacing: -0.07em;
       line-height: 1;
       color: var(--paper);
@@ -149,24 +148,23 @@
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 9px 20px;
-      background: rgba(127, 1, 31, 0.28);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      gap: 9px;
+      padding: 8px 18px;
+      background: rgba(127, 1, 31, 0.26);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 100px;
-      font: 600 clamp(0.7rem, 1.3vw, 0.78rem) var(--font-mono);
+      font: 600 0.72rem var(--font-mono);
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--paper);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--red-bright);
-      box-shadow: 0 0 14px var(--red-bright), 0 0 28px var(--red);
+      box-shadow: 0 0 12px var(--red-bright);
       animation: dot-pulse 1.8s ease-in-out infinite;
     }
 
@@ -178,7 +176,7 @@
     .headline {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: clamp(1.45rem, 3.2vw, 1.95rem);
+      font-size: clamp(1.4rem, 3vw, 1.85rem);
       line-height: 1.1;
       letter-spacing: -0.04em;
       text-transform: uppercase;
@@ -194,7 +192,7 @@
       text-transform: none;
       color: var(--red-bright);
       letter-spacing: -0.02em;
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     .auth-form {
@@ -203,7 +201,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .input-wrapper {
@@ -215,34 +213,34 @@
 
     .pass-input {
       width: 100%;
-      height: 54px;
-      padding: 0 50px 0 22px;
+      height: 52px;
+      padding: 0 48px 0 20px;
       border-radius: 100px;
       border: 1px solid rgba(255, 255, 255, 0.18);
       background: rgba(255, 255, 255, 0.03);
       color: var(--paper);
-      font: 500 0.95rem var(--font-mono);
+      font: 500 0.92rem var(--font-mono);
       text-align: center;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.2em;
       outline: none;
       transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
     }
 
     .pass-input::placeholder {
-      color: rgba(245, 235, 208, 0.36);
-      letter-spacing: 0.16em;
-      font-size: 0.8rem;
+      color: rgba(245, 235, 208, 0.38);
+      letter-spacing: 0.15em;
+      font-size: 0.78rem;
     }
 
     .pass-input:hover {
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.28);
       background: rgba(255, 255, 255, 0.05);
     }
 
     .pass-input:focus {
       border-color: var(--red-bright);
       background: rgba(255, 255, 255, 0.06);
-      box-shadow: 0 0 0 3px rgba(200, 16, 36, 0.22), 0 0 28px rgba(200, 16, 36, 0.18);
+      box-shadow: 0 0 0 3px rgba(200, 16, 36, 0.22);
     }
 
     .pass-input[aria-invalid="true"] {
@@ -252,7 +250,7 @@
 
     .toggle-btn {
       position: absolute;
-      right: 12px;
+      right: 11px;
       width: 30px;
       height: 30px;
       display: flex;
@@ -281,7 +279,7 @@
     .shatter-halo-btn {
       position: relative;
       width: min(100%, 324px);
-      height: 58px;
+      height: 56px;
       border-radius: 999px;
       background: radial-gradient(120% 140% at 50% 0%, rgba(232, 77, 90, 0.35), rgba(127, 1, 31, 0.55) 55%, rgba(20, 4, 8, 0.9) 100%);
       border: 1px solid rgba(255, 255, 255, 0.24);
@@ -374,8 +372,8 @@
     }
 
     .error-msg {
-      min-height: 20px;
-      font: 500 0.76rem var(--font-mono);
+      min-height: 18px;
+      font: 500 0.74rem var(--font-mono);
       letter-spacing: 0.1em;
       text-align: center;
       color: #ff6b6b;
@@ -391,9 +389,9 @@
 
     .footer-note {
       width: 100%;
-      padding-top: 18px;
+      padding-top: 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      font: 500 clamp(0.68rem, 1.2vw, 0.76rem) var(--font-mono);
+      font: 500 0.7rem var(--font-mono);
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(245, 235, 208, 0.48);
@@ -493,7 +491,7 @@
         const y = ((e.clientY - rect.top) / rect.height) * 100;
         card.style.setProperty('--mx', x.toFixed(1) + '%');
         card.style.setProperty('--my', y.toFixed(1) + '%');
-      });
+      }, { passive: true });
     })();
 
     const shatterButton = (() => {
@@ -509,7 +507,7 @@
       let progress = 0;
       let particles = [];
       let width = 324;
-      let height = 58;
+      let height = 56;
       let dpr = 1;
 
       function buildParticles() {
@@ -550,7 +548,7 @@
       function resize() {
         const rect = btn.getBoundingClientRect();
         width = Math.max(180, Math.round(rect.width || 324));
-        height = Math.max(44, Math.round(rect.height || 58));
+        height = Math.max(44, Math.round(rect.height || 56));
         dpr = Math.min(window.devicePixelRatio || 1, 2);
         canvas.width = width * dpr;
         canvas.height = height * dpr;
@@ -619,7 +617,7 @@
       btn.addEventListener('pointerleave', () => { hovered = false; });
       btn.addEventListener('focus', () => { hovered = true; });
       btn.addEventListener('blur', () => { hovered = false; });
-      window.addEventListener('resize', resize);
+      window.addEventListener('resize', resize, { passive: true });
 
       resize();
       if (!reducedMotion) {
