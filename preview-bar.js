@@ -13,9 +13,7 @@
       if (!data || !data.maintenance || !data.authenticated) return;
 
       renderBar();
-    } catch (_) {
-      // Fail silently on public mode
-    }
+    } catch (_) {}
   }
 
   function renderBar() {
