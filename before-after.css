@@ -1,4 +1,4 @@
-.process-comparison .section-head{max-width:680px}
+.process-comparison .section-head{max-width:850px}
 .comparison{position:relative;aspect-ratio:16/9;isolation:isolate;overflow:hidden;border:1px solid color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 30.2%, transparent);border-radius:20px;background:#101014}
 .comparison-art{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 45%,#27212b,#101014 75%)}
 .comparison-art img{display:block;width:88%;height:83%;object-fit:contain;pointer-events:none;user-select:none}
@@ -14,7 +14,7 @@
 @media(max-width:600px){.comparison{aspect-ratio:1/1;border-radius:12px}.comparison-label{top:12px;padding:6px 8px;letter-spacing:.03em}.label-before{left:10px}.label-after{right:10px}.comparison-hint{font-size:.46rem;gap:9px}.comparison-divider span{width:42px;height:42px}}
 .process-comparison .section-head{display:block;max-width:none}.process-comparison .section-head h2{font-size:clamp(2.7rem,6vw,6rem);max-width:none}.process-comparison .section-head .intro{max-width:560px;margin-top:22px}
 /* Compact comparison while retaining a comfortable touch target. */
-.process-comparison .comparison{width:min(100%,680px);margin-inline:auto}
+.process-comparison .comparison{width:min(100%,720px);margin-inline:auto}
 .process-comparison .section-head h2{font-size:clamp(2.5rem,5vw,4.8rem)}
 /* Frameless comparison on the page background. */
 .process-comparison .comparison{background:transparent;border:0;border-radius:0}

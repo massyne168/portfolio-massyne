@@ -34,6 +34,15 @@
       --font-serif: "DM Serif Display", Georgia, serif;
       --font-body: "Manrope", "Space Grotesk", Arial, sans-serif;
       --font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
+      /* Shader R parameters */
+      --shader-scale: 1.65;
+      --shader-distortion: 1.8;
+      --shader-grain: 0.4;
+      --shader-contrast: 1.45;
+      --shader-speed: 0.4;
+      --shader-color-a: #1f0000;
+      --shader-color-b: #101010;
+      --shader-color-c: #8a0000;
     }
 
     /* ===== Reset & Base ===== */
@@ -70,22 +79,28 @@
     input { font: inherit; color: inherit; }
     :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 
-    /* ===== Animated Background ===== */
-    .bg-layer {
+    /* ===== Shader R WebGL Background ===== */
+    #shader-canvas {
       position: fixed;
       inset: 0;
       z-index: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
       pointer-events: none;
-      overflow: hidden;
     }
 
-    .bg-gradient {
-      position: absolute;
-      inset: -20%;
+    /* Fallback CSS background for non-WebGL browsers */
+    .bg-fallback {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
       background:
-        radial-gradient(ellipse 60% 50% at 50% 20%, rgba(125, 1, 31, 0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 80% 60% at 80% 80%, rgba(200, 16, 36, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 10% 90%, rgba(192, 192, 192, 0.04) 0%, transparent 50%);
+        radial-gradient(ellipse 60% 50% at 50% 20%, rgba(138, 0, 0, 0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 60% at 80% 80%, rgba(31, 0, 0, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10% 90%, rgba(16, 16, 16, 0.08) 0%, transparent 50%),
+        var(--ink);
       animation: bg-shift 20s ease-in-out infinite alternate;
     }
 
@@ -95,34 +110,17 @@
       100% { transform: translate(2%, -1%) scale(0.98); opacity: 0.8; }
     }
 
-    .bg-particles {
-      position: absolute;
+    .bg-grid-fallback {
+      position: fixed;
       inset: 0;
-    }
-
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), rgba(200,16,36,0.15), transparent 70%);
-      filter: blur(1px);
-      animation: float 15s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-      25% { transform: translate(30px, -20px) scale(1.1); opacity: 0.5; }
-      50% { transform: translate(-20px, 30px) scale(0.9); opacity: 0.4; }
-      75% { transform: translate(15px, 25px) scale(1.05); opacity: 0.35; }
-    }
-
-    .bg-grid {
-      position: absolute;
-      inset: 0;
+      z-index: -1;
+      pointer-events: none;
       background-image:
-        linear-gradient(rgba(192, 192, 192, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(192, 192, 192, 0.02) 1px, transparent 1px);
+        linear-gradient(rgba(192, 192, 192, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(192, 192, 192, 0.015) 1px, transparent 1px);
       background-size: 80px 80px;
       animation: grid-drift 60s linear infinite;
+      opacity: 0;
     }
 
     @keyframes grid-drift {
@@ -130,18 +128,20 @@
       100% { transform: translate(80px, 80px); }
     }
 
-    .bg-scanline {
-      position: absolute;
+    .bg-scanline-fallback {
+      position: fixed;
       inset: 0;
+      z-index: -1;
+      pointer-events: none;
       background: repeating-linear-gradient(
         0deg,
         transparent,
         transparent 2px,
-        rgba(0,0,0,0.03) 2px,
-        rgba(0,0,0,0.03) 4px
+        rgba(0,0,0,0.02) 2px,
+        rgba(0,0,0,0.02) 4px
       );
-      pointer-events: none;
       animation: scanline 8s linear infinite;
+      opacity: 0;
     }
 
     @keyframes scanline {
@@ -483,9 +483,11 @@
       fill: none;
     }
 
-    .submit-btn {
+    /* ===== Shatter Halo Drift Button ===== */
+    .shatter-btn {
+      position: relative;
       width: 100%;
-      padding: clamp(16px, 2.5vw, 20px) clamp(24px, 3.5vw, 32px);
+      padding: clamp(18px, 3vw, 22px) clamp(28px, 4vw, 36px);
       margin-top: clamp(4px, 1vw, 8px);
       border-radius: 16px;
       background: linear-gradient(135deg, var(--red) 0%, var(--red-dim) 50%, #990011 100%);
@@ -500,20 +502,21 @@
         0 8px 30px rgba(125, 1, 31, 0.45),
         0 0 0 1px rgba(255, 255, 255, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      position: relative;
       overflow: hidden;
+      isolation: isolate;
     }
 
-    .submit-btn::before {
+    .shatter-btn::before {
       content: "";
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 50%);
       opacity: 0;
       transition: opacity 0.25s ease;
+      z-index: -1;
     }
 
-    .submit-btn:hover {
+    .shatter-btn:hover {
       transform: translateY(-2px) scale(1.015);
       background: linear-gradient(135deg, var(--red-bright) 0%, var(--red) 50%, var(--red-dim) 100%);
       box-shadow:
@@ -522,32 +525,42 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
 
-    .submit-btn:hover::before {
+    .shatter-btn:hover::before {
       opacity: 1;
     }
 
-    .submit-btn:active {
+    .shatter-btn:active {
       transform: translateY(0) scale(0.98);
     }
 
-    .submit-btn:focus-visible {
+    .shatter-btn:focus-visible {
       outline: 2px solid var(--focus);
       outline-offset: 3px;
     }
 
-    .submit-btn:disabled {
+    .shatter-btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
       transform: none;
     }
 
-    .submit-btn .btn-text {
+    .shatter-btn .btn-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .shatter-btn .btn-label {
       display: inline-flex;
       align-items: center;
       gap: 10px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
-    .submit-btn .spinner {
+    .shatter-btn .spinner {
       width: 18px;
       height: 18px;
       border: 2px solid rgba(255, 255, 255, 0.25);
@@ -557,16 +570,85 @@
       display: none;
     }
 
-    .submit-btn.loading .spinner {
+    .shatter-btn.loading .spinner {
       display: block;
     }
 
-    .submit-btn.loading .btn-label {
+    .shatter-btn.loading .btn-label {
       opacity: 0;
+      transform: translateY(-4px);
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    /* Shatter Halo ASCII particles */
+    .shatter-particles {
+      position: absolute;
+      inset: -4px;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 2;
+    }
+
+    .shatter-particle {
+      position: absolute;
+      font: 500 11px var(--font-mono);
+      color: var(--paper);
+      text-shadow: 0 0 8px var(--red-bright), 0 0 16px var(--red);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+      white-space: nowrap;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .shatter-btn.shattering .shatter-particle {
+      animation: shatter-burst 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes shatter-burst {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+      }
+      30% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1) rotate(var(--rotate));
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0.3) rotate(calc(var(--rotate) * 2));
+      }
+    }
+
+    /* Halo ring effect */
+    .shatter-halo {
+      position: absolute;
+      inset: -2px;
+      border-radius: 18px;
+      border: 1px solid transparent;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .shatter-btn:hover .shatter-halo {
+      animation: halo-pulse 1.5s ease-out forwards;
+    }
+
+    @keyframes halo-pulse {
+      0% {
+        border-color: rgba(200, 16, 36, 0.6);
+        box-shadow: 0 0 0 0 rgba(200, 16, 36, 0.4), inset 0 0 0 0 rgba(200, 16, 36, 0.2);
+        opacity: 1;
+      }
+      100% {
+        border-color: transparent;
+        box-shadow: 0 0 30px 10px rgba(200, 16, 36, 0), inset 0 0 40px 15px rgba(200, 16, 36, 0);
+        opacity: 0;
+      }
     }
 
     /* ===== Error Message ===== */
@@ -639,7 +721,8 @@
       100% { opacity: 0; transform: scale(1.1) translateY(-60px); filter: blur(20px); }
     }
 
-    .unlocking .bg-gradient {
+    .unlocking .bg-fallback,
+    .unlocking #shader-canvas {
       animation: bg-exit 0.8s ease-out forwards;
     }
 
@@ -677,10 +760,15 @@
       .status-dot { animation: none; }
       .status-badge { animation: none; }
       .progress-fill { animation: progress-grow 3s ease-in-out infinite; }
-      .bg-gradient { animation: none; }
-      .bg-particles .particle { animation: none; }
-      .bg-grid { animation: none; }
-      .bg-scanline { animation: none; }
+      .bg-fallback { animation: none; }
+      .bg-grid-fallback { animation: none; }
+      .bg-scanline-fallback { animation: none; }
+      .shatter-btn .shatter-particle { animation: none !important; display: none !important; }
+      .shatter-halo { animation: none !important; }
+      #shader-canvas { display: none !important; }
+      .bg-fallback { display: block !important; }
+      .bg-grid-fallback { display: block !important; opacity: 1 !important; }
+      .bg-scanline-fallback { display: block !important; opacity: 1 !important; }
     }
 
     /* ===== Responsive ===== */
@@ -692,7 +780,7 @@
       .glass-card::before { border-radius: 24px; }
       .glass-card::after { border-radius: 24px 24px 0 0; }
       .pass-input { letter-spacing: 0.15em; }
-      .submit-btn { letter-spacing: 0.14em; }
+      .shatter-btn { letter-spacing: 0.14em; }
     }
 
     @media (max-width: 360px) {
@@ -712,18 +800,18 @@
         --muted: #ccc;
       }
       .pass-input { border-width: 2px; }
-      .submit-btn { border: 2px solid var(--paper); }
+      .shatter-btn { border: 2px solid var(--paper); }
     }
   </style>
 </head>
 <body>
-  <!-- Animated Background -->
-  <div class="bg-layer" aria-hidden="true">
-    <div class="bg-gradient"></div>
-    <div class="bg-grid"></div>
-    <div class="bg-scanline"></div>
-    <div class="bg-particles" id="particles"></div>
-  </div>
+  <!-- Shader R WebGL Canvas -->
+  <canvas id="shader-canvas" aria-hidden="true"></canvas>
+
+  <!-- CSS Fallback Background (for non-WebGL / reduced motion) -->
+  <div class="bg-fallback" aria-hidden="true"></div>
+  <div class="bg-grid-fallback" aria-hidden="true"></div>
+  <div class="bg-scanline-fallback" aria-hidden="true"></div>
 
   <!-- Maintenance Shell -->
   <main class="maintenance-shell" role="main">
@@ -792,11 +880,16 @@
           </button>
         </div>
 
-        <button type="submit" class="submit-btn" id="submitBtn">
-          <span class="btn-text">
-            <span class="btn-label">UNLOCK</span>
-            <span class="spinner" aria-hidden="true"></span>
-          </span>
+        <!-- Shatter Halo Drift Button -->
+        <button type="submit" class="shatter-btn" id="submitBtn">
+          <div class="shatter-halo" aria-hidden="true"></div>
+          <div class="shatter-particles" id="shatterParticles" aria-hidden="true"></div>
+          <div class="btn-content">
+            <span class="btn-text">
+              <span class="btn-label">UNLOCK</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </span>
+          </div>
         </button>
 
         <div class="error-msg" id="errorMsg" role="alert" aria-live="polite"></div>
@@ -811,6 +904,297 @@
   </main>
 
   <script>
+    // ===== Shader R WebGL Background =====
+    (() => {
+      const canvas = document.getElementById('shader-canvas');
+      const gl = canvas.getContext('webgl', {
+        alpha: true,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        powerPreference: 'high-performance'
+      });
+
+      if (!gl) {
+        // WebGL not supported - fallback CSS will show
+        canvas.style.display = 'none';
+        document.querySelector('.bg-fallback').style.display = 'block';
+        document.querySelector('.bg-grid-fallback').style.display = 'block';
+        document.querySelector('.bg-scanline-fallback').style.display = 'block';
+        document.querySelector('.bg-grid-fallback').style.opacity = '1';
+        document.querySelector('.bg-scanline-fallback').style.opacity = '1';
+        return;
+      }
+
+      // Respect prefers-reduced-motion
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reducedMotion) {
+        canvas.style.display = 'none';
+        document.querySelector('.bg-fallback').style.display = 'block';
+        document.querySelector('.bg-grid-fallback').style.display = 'block';
+        document.querySelector('.bg-scanline-fallback').style.display = 'block';
+        document.querySelector('.bg-grid-fallback').style.opacity = '1';
+        document.querySelector('.bg-scanline-fallback').style.opacity = '1';
+        return;
+      }
+
+      // Shader R parameters from CSS custom properties
+      const SCALE = 1.65;
+      const DISTORTION = 1.8;
+      const GRAIN = 0.4;
+      const CONTRAST = 1.45;
+      const SPEED = 0.4;
+      const COLOR_A = [31/255, 0, 0];      // #1f0000
+      const COLOR_B = [16/255, 16/255, 16/255]; // #101010
+      const COLOR_C = [138/255, 0, 0];     // #8a0000
+
+      // Vertex shader - fullscreen quad
+      const vertexShaderSource = `
+        attribute vec2 a_position;
+        varying vec2 v_uv;
+        void main() {
+          v_uv = a_position * 0.5 + 0.5;
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+      `;
+
+      // Fragment shader - Shader R implementation
+      const fragmentShaderSource = `
+        precision highp float;
+        varying vec2 v_uv;
+
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        uniform float u_scale;
+        uniform float u_distortion;
+        uniform float u_grain;
+        uniform float u_contrast;
+        uniform float u_speed;
+        uniform vec3 u_colorA;
+        uniform vec3 u_colorB;
+        uniform vec3 u_colorC;
+
+        // Hash function for noise
+        float hash(vec2 p) {
+          return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+        }
+
+        // Value noise
+        float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+          return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+
+        // FBM noise
+        float fbm(vec2 p) {
+          float value = 0.0;
+          float amplitude = 0.5;
+          for (int i = 0; i < 5; i++) {
+            value += amplitude * noise(p);
+            p *= 2.0;
+            amplitude *= 0.5;
+          }
+          return value;
+        }
+
+        // Domain distortion
+        vec2 distort(vec2 p, float time) {
+          float n1 = fbm(p * 0.5 + time * 0.1);
+          float n2 = fbm(p * 0.7 + time * 0.13 + 100.0);
+          float n3 = fbm(p * 1.2 + time * 0.07 + 200.0);
+          vec2 d = vec2(n1 - n2, n2 - n3) * u_distortion;
+          return p + d;
+        }
+
+        // Grain
+        float grain(vec2 p) {
+          return hash(p) * 2.0 - 1.0;
+        }
+
+        void main() {
+          vec2 uv = v_uv;
+          vec2 center = vec2(0.5);
+          vec2 p = (uv - center) * u_scale + center;
+
+          // Time with speed control
+          float t = u_time * u_speed;
+
+          // Domain distortion
+          p = distort(p, t);
+
+          // Distance from center for radial effects
+          float dist = length(p - center);
+
+          // Layered noise fields
+          float n1 = fbm(p * 1.5 + t * 0.3);
+          float n2 = fbm(p * 2.5 - t * 0.2 + 50.0);
+          float n3 = fbm(p * 4.0 + t * 0.15 + 150.0);
+
+          // Combine noise layers
+          float field = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
+
+          // Radial modulation
+          float radial = smoothstep(0.8, 0.0, dist) * 0.5 + 0.5;
+          field = mix(field, field * radial, 0.6);
+
+          // Color mixing between three colors
+          vec3 col = mix(u_colorB, u_colorA, smoothstep(0.3, 0.7, field));
+          col = mix(col, u_colorC, smoothstep(0.6, 0.9, field) * radial);
+
+          // Add grain
+          float g = grain(v_uv * u_resolution * 0.5) * u_grain;
+          col += vec3(g);
+
+          // Contrast
+          col = pow(col, vec3(u_contrast));
+
+          // Vignette
+          float vig = smoothstep(1.2, 0.3, dist);
+          col *= vig;
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `;
+
+      function compileShader(source, type) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
+      const fragmentShader = compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
+
+      if (!vertexShader || !fragmentShader) {
+        canvas.style.display = 'none';
+        return;
+      }
+
+      const program = gl.createProgram();
+      gl.attachShader(program, vertexShader);
+      gl.attachShader(program, fragmentShader);
+      gl.linkProgram(program);
+
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Program link error:', gl.getProgramInfoLog(program));
+        canvas.style.display = 'none';
+        return;
+      }
+
+      // Quad geometry
+      const positions = new Float32Array([
+        -1, -1,
+         1, -1,
+        -1,  1,
+         1,  1
+      ]);
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+      const positionLoc = gl.getAttribLocation(program, 'a_position');
+      gl.enableVertexAttribArray(positionLoc);
+      gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
+
+      // Uniform locations
+      const timeLoc = gl.getUniformLocation(program, 'u_time');
+      const resLoc = gl.getUniformLocation(program, 'u_resolution');
+      const scaleLoc = gl.getUniformLocation(program, 'u_scale');
+      const distortionLoc = gl.getUniformLocation(program, 'u_distortion');
+      const grainLoc = gl.getUniformLocation(program, 'u_grain');
+      const contrastLoc = gl.getUniformLocation(program, 'u_contrast');
+      const speedLoc = gl.getUniformLocation(program, 'u_speed');
+      const colorALoc = gl.getUniformLocation(program, 'u_colorA');
+      const colorBLoc = gl.getUniformLocation(program, 'u_colorB');
+      const colorCLoc = gl.getUniformLocation(program, 'u_colorC');
+
+      gl.useProgram(program);
+      gl.uniform1f(scaleLoc, SCALE);
+      gl.uniform1f(distortionLoc, DISTORTION);
+      gl.uniform1f(grainLoc, GRAIN);
+      gl.uniform1f(contrastLoc, CONTRAST);
+      gl.uniform1f(speedLoc, SPEED);
+      gl.uniform3fv(colorALoc, COLOR_A);
+      gl.uniform3fv(colorBLoc, COLOR_B);
+      gl.uniform3fv(colorCLoc, COLOR_C);
+
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+      let startTime = null;
+      let animationId = 0;
+      let disposed = false;
+
+      function resize() {
+        if (disposed) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = Math.max(1, Math.round(window.innerWidth * dpr));
+        const height = Math.max(1, Math.round(window.innerHeight * dpr));
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+          canvas.style.width = '100%';
+          canvas.style.height = '100%';
+          gl.viewport(0, 0, width, height);
+          gl.uniform2f(resLoc, width, height);
+        }
+      }
+
+      function draw(timestamp) {
+        if (disposed || gl.isContextLost()) return;
+        if (startTime === null) startTime = timestamp;
+        const elapsed = (timestamp - startTime) * 0.001;
+
+        gl.useProgram(program);
+        gl.uniform1f(timeLoc, elapsed);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      }
+
+      function render(timestamp) {
+        if (disposed) return;
+        draw(timestamp);
+        animationId = requestAnimationFrame(render);
+      }
+
+      function start() {
+        if (animationId) return;
+        animationId = requestAnimationFrame(render);
+      }
+
+      function stop() {
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+          animationId = 0;
+        }
+      }
+
+      resize();
+      start();
+
+      window.addEventListener('resize', resize);
+      window.addEventListener('pagehide', () => {
+        disposed = true;
+        stop();
+        gl.deleteBuffer(buffer);
+        gl.deleteProgram(program);
+        gl.deleteShader(vertexShader);
+        gl.deleteShader(fragmentShader);
+      }, { once: true });
+    })();
+
     // ===== Configuration =====
     const CONFIG = {
       password: 'SALMA', // This is only for client-side UX feedback; real validation is server-side
@@ -830,11 +1214,16 @@
     const relockLink = document.getElementById('relockLink');
     const eyeOpen = toggleBtn.querySelector('.eye-open');
     const eyeClosed = toggleBtn.querySelector('.eye-closed');
+    const shatterParticles = document.getElementById('shatterParticles');
 
     // ===== State =====
     let isUnlocking = false;
     let progressInterval = null;
     let progressValue = 0;
+    let shatterAnimationId = null;
+
+    // ===== ASCII Characters for Shatter Effect =====
+    const SHATTER_CHARS = ['▲', '◆', '●', '■', '▼', '◆', '▲', '●', '◇', '■', '▲', '◆'];
 
     // ===== Utility Functions =====
     function setError(message) {
@@ -873,6 +1262,56 @@
       passwordInput.focus();
     }
 
+    // ===== Shatter Halo Drift Particle Generation =====
+    function createShatterParticles() {
+      // Respect reduced motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+
+      const rect = submitBtn.getBoundingClientRect();
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const particleCount = 12;
+
+      shatterParticles.innerHTML = '';
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('span');
+        particle.className = 'shatter-particle';
+        particle.textContent = SHATTER_CHARS[i % SHATTER_CHARS.length];
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+
+        // Random angle and distance for burst
+        const angle = (i / particleCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+        const distance = 60 + Math.random() * 80;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        const rotate = (Math.random() - 0.5) * 720; // -360 to 360 degrees
+
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+        particle.style.setProperty('--rotate', rotate + 'deg');
+
+        // Staggered delay
+        particle.style.animationDelay = (Math.random() * 0.1) + 's';
+
+        shatterParticles.appendChild(particle);
+      }
+    }
+
+    function triggerShatter() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+      createShatterParticles();
+      submitBtn.classList.add('shattering');
+      setTimeout(() => {
+        submitBtn.classList.remove('shattering');
+      }, 900);
+    }
+
     // ===== Progress Animation =====
     function startProgressAnimation() {
       const labels = ['INITIALIZING', 'PREPARING', 'OPTIMIZING', 'FINALIZING', 'READY'];
@@ -894,25 +1333,6 @@
           clearInterval(progressInterval);
         }
       }, 300);
-    }
-
-    // ===== Particle Generation =====
-    function createParticles() {
-      const container = document.getElementById('particles');
-      const count = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 12;
-
-      for (let i = 0; i < count; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        const size = Math.random() * 60 + 20;
-        particle.style.width = size + 'px';
-        particle.style.height = size + 'px';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.top = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-        container.appendChild(particle);
-      }
     }
 
     // ===== Session Check =====
@@ -937,6 +1357,9 @@
       isUnlocking = true;
       setLoading(true);
       clearError();
+
+      // Trigger shatter effect on submit
+      triggerShatter();
 
       try {
         const res = await fetch(CONFIG.apiEndpoint, {
@@ -1013,9 +1436,15 @@
       relock();
     });
 
+    // Hover effect on shatter button - regenerate particles
+    submitBtn.addEventListener('mouseenter', () => {
+      if (!submitBtn.classList.contains('loading') && !isUnlocking) {
+        createShatterParticles();
+      }
+    });
+
     // ===== Initialize =====
     async function init() {
-      createParticles();
       startProgressAnimation();
 
       const session = await checkSession();

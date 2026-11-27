@@ -1,7 +1,6 @@
-﻿/* MASSYNE – chapter-specific scroll reveals and visual transitions. */
+/* MASSYNE â€” chapter-specific scroll reveals and visual transitions. */
 .section-flow{position:relative;isolation:isolate;padding-block:clamp(20px,3vw,36px) 10px}
-.section-flow-line{position:absolute;top:0;bottom:0;left:50%;width:2px;height:auto;transform:translateX(-50%);background:linear-gradient(180deg,transparent 0%,var(--site-accent, var(--site-accent, #990011)) 50%,transparent 100%);box-shadow:0 0 18px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 33.3%, transparent)}
-.section-flow-diamond{position:absolute;top:50%;left:50%;width:28px;height:28px;transform:translate(-50%,-50%);border:2px solid var(--site-accent, var(--site-accent, #990011));border-radius:50%;background:var(--site-accent, var(--site-accent, #990011));box-shadow:0 0 20px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 40%, transparent)}
+.section-flow-line{height:2px;background:linear-gradient(90deg,transparent 0%,var(--site-accent, var(--site-accent, #990011)) 12%,var(--site-accent, var(--site-accent, #990011)) 48%,var(--site-accent, var(--site-accent, #990011)) 88%,transparent 100%);box-shadow:0 0 18px color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 33.3%, transparent)}
 .section-flow-label{align-items:center;color:#c9bec1}
 .section-flow-label span:first-child{letter-spacing:.15em}
 .section-flow-label span:last-child{display:grid;place-items:center;width:28px;height:28px;border:1px solid color-mix(in srgb, var(--site-accent, var(--site-accent, #990011)) 40%, transparent);border-radius:50%;color:var(--site-accent, var(--site-accent, #990011))}
@@ -38,13 +37,10 @@
  .flow-enabled #motion.is-visible .showreel-screen{clip-path:inset(0)}
  .flow-enabled #motion .showreel-side{opacity:0;translate:0 24px;transition:opacity .75s ease .2s,translate .8s cubic-bezier(.18,.72,.2,1) .2s}
  .flow-enabled #motion.is-visible .showreel-side{opacity:1;translate:0 0}
- .flow-enabled #archive .archive-item:nth-child(3n+1){transition-delay:.04s}.flow-enabled #archive .archive-item:nth-child(3n+2){transition-delay:.12s}.flow-enabled #archive .archive-item:nth-child(3n){transition-delay:.2s}
+  .flow-enabled #archive .archive-item:nth-child(3n+1){transition-delay:.04s}.flow-enabled #archive .archive-item:nth-child(3n+2){transition-delay:.12s}.flow-enabled #archive .archive-item:nth-child(3n){transition-delay:.2s}
  .flow-enabled #services .service-item:nth-child(2){transition-delay:.08s}.flow-enabled #services .service-item:nth-child(3){transition-delay:.16s}.flow-enabled #services .service-item:nth-child(4){transition-delay:.24s}
  .flow-enabled #contact>h2{transition-delay:.08s}.flow-enabled #contact .availability-block{transition-delay:.14s}.flow-enabled #contact .contact-v2-bottom{transition-delay:.2s}.flow-enabled #contact .project-brief{transition-delay:.26s}
- .flow-enabled .section-flow-line{transform:scaleY(.08);transition:transform .75s cubic-bezier(.2,.6,.3,1)}
- .flow-enabled .section-flow-diamond{opacity:1;animation:crimsonPulse 2.5s ease-in-out infinite}
- .flow-enabled .section-flow.is-visible .section-flow-line{transform:scaleY(1)}
- .flow-enabled .section-flow.is-visible .section-flow-diamond{opacity:1}
+ .flow-enabled .section-flow-line{background-size:220% 100%;animation:chapter-line-flow 2.4s linear infinite}
 }
 @keyframes chapter-line-flow{to{background-position:220% 0}}
 @media(prefers-reduced-motion:reduce){#archive .archive-item{transition:none}}
@@ -91,6 +87,7 @@ html[data-theme="dark"] .section-flow-label span:first-child{border-color:color-
 .section-flow[data-flow-target="motion"] .section-flow-label::before{content:"04"}
 .section-flow[data-flow-target="archive"] .section-flow-label::before{content:"05"}
 .section-flow[data-flow-target="services"] .section-flow-label::before{content:"06"}
+
 .section-flow[data-flow-target="contact"] .section-flow-label::before{content:"07"}
 @media(max-width:700px){.section-flow-label span:first-child{font-size:9px;letter-spacing:.08em}.section-flow-label::before{min-width:29px}}
 
