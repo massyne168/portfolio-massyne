@@ -38,7 +38,7 @@ async function isValidSession(cookieHeader, secret) {
   if (parts.length !== 2) return false;
 
   const [expires, signature] = parts;
-  if (!/^\d+$/.test(expires) \vert{}\vert{} !/^[a-f0-9]{64}$/i.test(signature)) {
+  if (!/^\d+$/.test(expires) || !/^[a-f0-9]{64}$/i.test(signature)) {
     return false;
   }
 
