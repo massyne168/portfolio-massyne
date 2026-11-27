@@ -734,6 +734,44 @@
         })
         .catch(() => passwordInput.focus());
     })();
+
+    // Sync background layers & styles from /index.html so updating the site updates here too
+    (() => {
+      fetch('/index.html', { cache: 'no-store' })
+        .then((res) => (res.ok ? res.text() : ''))
+        .then((html) => {
+          if (!html) return;
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const shell = document.querySelector('.preview-shell');
+          if (!shell) return;
+
+          const selectors = [
+            '#shader-canvas',
+            '.bg-fallback',
+            '.grain-overlay',
+            '.site-bg',
+            '.bg-layer',
+            '[data-site-bg]'
+          ];
+
+          selectors.forEach((sel) => {
+            doc.querySelectorAll(sel).forEach((el) => {
+              const id = el.id;
+              if (id && document.getElementById(id)) return;
+              const clone = el.cloneNode(true);
+              clone.style.pointerEvents = 'none';
+              if (!clone.style.zIndex) clone.style.zIndex = '0';
+              document.body.insertBefore(clone, shell);
+            });
+          });
+
+          const indexBodyBg = doc.body?.style?.background || doc.body?.style?.backgroundImage;
+          if (indexBodyBg) {
+            document.body.style.background = doc.body.style.background;
+          }
+        })
+        .catch(() => {});
+    })();
   </script>
 </body>
 </html>
