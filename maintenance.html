@@ -212,6 +212,28 @@
       max-width: 400px;
     }
 
+    .owner-preview-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--paper);
+      font: 600 clamp(0.7rem, 1.25vw, 0.78rem) var(--font-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+    }
+
+    .owner-preview-btn:hover {
+      border-color: var(--red-bright);
+      background: rgba(200, 16, 36, 0.22);
+      transform: translateY(-1px);
+    }
+
     .footer-note {
       width: 100%;
       padding-top: 22px;
@@ -222,7 +244,7 @@
       color: rgba(245, 235, 208, 0.48);
     }
 
-    .logo-wrap, .status-badge, .headline, .subtext, .footer-note {
+    .logo-wrap, .status-badge, .headline, .subtext, .owner-preview-btn, .footer-note {
       opacity: 0;
       transform: translateY(22px);
       animation: entrance 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
@@ -232,14 +254,15 @@
     .status-badge { animation-delay: 0.18s; }
     .headline { animation-delay: 0.28s; }
     .subtext { animation-delay: 0.38s; }
-    .footer-note { animation-delay: 0.48s; }
+    .owner-preview-btn { animation-delay: 0.44s; }
+    .footer-note { animation-delay: 0.50s; }
 
     @keyframes entrance {
       to { opacity: 1; transform: translateY(0); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .logo-wrap, .status-badge, .headline, .subtext, .footer-note {
+      .logo-wrap, .status-badge, .headline, .subtext, .owner-preview-btn, .footer-note {
         animation: none;
         opacity: 1;
         transform: none;
@@ -277,6 +300,8 @@
       <h1 class="headline">SOMETHING NEW<em>is coming.</em></h1>
 
       <p class="subtext">WE'RE CURRENTLY CRAFTING A NEW EXPERIENCE.</p>
+
+      <a class="owner-preview-btn" href="/preview">Owner /preview Login</a>
 
       <footer class="footer-note">MASSYNE — CREATIVE PORTFOLIO</footer>
     </article>
