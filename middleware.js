@@ -85,10 +85,11 @@ export default async function middleware(request) {
     });
   }
 
-  const rewriteUrl = new URL("/maintenance.html", request.url);
+  const redirectUrl = new URL("/maintenance.html", request.url);
   return new Response(null, {
+    status: 307,
     headers: {
-      "x-middleware-rewrite": rewriteUrl.toString(),
+      Location: redirectUrl.toString(),
       "Cache-Control": "no-store, no-cache, must-revalidate"
     }
   });
