@@ -1,7 +1,7 @@
 const COOKIE_NAME = "massyne_maintenance_session";
 
 export const config = {
-  matcher: ["/", "/index.html", "/projects/:path*"]
+  matcher: ["/", "/index.html", "/maintenance", "/maintenance.html", "/projects/:path*"]
 };
 
 function parseCookies(cookieHeader) {
@@ -85,7 +85,7 @@ export default async function middleware(request) {
     });
   }
 
-  const redirectUrl = new URL("/maintenance.html", request.url);
+  const redirectUrl = new URL("/preview.html", request.url);
   return new Response(null, {
     status: 307,
     headers: {
