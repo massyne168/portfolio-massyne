@@ -59,7 +59,6 @@
     input { font: inherit; color: inherit; }
     :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 
-    /* ===== Shader R WebGL Background ===== */
     #shader-canvas {
       position: fixed;
       inset: 0;
@@ -90,7 +89,6 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* ===== Main Shell ===== */
     .preview-shell {
       position: relative;
       z-index: 10;
@@ -102,7 +100,6 @@
       padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px);
     }
 
-    /* ===== Liquid Glass Card (blur: 10px | radius: 36px | tint: 1%) ===== */
     .glass-card {
       --mx: 50%;
       --my: 25%;
@@ -153,7 +150,6 @@
       border-color: var(--glass-border-bright);
     }
 
-    /* ===== Logo ===== */
     .logo-wrap {
       display: flex;
       flex-direction: column;
@@ -180,7 +176,6 @@
       color: var(--red-bright);
     }
 
-    /* ===== Status Badge ===== */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -232,7 +227,6 @@
       margin-top: 2px;
     }
 
-    /* ===== Form ===== */
     .auth-form {
       width: 100%;
       max-width: 324px;
@@ -314,7 +308,6 @@
       fill: none;
     }
 
-    /* ===== Shatter Halo Drift Button (324px High-DPI Canvas Pill) ===== */
     .shatter-halo-btn {
       position: relative;
       width: min(100%, 324px);
@@ -410,7 +403,6 @@
       white-space: nowrap;
     }
 
-    /* ===== Error & Footer ===== */
     .error-msg {
       min-height: 20px;
       font: 500 0.76rem var(--font-mono);
@@ -437,7 +429,6 @@
       color: rgba(245, 235, 208, 0.48);
     }
 
-    /* ===== Shake & Unlock Animations ===== */
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       15%, 45%, 75% { transform: translateX(-8px); }
@@ -528,7 +519,6 @@
   </main>
 
   <script>
-    // Liquid Glass cursor sheen
     (() => {
       const card = document.getElementById('glassCard');
       if (!card) return;
@@ -541,7 +531,6 @@
       });
     })();
 
-    // High-DPI Shatter Halo Drift Button (ASCII particle shatter & reassembly)
     const shatterButton = (() => {
       const btn = document.getElementById('submitBtn');
       const canvas = document.getElementById('shatterCanvas');
@@ -552,7 +541,7 @@
 
       let label = 'UNLOCK';
       let hovered = false;
-      let progress = 0; // 0 = clean crisp label, 1 = shattered ASCII art reassembled
+      let progress = 0;
       let particles = [];
       let width = 324;
       let height = 58;
@@ -617,7 +606,6 @@
           return;
         }
 
-        // Peak shatter happens at progress = 0.5, then reassembles into crisp ASCII art of itself at 1.0
         const scatter = Math.sin(progress * Math.PI);
         const textAlpha = Math.max(0, 1 - progress * 2.2);
 
@@ -683,7 +671,6 @@
       };
     })();
 
-    // Authentication Flow
     (() => {
       const API_ENDPOINT = '/api/maintenance-auth';
       const glassCard = document.getElementById('glassCard');
@@ -716,4 +703,269 @@
         submitting = loading;
         submitBtn.disabled = loading;
         passwordInput.disabled = loading;
-        toggleBtn.
+        toggleBtn.disabled = loading;
+        shatterButton.setLabel(loading ? 'VERIFYING' : 'UNLOCK');
+      }
+
+      toggleBtn.addEventListener('click', () => {
+        const show = passwordInput.type === 'password';
+        passwordInput.type = show ? 'text' : 'password';
+        toggleBtn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        toggleBtn.setAttribute('aria-pressed', String(show));
+        eyeOpen.style.display = show ? 'none' : 'block';
+        eyeClosed.style.display = show ? 'block' : 'none';
+        passwordInput.focus();
+      });
+
+      passwordInput.addEventListener('input', clearError);
+
+      authForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (submitting) return;
+        const password = passwordInput.value.trim();
+        if (!password) {
+          setError('ENTER ACCESS CODE');
+          return;
+        }
+
+        setLoading(true);
+        clearError();
+
+        try {
+          const res = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            credentials: 'same-origin',
+            cache: 'no-store',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password })
+          });
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok || !data.authenticated) {
+            throw new Error(data.message || 'ACCESS DENIED');
+          }
+
+          shatterButton.setLabel('GRANTED');
+          document.body.classList.add('unlocking');
+          setTimeout(() => {
+            window.location.replace('/');
+          }, 600);
+        } catch (err) {
+          setLoading(false);
+          setError(err.message || 'ACCESS DENIED');
+        }
+      });
+
+      fetch(API_ENDPOINT, {
+        method: 'GET',
+        credentials: 'same-origin',
+        cache: 'no-store'
+      })
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data && (!data.maintenance || data.authenticated)) {
+            window.location.replace('/');
+            return;
+          }
+          passwordInput.focus();
+        })
+        .catch(() => passwordInput.focus());
+    })();
+
+    (() => {
+      const canvas = document.getElementById('shader-canvas');
+      const gl = canvas.getContext('webgl', {
+        alpha: true,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        powerPreference: 'high-performance'
+      });
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!gl || reducedMotion) {
+        canvas.style.display = 'none';
+        return;
+      }
+
+      const vertexShaderSource = `
+        attribute vec2 a_position;
+        varying vec2 v_uv;
+        void main() {
+          v_uv = a_position * 0.5 + 0.5;
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+      `;
+
+      const fragmentShaderSource = `
+        precision highp float;
+        varying vec2 v_uv;
+
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        uniform float u_scale;
+        uniform float u_distortion;
+        uniform float u_grain;
+        uniform float u_contrast;
+        uniform float u_speed;
+        uniform vec3 u_colorA;
+        uniform vec3 u_colorB;
+        uniform vec3 u_colorC;
+
+        float hash(vec2 p) {
+          return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+        }
+
+        float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+          return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+
+        float fbm(vec2 p) {
+          float value = 0.0;
+          float amplitude = 0.5;
+          for (int i = 0; i < 5; i++) {
+            value += amplitude * noise(p);
+            p *= 2.0;
+            amplitude *= 0.5;
+          }
+          return value;
+        }
+
+        vec2 distort(vec2 p, float time) {
+          float n1 = fbm(p * 0.5 + time * 0.1);
+          float n2 = fbm(p * 0.7 + time * 0.13 + 100.0);
+          float n3 = fbm(p * 1.2 + time * 0.07 + 200.0);
+          vec2 d = vec2(n1 - n2, n2 - n3) * u_distortion;
+          return p + d;
+        }
+
+        float grain(vec2 p) {
+          return hash(p) * 2.0 - 1.0;
+        }
+
+        void main() {
+          vec2 uv = v_uv;
+          vec2 center = vec2(0.5);
+          vec2 p = (uv - center) * u_scale + center;
+          float t = u_time * u_speed;
+          p = distort(p, t);
+          float dist = length(p - center);
+
+          float n1 = fbm(p * 1.5 + t * 0.3);
+          float n2 = fbm(p * 2.5 - t * 0.2 + 50.0);
+          float n3 = fbm(p * 4.0 + t * 0.15 + 150.0);
+          float field = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
+
+          float radial = smoothstep(0.8, 0.0, dist) * 0.5 + 0.5;
+          field = mix(field, field * radial, 0.6);
+
+          vec3 col = mix(u_colorB, u_colorA, smoothstep(0.3, 0.7, field));
+          col = mix(col, u_colorC, smoothstep(0.6, 0.9, field) * radial);
+
+          float g = grain(v_uv * u_resolution * 0.5) * u_grain;
+          col += vec3(g);
+          col = pow(col, vec3(u_contrast));
+
+          float vig = smoothstep(1.2, 0.3, dist);
+          col *= vig;
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `;
+
+      function compileShader(source, type) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
+      const fragmentShader = compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
+      if (!vertexShader || !fragmentShader) {
+        canvas.style.display = 'none';
+        return;
+      }
+
+      const program = gl.createProgram();
+      gl.attachShader(program, vertexShader);
+      gl.attachShader(program, fragmentShader);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        canvas.style.display = 'none';
+        return;
+      }
+
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+      const positionLoc = gl.getAttribLocation(program, 'a_position');
+      gl.enableVertexAttribArray(positionLoc);
+      gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
+
+      gl.useProgram(program);
+      const timeLoc = gl.getUniformLocation(program, 'u_time');
+      const resLoc = gl.getUniformLocation(program, 'u_resolution');
+      gl.uniform1f(gl.getUniformLocation(program, 'u_scale'), 1.65);
+      gl.uniform1f(gl.getUniformLocation(program, 'u_distortion'), 1.8);
+      gl.uniform1f(gl.getUniformLocation(program, 'u_grain'), 0.4);
+      gl.uniform1f(gl.getUniformLocation(program, 'u_contrast'), 1.45);
+      gl.uniform1f(gl.getUniformLocation(program, 'u_speed'), 0.4);
+      gl.uniform3fv(gl.getUniformLocation(program, 'u_colorA'), [31 / 255, 0, 0]);
+      gl.uniform3fv(gl.getUniformLocation(program, 'u_colorB'), [16 / 255, 16 / 255, 16 / 255]);
+      gl.uniform3fv(gl.getUniformLocation(program, 'u_colorC'), [138 / 255, 0, 0]);
+
+      let startTime = null;
+      let animationId = 0;
+      let disposed = false;
+
+      function resize() {
+        if (disposed) return;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const width = Math.max(1, Math.round(window.innerWidth * dpr));
+        const height = Math.max(1, Math.round(window.innerHeight * dpr));
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+          gl.viewport(0, 0, width, height);
+          gl.uniform2f(resLoc, width, height);
+        }
+      }
+
+      function render(timestamp) {
+        if (disposed || gl.isContextLost()) return;
+        if (startTime === null) startTime = timestamp;
+        const elapsed = (timestamp - startTime) * 0.001;
+        gl.useProgram(program);
+        gl.uniform1f(timeLoc, elapsed);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        animationId = requestAnimationFrame(render);
+      }
+
+      resize();
+      animationId = requestAnimationFrame(render);
+      window.addEventListener('resize', resize);
+      window.addEventListener('pagehide', () => {
+        disposed = true;
+        cancelAnimationFrame(animationId);
+        gl.deleteBuffer(buffer);
+        gl.deleteProgram(program);
+        gl.deleteShader(vertexShader);
+        gl.deleteShader(fragmentShader);
+      }, { once: true });
+    })();
+  </script>
+</body>
+</html>
