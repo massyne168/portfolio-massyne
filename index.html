@@ -2,250 +2,33 @@
 <html lang="en" data-theme="dark"><head><link rel="preconnect" href="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev" crossorigin><meta charset="utf-8"><script src="/theme-init.js"></script>
 <script>
   (function() {
-    // Check if already unlocked
-    if (sessionStorage.getItem('m_unlocked') === '1') return;
+    // Maintenance mode gate - check server-side session
+    // If maintenance is active and not authenticated, redirect to maintenance page
+    async function checkMaintenance() {
+      try {
+        const res = await fetch('/api/maintenance-auth', {
+          method: 'GET',
+          credentials: 'same-origin',
+          cache: 'no-store'
+        });
+        const data = await res.json();
 
-    // Immediately inject full-screen overlay onto document.documentElement
-    // This runs before body parses, so body visibility:hidden won't affect it
-    var overlay = document.createElement('div');
-    overlay.id = 'm-gate';
-    overlay.style.cssText = [
-      'position:fixed',
-      'inset:0',
-      'z-index:2147483647',
-      'background:#070709',
-      'display:flex',
-      'align-items:center',
-      'justify-content:center',
-      'overflow:hidden'
-    ].join(';');
+        // If maintenance mode is disabled, allow access
+        if (!data.maintenance) return;
 
-    // Lock html/body overflow
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
+        // If maintenance is active but user is authenticated, allow access
+        if (data.authenticated) return;
 
-    // Create the Liquid Glass card
-    var card = document.createElement('div');
-    card.style.cssText = [
-      'background:rgba(20,20,25,0.65)',
-      'backdrop-filter:blur(24px) saturate(160%)',
-      'border:1px solid rgba(245,235,208,0.16)',
-      'border-radius:24px',
-      'box-shadow:0 0 80px rgba(125,1,31,0.5),0 0 120px rgba(200,16,36,0.25),0 24px 60px rgba(0,0,0,0.52)',
-      'width:min(100%,480px)',
-      'max-width:90vw',
-      'padding:clamp(32px,6vw,56px) clamp(24px,4vw,48px)',
-      'display:flex',
-      'flex-direction:column',
-      'align-items:center',
-      'gap:clamp(20px,3vw,38px)',
-      'color:rgba(245,235,208,0.8)',
-      'font-family:Space Grotesk,Manrope,Arial,sans-serif'
-    ].join(';');
-
-    // MASSYNE logo container
-    var logoContainer = document.createElement('div');
-    logoContainer.style.cssText = [
-      'width:100%',
-      'display:flex',
-      'justify-content:center',
-      'align-items:center',
-      'margin-bottom:clamp(12px,2vw,24px)'
-    ].join(';');
-
-    var logoImg = document.createElement('img');
-    logoImg.src = 'https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/flame-metal-logo-480.webp';
-    logoImg.alt = 'MASSYNE logo';
-    logoImg.width = 120;
-    logoImg.height = 60;
-    logoImg.style.cssText = [
-      'filter:drop-shadow(0 0 30px rgba(200,16,36,0.4))',
-      'animation:m-gate-logo-pulse 4s ease-in-out infinite'
-    ].join(';');
-
-    var wordmark = document.createElement('div');
-    wordmark.style.cssText = [
-      'display:none',
-      'font-family:Space Grotesk,Syne,Arial,sans-serif',
-      'font-weight:800',
-      'font-size:clamp(2.2rem,5.5vw,3.2rem)',
-      'letter-spacing:-0.08em',
-      'color:#F5EBD0',
-      'text-align:center',
-      'margin-top:8px'
-    ].join(';');
-    wordmark.textContent = 'MASSYNE';
-
-    // System Maintenance pill
-    var badge = document.createElement('div');
-    badge.style.cssText = [
-      'display:inline-flex',
-      'align-items:center',
-      'gap:14px',
-      'padding:14px 28px',
-      'background:linear-gradient(135deg,rgba(200,16,36,0.45),rgba(125,1,31,0.52),rgba(153,0,17,0.48))',
-      'border:1px solid rgba(255,255,255,0.28)',
-      'border-radius:18px',
-      'backdrop-filter:blur(12px) saturate(180%)',
-      'font:600 clamp(0.95rem,2.2vw,1.15rem) "JetBrains Mono",monospace',
-      'letter-spacing:0.22em',
-      'text-transform:uppercase',
-      'color:#F5EBD0',
-      'cursor:default'
-    ].join(';');
-
-    var badgeDot = document.createElement('span');
-    badgeDot.style.cssText = [
-      'width:8px;height:8px;border-radius:50%;',
-      'background:#c81024',
-      'box-shadow:0 0 12px #c81024,0 0 30px #c81024'
-    ].join(';');
-    badgeDot.setAttribute('aria-hidden', 'true');
-
-    badge.appendChild(badgeDot);
-    badge.textContent += ' SYSTEM MAINTENANCE';
-
-    // Title
-    var title = document.createElement('h2');
-    title.style.cssText = [
-      'font:600 clamp(1.8rem,4.2vw,2.4rem)/1.05 Space Grotesk,Arial,sans-serif',
-      'letter-spacing:-0.04em',
-      'color:#F5EBD0',
-      'text-align:center',
-      'margin:0',
-      'padding:clamp(20px,4vw,32px) 0 16px 0'
-    ].join(';');
-    title.textContent = 'UPGRADING EXPERIENCE';
-
-    // Subtitle
-    var subtitle = document.createElement('p');
-    subtitle.style.cssText = [
-      'font:400 clamp(0.9rem,1.8vw,1rem)/1.55 Manrope,Arial,sans-serif',
-      'color:rgba(245,235,208,0.68)',
-      'margin:0',
-      'text-align:center',
-      'letter-spacing:0.01em'
-    ].join(';');
-    subtitle.textContent = 'A quick security check to ensure smooth operations.';
-
-    // Password form
-    var form = document.createElement('form');
-    form.id = 'm-gate-form';
-    form.style.cssText = ['width:100%;max-width:320px;margin-top:clamp(16px,2.5vw,28px) 0'].join(';');
-
-    var label = document.createElement('label');
-    label.for = 'm-gate-password';
-    label.style.cssText = [
-      'display:block',
-      'margin-bottom:10px',
-      'font:500 clamp(0.8rem,1.3vw,0.9rem) mono,monospace',
-      'letter-spacing:0.18em',
-      'text-transform:uppercase',
-      'color:rgba(245,235,208,0.75)'
-    ].join(';');
-    label.textContent = 'ENTER PASSCODE';
-
-    var inputWrapper = document.createElement('div');
-    inputWrapper.style.cssText = [
-      'position:relative;display:flex;align-items:center;gap:10px'
-    ].join(';');
-
-    var passwordInput = document.createElement('input');
-    passwordInput.type = 'password';
-    passwordInput.id = 'm-gate-password';
-    passwordInput.name = 'password';
-    passwordInput.autocomplete = 'off';
-    passwordInput.maxlength = 20;
-    passwordInput.spellcheck = 'false';
-    passwordInput.placeholder = 'ENTER PASSCODE';
-    passwordInput.style.cssText = [
-      'flex:1;width:100%;padding:clamp(14px,2.2vw,16px) clamp(16px,2.8vw,20px);',
-      'border-radius:16px;border:1px solid rgba(255,255,255,0.22);',
-      'background:rgba(255,255,255,0.04);color:#F5EBD0;',
-      'font:500 clamp(1rem,1.8vw,1.15rem) Manrope,Arial,sans-serif;',
-      'text-align:center;letter-spacing:0.08em;outline:none;',
-      'transition:border-color 0.25s ease,background 0.25s ease,box-shadow 0.25s ease;',
-      'backdrop-filter:blur(8px) saturate(150%);-webkit-backdrop-filter:blur(8px) saturate(150%)'
-    ].join(';');
-
-    var submitBtn = document.createElement('button');
-    submitBtn.type = 'submit';
-    submitBtn.style.cssText = [
-      'width:100%;padding:clamp(14px,2.4vw,18px) clamp(20px,3vw,28px);',
-      'margin-top:20px;border:none;border-radius:16px;',
-      'background:linear-gradient(135deg,#c81024,#990011,#7F011F);',
-      'color:#F5EBD0;font:600 clamp(0.95rem,1.7vw,1.1rem) mono,monospace;',
-      'letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;',
-      'transition:transform 0.18s cubic-bezier(.25,.8,.25,1),background 0.25s ease,box-shadow 0.25s ease,filter 0.25s ease;',
-      'backdrop-filter:blur(8px) saturate(160%);-webkit-backdrop-filter:blur(8px) saturate(160%);',
-      'box-shadow:0 6px 24px rgba(125,1,31,0.45),0 0 0 1px rgba(255,255,255,0.2)'
-    ].join(';');
-    submitBtn.textContent = 'UNLOCK';
-
-    var errorDiv = document.createElement('div');
-    errorDiv.id = 'm-gate-error';
-    errorDiv.style.cssText = [
-      'margin-top:8px;font:500 clamp(0.8rem,1.3vw,0.9rem) mono,monospace;',
-      'letter-spacing:0.12em;text-align:center;color:#ff6b6b;opacity:0;height:clamp(18px,2.5vw,24px);',
-      'transition:opacity 0.25s ease'
-    ].join(';');
-    errorDiv.textContent = 'ACCESS DENIED';
-
-    // Assemble form
-    inputWrapper.appendChild(passwordInput);
-    inputWrapper.appendChild(submitBtn);
-    form.appendChild(label);
-    form.appendChild(inputWrapper);
-    form.appendChild(errorDiv);
-
-    // Assemble card
-    logoContainer.appendChild(logoImg);
-    logoContainer.appendChild(wordmark);
-    card.appendChild(logoContainer);
-    card.appendChild(badge);
-    card.appendChild(title);
-    card.appendChild(subtitle);
-    card.appendChild(form);
-    overlay.appendChild(card);
-
-    // Inject into document.documentElement (before body parses)
-    document.documentElement.insertBefore(overlay, document.documentElement.firstChild);
-
-    // Handle form submission
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var password = passwordInput.value.trim().toLowerCase();
-      var errorDiv = document.getElementById('m-gate-error');
-
-      if (password === 'salma') {
-        sessionStorage.setItem('m_unlocked', '1');
-        // Restore overflow
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-        // Remove overlay
-        overlay.remove();
-      } else {
-        // Wrong password - shake card
-        card.style.animation = 'm-gate-shake 0.52s ease-in-out';
-        errorDiv.style.opacity = '1';
-        passwordInput.value = '';
-        passwordInput.focus();
-
-        setTimeout(function() {
-          card.style.animation = '';
-          errorDiv.style.opacity = '0';
-        }, 520);
+        // Otherwise redirect to maintenance page
+        window.location.href = '/maintenance.html';
+      } catch (e) {
+        console.error('Maintenance check failed:', e);
+        // On error, allow access (fail open for availability)
       }
-    });
+    }
 
-    // Handle Escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        overlay.remove();
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-      }
-    }, { once: true });
+    // Run check immediately
+    checkMaintenance();
   })();
 </script><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="MASSYNE — independent graphic and motion designer. Selected cinematic worlds, visual identities and motion studies."><meta property="og:title" content="MASSYNE — Graphic & Motion Designer"><meta property="og:description" content="Cinematic worlds, visual identities and motion studies."><meta property="og:image" content="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/og-preview.jpg"><meta property="og:url" content="https://portfolio-massyne.vercel.app/"><meta property="og:type" content="website"><meta name="robots" content="index,follow,max-image-preview:large"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MASSYNE — Graphic & Motion Designer"><meta name="twitter:description" content="Cinematic visual stories, expressive poster design and original brand identities."><meta name="twitter:image" content="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/og-preview.jpg"><link rel="canonical" href="https://portfolio-massyne.vercel.app/"><meta name="theme-color" content="#09090c"><title>MASSYNE — Graphic & Motion Designer</title><link rel="icon" href="images/favicon.png"><link rel="preload" as="image" href="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/assets/massyne-hero-portrait.jpg?v=20261124-dark" type="image/jpeg" fetchpriority="high"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap"></noscript><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="portfolio-enhancements.css"><link rel="stylesheet" href="signature-intro-v5.css"><link rel="stylesheet" href="studio-upgrade.css"><link rel="stylesheet" href="next-level.css"><link rel="stylesheet" href="studio-polish.css"><link rel="stylesheet" href="creative-cursor.css"><link rel="stylesheet" href="mobile-polish.css">
     <link rel="stylesheet" href="/mobile-nav.css"><link rel="stylesheet" href="project-transitions.css"><link rel="stylesheet" href="spotlight-discovery.css"><script src="script.js" defer></script><script src="brand-loader.js" defer></script><script src="studio-upgrade.js?v=20261109-no-reel" defer></script><script src="availability.js" defer></script><script src="next-level.js" defer></script><script src="portfolio-analytics.js" defer></script><script src="creative-cursor.js" defer></script><script src="project-transitions.js" defer></script><script src="spotlight-discovery.js" defer></script><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"MASSYNE","url":"https://portfolio-massyne.vercel.app/","jobTitle":"Graphic & Motion Designer","description":"Independent visual designer creating cinematic posters, visual identities and motion studies.","knowsAbout":["Poster Design","Graphic Design","Visual Identity","Art Direction","Motion Graphics"],"sameAs":["https://www.behance.net/massyne","https://www.instagram.com/massyne_901/"]}</script><link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="archive-showcase.css"><script src="archive-showcase.js" defer></script><link rel="stylesheet" href="before-after.css"><script src="before-after.js" defer></script><link rel="stylesheet" href="/premium-experience.css"><script src="/premium-experience.js" defer></script><link rel="stylesheet" href="gurzil-brand.css"><link rel="stylesheet" href="section-flow.css"><script src="section-flow.js" defer></script><link rel="stylesheet" href="brand-sections.css"><link rel="stylesheet" href="motion-cinema.css"><link rel="stylesheet" href="/motion-projects.css?v=20261110-motion-15"><link rel="stylesheet" href="lab-entry.css"><link rel="stylesheet" href="creative-details.css"><script src="creative-details.js" defer></script><link rel="stylesheet" href="selected-effects.css"><script src="selected-effects.js" defer></script><link rel="stylesheet" href="scroll-chapters.css"><link rel="stylesheet" href="motion-premium.css"><script src="motion-premium.js" defer></script><script src="/motion-projects.js?v=20261110-motion-15" defer></script><link rel="stylesheet" href="/section-nav.css?v=20261124d"><link rel="stylesheet" href="/feedback.css"><script src="/feedback.js" defer></script>

@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#050608">
+  <title>MASSYNE — Maintenance Mode</title>
+  <link rel="icon" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"></noscript>
+  <style>
+    /* ===== CSS Custom Properties ===== */
+    :root {
+      --ink: #050608;
+      --ink-soft: #0a0b0f;
+      --surface: #0f1014;
+      --paper: #f5ebd0;
+      --muted: #8a8487;
+      --red: #c81024;
+      --red-bright: #e84d5a;
+      --red-dim: #7f011f;
+      --silver: #c0c0c0;
+      --silver-dim: #9a9598;
+      --glass-bg: rgba(20, 20, 28, 0.55);
+      --glass-border: rgba(245, 235, 208, 0.14);
+      --glass-border-bright: rgba(255, 255, 255, 0.22);
+      --glass-shadow: 0 0 80px rgba(125, 1, 31, 0.35), 0 0 120px rgba(200, 16, 36, 0.18), 0 24px 60px rgba(0, 0, 0, 0.5);
+      --glass-shadow-hover: 0 0 100px rgba(125, 1, 31, 0.45), 0 0 160px rgba(200, 16, 36, 0.25), 0 32px 80px rgba(0, 0, 0, 0.6);
+      --focus: #ff6b7a;
+      --font-display: "Syne", "Space Grotesk", Arial, sans-serif;
+      --font-serif: "DM Serif Display", Georgia, serif;
+      --font-body: "Manrope", "Space Grotesk", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
+    }
+
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+    }
+
+    ::selection { background: var(--red); color: var(--paper); }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
+    input { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+    /* ===== Animated Background ===== */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bg-gradient {
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 20%, rgba(125, 1, 31, 0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 60% at 80% 80%, rgba(200, 16, 36, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10% 90%, rgba(192, 192, 192, 0.04) 0%, transparent 50%);
+      animation: bg-shift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes bg-shift {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+      50% { transform: translate(-2%, 1%) scale(1.02); opacity: 1; }
+      100% { transform: translate(2%, -1%) scale(0.98); opacity: 0.8; }
+    }
+
+    .bg-particles {
+      position: absolute;
+      inset: 0;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), rgba(200,16,36,0.15), transparent 70%);
+      filter: blur(1px);
+      animation: float 15s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+      25% { transform: translate(30px, -20px) scale(1.1); opacity: 0.5; }
+      50% { transform: translate(-20px, 30px) scale(0.9); opacity: 0.4; }
+      75% { transform: translate(15px, 25px) scale(1.05); opacity: 0.35; }
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(192, 192, 192, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(192, 192, 192, 0.02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      animation: grid-drift 60s linear infinite;
+    }
+
+    @keyframes grid-drift {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(80px, 80px); }
+    }
+
+    .bg-scanline {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      animation: scanline 8s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    /* ===== Main Container ===== */
+    .maintenance-shell {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px);
+    }
+
+    /* ===== Liquid Glass Card ===== */
+    .glass-card {
+      position: relative;
+      width: min(100%, 520px);
+      max-width: 92vw;
+      background: var(--glass-bg);
+      backdrop-filter: blur(32px) saturate(180%);
+      -webkit-backdrop-filter: blur(32px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      box-shadow: var(--glass-shadow);
+      padding: clamp(40px, 6vw, 64px) clamp(32px, 5vw, 56px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(28px, 4vw, 44px);
+      text-align: center;
+      overflow: hidden;
+      transition: box-shadow 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.4s ease;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.015) 40%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0.01) 100%
+      );
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      border-radius: 28px 28px 0 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      pointer-events: none;
+    }
+
+    .glass-card:hover {
+      box-shadow: var(--glass-shadow-hover);
+      border-color: var(--glass-border-bright);
+    }
+
+    /* ===== Logo ===== */
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(12px, 2vw, 20px);
+      margin-bottom: clamp(8px, 1.5vw, 16px);
+    }
+
+    .logo-img {
+      width: clamp(100px, 18vw, 140px);
+      height: auto;
+      filter: drop-shadow(0 0 40px rgba(200, 16, 36, 0.4));
+      animation: logo-pulse 5s ease-in-out infinite;
+    }
+
+    @keyframes logo-pulse {
+      0%, 100% { filter: drop-shadow(0 0 30px rgba(200, 16, 36, 0.35)); }
+      50% { filter: drop-shadow(0 0 50px rgba(200, 16, 36, 0.55)); }
+    }
+
+    .wordmark {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2rem, 4.5vw, 2.8rem);
+      letter-spacing: -0.07em;
+      color: var(--paper);
+      text-shadow: 0 2px 20px rgba(200, 16, 36, 0.2);
+    }
+
+    .wordmark span {
+      color: var(--red-bright);
+    }
+
+    /* ===== Status Badge ===== */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(10px, 1.5vw, 14px);
+      padding: clamp(12px, 2vw, 16px) clamp(20px, 3vw, 32px);
+      background: linear-gradient(135deg, rgba(200, 16, 36, 0.35), rgba(125, 1, 31, 0.45), rgba(153, 0, 17, 0.38));
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 100px;
+      backdrop-filter: blur(16px) saturate(200%);
+      -webkit-backdrop-filter: blur(16px) saturate(200%);
+      font: 600 clamp(0.8rem, 1.8vw, 1rem) var(--font-mono);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--paper);
+      cursor: default;
+      animation: badge-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes badge-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(200, 16, 36, 0.2), inset 0 1px 0 rgba(255,255,255,0.1); }
+      50% { box-shadow: 0 0 35px rgba(200, 16, 36, 0.35), inset 0 1px 0 rgba(255,255,255,0.15); }
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--red-bright);
+      box-shadow: 0 0 16px var(--red-bright), 0 0 32px var(--red);
+      animation: dot-pulse 1.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes dot-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+    }
+
+    /* ===== Typography ===== */
+    .headline {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--paper);
+      margin: 0;
+      margin-top: clamp(8px, 1.5vw, 16px);
+    }
+
+    .headline em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--red-bright);
+      letter-spacing: -0.02em;
+    }
+
+    .subtext {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+      line-height: 1.6;
+      color: rgba(245, 235, 208, 0.65);
+      margin: 0;
+      max-width: 420px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ===== Progress Indicator ===== */
+    .progress-wrap {
+      width: 100%;
+      max-width: 360px;
+      margin-top: clamp(4px, 1vw, 8px);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 100px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-track::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: progress-shine 2s ease-in-out infinite;
+    }
+
+    @keyframes progress-shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--red-dim), var(--red), var(--red-bright), var(--red));
+      background-size: 200% 100%;
+      box-shadow: 0 0 20px rgba(200, 16, 36, 0.5), 0 0 40px rgba(200, 16, 36, 0.3);
+      animation: progress-grow 3s ease-in-out infinite, progress-flow 2s linear infinite;
+      transform-origin: left;
+    }
+
+    @keyframes progress-grow {
+      0%, 100% { width: 0%; }
+      50% { width: 100%; }
+    }
+
+    @keyframes progress-flow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font: 500 clamp(0.7rem, 1.2vw, 0.8rem) var(--font-mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .progress-label span:last-child {
+      color: var(--red-bright);
+    }
+
+    /* ===== Form ===== */
+    .auth-form {
+      width: 100%;
+      max-width: 360px;
+      margin-top: clamp(8px, 1.5vw, 16px);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(16px, 2.5vw, 22px);
+    }
+
+    .form-label {
+      display: block;
+      font: 500 clamp(0.7rem, 1.2vw, 0.8rem) var(--font-mono);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(245, 235, 208, 0.7);
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .pass-input {
+      flex: 1;
+      width: 100%;
+      padding: clamp(16px, 2.5vw, 18px) clamp(20px, 3vw, 24px);
+      padding-right: 60px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--paper);
+      font: 500 clamp(1rem, 1.8vw, 1.15rem) var(--font-body);
+      text-align: center;
+      letter-spacing: 0.2em;
+      outline: none;
+      transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+      backdrop-filter: blur(12px) saturate(160%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
+    }
+
+    .pass-input::placeholder {
+      color: rgba(245, 235, 208, 0.35);
+      letter-spacing: 0.15em;
+    }
+
+    .pass-input:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .pass-input:focus {
+      border-color: var(--red-bright);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 0 3px rgba(200, 16, 36, 0.2), 0 0 30px rgba(200, 16, 36, 0.15);
+    }
+
+    .pass-input[aria-invalid="true"] {
+      border-color: #ff4d5a;
+      box-shadow: 0 0 0 3px rgba(255, 77, 90, 0.2);
+    }
+
+    .toggle-btn {
+      position: absolute;
+      right: clamp(12px, 2vw, 16px);
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .toggle-btn:hover {
+      color: var(--paper);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .toggle-btn:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .toggle-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: clamp(16px, 2.5vw, 20px) clamp(24px, 3.5vw, 32px);
+      margin-top: clamp(4px, 1vw, 8px);
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-dim) 50%, #990011 100%);
+      color: var(--paper);
+      font: 600 clamp(0.9rem, 1.6vw, 1rem) var(--font-mono);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: transform 0.18s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      backdrop-filter: blur(12px) saturate(160%);
+      -webkit-backdrop-filter: blur(12px) saturate(160%);
+      box-shadow:
+        0 8px 30px rgba(125, 1, 31, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px) scale(1.015);
+      background: linear-gradient(135deg, var(--red-bright) 0%, var(--red) 50%, var(--red-dim) 100%);
+      box-shadow:
+        0 14px 40px rgba(200, 16, 36, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .submit-btn:hover::before {
+      opacity: 1;
+    }
+
+    .submit-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .submit-btn:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit-btn .btn-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .submit-btn .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-top-color: var(--paper);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+
+    .submit-btn.loading .spinner {
+      display: block;
+    }
+
+    .submit-btn.loading .btn-label {
+      opacity: 0;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== Error Message ===== */
+    .error-msg {
+      min-height: 24px;
+      font: 500 clamp(0.75rem, 1.3vw, 0.85rem) var(--font-mono);
+      letter-spacing: 0.1em;
+      text-align: center;
+      color: #ff6b6b;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .error-msg.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== Footer ===== */
+    .footer-note {
+      margin-top: clamp(16px, 3vw, 24px);
+      padding-top: clamp(20px, 3vw, 28px);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-text {
+      font: 400 clamp(0.75rem, 1.2vw, 0.85rem) var(--font-body);
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .footer-link {
+      font: 500 clamp(0.7rem, 1.2vw, 0.8rem) var(--font-mono);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red-bright);
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--paper);
+      text-shadow: 0 0 20px rgba(200, 16, 36, 0.5);
+    }
+
+    /* ===== Shake Animation ===== */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+      20%, 40%, 60%, 80% { transform: translateX(8px); }
+    }
+
+    .shake {
+      animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    }
+
+    /* ===== Unlock Transition ===== */
+    .unlocking .glass-card {
+      animation: unlock-exit 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes unlock-exit {
+      0% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+      60% { opacity: 0.8; transform: scale(1.02) translateY(-20px); filter: blur(4px); }
+      100% { opacity: 0; transform: scale(1.1) translateY(-60px); filter: blur(20px); }
+    }
+
+    .unlocking .bg-gradient {
+      animation: bg-exit 0.8s ease-out forwards;
+    }
+
+    @keyframes bg-exit {
+      0% { opacity: 1; filter: blur(0); }
+      100% { opacity: 0; filter: blur(60px); }
+    }
+
+    /* ===== Entrance Animations ===== */
+    .logo-wrap, .status-badge, .headline, .subtext, .progress-wrap, .auth-form, .footer-note {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: entrance 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+
+    .logo-wrap { animation-delay: 0.1s; }
+    .status-badge { animation-delay: 0.2s; }
+    .headline { animation-delay: 0.3s; }
+    .subtext { animation-delay: 0.4s; }
+    .progress-wrap { animation-delay: 0.5s; }
+    .auth-form { animation-delay: 0.6s; }
+    .footer-note { animation-delay: 0.7s; }
+
+    @keyframes entrance {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .logo-wrap, .status-badge, .headline, .subtext, .progress-wrap, .auth-form, .footer-note {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      .logo-img { animation: none; }
+      .status-dot { animation: none; }
+      .status-badge { animation: none; }
+      .progress-fill { animation: progress-grow 3s ease-in-out infinite; }
+      .bg-gradient { animation: none; }
+      .bg-particles .particle { animation: none; }
+      .bg-grid { animation: none; }
+      .bg-scanline { animation: none; }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 480px) {
+      .glass-card {
+        border-radius: 24px;
+        padding: clamp(32px, 7vw, 48px) clamp(24px, 5vw, 36px);
+      }
+      .glass-card::before { border-radius: 24px; }
+      .glass-card::after { border-radius: 24px 24px 0 0; }
+      .pass-input { letter-spacing: 0.15em; }
+      .submit-btn { letter-spacing: 0.14em; }
+    }
+
+    @media (max-width: 360px) {
+      .maintenance-shell { padding: 16px; }
+      .glass-card { padding: 28px 20px; gap: 24px; }
+      .logo-img { width: 90px; }
+      .wordmark { font-size: 1.8rem; }
+      .headline { font-size: 1.5rem; }
+      .subtext { font-size: 0.9rem; }
+    }
+
+    /* ===== High Contrast Mode ===== */
+    @media (prefers-contrast: high) {
+      :root {
+        --glass-border: rgba(255, 255, 255, 0.4);
+        --glass-border-bright: rgba(255, 255, 255, 0.6);
+        --muted: #ccc;
+      }
+      .pass-input { border-width: 2px; }
+      .submit-btn { border: 2px solid var(--paper); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-scanline"></div>
+    <div class="bg-particles" id="particles"></div>
+  </div>
+
+  <!-- Maintenance Shell -->
+  <main class="maintenance-shell" role="main">
+    <article class="glass-card" id="glassCard">
+      <!-- Logo -->
+      <div class="logo-wrap">
+        <img
+          class="logo-img"
+          src="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/flame-metal-logo-480.webp"
+          alt="MASSYNE logo"
+          width="120"
+          height="60"
+        >
+        <div class="wordmark">MASSYNE<span>.</span></div>
+      </div>
+
+      <!-- Status Badge -->
+      <div class="status-badge" aria-label="Maintenance mode active">
+        <span class="status-dot" aria-hidden="true"></span>
+        SYSTEM MAINTENANCE
+      </div>
+
+      <!-- Headline -->
+      <h1 class="headline">Something Beautiful<em> Is Being Built.</em></h1>
+
+      <!-- Subtext -->
+      <p class="subtext">I'm currently upgrading my digital space. I'll be back soon with something special.</p>
+
+      <!-- Progress Indicator -->
+      <div class="progress-wrap" aria-label="Upgrade progress">
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-label">
+          <span>INITIALIZING</span>
+          <span id="progressPercent">0%</span>
+        </div>
+      </div>
+
+      <!-- Authentication Form -->
+      <form class="auth-form" id="authForm" novalidate>
+        <label class="form-label" for="password">ENTER PASSCODE</label>
+
+        <div class="input-wrapper">
+          <input
+            type="password"
+            class="pass-input"
+            id="password"
+            name="password"
+            autocomplete="off"
+            spellcheck="false"
+            maxlength="20"
+            placeholder="ENTER PASSCODE"
+            aria-describedby="errorMsg"
+            aria-invalid="false"
+          >
+          <button
+            type="button"
+            class="toggle-btn"
+            id="toggleBtn"
+            aria-label="Show password"
+            aria-pressed="false"
+          >
+            <svg class="eye-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-closed" viewBox="0 0 24 24" aria-hidden="true" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="btn-text">
+            <span class="btn-label">UNLOCK</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </span>
+        </button>
+
+        <div class="error-msg" id="errorMsg" role="alert" aria-live="polite"></div>
+      </form>
+
+      <!-- Footer -->
+      <footer class="footer-note">
+        <p class="footer-text">This is a private preview. Access is restricted.</p>
+        <a href="#" class="footer-link" id="relockLink" style="display: none;">RE-LOCK</a>
+      </footer>
+    </article>
+  </main>
+
+  <script>
+    // ===== Configuration =====
+    const CONFIG = {
+      password: 'SALMA', // This is only for client-side UX feedback; real validation is server-side
+      apiEndpoint: '/api/maintenance-auth',
+      sessionCookieName: 'massyne_maintenance_session'
+    };
+
+    // ===== DOM Elements =====
+    const glassCard = document.getElementById('glassCard');
+    const authForm = document.getElementById('authForm');
+    const passwordInput = document.getElementById('password');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const progressFill = document.getElementById('progressFill');
+    const progressPercent = document.getElementById('progressPercent');
+    const relockLink = document.getElementById('relockLink');
+    const eyeOpen = toggleBtn.querySelector('.eye-open');
+    const eyeClosed = toggleBtn.querySelector('.eye-closed');
+
+    // ===== State =====
+    let isUnlocking = false;
+    let progressInterval = null;
+    let progressValue = 0;
+
+    // ===== Utility Functions =====
+    function setError(message) {
+      errorMsg.textContent = message;
+      errorMsg.classList.add('visible');
+      passwordInput.setAttribute('aria-invalid', 'true');
+      glassCard.classList.add('shake');
+      passwordInput.value = '';
+      passwordInput.focus();
+
+      setTimeout(() => {
+        glassCard.classList.remove('shake');
+      }, 500);
+    }
+
+    function clearError() {
+      errorMsg.classList.remove('visible');
+      errorMsg.textContent = '';
+      passwordInput.removeAttribute('aria-invalid');
+    }
+
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      submitBtn.classList.toggle('loading', loading);
+      passwordInput.disabled = loading;
+      toggleBtn.disabled = loading;
+    }
+
+    function togglePasswordVisibility() {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+      toggleBtn.setAttribute('aria-pressed', String(isPassword));
+      eyeOpen.style.display = isPassword ? 'none' : 'block';
+      eyeClosed.style.display = isPassword ? 'block' : 'none';
+      passwordInput.focus();
+    }
+
+    // ===== Progress Animation =====
+    function startProgressAnimation() {
+      const labels = ['INITIALIZING', 'PREPARING', 'OPTIMIZING', 'FINALIZING', 'READY'];
+      let labelIndex = 0;
+
+      progressInterval = setInterval(() => {
+        progressValue += Math.random() * 15 + 5;
+        if (progressValue > 100) progressValue = 100;
+
+        progressFill.style.width = progressValue + '%';
+        progressPercent.textContent = Math.round(progressValue) + '%';
+
+        if (progressValue >= 25 * (labelIndex + 1) && labelIndex < labels.length - 1) {
+          labelIndex++;
+          progressPercent.parentElement.querySelector('span:first-child').textContent = labels[labelIndex];
+        }
+
+        if (progressValue >= 100) {
+          clearInterval(progressInterval);
+        }
+      }, 300);
+    }
+
+    // ===== Particle Generation =====
+    function createParticles() {
+      const container = document.getElementById('particles');
+      const count = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 12;
+
+      for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const size = Math.random() * 60 + 20;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        container.appendChild(particle);
+      }
+    }
+
+    // ===== Session Check =====
+    async function checkSession() {
+      try {
+        const res = await fetch(CONFIG.apiEndpoint, {
+          method: 'GET',
+          credentials: 'same-origin',
+          cache: 'no-store'
+        });
+        const data = await res.json();
+        return data;
+      } catch (e) {
+        console.error('Session check failed:', e);
+        return { maintenance: true, authenticated: false, requiresAuth: true };
+      }
+    }
+
+    // ===== Unlock Flow =====
+    async function unlock(password) {
+      if (isUnlocking) return;
+      isUnlocking = true;
+      setLoading(true);
+      clearError();
+
+      try {
+        const res = await fetch(CONFIG.apiEndpoint, {
+          method: 'POST',
+          credentials: 'same-origin',
+          cache: 'no-store',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.authenticated) {
+          throw new Error(data.message || 'Authentication failed');
+        }
+
+        // Success - trigger unlock animation
+        glassCard.classList.add('unlocking');
+        document.body.classList.add('unlocking');
+
+        // Wait for animation then redirect
+        setTimeout(() => {
+          window.location.reload();
+        }, 800);
+
+      } catch (err) {
+        isUnlocking = false;
+        setLoading(false);
+        setError(err.message || 'ACCESS DENIED');
+      }
+    }
+
+    // ===== Lock/Logout Flow =====
+    async function relock() {
+      try {
+        await fetch(CONFIG.apiEndpoint, {
+          method: 'POST',
+          credentials: 'same-origin',
+          cache: 'no-store',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'logout' })
+        });
+        window.location.reload();
+      } catch (e) {
+        console.error('Relock failed:', e);
+        window.location.reload();
+      }
+    }
+
+    // ===== Event Listeners =====
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = passwordInput.value.trim();
+      if (!password) {
+        setError('ENTER PASSCODE');
+        return;
+      }
+      await unlock(password);
+    });
+
+    toggleBtn.addEventListener('click', togglePasswordVisibility);
+
+    passwordInput.addEventListener('input', clearError);
+
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        authForm.dispatchEvent(new Event('submit'));
+      }
+    });
+
+    relockLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      relock();
+    });
+
+    // ===== Initialize =====
+    async function init() {
+      createParticles();
+      startProgressAnimation();
+
+      const session = await checkSession();
+
+      if (!session.maintenance) {
+        // Maintenance mode disabled - redirect to portfolio
+        window.location.href = '/';
+        return;
+      }
+
+      if (session.authenticated) {
+        // Already unlocked - redirect to portfolio
+        window.location.href = '/';
+        return;
+      }
+
+      // Show maintenance page (already visible)
+      passwordInput.focus();
+    }
+
+    // Handle page visibility change to pause/resume animations
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (progressInterval) clearInterval(progressInterval);
+      } else if (!isUnlocking && progressValue < 100) {
+        startProgressAnimation();
+      }
+    });
+
+    // Keyboard shortcut: Escape to clear error
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        clearError();
+        passwordInput.blur();
+      }
+    });
+
+    init();
+  </script>
+</body>
+</html>
