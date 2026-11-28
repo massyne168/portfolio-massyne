@@ -59,6 +59,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "motion": [
     {
+      "title": "SELEN OPHILE",
+      "category": "MOTION / SELECTED WORK",
+      "kind": "gif",
+      "source": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/20ba08ef-86c1-4f64-afff-3dcab81ed51c-PA.gif",
+      "id": "motio-selen-ophile"
+    },
+    {
       "title": "EUPHORIA",
       "category": "MOTION / SELECTED WORK",
       "kind": "gif",
