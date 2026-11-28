@@ -236,13 +236,6 @@ window.MASSYNE_STUDIO_CONTENT = {
       "id": "archiv-9hiwa-f-discord"
     },
     {
-      "title": "SMART HOSTING",
-      "category": "LOGOS",
-      "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/971ada49-523b-411e-b987-ed9bf384cb19-Untitled-2fz.png",
-      "alt": "",
-      "id": "archiv-smart-hosting"
-    },
-    {
       "id": "archive-01",
       "title": "Yediiklim",
       "category": "posters",
