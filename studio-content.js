@@ -208,15 +208,22 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
-      "title": "SMART HOSTING",
+      "title": "9HIWA F DISCORD",
       "category": "logos",
+      "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/dce042ef-9f62-4231-89f2-39c2b468e20b-21.png",
+      "alt": "",
+      "id": "archiv-9hiwa-f-discord"
+    },
+    {
+      "title": "SMART HOSTING",
+      "category": "LOGOS",
       "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/971ada49-523b-411e-b987-ed9bf384cb19-Untitled-2fz.png",
       "alt": "",
       "id": "archiv-smart-hosting"
     },
     {
       "title": "ELITE INNOVATECH",
-      "category": "logos",
+      "category": "LOGOS",
       "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/e8a35889-50d0-4e70-85a7-1819c01c608f-Untitled-1f_2.png",
       "alt": "",
       "id": "archiv-elite-innovatech"
