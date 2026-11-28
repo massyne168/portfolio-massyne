@@ -2,8 +2,7 @@
 <html lang="en" data-theme="dark"><head><link rel="preconnect" href="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev" crossorigin><meta charset="utf-8"><script src="/theme-init.js"></script>
 <script>
   (function() {
-    // Maintenance mode gate - check server-side session
-    // If maintenance is active and not authenticated, redirect to maintenance page
+    // Fallback maintenance mode gate (server-side rewrites handle this primarily)
     async function checkMaintenance() {
       try {
         const res = await fetch('/api/maintenance-auth', {
@@ -13,21 +12,19 @@
         });
         const data = await res.json();
 
-        // If maintenance mode is disabled, allow access
         if (!data.maintenance) return;
-
-        // If maintenance is active but user is authenticated, allow access
         if (data.authenticated) return;
 
-        // Otherwise redirect to maintenance page
-        window.location.href = '/maintenance.html';
+        // Redirect to maintenance page with current path as redirect target
+        const currentPath = window.location.pathname + window.location.search;
+        window.location.href = '/maintenance.html?redirect=' + encodeURIComponent(currentPath);
       } catch (e) {
         console.error('Maintenance check failed:', e);
-        // On error, allow access (fail open for availability)
+        const currentPath = window.location.pathname + window.location.search;
+        window.location.href = '/maintenance.html?redirect=' + encodeURIComponent(currentPath);
       }
     }
 
-    // Run check immediately
     checkMaintenance();
   })();
 </script><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="MASSYNE — independent graphic and motion designer. Selected cinematic worlds, visual identities and motion studies."><meta property="og:title" content="MASSYNE — Graphic & Motion Designer"><meta property="og:description" content="Cinematic worlds, visual identities and motion studies."><meta property="og:image" content="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/og-preview.jpg"><meta property="og:url" content="https://portfolio-massyne.vercel.app/"><meta property="og:type" content="website"><meta name="robots" content="index,follow,max-image-preview:large"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MASSYNE — Graphic & Motion Designer"><meta name="twitter:description" content="Cinematic visual stories, expressive poster design and original brand identities."><meta name="twitter:image" content="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/og-preview.jpg"><link rel="canonical" href="https://portfolio-massyne.vercel.app/"><meta name="theme-color" content="#09090c"><title>MASSYNE — Graphic & Motion Designer</title><link rel="icon" href="images/favicon.png"><link rel="preload" as="image" href="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/assets/massyne-hero-portrait.jpg?v=20261124-dark" type="image/jpeg" fetchpriority="high"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800&display=swap"></noscript><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="portfolio-enhancements.css"><link rel="stylesheet" href="signature-intro-v5.css"><link rel="stylesheet" href="studio-upgrade.css"><link rel="stylesheet" href="next-level.css"><link rel="stylesheet" href="studio-polish.css"><link rel="stylesheet" href="creative-cursor.css"><link rel="stylesheet" href="mobile-polish.css">
@@ -660,19 +657,34 @@ html[data-theme] section#contact #project-brief .brief-feedback {
 </aside>
 <main id="top"><section id="home-panel" class="hero hero-v2" aria-labelledby="main-hero-title">
     <div class="hero-ambient" aria-hidden="true"></div>
-    <div class="hero-meta"><span>INDEPENDENT DESIGNER <i aria-hidden="true">/</i> 2026</span><span>MOROCCO — WORLDWIDE</span></div>
+    <div class="hero-meta"><span>MASSYNE <i aria-hidden="true">/</i> STUDIO 2026</span><span>MOROCCO — WORLDWIDE</span></div>
     <div class="hero-v2-content">
-      <p class="eyebrow hero-kicker"><span class="hero-status-dot" aria-hidden="true"></span> GRAPHIC DESIGNER / VISUAL CREATIVE</p>
-      <h1 id="main-hero-title" class="hero-v2-title"><span>MASSYNE</span><span>VISUAL</span><em>THINKER.</em></h1>
-      <p class="hero-v2-description">I create cinematic visuals, bold identities and distinctive digital stories — designed to leave an impression.</p>
+      <p class="eyebrow hero-kicker"><span class="hero-status-dot" aria-hidden="true"></span> GRAPHIC &amp; MOTION DESIGNER</p>
+      <h1 id="main-hero-title" class="hero-v2-title">Shaping <em>cinematic</em> visuals, bold identities &amp; motion.</h1>
+      <p class="hero-v2-description">Independent visual designer based in Morocco, working worldwide. I craft dark-editorial poster worlds, streetwear &amp; brand identities, and rhythmic motion studies.</p>
+      <div class="hero-spec-strip" aria-label="Designer overview">
+        <div class="hero-spec-item">
+          <span class="hero-spec-label">Focus</span>
+          <span class="hero-spec-value">Posters · Brand · Motion</span>
+        </div>
+        <div class="hero-spec-item">
+          <span class="hero-spec-label">Based</span>
+          <span class="hero-spec-value">Morocco / Remote</span>
+        </div>
+        <div class="hero-spec-item">
+          <span class="hero-spec-label">Status</span>
+          <a href="#contact" class="hero-spec-value hero-spec-status" data-availability-status data-state="unknown"><span class="availability-dot" aria-hidden="true"></span><span data-availability-text>Open for Projects</span></a>
+        </div>
+      </div>
       <div class="hero-v2-actions"><a class="hero-button-primary studio-link-sheen" data-magnetic href="#work">EXPLORE WORK <span aria-hidden="true">↗&#xfe0e;</span></a><a class="hero-button-quiet studio-link-sheen" data-magnetic href="#contact">LET'S TALK <span aria-hidden="true">↗&#xfe0e;</span></a></div>
-      <div class="availability-block"><div class="availability-strip" data-availability-status data-state="unknown"><span class="availability-dot" aria-hidden="true"></span><a href="#contact" data-availability-text>CREATIVE INQUIRIES WELCOME ↗</a></div><p>Independent designer / Morocco & worldwide</p></div><div class="hero-v2-bottom"><span>001 / INDEPENDENT DESIGNER</span><span class="discipline-cycle" aria-label="Graphic design, motion graphics and visual identity"><span class="discipline-strip" aria-hidden="true"><span>GRAPHIC DESIGN</span><span>MOTION GRAPHICS</span><span>VISUAL IDENTITY</span></span></span></div>
     </div>
     <figure class="hero-v2-portrait">
-      <div class="hero-portrait-halo" aria-hidden="true"></div>
-      <picture><source type="image/avif" srcset="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/massyne-portrait-2026.avif?v=20261124-dark"><img src="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/assets/massyne-hero-portrait.jpg?v=20261124-dark" width="640" height="853" fetchpriority="high" decoding="async" alt="Black and white portrait of MASSYNE wearing black sunglasses and a dark jacket"><img class="about-portrait-echo echo-1" src="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/assets/massyne-hero-portrait.jpg?v=20261124-dark" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low"><img class="about-portrait-echo echo-2" src="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/assets/massyne-hero-portrait.jpg?v=20261124-dark" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low"></picture>
-      <figcaption><span>MASSYNE / CREATIVE IDENTITY</span><span>FIG. 001</span></figcaption>
-      <div class="hero-portrait-stamp" aria-hidden="true">VISUAL<br><em>THINKER.</em><span>↗</span></div>
+      <span class="hero-crop hero-crop-tl" aria-hidden="true"></span>
+      <span class="hero-crop hero-crop-tr" aria-hidden="true"></span>
+      <span class="hero-crop hero-crop-bl" aria-hidden="true"></span>
+      <span class="hero-crop hero-crop-br" aria-hidden="true"></span>
+      <picture><source type="image/avif" srcset="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/massyne-portrait-2026.avif?v=20261124-dark"><img src="https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/assets/massyne-hero-portrait.jpg?v=20261124-dark" width="640" height="853" fetchpriority="high" decoding="async" alt="Black and white portrait of MASSYNE wearing black sunglasses and a dark jacket"></picture>
+      <figcaption><span>FIG. 001</span><span>MASSYNE · 2026</span></figcaption>
     </figure>
     <a class="hero-v2-scroll" href="#work" aria-label="Scroll to curated work"><span>SCROLL TO EXPLORE</span><span aria-hidden="true">↓</span></a>
   </section><div class="ticker" aria-hidden="true"><div class="ticker-track"><span class="ticker-copy">ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · </span><span class="ticker-copy">ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · ART DIRECTION · POSTER DESIGN · BRAND IDENTITIES · MOTION GRAPHICS · </span></div></div>
