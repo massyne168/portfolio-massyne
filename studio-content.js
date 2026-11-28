@@ -59,6 +59,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "motion": [
     {
+      "title": "EUPHORIA",
+      "category": "MOTION / SELECTED WORK",
+      "kind": "gif",
+      "source": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/471ed1e8-d3d0-47e5-8bb4-b761ae2845ae-ezgif-5-00ac080b73.gif",
+      "id": "motio-euphoria"
+    },
+    {
       "title": "EUPHORLESS",
       "category": "MOTION / SELECTED WORK",
       "kind": "gif",
