@@ -6,7 +6,7 @@
   "background": {
     "type": "image",
     "color": "#000000",
-    "src": "images/studio-uploads/1795217280153-c2508e81-asd.png",
+    "src": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/studio-uploads/1795217280153-c2508e81-asd.png",
     "overlay": 0,
     "fit": "cover",
     "position": "center"

@@ -59,6 +59,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "motion": [
     {
+      "title": "EUPHORLESS",
+      "category": "MOTION / SELECTED WORK",
+      "kind": "gif",
+      "source": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/5358f639-815c-4c1b-9ad6-b8d1b8bdef5e-After_Effect.gif",
+      "id": "motio-euphorless"
+    },
+    {
       "id": "motion-01",
       "title": "EXOTIC Roleplay",
       "category": "BRAND MOTION / SELECTED WORK",
