@@ -208,6 +208,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
+      "title": "SPOILER ALERT",
+      "category": "logos",
+      "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/a1db8c72-633d-4e91-b0fa-93e5d8ef1e4f-1350x1080.png",
+      "alt": "",
+      "id": "archiv-spoiler-alert"
+    },
+    {
       "title": "SMART HOSTING",
       "category": "logos",
       "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/2398c6e0-1039-44da-a06c-ddb7a2aee494-Untitled-2fz.png",
