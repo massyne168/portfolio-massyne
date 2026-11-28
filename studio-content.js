@@ -208,6 +208,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
+      "title": "SLYYUTUS FAMILY",
+      "category": "logos",
+      "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/f4ebeddb-f0bf-4da0-a54d-32d6adcf7e81-Capture_decran_2023-03-08_193844.png",
+      "alt": "",
+      "id": "archiv-slyyutus-family"
+    },
+    {
       "title": "9HIWA F DISCORD",
       "category": "logos",
       "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/dce042ef-9f62-4231-89f2-39c2b468e20b-21.png",
