@@ -59,6 +59,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "motion": [
     {
+      "title": "GURZIL TEAM",
+      "category": "MOTION / SELECTED WORK",
+      "kind": "gif",
+      "source": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/26c6cea7-363f-44d9-8a13-ef3474c1c55f-ezgif-7-157f80fda6.gif",
+      "id": "motio-gurzil-team"
+    },
+    {
       "title": "SELEN OPHILE",
       "category": "MOTION / SELECTED WORK",
       "kind": "gif",
