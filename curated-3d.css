@@ -26,7 +26,7 @@
 
 #work .work-header .section-head {
   margin: 0;
-  max-width: 780px;
+  max-width: none;
 }
 
 #work .work-header .gallery-toolbar {
@@ -229,14 +229,14 @@
 /* 3. Deep 3D Orbital Perspective Stage */
 #work .project-grid[data-view="3d"].carousel-ready,
 .project-grid[data-view="3d"].carousel-ready {
-  --carousel-card-width: clamp(210px, 19vw, 275px);
+  --carousel-card-width: clamp(205px, 18vw, 265px);
   position: relative;
   display: block;
   isolation: isolate;
-  height: clamp(520px, 58vw, 700px) !important;
-  min-height: 520px !important;
+  height: clamp(430px, 46vw, 540px) !important;
+  min-height: 430px !important;
   min-width: 0;
-  perspective: 1100px;
+  perspective: 1200px;
   perspective-origin: 50% 48%;
   transform-style: preserve-3d;
   touch-action: pan-y;

@@ -22,39 +22,50 @@ body.section-view-ready #top > #work {
 #work .section-head {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(105px, .55fr) minmax(0, 1.75fr) minmax(205px, .8fr);
+  grid-template-columns: minmax(0, 1.3fr) minmax(240px, .85fr);
   align-items: end;
-  gap: 12px clamp(18px, 2.6vw, 40px);
-  min-height: 132px;
-  margin: 0 0 clamp(20px, 3vh, 34px);
+  gap: 8px clamp(20px, 3vw, 48px);
+  min-height: 0;
+  max-width: none;
+  margin: 0;
 }
-#work .section-head .eyebrow { grid-column: 1; grid-row: 1; align-self: start; }
+#work .section-head .eyebrow {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  color: var(--red-bright, #E74C3C);
+  font-size: .68rem;
+  letter-spacing: .16em;
+  margin: 0 0 6px;
+}
 #work .section-head h2 {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  max-width: 780px;
-  font: 600 clamp(3.1rem, 6.1vw, 6.4rem)/.87 var(--display);
-  letter-spacing: -.085em;
-  text-wrap: balance;
-}
-#work .section-head h2 em { color: var(--red-bright); }
-#work .section-head .intro {
-  grid-column: 3;
+  grid-column: 1;
   grid-row: 2;
-  max-width: 290px;
-  margin: 0 0 4px;
-  color: var(--muted);
-  font: 400 .88rem/1.7 var(--body);
+  max-width: none;
+  font: 600 clamp(2.1rem, 3.6vw, 3.5rem)/1.02 var(--display);
+  letter-spacing: -.04em;
+  text-wrap: balance;
+  margin: 0;
+}
+#work .section-head h2 em { color: var(--red-bright, #E74C3C); }
+#work .section-head .intro {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  max-width: 420px;
+  margin: 0;
+  color: #c0c0c0;
+  font: 400 .9rem/1.6 var(--body);
 }
 #work .gallery-toolbar {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px 18px;
-  padding: 10px 0;
-  border-block: 1px solid var(--line);
+  gap: 12px 18px;
+  padding: 12px 0;
+  border-block: 1px solid rgba(255, 255, 255, 0.1);
 }
-#work .gallery-count { margin-right: auto; color: var(--muted); }
+#work .gallery-count { margin-right: auto; color: #c0c0c0; }
 #work .discover-tools {
   display: grid;
   grid-template-columns: 1fr minmax(190px, .55fr);
@@ -636,12 +647,15 @@ body.section-view-ready #top :is(#work, #process, #identity, #motion, #archive, 
 /* Tablet and phone compositions */
 @media (max-width: 850px) {
   #work .section-head {
-    grid-template-columns: minmax(100px, .42fr) minmax(0, 1.7fr);
+    grid-template-columns: 1fr;
+    gap: 8px;
     min-height: 0;
   }
-  #work .section-head h2 { grid-column: 2; grid-row: 1 / span 2; font-size: clamp(2.65rem, 7vw, 4.5rem); }
-  #work .section-head .intro { grid-column: 1 / -1; grid-row: 3; max-width: 520px; }
-  #work .project-grid[data-view="3d"].carousel-ready { height: clamp(280px, 38vh, 360px); min-height: 280px; }
+  #work .section-head .eyebrow,
+  #work .section-head h2,
+  #work .section-head .intro { grid-column: 1; grid-row: auto; justify-self: start; }
+  #work .section-head h2 { font-size: clamp(2.1rem, 8.5vw, 3.2rem); }
+  #work .project-grid[data-view="3d"].carousel-ready { height: clamp(380px, 55vw, 460px); min-height: 380px; }
   #work .project-grid[data-view="grid"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #process .section-head { grid-template-columns: 1fr; }
   #process .section-head .intro { grid-column: 1; justify-self: start; }

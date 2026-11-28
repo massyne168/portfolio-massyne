@@ -252,9 +252,9 @@
       // Deep 3D Horizontal Arc Parameters
       const isMobile = window.innerWidth <= 850;
       const radius = isMobile
-        ? Math.min(520, window.innerWidth * 0.78)
-        : Math.min(920, Math.max(460, window.innerWidth * 0.56));
-      const stepAngle = isMobile ? 32 : 28; // deg
+        ? Math.min(540, window.innerWidth * 0.82)
+        : Math.min(960, Math.max(500, window.innerWidth * 0.58));
+      const stepAngle = isMobile ? 34 : 31; // deg
       const isReduced = motion.matches;
 
       let closestIdx = 0;
@@ -294,7 +294,7 @@
         // z = (Math.cos(angleRad) - 1) * radius * 1.24 + centerBoost
         // rotY = -angleDeg * 1.28
         // Floating 3D levitation = Math.sin(t + idx * 1.15) * 4.5px
-        const centerBoost = Math.max(0, 1 - absOffset) * 68;
+        const centerBoost = Math.max(0, 1 - absOffset) * 120;
         const x = Math.sin(angleRad) * radius;
         const z = (Math.cos(angleRad) - 1) * radius * 1.24 + centerBoost;
         const rotY = -angleDeg * 1.28;
