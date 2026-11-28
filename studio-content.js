@@ -208,6 +208,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
+      "title": "ELITE INNOVATECH",
+      "category": "logos",
+      "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/8d33036c-d942-4f3b-820f-523e72f6819b-Untitled-1f_2.png",
+      "alt": "",
+      "id": "archiv-elite-innovatech"
+    },
+    {
       "title": "EUPHORIA ",
       "category": "posters",
       "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/e3f46585-9686-4791-9325-48105025d2fa-Comp_1_00000.jpg",
