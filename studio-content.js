@@ -59,6 +59,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "motion": [
     {
+      "title": "SLYYUTUS FAMILY",
+      "category": "MOTION / SELECTED WORK",
+      "kind": "gif",
+      "source": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/bec0b400-7c56-43c4-a3d8-f01f6c97b246-20230224_154612.gif",
+      "id": "motio-slyyutus-family"
+    },
+    {
       "title": "SLYYUTUS",
       "category": "MOTION / SELECTED WORK",
       "kind": "gif",
