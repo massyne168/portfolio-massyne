@@ -208,6 +208,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
+      "title": "EUPHORLESS",
+      "category": "posters",
+      "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/c4bcfaaa-bc57-4d54-a5f8-5d19a611c656-19092020.jpg",
+      "alt": "",
+      "id": "archiv-euphorless"
+    },
+    {
       "title": "SLYYUTUS FAMILY",
       "category": "logos",
       "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/f4ebeddb-f0bf-4da0-a54d-32d6adcf7e81-Capture_decran_2023-03-08_193844.png",
