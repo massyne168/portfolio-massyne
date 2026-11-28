@@ -208,6 +208,13 @@ window.MASSYNE_STUDIO_CONTENT = {
   ],
   "archive": [
     {
+      "title": "EUPHORIA ",
+      "category": "posters",
+      "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/e3f46585-9686-4791-9325-48105025d2fa-Comp_1_00000.jpg",
+      "alt": "",
+      "id": "archiv-euphoria"
+    },
+    {
       "title": "EUPHORLESS",
       "category": "posters",
       "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/studio-uploads/2026/11/c4bcfaaa-bc57-4d54-a5f8-5d19a611c656-19092020.jpg",
