@@ -909,41 +909,6 @@
       "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/archive26.webp"
     },
     {
-      "slug": "gurzil-team",
-      "title": "Gurzil Team",
-      "category": "Brand Identity",
-      "year": "2026",
-      "image": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/jersey-1536.webp",
-      "focus": "Brand system / gaming culture",
-      "summary": "Gurzil Team is a creative identity influenced by streetwear, gaming culture and bold branding.",
-      "number": "15",
-      "gallery": [
-        "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/jersey-1536.webp",
-        "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/streetwear-1536.webp",
-        "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/gaming-1536.webp",
-        "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/member-kit-1536.webp",
-        "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/optimized/gurzil-logo-1000.webp"
-      ],
-      "concept": "A visual identity world shaped by gaming culture, bold graphic form and streetwear energy.",
-      "direction": "The collection brings a core symbol into several presentations, letting the identity live beyond a single mark.",
-      "details": [
-        {
-          "title": "Core mark",
-          "description": "A strong emblem creates a recognizable center"
-        },
-        {
-          "title": "Application",
-          "description": "Multiple original artworks show the identity across different expressions"
-        },
-        {
-          "title": "Consistent language",
-          "description": "The imagery holds together through shared style and attitude"
-        }
-      ],
-      "staticPage": true,
-      "preview": "https://pub-c78e3daeef5841a99f5ce6ad0ebd9fdf.r2.dev/images/gurzil/jersey-1536.webp"
-    },
-    {
       "slug": "glory",
       "title": "Glory",
       "category": "Cinematic Medieval Poster Design",
