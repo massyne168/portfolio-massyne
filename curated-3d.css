@@ -5,7 +5,7 @@
    Zero external dependencies • Hardware accelerated • Pure Dark-Only Lock
    ========================================================================== */
 
-/* 1. Stage Foundation: Generous breathing room, zero clipping, transparent obsidian */
+/* 1. Stage Foundation: Generous breathing room, centered alignment, transparent obsidian */
 @media (min-width: 851px) {
   body.section-view-ready #top > #work {
     padding-left: clamp(68px, 6vw, 96px) !important;
@@ -16,17 +16,49 @@
   }
 }
 
+#work .work-header {
+  width: min(100%, 1380px);
+  margin: 0 auto 8px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.2vw, 26px);
+}
+
+#work .work-header .section-head {
+  margin: 0;
+  max-width: 780px;
+}
+
+#work .work-header .gallery-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 18px;
+  padding: 14px 0;
+  border-block: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#work .work-header .gallery-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .curated-stage {
   position: relative;
+  width: 100%;
   min-width: 0;
-  padding: 24px 0 42px;
+  padding: 12px 0 36px;
   overflow: visible !important;
   background: transparent !important;
   isolation: isolate;
 }
 
 .curated-stage.carousel-active {
-  margin-inline: calc(-1 * clamp(16px, 3.8vw, 64px));
+  margin-inline: 0;
+  width: 100%;
   overflow: visible !important;
   background: transparent !important;
   isolation: isolate;
@@ -38,13 +70,12 @@
   display: none !important;
 }
 
-/* 1b. Top-Center Category Filter Pill Bar (#work) */
+/* 1b. Category Filter Pill Bar (#work) */
 #work .orbital-filter-bar {
   position: relative;
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto clamp(14px, 2.2vh, 24px);
-  padding: 0 16px;
+  width: auto;
+  margin: 0;
+  padding: 0;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -583,9 +614,18 @@ html[data-theme] #work .project-grid[data-view="3d"].carousel-ready > .project::
 
 /* 10. Responsive Mobile / Tablet Adjustments */
 @media (max-width: 850px) {
+  #work .work-header .gallery-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  #work .work-header .gallery-toolbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
   .curated-stage.carousel-active {
     margin-inline: 0;
-    padding: 16px 0 32px;
+    padding: 12px 0 28px;
   }
   #work .project-grid[data-view="3d"].carousel-ready,
   .project-grid[data-view="3d"].carousel-ready {
